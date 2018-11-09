@@ -1,12 +1,6 @@
-<div style="text-align:center">
-  <h1>
-    You have reached {{ title }}
-  </h1>
-</div>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/tehw0lf">GitHub</a></h2>
-  </li>
-</ul>
-
+<head>
+  <base href="/" />
+</head>
+<app-navbar></app-navbar>
+<app-home *ngIf="router.url == '/'"></app-home>
 <router-outlet></router-outlet>
