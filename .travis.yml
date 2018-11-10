@@ -12,11 +12,14 @@ script:
   - ng test --browsers ChromeHeadless --watch=false
   - ng build --prod --aot --build-optimizer
 before_deploy:
+  - apt-get install sshpass
+  - openssl aes-256-cbc -K $encrypted_ed1737b0524d_key -iv $encrypted_ed1737b0524d_iv
+    -in deploy_key.enc -out deploy_key -d
   - openssl aes-256-cbc -K $encrypted_b2acfa2de9eb_key -iv $encrypted_b2acfa2de9eb_iv
     -in deploy_rsa.enc -out deploy_rsa -d
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -ravz -e "ssh -p 3695" --delete-after --quiet $TRAVIS_BUILD_DIR/dist tehwolfi@164.132.49.122:public_html
+  script: rsync -ravz -e "sshpass -f deploy_key ssh -i deploy_rsa -p 3695" --delete-after --quiet $TRAVIS_BUILD_DIR/dist tehwolfi@164.132.49.122:public_html
   on:
     branch: master
