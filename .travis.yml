@@ -7,7 +7,7 @@ branches:
 before_script:
   - npm install -g @angular/cli
 script:
-  - ng test --browsers ChromeHeadless
+  - ng test --browsers ChromeHeadless --watch=false
   - ng build --prod --aot --build-optimizer
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_b2acfa2de9eb_key -iv $encrypted_b2acfa2de9eb_iv
