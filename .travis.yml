@@ -24,6 +24,6 @@ deploy:
   skip_cleanup: true
   script:
     rsync -ravz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695"
-    --delete-after --quiet $TRAVIS_BUILD_DIR/dist tehwolfi@164.132.49.122:public_html
+    --delete-after --quiet $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@164.132.49.122:public_html
   on:
     branch: master
