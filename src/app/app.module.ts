@@ -5,16 +5,10 @@ import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { MatToolbarModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ProjectsComponent } from "./projects/projects.component";
 import { HomeComponent } from "./home/home.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    ProjectsComponent,
-    HomeComponent
-  ],
+  declarations: [AppComponent, NavbarComponent, HomeComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
