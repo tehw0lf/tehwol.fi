@@ -18,6 +18,7 @@ before_deploy:
     -in deploy_key.enc -out deploy_key -d
   - openssl aes-256-cbc -K $encrypted_b2acfa2de9eb_key -iv $encrypted_b2acfa2de9eb_iv
     -in deploy_rsa.enc -out deploy_rsa -d
+  - chmod 0600 deploy_*
 deploy:
   provider: script
   skip_cleanup: true
