@@ -12,6 +12,7 @@ script:
   - ng test --browsers ChromeHeadless --watch=false
   - ng build --prod --aot --build-optimizer
 before_deploy:
+  - sudo apt-get update
   - sudo apt-get install sshpass -y
   - openssl aes-256-cbc -K $encrypted_ed1737b0524d_key -iv $encrypted_ed1737b0524d_iv
     -in deploy_key.enc -out deploy_key -d
