@@ -13,4 +13,4 @@ test:
   - ng test
 
 script:
-  - ng build --prod --aot --
+  - ng build --prod --aot --build-optimizer
