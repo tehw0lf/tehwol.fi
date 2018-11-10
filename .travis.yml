@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - 9.8.0
+branches:
+  only:
+    - master
+before_script:
+  - npm install -g @angular/cli
+test:
+  - ng test
+script:
+  - ng build --prod --aot --build-optimizer
+before_install:
+  - openssl aes-256-cbc -K $encrypted_b2acfa2de9eb_key -iv $encrypted_b2acfa2de9eb_iv
+    -in deploy_rsa.enc -out deploy_rsa -d
+after_success:
+  - chmod 600 ~/.ssh/id_rsa
+  - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist tehwolfi@164.132.49.122:public_html
