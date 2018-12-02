@@ -10,6 +10,10 @@
   display: flex;
 }
 
+.link-active {
+  border-bottom: 2px solid $linkcolor;
+}
+
 .mat-button {
   color: $linkcolor;
   vertical-align: middle;

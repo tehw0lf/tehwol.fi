@@ -2,10 +2,10 @@
   <div class="left-nav-group">
     <a
       class="mat-button"
+      [ngClass]="{ 'link-active': isActive() }"
       mat-button=""
       routerLink="/home"
-      routerLinkActive="active"
-      href="/home"
+      routerLinkActive="link-active"
     >
       <span class="mat-button-wrapper">
         <img alt="tehwol.fi" class="nav-logo" src="../../favicon.png" />
