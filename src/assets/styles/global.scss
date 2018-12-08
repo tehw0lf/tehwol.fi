@@ -1,8 +1,11 @@
+@import "config.scss";
+
 html {
-    background-color: $bgcolor;
-    color: $fontcolor;
+  background-color: $bgcolor;
+  color: $fontcolor;
+  font-family: $font;
 }
 
 a {
-    color: $linkcolor;
+  color: $linkcolor;
 }
