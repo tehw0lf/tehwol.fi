@@ -1,8 +1,6 @@
-html {
-    background-color: $bgcolor;
-    color: $fontcolor;
-}
+@import "config.scss";
 
-a {
-    color: $linkcolor;
+html {
+  background-color: $bgcolor-main;
+  font-family: $font;
 }

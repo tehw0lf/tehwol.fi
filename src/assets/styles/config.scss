@@ -1,3 +1,10 @@
-$bgcolor: #1a1a1a;
+/* Font */
+$font: Roboto, "Helvetica Neue", sans-serif;
+$fontsize: 20px;
+$fontsize-button-md: 24px;
+
+/* Colors */
+$bgcolor-main: #1a1a1a;
+$bgcolor-nav: lighten(#1a1a1a, 1%);
 $fontcolor: #437da8;
 $linkcolor: #cc7832;
