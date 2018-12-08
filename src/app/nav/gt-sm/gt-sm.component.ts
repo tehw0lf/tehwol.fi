@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { FocusMonitor } from "@angular/cdk/a11y";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { SidenavService } from "src/app/nav/sidenav.service";
 
@@ -7,9 +8,16 @@ import { SidenavService } from "src/app/nav/sidenav.service";
   templateUrl: "./gt-sm.component.html",
   styleUrls: ["./gt-sm.component.scss"]
 })
-export class GtSmComponent implements OnInit {
-  constructor(private router: Router, private sidenavService: SidenavService) {}
+export class GtSmComponent implements AfterViewInit, OnInit {
+  constructor(
+    private focusMonitor: FocusMonitor,
+    private router: Router,
+    private sidenavService: SidenavService
+  ) {}
 
+  ngAfterViewInit() {
+    this.focusMonitor.stopMonitoring(document.getElementById("menu"));
+  }
   ngOnInit() {}
 
   isActive(): boolean {
