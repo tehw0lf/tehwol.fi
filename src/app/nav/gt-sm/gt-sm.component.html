@@ -1,0 +1,46 @@
+<mat-toolbar>
+  <mat-toolbar-row class="nav-row">
+    <button
+      mat-icon-button
+      (click)="toggleSidenav()"
+      fxLayoutGap="20px"
+      fxShow="true"
+      fxHide.gt-sm
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div
+      fxLayoutGap="20px"
+      fxShow="true"
+      fxHide.lt-md="true"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <div class="nav-item">
+        <a
+          mat-button
+          [ngClass]="{ 'link-active': isActive() }"
+          routerLink="/home"
+          routerLinkActive="link-active"
+        >
+          <span class="mat-button-wrapper">
+            <img alt="tehwol.fi" class="nav-logo" src="../../favicon.svg" />
+            <span>Home</span>
+          </span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a mat-button target="_blank" href="https://github.com/tehw0lf">
+          <span class="mat-button-wrapper">
+            <img
+              alt="tehwol.fi"
+              class="nav-logo"
+              src="assets/icons/github.png"
+            />
+            <span>GitHub</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

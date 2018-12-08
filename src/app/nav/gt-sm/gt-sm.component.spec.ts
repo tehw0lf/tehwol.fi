@@ -1,21 +1,22 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
-import { NavbarComponent } from "./navbar.component";
+import { MatIconModule, MatToolbarModule } from "@angular/material";
 import { RouterTestingModule } from "@angular/router/testing";
 
-describe("NavbarComponent", () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+import { GtSmComponent } from "./gt-sm.component";
+
+describe("GtSmComponent", () => {
+  let component: GtSmComponent;
+  let fixture: ComponentFixture<GtSmComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [NavbarComponent]
+      imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
+      declarations: [GtSmComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(GtSmComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

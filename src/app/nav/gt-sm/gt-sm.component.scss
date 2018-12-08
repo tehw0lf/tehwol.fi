@@ -1,15 +1,5 @@
 @import "src/assets/styles/config.scss";
 
-.left-nav-group {
-  align-self: flex-start;
-  display: flex;
-}
-
-.right-nav-group {
-  align-self: flex-end;
-  display: flex;
-}
-
 .link-active {
   border-bottom: 2px solid $linkcolor;
 }
@@ -18,20 +8,23 @@
   color: $linkcolor;
   vertical-align: middle;
   line-height: 36px;
-  font-size: 18px;
+  font-size: $fontsize-button-md;
   margin: 0 10px 0 0;
+  padding: 0;
   text-align: center;
   text-decoration: none;
 }
 
-.nav-header {
-  height: 36px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.mat-icon-button {
+  color: $linkcolor;
 }
 
 .nav-logo {
-  height: 20px;
+  height: 24px;
+  width: 24px;
   margin: 0 4px 0 0;
+}
+
+.nav-row {
+  background: $bgcolor-nav;
 }
