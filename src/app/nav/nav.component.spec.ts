@@ -3,8 +3,8 @@ import { MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { GtSmComponent } from './gt-sm/gt-sm.component';
-import { LtMdComponent } from './lt-md/lt-md.component';
+import { DesktopComponent } from './desktop/desktop.component';
+import { MobileComponent } from './mobile/mobile.component';
 import { NavComponent } from './nav.component';
 
 describe('NavComponent', () => {
@@ -21,7 +21,7 @@ describe('NavComponent', () => {
         MatSidenavModule,
         MatToolbarModule
       ],
-      declarations: [NavComponent, GtSmComponent, LtMdComponent]
+      declarations: [NavComponent, DesktopComponent, MobileComponent]
     }).compileComponents();
   }));
 

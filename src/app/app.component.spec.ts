@@ -5,8 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { GtSmComponent } from './nav/gt-sm/gt-sm.component';
-import { LtMdComponent } from './nav/lt-md/lt-md.component';
+import { DesktopComponent } from './nav/desktop/desktop.component';
+import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 
 describe('AppComponent', () => {
@@ -24,8 +24,8 @@ describe('AppComponent', () => {
         AppComponent,
         HomeComponent,
         NavComponent,
-        LtMdComponent,
-        GtSmComponent
+        MobileComponent,
+        DesktopComponent
       ]
     }).compileComponents();
   }));
