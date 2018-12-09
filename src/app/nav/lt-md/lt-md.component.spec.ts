@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatIconModule, MatListModule, MatSidenavModule } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterTestingModule } from "@angular/router/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule, MatListModule, MatSidenavModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { LtMdComponent } from "./lt-md.component";
+import { LtMdComponent } from './lt-md.component';
 
-describe("LtMdComponent", () => {
+describe('LtMdComponent', () => {
   let component: LtMdComponent;
   let fixture: ComponentFixture<LtMdComponent>;
 
@@ -28,7 +28,7 @@ describe("LtMdComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

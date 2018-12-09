@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatIconModule, MatToolbarModule } from "@angular/material";
-import { RouterTestingModule } from "@angular/router/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { GtSmComponent } from "./gt-sm.component";
+import { GtSmComponent } from './gt-sm.component';
 
-describe("GtSmComponent", () => {
+describe('GtSmComponent', () => {
   let component: GtSmComponent;
   let fixture: ComponentFixture<GtSmComponent>;
 
@@ -21,7 +21,7 @@ describe("GtSmComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
