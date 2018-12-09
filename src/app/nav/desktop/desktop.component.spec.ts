@@ -2,21 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { GtSmComponent } from './gt-sm.component';
+import { DesktopComponent } from './desktop.component';
 
-describe('GtSmComponent', () => {
-  let component: GtSmComponent;
-  let fixture: ComponentFixture<GtSmComponent>;
+describe('DesktopComponent', () => {
+  let component: DesktopComponent;
+  let fixture: ComponentFixture<DesktopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
-      declarations: [GtSmComponent]
+      declarations: [DesktopComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GtSmComponent);
+    fixture = TestBed.createComponent(DesktopComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,11 +3,11 @@ import { MatIconModule, MatListModule, MatSidenavModule } from '@angular/materia
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { LtMdComponent } from './lt-md.component';
+import { MobileComponent } from './mobile.component';
 
-describe('LtMdComponent', () => {
-  let component: LtMdComponent;
-  let fixture: ComponentFixture<LtMdComponent>;
+describe('MobileComponent', () => {
+  let component: MobileComponent;
+  let fixture: ComponentFixture<MobileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,12 +18,12 @@ describe('LtMdComponent', () => {
         MatListModule,
         MatSidenavModule
       ],
-      declarations: [LtMdComponent]
+      declarations: [MobileComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LtMdComponent);
+    fixture = TestBed.createComponent(MobileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
