@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { SidenavService } from 'src/app/nav/sidenav.service';
 
 @Component({
-  selector: 'app-lt-md',
-  templateUrl: './lt-md.component.html',
-  styleUrls: ['./lt-md.component.scss']
+  selector: 'app-mobile',
+  templateUrl: './mobile.component.html',
+  styleUrls: ['./mobile.component.scss']
 })
-export class LtMdComponent implements OnInit {
+export class MobileComponent implements OnInit {
   @ViewChild('sidenav') public sidenav: MatSidenav;
   constructor(public router: Router, private sidenavService: SidenavService) {}
 
