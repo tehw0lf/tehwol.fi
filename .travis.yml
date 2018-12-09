@@ -9,6 +9,7 @@ addons:
 before_script:
   - npm install -g @angular/cli
 script:
+  - ng lint
   - ng test --browsers ChromeHeadless --watch=false
   - ng build --prod --aot --build-optimizer
 before_deploy:
