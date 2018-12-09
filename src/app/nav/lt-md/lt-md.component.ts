@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatSidenav } from "@angular/material";
-import { Router } from "@angular/router";
-import { SidenavService } from "src/app/nav/sidenav.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+import { Router } from '@angular/router';
+import { SidenavService } from 'src/app/nav/sidenav.service';
 
 @Component({
-  selector: "app-lt-md",
-  templateUrl: "./lt-md.component.html",
-  styleUrls: ["./lt-md.component.scss"]
+  selector: 'app-lt-md',
+  templateUrl: './lt-md.component.html',
+  styleUrls: ['./lt-md.component.scss']
 })
 export class LtMdComponent implements OnInit {
-  @ViewChild("sidenav") public sidenav: MatSidenav;
+  @ViewChild('sidenav') public sidenav: MatSidenav;
   constructor(public router: Router, private sidenavService: SidenavService) {}
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class LtMdComponent implements OnInit {
 
   isActive(): boolean {
     return (
-      this.router.isActive("/", true) || this.router.isActive("/home", true)
+      this.router.isActive('/', true) || this.router.isActive('/home', true)
     );
   }
 
@@ -30,6 +30,6 @@ export class LtMdComponent implements OnInit {
   }
 
   uselessfn() {
-    console.log("");
+    console.log('');
   }
 }
