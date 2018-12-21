@@ -1,0 +1,79 @@
+@import "src/assets/styles/config.scss";
+
+.clipboard-button {
+  line-height: $line-height-button-clippy !important;
+  padding: 0;
+  margin-bottom: 0;
+
+  span {
+    font-size: $fontsize-button-clippy;
+
+    .check {
+      color: $icon-issue-color;
+    }
+  }
+}
+
+.mat-button {
+  color: $linkcolor;
+  vertical-align: middle;
+  line-height: 36px;
+  font-size: $fontsize-button-md;
+  margin: 0 10px 0 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mat-card {
+  color: $card-fontcolor;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+}
+
+.mat-card-avatar {
+  height: 53px;
+  width: 53px;
+}
+
+.mat-card-subtitle {
+  padding-left: 16px;
+}
+
+.mat-card-header {
+  flex-shrink: 0;
+}
+
+.mat-card-content {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.mat-card-footer {
+  padding: 16px 16px 16px 16px;
+}
+
+.footer-span {
+  color: $card-fontcolor;
+  display: block;
+  font-size: $fontsize-mat-footer-span;
+}
+
+.issue-icon {
+  color: $icon-issue-color;
+}
+
+.fork-icon {
+  color: $icon-fork-color;
+}
+
+.star-icon {
+  color: $icon-star-color;
+}
+
+.language-icon {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  margin-top: 2px;
+}

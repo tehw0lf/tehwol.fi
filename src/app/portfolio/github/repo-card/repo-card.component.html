@@ -1,0 +1,76 @@
+<mat-card>
+  <mat-card-header>
+    <div
+      mat-card-avatar
+      [ngStyle]="{
+        'background-image': 'url(' + githubRepo.owner.avatar_url + ')',
+        'background-size': 'cover',
+        'border-radius': 0
+      }"
+    ></div>
+    <mat-card-title>
+      <a mat-button target="_blank" href="{{githubRepo.html_url}}">
+        {{ githubRepo.name }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle fxLayout="row" fxLayoutGap="12px">
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div
+          [ngStyle]="{
+            'background-color': githubLanguageColors[githubRepo.language]
+          }"
+          class="language-icon"
+        ></div>
+        <div>{{ githubRepo.language }}</div>
+      </div>
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div [innerHTML]="starIcon || 'Stars: '" class="star-icon"></div>
+        <div>{{ githubRepo.stargazers_count }}</div>
+      </div>
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div [innerHTML]="repoForkedIcon || 'Forks: '" class="fork-icon"></div>
+        <div>{{ githubRepo.forks_count }}</div>
+      </div>
+      <div
+        *ngIf="githubRepo.open_issues_count"
+        class="info-item"
+        fxLayout="row"
+        fxLayoutGap="5px"
+      >
+        <div
+          [innerHTML]="issueOpenedIcon || 'Issues: '"
+          class="issue-icon"
+        ></div>
+        <div>{{ githubRepo.open_issues_count }}</div>
+      </div>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ githubRepo.description }}</p>
+  </mat-card-content>
+  <mat-card-footer fxLayout="row" fxLayoutGap="12px">
+    <span class="mat-footer-cell" fxFlex>
+      <span class="footer-span"
+        >Created: {{ githubRepo.created_at | date }}</span
+      >
+      <span class="footer-span"
+        >Updated: {{ githubRepo.pushed_at | date }}</span
+      >
+    </span>
+    <span class="mat-footer-cell">
+      <button
+        mat-button
+        ngxClipboard
+        (cbOnSuccess)="copiedToClipboard()"
+        [cbContent]="githubRepo.clone_url"
+        class="clipboard-button"
+      >
+        <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
+          <div *ngIf="isCopied" [innerHTML]="checkIcon" class="check"></div>
+          <div [innerHTML]="clippyIcon"></div>
+          <span>Copy URL</span>
+        </span>
+      </button>
+    </span>
+  </mat-card-footer>
+</mat-card>
