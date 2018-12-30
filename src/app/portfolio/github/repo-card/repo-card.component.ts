@@ -32,7 +32,6 @@ export class RepoCardComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
-    console.log(this.githubRepo);
     this.checkIcon = this.sanitizer.bypassSecurityTrustHtml(
       octicons.check.toSVG({ height: '24px', width: '24px' })
     );
