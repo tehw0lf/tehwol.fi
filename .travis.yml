@@ -25,6 +25,6 @@ deploy:
   skip_cleanup: true
   script:
     rsync -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695"
-    --exclude /.htaccess --delete-after --quiet $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@tehwol.fi:public_html
+    --exclude /.htaccess --delete-after -v $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@tehwol.fi:public_html
   on:
     branch: master
