@@ -5,7 +5,7 @@ branches:
   only:
     - master
 addons:
-  ssh_known_hosts: 164.132.49.122:3695
+  ssh_known_hosts: tehwol.fi:3695
 before_script:
   - npm install -g @angular/cli
 script:
