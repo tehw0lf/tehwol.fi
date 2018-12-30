@@ -28,8 +28,4 @@ export class MobileComponent implements OnInit {
   toggleSidenav() {
     this.sidenavService.toggle();
   }
-
-  uselessfn() {
-    console.log('');
-  }
 }

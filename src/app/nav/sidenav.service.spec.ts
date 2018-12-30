@@ -3,10 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { SidenavService } from './sidenav.service';
 
 describe('SidenavService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: SidenavService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [SidenavService]
+    });
+    service = TestBed.get(SidenavService);
+  });
 
   it('should be created', () => {
-    const service: SidenavService = TestBed.get(SidenavService);
     expect(service).toBeTruthy();
   });
 });
