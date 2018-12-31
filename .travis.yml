@@ -5,7 +5,7 @@ branches:
   only:
     - master
 addons:
-  ssh_known_hosts: tehwol.fi:3695
+  ssh_known_hosts: 193.70.94.150:3695
 before_script:
   - npm install -g @angular/cli
 script:
@@ -23,8 +23,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script:
-    rsync -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695"
-    --exclude /.htaccess --delete-after -v $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@tehwol.fi:public_html
+  script: rsync -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695" --exclude /.htaccess --delete-after --quiet $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@193.70.94.150:public_html
   on:
     branch: master
