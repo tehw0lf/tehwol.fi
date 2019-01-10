@@ -23,6 +23,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync --progress -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695" --exclude /.htaccess --delete-after $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@193.70.94.150:public_html
+  script: ls $TRAVIS_BUILD_DIR/dist/ && rsync --progress -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695" --exclude /.htaccess --delete-after $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@193.70.94.150:public_html
   on:
     branch: master
