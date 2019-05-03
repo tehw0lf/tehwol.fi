@@ -17,7 +17,6 @@ export class OcticonDirective implements OnInit {
 
     const icon: Node = el.firstChild;
     if (this.color) {
-      console.log(this.color);
       this.renderer.setStyle(icon, 'fill', this.color);
     }
     if (this.width) {
