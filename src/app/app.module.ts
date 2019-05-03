@@ -24,6 +24,7 @@ import { GithubComponent } from './portfolio/github/github.component';
 import { GithubService } from './portfolio/github/github.service';
 import { RepoCardComponent } from './portfolio/github/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { OcticonDirective } from './octicon.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     MobileComponent,
     PortfolioComponent,
     GithubComponent,
-    RepoCardComponent
+    RepoCardComponent,
+    OcticonDirective
   ],
   imports: [
     AppRoutingModule,
