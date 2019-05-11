@@ -37,7 +37,7 @@ describe('OcticonDirective', () => {
     fixture.detectChanges();
   });
 
-  fit('should create a div with golden octicon star svg as innerHTML', () => {
+  it('should create a div with golden octicon star svg as innerHTML', () => {
     star = octicons['star'].toSVG().replace('/>', '></path>');
 
     expect(rendererSpy).toHaveBeenCalled();
