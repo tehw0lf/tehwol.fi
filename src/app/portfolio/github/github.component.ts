@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
 
 import { GithubRepository } from './github-repository-type';
 import { GithubService } from './github.service';
-
-const GITHUB_USER = environment.GITHUB_USER;
 
 @Component({
   selector: 'app-github',
@@ -14,6 +11,15 @@ const GITHUB_USER = environment.GITHUB_USER;
   styleUrls: ['./github.component.scss']
 })
 export class GithubComponent implements OnInit, OnDestroy {
+  @Input()
+  githubUser: string;
+
+  @Input()
+  showForked = true;
+
+  @Input()
+  showOwn = true;
+
   private unsubscribe$ = new Subject<void>();
   currentRepo: GithubRepository;
   allGithubRepositories: GithubRepository[];
@@ -68,7 +74,7 @@ export class GithubComponent implements OnInit, OnDestroy {
   }
   filterOwnRepositories(): void {
     this.allGithubRepositories.filter(githubRepo => {
-      if (githubRepo.owner.login === GITHUB_USER && !githubRepo.fork) {
+      if (githubRepo.owner.login === this.githubUser && !githubRepo.fork) {
         this.ownGithubRepositories.push(githubRepo);
       }
     });

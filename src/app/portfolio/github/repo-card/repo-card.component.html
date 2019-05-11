@@ -8,8 +8,8 @@
         'border-radius': 0
       }"
     ></div>
-    <mat-card-title>
-      <a mat-button target="_blank" href="{{githubRepo.html_url}}">
+    <mat-card-title
+      ><a mat-button target="_blank" href="{{ githubRepo.html_url }}">
         {{ githubRepo.name }}
       </a>
     </mat-card-title>
@@ -24,11 +24,11 @@
         <div>{{ githubRepo.language }}</div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div [innerHTML]="starIcon || 'Stars: '" class="star-icon"></div>
+        <div octicon="star" color="gold"></div>
         <div>{{ githubRepo.stargazers_count }}</div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div [innerHTML]="repoForkedIcon || 'Forks: '" class="fork-icon"></div>
+        <div octicon="repo-forked" color="#437da8"></div>
         <div>{{ githubRepo.forks_count }}</div>
       </div>
       <div
@@ -37,10 +37,7 @@
         fxLayout="row"
         fxLayoutGap="5px"
       >
-        <div
-          [innerHTML]="issueOpenedIcon || 'Issues: '"
-          class="issue-icon"
-        ></div>
+        <div octicon="issue-opened" color="rgb(56, 224, 56)"></div>
         <div>{{ githubRepo.open_issues_count }}</div>
       </div>
     </mat-card-subtitle>
@@ -66,8 +63,13 @@
         class="clipboard-button"
       >
         <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
-          <div *ngIf="isCopied" [innerHTML]="checkIcon" class="check"></div>
-          <div [innerHTML]="clippyIcon"></div>
+          <div
+            *ngIf="isCopied"
+            octicon="check"
+            color="#38e038"
+            width="24"
+          ></div>
+          <div octicon="clippy" color="#cc7832" width="24px"></div>
           <span>Copy URL</span>
         </span>
       </button>
