@@ -7,10 +7,6 @@
 
   span {
     font-size: $fontsize-button-clippy;
-
-    .check {
-      color: $icon-issue-color;
-    }
   }
 }
 
@@ -57,18 +53,6 @@
   color: $card-fontcolor;
   display: block;
   font-size: $fontsize-mat-footer-span;
-}
-
-.issue-icon {
-  color: $icon-issue-color;
-}
-
-.fork-icon {
-  color: $icon-fork-color;
-}
-
-.star-icon {
-  color: $icon-star-color;
 }
 
 .language-icon {
