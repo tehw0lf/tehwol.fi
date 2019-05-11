@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-portfolio',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
+  githubUser: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.githubUser = environment.GITHUB_USER;
   }
-
 }
