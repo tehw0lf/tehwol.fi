@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import * as octicons from 'octicons';
 
 @Directive({
+  // tslint:disable-next-line: directive-selector
   selector: '[octicon]'
 })
 export class OcticonDirective implements OnInit {
