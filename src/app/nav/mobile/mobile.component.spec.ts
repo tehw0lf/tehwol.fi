@@ -34,7 +34,7 @@ describe('MobileComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     spyOn(service, 'setSidenav').and.callFake(() => {});
-    toggleSpy = spyOn(service, 'toggle').and.callFake(() => {});
+    toggleSpy = spyOn(service, 'toggle');
   });
 
   it('should create', () => {
