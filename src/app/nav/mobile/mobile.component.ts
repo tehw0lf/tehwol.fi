@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { SidenavService } from 'src/app/nav/sidenav.service';
 
@@ -9,7 +9,7 @@ import { SidenavService } from 'src/app/nav/sidenav.service';
   styleUrls: ['./mobile.component.scss']
 })
 export class MobileComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
+  @ViewChild('sidenav', { static: true }) public sidenav: MatSidenav;
   constructor(public router: Router, private sidenavService: SidenavService) {}
 
   ngOnInit(): void {
