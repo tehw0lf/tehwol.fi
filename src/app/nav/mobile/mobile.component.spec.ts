@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule, MatListModule, MatSidenavModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -32,7 +34,7 @@ describe('MobileComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     spyOn(service, 'setSidenav').and.callFake(() => {});
-    toggleSpy = spyOn(service, 'toggle').and.callFake(() => {});
+    toggleSpy = spyOn(service, 'toggle');
   });
 
   it('should create', () => {
