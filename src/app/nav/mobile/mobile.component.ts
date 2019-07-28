@@ -9,7 +9,7 @@ import { SidenavService } from 'src/app/nav/sidenav.service';
   styleUrls: ['./mobile.component.scss']
 })
 export class MobileComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
+  @ViewChild('sidenav', { static: true }) public sidenav: MatSidenav;
   constructor(public router: Router, private sidenavService: SidenavService) {}
 
   ngOnInit(): void {
