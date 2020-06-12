@@ -23,6 +23,7 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync --progress -avz -e "sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no" --exclude /.htaccess --delete-after $TRAVIS_BUILD_DIR/dist/tehwolfi/ tehwolfi@tehwol.fi:public_html
+  script: sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no" -rp $TRAVIS_BUILD_DIR/dist/tehwolfi/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
+
   on:
     branch: master
