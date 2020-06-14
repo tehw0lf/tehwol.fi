@@ -1,0 +1,6 @@
+<p>wordlist-generator works!</p>
+<div>
+  <ul *ngFor="let word of wordlist$ | async">
+    <li>{{ word.join() }}</li>
+  </ul>
+</div>
