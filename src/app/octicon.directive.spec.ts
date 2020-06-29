@@ -30,7 +30,7 @@ describe('OcticonDirective', () => {
     renderer = fixture.componentRef.injector.get<Renderer2>(Renderer2 as Type<
       Renderer2
     >);
-    rendererSpy = spyOn(renderer, 'setStyle');
+    rendererSpy = jest.spyOn(renderer, 'setStyle');
     component = fixture.componentInstance;
     inputEl = fixture.debugElement.query(By.css('div'));
 
