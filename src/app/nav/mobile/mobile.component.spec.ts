@@ -33,8 +33,8 @@ describe('MobileComponent', () => {
     service = TestBed.get(SidenavService);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    spyOn(service, 'setSidenav').and.callFake(() => {});
-    toggleSpy = spyOn(service, 'toggle');
+    jest.spyOn(service, 'setSidenav').mockImplementation(() => {});
+    toggleSpy = jest.spyOn(service, 'toggle');
   });
 
   it('should create', () => {
