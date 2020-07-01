@@ -9,7 +9,7 @@ describe('SidenavService', () => {
     TestBed.configureTestingModule({
       providers: [SidenavService]
     });
-    service = TestBed.get(SidenavService);
+    service = TestBed.inject(SidenavService);
   });
 
   it('should be created', () => {
