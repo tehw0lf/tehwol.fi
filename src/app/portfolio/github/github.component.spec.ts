@@ -148,4 +148,10 @@ describe('GithubComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should copy to clipboard', () => {
+    component.copyToClipboard(GITHUB_REPO);
+    expect(component.currentRepo).toBe(GITHUB_REPO);
+    expect(component.isCopiedToClipboard(GITHUB_REPO)).toBeTruthy();
+  });
 });
