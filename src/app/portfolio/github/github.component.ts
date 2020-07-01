@@ -37,7 +37,7 @@ export class GithubComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  copiedToClipboard(githubRepo: GithubRepository) {
+  copyToClipboard(githubRepo: GithubRepository) {
     this.currentRepo = githubRepo;
   }
 
@@ -66,14 +66,14 @@ export class GithubComponent implements OnInit, OnDestroy {
   }
 
   filterForkedRepositories(): void {
-    this.allGithubRepositories.filter(githubRepo => {
+    this.allGithubRepositories.filter((githubRepo) => {
       if (githubRepo.fork) {
         this.forkedGithubRepositories.push(githubRepo);
       }
     });
   }
   filterOwnRepositories(): void {
-    this.allGithubRepositories.filter(githubRepo => {
+    this.allGithubRepositories.filter((githubRepo) => {
       if (githubRepo.owner.login === this.githubUser && !githubRepo.fork) {
         this.ownGithubRepositories.push(githubRepo);
       }
