@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { OcticonDirective } from './octicon.directive';
 
 @Component({
-  template: ` <div octicon="star" color="gold"></div> `
+  template: ` <div octicon="star" color="gold" width="20px"></div> `
 })
 class TestOcticonDirectiveComponent {}
 
@@ -34,8 +34,8 @@ describe('OcticonDirective', () => {
   });
 
   it('should create a div with golden octicon star svg as innerHTML', () => {
-    expect(rendererSpy).toHaveBeenCalled();
     expect(inputEl.attributes.color).toBe('gold');
     expect(inputEl.attributes.octicon).toBe('star');
+    expect(inputEl.attributes.width).toBe('20px');
   });
 });
