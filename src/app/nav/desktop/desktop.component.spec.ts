@@ -3,7 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { SidenavService } from '../sidenav.service';
 import { DesktopComponent } from './desktop.component';
+
+const mockSidenavService = {
+  toggle: jest.fn()
+};
 
 describe('DesktopComponent', () => {
   let component: DesktopComponent;
@@ -12,6 +17,7 @@ describe('DesktopComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
+      providers: [{ provide: SidenavService, useValue: mockSidenavService }],
       declarations: [DesktopComponent]
     }).compileComponents();
   }));
@@ -24,5 +30,10 @@ describe('DesktopComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should toggle sidenav', () => {
+    component.toggleSidenav();
+    expect(mockSidenavService.toggle).toHaveBeenCalled();
   });
 });
