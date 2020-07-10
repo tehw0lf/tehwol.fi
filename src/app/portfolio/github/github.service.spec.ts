@@ -19,8 +19,8 @@ describe('GithubService', () => {
       imports: [HttpClientTestingModule],
       providers: [GithubService]
     });
-    service = TestBed.get(GithubService);
-    httpMock = TestBed.get(HttpTestingController);
+    service = TestBed.inject(GithubService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
