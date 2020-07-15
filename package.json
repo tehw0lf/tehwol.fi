@@ -30,6 +30,7 @@
     "@scullyio/init": "0.0.29",
     "@scullyio/ng-lib": "latest",
     "@scullyio/scully": "latest",
+    "cartesian-product-generator": "^1.1.1",
     "github-language-colors": "^1.0.0",
     "ngx-clipboard": "^13.0.1",
     "octicons": "^8.5.0",
