@@ -23,6 +23,7 @@ import { GithubService } from './portfolio/github/github.service';
 import { RepoCardComponent } from './portfolio/github/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { OcticonDirective } from './octicon.directive';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { OcticonDirective } from './octicon.directive';
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ScullyLibModule
   ],
   providers: [GithubService, SidenavService],
   bootstrap: [AppComponent]
