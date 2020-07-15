@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,7 +51,8 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ScullyLibModule
   ],
   providers: [GithubService, SidenavService],
   bootstrap: [AppComponent]
