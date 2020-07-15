@@ -12,6 +12,7 @@ script:
   - ng lint
   - ng test
   - ng build --prod --aot --build-optimizer
+  - npm run scully
 before_deploy:
   - wget http://de.archive.ubuntu.com/ubuntu/pool/universe/s/sshpass/sshpass_1.06-1_amd64.deb
   - sudo dpkg -i sshpass_1.06-1_amd64.deb
@@ -23,6 +24,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $TRAVIS_BUILD_DIR/dist/tehwolfi/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
+  script: sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $TRAVIS_BUILD_DIR/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
   on:
     branch: master
