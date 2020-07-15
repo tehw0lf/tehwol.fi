@@ -1,4 +1,14 @@
-<p>wordlist-generator works!</p>
+<form [formGroup]="charsetForm">
+  <div formArrayName="charsets">
+    <div *ngFor="let charset of charsets.controls; let i = index">
+      <label>Character set for string position {{ i }}: </label>
+      <input type="text" [formControlName]="i" />
+    </div>
+    <button (click)="addCharset()">Add string position</button>
+  </div>
+  <button (click)="generateWordlist('123', '456')">Generate wordlist</button>
+</form>
+
 <div>
   <ul *ngFor="let word of wordlist$ | async">
     <li>{{ word.join() }}</li>
