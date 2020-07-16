@@ -12,6 +12,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 export class WordlistGeneratorComponent implements OnInit {
   wordlist$: Observable<IterableIterator<string[]>>;
   charsetForm: FormGroup;
+  consol = console;
   constructor(
     private formBuilder: FormBuilder,
     private wordlistGenerator: WordlistGeneratorService
@@ -44,7 +45,6 @@ export class WordlistGeneratorComponent implements OnInit {
       this.wordlist$ = this.wordlistGenerator.generateWordlist(
         ...this.charsets.value
       );
-      this.wordlist$.subscribe((c) => console.log(c.next().value.join('')));
     }
   }
 }
