@@ -12,5 +12,6 @@
 <div>
   <ng-container *ngFor="let word of wordlist$ | async">
     <div>{{ consol.log(word.join('')) }}</div>
+    <div>{{ word.join('') }}</div>
   </ng-container>
 </div>
