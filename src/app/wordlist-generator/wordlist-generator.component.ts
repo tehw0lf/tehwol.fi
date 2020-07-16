@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { WordlistGeneratorService } from './wordlist-generator.service';
@@ -10,7 +10,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   styleUrls: ['./wordlist-generator.component.scss']
 })
 export class WordlistGeneratorComponent implements OnInit {
-  wordlist$: Observable<IterableIterator<any[]>>;
+  wordlist$: Observable<IterableIterator<string[]>>;
   charsetForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -21,7 +21,6 @@ export class WordlistGeneratorComponent implements OnInit {
     if (this.charsetForm === undefined) {
       this.generateForm();
     }
-    this.generateWordlist('123', '456');
   }
 
   get charsets() {
@@ -29,18 +28,23 @@ export class WordlistGeneratorComponent implements OnInit {
   }
 
   addCharset() {
-    this.charsets.push(this.formBuilder.control(''));
+    this.charsets.push(this.formBuilder.control('', Validators.required));
   }
 
   generateForm() {
     this.charsetForm = this.formBuilder.group({
-      charsets: this.formBuilder.array([this.formBuilder.control('')])
+      charsets: this.formBuilder.array([
+        this.formBuilder.control('', Validators.required)
+      ])
     });
   }
 
-  generateWordlist(...charsets) {
-    console.log(charsets);
-    console.log(...charsets);
-    this.wordlist$ = this.wordlistGenerator.generateWordlist(...charsets);
+  generateWordlist() {
+    if (this.charsets.valid) {
+      this.wordlist$ = this.wordlistGenerator.generateWordlist(
+        ...this.charsets.value
+      );
+      this.wordlist$.subscribe((c) => console.log(c.next().value.join('')));
+    }
   }
 }
