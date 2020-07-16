@@ -2,15 +2,15 @@
   <div formArrayName="charsets">
     <div *ngFor="let charset of charsets.controls; let i = index">
       <label>Character set for string position {{ i }}: </label>
-      <input type="text" [formControlName]="i" />
+      <input matInput type="text" [formControlName]="i" />
     </div>
     <button (click)="addCharset()">Add string position</button>
   </div>
-  <button (click)="generateWordlist('123', '456')">Generate wordlist</button>
+  <button (click)="generateWordlist()">Generate wordlist</button>
 </form>
 
 <div>
-  <ul *ngFor="let word of wordlist$ | async">
-    <li>{{ word.join() }}</li>
-  </ul>
+  <ng-container *ngFor="let word of wordlist$ | async">
+    <div>{{ word.join('') }}</div>
+  </ng-container>
 </div>
