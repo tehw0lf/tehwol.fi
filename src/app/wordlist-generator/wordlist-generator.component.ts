@@ -46,8 +46,14 @@ export class WordlistGeneratorComponent implements OnInit {
   }
 
   generateWordlist(...charsets) {
-    //if (this.charsets.valid) {
-    this.wordlistGenerator.generateWordlist(...charsets);
-    //}
+    if (this.charsets.valid) {
+      console.log(this.charsets);
+      console.log(this.charsetForm);
+      console.log('input from form:', ...this.charsets.value);
+      this.wordlistGenerator.generateWordlist(...this.charsets.value);
+    } else {
+      console.log('input from function call:', ...charsets);
+      this.wordlistGenerator.generateWordlist(...charsets);
+    }
   }
 }
