@@ -6,11 +6,14 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class WordlistGeneratorService {
+  private wordlist$: Observable<IterableIterator<string[]>>;
   constructor() {}
 
-  generateWordlist(
-    ...charsets: string[]
-  ): Observable<IterableIterator<string[]>> {
-    return of(product(...charsets));
+  generateWordlist(...charsets: string[]): void {
+    this.wordlist$ = of(product(...charsets));
+  }
+
+  getWordlist(): Observable<IterableIterator<string[]>> {
+    return this.wordlist$;
   }
 }
