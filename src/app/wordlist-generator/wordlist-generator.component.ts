@@ -24,7 +24,9 @@ export class WordlistGeneratorComponent implements OnInit {
       this.generateForm();
     }
     this.generateWordlist('123', 'abc');
-    this.wordlist$ = this.wordlistGenerator.getWordlist();
+    if (this.wordlist$ === undefined) {
+      this.wordlist$ = this.wordlistGenerator.getWordlist();
+    }
   }
 
   get charsets() {
