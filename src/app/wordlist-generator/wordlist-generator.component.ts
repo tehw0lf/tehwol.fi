@@ -24,6 +24,7 @@ export class WordlistGeneratorComponent implements OnInit {
       this.generateForm();
     }
     this.generateWordlist('123', 'abc');
+    this.wordlist$ = this.wordlistGenerator.getWordlist();
   }
 
   get charsets() {
@@ -44,7 +45,7 @@ export class WordlistGeneratorComponent implements OnInit {
 
   generateWordlist(...charsets) {
     //if (this.charsets.valid) {
-    this.wordlist$ = this.wordlistGenerator.generateWordlist(...charsets);
+    this.wordlistGenerator.generateWordlist(...charsets);
     //}
   }
 }
