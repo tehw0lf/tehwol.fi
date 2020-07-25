@@ -1,9 +1,42 @@
-.form-container {
-}
+@import 'src/assets/styles/config.scss';
 
-.wordlist-container {
-}
+.meta-container {
+  margin-left: 20%;
+  margin-top: 2%;
+  max-width: 40%;
 
-.wordlist {
-  margin-left: 5em;
+  .form-container {
+    float: left;
+
+    .charset {
+      width: 304px;
+    }
+
+    .charset-label {
+      color: $linkcolor;
+    }
+
+    .add-charset {
+      color: $linkcolor;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .generate-wordlist {
+      color: $linkcolor;
+      margin-bottom: 10px;
+    }
+  }
+
+  .wordlist-container {
+    float: right;
+
+    .wordlist-header {
+      margin-top: 0px;
+    }
+
+    .wordlist {
+      margin-left: 5em;
+    }
+  }
 }
