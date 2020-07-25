@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
@@ -10,10 +11,11 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   styleUrls: ['./wordlist-generator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WordlistGeneratorComponent implements OnInit {
-  wordlist$: Observable<IterableIterator<string[]>>;
+export class WordlistGeneratorComponent implements OnInit, OnDestroy {
+  wordlist: string[];
   charsetForm: FormGroup;
-  consol = console;
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
     private formBuilder: FormBuilder,
     private wordlistGenerator: WordlistGeneratorService
@@ -23,10 +25,11 @@ export class WordlistGeneratorComponent implements OnInit {
     if (this.charsetForm === undefined) {
       this.generateForm();
     }
-    this.generateWordlist('123', 'abc');
-    if (this.wordlist$ === undefined) {
-      this.wordlist$ = this.wordlistGenerator.getWordlist();
-    }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   get charsets() {
@@ -45,13 +48,17 @@ export class WordlistGeneratorComponent implements OnInit {
     });
   }
 
-  generateWordlist(...charsets: string[]) {
+  generateWordlist() {
     if (this.charsets.valid) {
-      console.log('input from form:', ...this.charsets.value);
-      this.wordlistGenerator.generateWordlist(...this.charsets.value);
-    } else {
-      console.log('input from function call:', ...charsets);
-      this.wordlistGenerator.generateWordlist(...charsets);
+      this.wordlist = [];
+      this.wordlistGenerator
+        .generateWordlist(...this.charsets.value)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((wordlist) => {
+          for (const word of wordlist) {
+            this.wordlist.push(word.join(''));
+          }
+        });
     }
   }
 }
