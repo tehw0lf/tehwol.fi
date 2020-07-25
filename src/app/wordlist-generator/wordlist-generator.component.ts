@@ -49,10 +49,13 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   generateWordlist() {
     if (this.charsets.valid) {
-      // TODO: Filter duplicates from charsets
       this.wordlist = [];
+      const filteredCharset = [];
+      this.charsets.value.map((charset: string) =>
+        filteredCharset.push(this.removeDuplicates(charset))
+      );
       this.wordlistGenerator
-        .generateWordlist(...this.charsets.value)
+        .generateWordlist(...filteredCharset)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((wordlist) => {
           for (const word of wordlist) {
@@ -61,4 +64,6 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  removeDuplicates = (unfiltered) => [...new Set(unfiltered)].join('');
 }
