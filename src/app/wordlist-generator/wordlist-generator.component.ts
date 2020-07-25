@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,8 +8,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 @Component({
   selector: 'app-wordlist-generator',
   templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./wordlist-generator.component.scss']
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   wordlist: string[];
@@ -50,6 +49,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   generateWordlist() {
     if (this.charsets.valid) {
+      // TODO: Filter duplicates from charsets
       this.wordlist = [];
       this.wordlistGenerator
         .generateWordlist(...this.charsets.value)
