@@ -36,7 +36,7 @@ describe('WordlistGeneratorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: WordlistGeneratorService = TestBed.get(
+    const service: WordlistGeneratorService = TestBed.inject(
       WordlistGeneratorService
     );
     expect(service).toBeTruthy();
@@ -44,7 +44,7 @@ describe('WordlistGeneratorService', () => {
 
   it('should create a wordlist', () => {
     const expectedWordlist = [];
-    const service: WordlistGeneratorService = TestBed.get(
+    const service: WordlistGeneratorService = TestBed.inject(
       WordlistGeneratorService
     );
     const charset1 = '012';
