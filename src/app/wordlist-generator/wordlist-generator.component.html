@@ -1,0 +1,39 @@
+<div class="meta-container">
+  <div class="form-container">
+    <button class="add-charset" mat-raised-button (click)="addCharset()">
+      Add string position
+    </button>
+    <button
+      class="generate-wordlist"
+      mat-raised-button
+      (click)="generateWordlist()"
+    >
+      Generate wordlist
+    </button>
+    <form [formGroup]="charsetForm">
+      <div formArrayName="charsets">
+        <div *ngFor="let charset of charsets.controls; let i = index">
+          <mat-form-field class="charset" appearance="fill">
+            <mat-label class="charset-label"
+              >character set for string position {{ i }}
+            </mat-label>
+            <input
+              matInput
+              type="text"
+              id="position-{{ i }}"
+              [formControlName]="i"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="wordlist-container" *ngIf="wordlist">
+    <h3 class="wordlist-header">Generated wordlist:</h3>
+    <code>
+      <div class="wordlist" *ngFor="let word of wordlist">
+        <div class="word">{{ word }}</div>
+      </div>
+    </code>
+  </div>
+</div>
