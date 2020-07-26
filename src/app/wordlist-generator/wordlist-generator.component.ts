@@ -57,7 +57,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   downloadWordlist(filename: string) {
     if (this.wordlist) {
       const parsed = this.wordlist.toString().replace(/,/g, '\n');
-      const file = new Blob([parsed], { type: 'text' });
+      const file = new Blob([parsed], { type: 'text/plain' });
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(file, filename);
       } else {
