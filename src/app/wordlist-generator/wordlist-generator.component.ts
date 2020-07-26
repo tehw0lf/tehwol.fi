@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -37,6 +38,15 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   addCharset() {
     this.charsets.push(this.formBuilder.control('', Validators.required));
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.charsets.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.charsets.updateValueAndValidity();
   }
 
   generateForm() {

@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -45,6 +46,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    DragDropModule,
     ReactiveFormsModule,
     ClipboardModule,
     HttpClientModule,
