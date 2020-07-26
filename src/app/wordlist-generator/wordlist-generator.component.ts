@@ -46,6 +46,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       event.previousIndex,
       event.currentIndex
     );
+    this.charsets.updateValueAndValidity();
   }
 
   generateForm() {
