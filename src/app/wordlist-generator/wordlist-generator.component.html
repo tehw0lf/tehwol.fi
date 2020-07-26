@@ -10,6 +10,14 @@
     >
       Generate wordlist
     </button>
+    <button
+      class="download-wordlist"
+      mat-raised-button
+      *ngIf="this.wordlist"
+      (click)="downloadDialog()"
+    >
+      Download wordlist
+    </button>
     <form [formGroup]="charsetForm">
       <div formArrayName="charsets">
         <div cdkDropList (cdkDropListDropped)="drop($event)">
