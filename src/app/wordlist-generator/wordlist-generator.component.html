@@ -38,7 +38,7 @@
       </div>
     </form>
   </div>
-  <div class="wordlist-container" *ngIf="wordlist">
+  <div class="wordlist-container" *ngIf="wordlist && wordlist.length < 100">
     <h3 class="wordlist-header">Generated wordlist:</h3>
     <code>
       <div class="wordlist" *ngFor="let word of wordlist">
