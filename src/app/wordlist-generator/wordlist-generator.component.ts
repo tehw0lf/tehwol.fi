@@ -49,6 +49,33 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     this.charsets.updateValueAndValidity();
   }
 
+  downloadDialog(): void {
+    const filename = 'word.lst';
+    this.downloadWordlist(filename);
+  }
+
+  downloadWordlist(filename: string) {
+    if (this.wordlist) {
+      const parsed = this.wordlist.toString().replace(/,/g, '\n');
+      const file = new Blob([parsed], { type: 'text' });
+      if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(file, filename);
+      } else {
+        const a = document.createElement('a');
+        const url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        console.log(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 0);
+      }
+    }
+  }
+
   generateForm() {
     this.charsetForm = this.formBuilder.group({
       charsets: this.formBuilder.array([
