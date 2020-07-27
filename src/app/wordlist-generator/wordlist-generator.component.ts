@@ -40,6 +40,14 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     this.charsets.push(this.formBuilder.control('', Validators.required));
   }
 
+  cloneCharset(index: number) {
+    const charset = this.charsets.value[index];
+    this.charsets.insert(
+      index,
+      this.formBuilder.control(charset, Validators.required)
+    );
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.charsets.controls,
