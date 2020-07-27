@@ -16,15 +16,32 @@
       color: $linkcolor;
     }
 
-    .add-charset {
-      color: $linkcolor;
-      margin-right: 10px;
-      margin-bottom: 10px;
+    .charset-container {
+      .add-charset {
+        color: $linkcolor;
+      }
+
+      .drag-indicator {
+        color: $linkcolor;
+        margin-right: 10px;
+      }
+
+      .clone-charset {
+        color: $linkcolor;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    .charset-container:not(:last-child) {
+      .add-charset {
+        display: none;
+      }
     }
 
     .generate-wordlist {
       color: $linkcolor;
-      margin-right: 10px;
+      margin-left: 34px;
       margin-bottom: 10px;
     }
 
