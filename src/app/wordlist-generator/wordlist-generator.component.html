@@ -1,8 +1,5 @@
 <div class="meta-container">
   <div class="form-container">
-    <button class="add-charset" mat-raised-button (click)="addCharset()">
-      Add string position
-    </button>
     <button
       class="generate-wordlist"
       mat-raised-button
@@ -21,7 +18,12 @@
     <form [formGroup]="charsetForm">
       <div formArrayName="charsets">
         <div cdkDropList (cdkDropListDropped)="drop($event)">
-          <div cdkDrag *ngFor="let charset of charsets.controls; let i = index">
+          <div
+            class="charset-container"
+            cdkDrag
+            *ngFor="let charset of charsets.controls; let i = index"
+          >
+            <mat-icon class="drag-indicator">drag_indicator</mat-icon>
             <mat-form-field class="charset" appearance="fill">
               <mat-label class="charset-label">
                 character set for string position {{ i }}
@@ -33,6 +35,20 @@
                 [formControlName]="i"
               />
             </mat-form-field>
+            <button
+              mat-raised-button
+              class="clone-charset"
+              (click)="cloneCharset(i)"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button
+              mat-raised-button
+              class="add-charset"
+              (click)="addCharset()"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
           </div>
         </div>
       </div>
