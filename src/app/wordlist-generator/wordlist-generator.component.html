@@ -44,6 +44,14 @@
             </button>
             <button
               mat-raised-button
+              class="remove-charset"
+              (click)="removeCharset(i)"
+              [disabled]="this.charsets.value.length === 1"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <button
+              mat-raised-button
               class="add-charset"
               (click)="addCharset()"
             >
