@@ -31,6 +31,10 @@
         margin-left: 10px;
         margin-right: 10px;
       }
+      .remove-charset {
+        color: $linkcolor;
+        margin-right: 10px;
+      }
     }
 
     .charset-container:not(:last-child) {

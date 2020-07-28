@@ -110,5 +110,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeCharset(i) {
+    this.charsets.removeAt(i);
+  }
+
   removeDuplicates = (unfiltered) => [...new Set(unfiltered)].join('');
 }
