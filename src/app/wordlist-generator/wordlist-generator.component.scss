@@ -65,19 +65,19 @@
     .choose-format {
       color: $linkcolor;
       margin: 0 0 10px 34px;
-      max-width: 150px;
+      width: 150px;
     }
 
     .generate-wordlist {
       color: $linkcolor;
       margin: 0 0 10px 34px;
-      max-width: 150px;
+      width: 150px;
     }
 
     .download-wordlist {
       color: $linkcolor;
       margin: 0 0 10px 34px;
-      max-width: 150px;
+      width: 150px;
     }
   }
 
@@ -92,4 +92,12 @@
       overflow: auto;
     }
   }
+}
+
+.mat-menu-panel {
+  width: 150px;
+}
+
+button.mat-menu-item {
+  color: $linkcolor;
 }
