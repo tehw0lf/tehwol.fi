@@ -1,10 +1,6 @@
-@import "src/assets/styles/config.scss";
-
-.mat-headline {
-  margin: 32px 0 0 32px;
-}
+@import 'src/assets/styles/config.scss';
 
 .repository-card {
   max-width: 450px;
-  margin: 32px 32px 32px 32px;
+  margin: 0 32px 32px 0;
 }
