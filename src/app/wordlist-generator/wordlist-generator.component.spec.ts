@@ -3,13 +3,29 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
 
+import { FileType } from './filetypes';
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
+import { WordlistGeneratorService } from './wordlist-generator.service';
+
+const wordlistGeneratorServiceMock = {
+  generateWordlist: jest.fn(() => {
+    return of([['123']]);
+  })
+};
+
+const plaintextSample = '13\n23\n14\n24';
+const xmlSample =
+  '<wordlist><word>13</word><word>23</word><word>14</word><word>24</word></wordlist>';
 
 describe('WordlistGeneratorComponent', () => {
   let component: WordlistGeneratorComponent;
   let fixture: ComponentFixture<WordlistGeneratorComponent>;
+
+  global.URL.createObjectURL = jest.fn();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +35,14 @@ describe('WordlistGeneratorComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatIconModule,
-        MatInputModule
+        MatInputModule,
+        MatMenuModule
+      ],
+      providers: [
+        {
+          provide: WordlistGeneratorService,
+          useValue: wordlistGeneratorServiceMock
+        }
       ]
     }).compileComponents();
   }));
@@ -27,10 +50,75 @@ describe('WordlistGeneratorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WordlistGeneratorComponent);
     component = fixture.componentInstance;
+    component.wordlist = ['13', '23', '14', '24'];
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have generated a form', () => {
+    expect(component.charsets.length).toBe(1);
+  });
+
+  it('should add a charset', () => {
+    component.addCharset();
+    expect(component.charsets.length).toBe(2);
+  });
+
+  it('should clone a charset at the correct position', () => {
+    component.addCharset();
+    component.addCharset();
+    component.charsets.at(1).setValue('abc');
+    component.cloneCharset(1);
+    expect(component.charsets.at(1).value).toEqual(
+      component.charsets.at(2).value
+    );
+  });
+
+  it('should remove a charset if there is more than one', () => {
+    component.addCharset();
+    component.removeCharset(0);
+    expect(component.charsets.length).toBe(1);
+  });
+
+  it('should not remove a charset if there is just one', () => {
+    component.removeCharset(0);
+    expect(component.charsets.length).toBe(1);
+  });
+
+  it('should filter duplicates from the charsets', () => {
+    component.charsets.at(0).setValue('1233');
+    component.generateWordlist();
+
+    expect(wordlistGeneratorServiceMock.generateWordlist).toHaveBeenCalledWith(
+      '123'
+    );
+  });
+
+  it('should parse a wordlist to plain text', () => {
+    component.fileType = FileType.PLAINTEXT;
+    const result = component.parseWordlist();
+
+    expect(JSON.stringify(result.wordlist)).toEqual(
+      JSON.stringify(plaintextSample)
+    );
+    expect(result.contentType).toEqual('text/plain');
+  });
+
+  it('should parse a wordlist to XML', () => {
+    component.fileType = FileType.XML;
+    const result = component.parseWordlist();
+
+    expect(result.wordlist).toEqual(xmlSample);
+    expect(result.contentType).toEqual('text/xml');
+  });
+
+  it('should provide a downloadable file', () => {
+    const before = document.body.innerHTML;
+    component.downloadWordlist();
+    const after = document.body.innerHTML;
+    expect(before).not.toEqual(after);
   });
 });
