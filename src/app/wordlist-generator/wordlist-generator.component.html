@@ -1,20 +1,39 @@
-<div class="meta-container">
-  <div class="form-container">
-    <button
-      class="generate-wordlist"
-      mat-raised-button
-      (click)="generateWordlist()"
-    >
-      Generate wordlist
-    </button>
-    <button
-      class="download-wordlist"
-      mat-raised-button
-      *ngIf="this.wordlist"
-      (click)="downloadDialog()"
-    >
-      Download wordlist
-    </button>
+<div class="meta-container" fxLayout="row wrap">
+  <div class="form-container" fxLayout="column" fxFlex>
+    <div fxLayout="row wrap">
+      <button
+        class="generate-wordlist"
+        mat-raised-button
+        (click)="generateWordlist()"
+      >
+        Generate wordlist
+      </button>
+      <button
+        class="choose-format"
+        mat-raised-button
+        [matMenuTriggerFor]="menu"
+        *ngIf="this.wordlist"
+      >
+        Choose format
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          *ngFor="let type of fileTypes"
+          (click)="fileType = type"
+        >
+          {{ type }}
+        </button>
+      </mat-menu>
+      <button
+        class="download-wordlist"
+        mat-raised-button
+        *ngIf="this.wordlist"
+        (click)="downloadWordlist()"
+      >
+        Download wordlist
+      </button>
+    </div>
     <form [formGroup]="charsetForm">
       <div formArrayName="charsets">
         <div cdkDropList (cdkDropListDropped)="drop($event)">
@@ -24,7 +43,7 @@
             *ngFor="let charset of charsets.controls; let i = index"
           >
             <mat-icon class="drag-indicator">drag_indicator</mat-icon>
-            <mat-form-field class="charset" appearance="fill">
+            <mat-form-field class="charset" appearance="outline">
               <mat-label class="charset-label">
                 character set for string position {{ i }}
               </mat-label>
@@ -62,12 +81,12 @@
       </div>
     </form>
   </div>
-  <div class="wordlist-container" *ngIf="wordlist && wordlist.length < 100">
+  <div class="wordlist-container" *ngIf="wordlist" fxLayout="column" fxFlex>
     <h3 class="wordlist-header">Generated wordlist:</h3>
-    <code>
-      <div class="wordlist" *ngFor="let word of wordlist">
-        <div class="word">{{ word }}</div>
-      </div>
+    <code class="wordlist">
+      <ng-container *ngFor="let word of wordlist; let i = index">
+        <div class="word" *ngIf="i <= 100">{{ word }}</div>
+      </ng-container>
     </code>
   </div>
 </div>
