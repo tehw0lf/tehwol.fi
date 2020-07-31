@@ -1,4 +1,4 @@
-@import "src/assets/styles/config.scss";
+@import 'src/assets/styles/config.scss';
 
 .link-active {
   border-bottom: 2px solid $linkcolor;
@@ -28,7 +28,8 @@
   margin: 0 4px 0 0;
 }
 
-.sidebar-content {
+.main-content {
   background-color: $bgcolor-main;
   color: $fontcolor;
+  padding: 32px 0 0 32px;
 }
