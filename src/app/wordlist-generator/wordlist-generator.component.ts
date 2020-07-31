@@ -1,19 +1,26 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { FileType } from './filetypes';
+import { toPlaintext, toXML } from './parsers';
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
 @Component({
   selector: 'app-wordlist-generator',
   templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss']
+  styleUrls: ['./wordlist-generator.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
-  wordlist: string[];
   charsetForm: FormGroup;
+  wordlist: string[];
+
+  fileType = FileType.PLAINTEXT;
+  fileTypes = Object.values(FileType);
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -22,9 +29,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.charsetForm === undefined) {
-      this.generateForm();
-    }
+    this.generateForm();
   }
 
   ngOnDestroy() {
@@ -48,24 +53,11 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     );
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(
-      this.charsets.controls,
-      event.previousIndex,
-      event.currentIndex
-    );
-    this.charsets.updateValueAndValidity();
-  }
-
-  downloadDialog(): void {
-    const filename = 'word.lst';
-    this.downloadWordlist(filename);
-  }
-
-  downloadWordlist(filename: string) {
+  downloadWordlist(): void {
     if (this.wordlist) {
-      const parsed = this.wordlist.toString().replace(/,/g, '\n');
-      const file = new Blob([parsed], { type: 'text/plain' });
+      const filename = `wordlist_${this.charsets.length}_positions.${this.fileType}`;
+      const parsed = this.parseWordlist();
+      const file = new Blob([parsed.wordlist], { type: parsed.contentType });
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(file, filename);
       } else {
@@ -74,7 +66,6 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         a.href = url;
         a.download = filename;
         document.body.appendChild(a);
-        console.log(a);
         a.click();
         setTimeout(() => {
           document.body.removeChild(a);
@@ -82,6 +73,15 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         }, 0);
       }
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.charsets.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.charsets.updateValueAndValidity();
   }
 
   generateForm() {
@@ -110,8 +110,19 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     }
   }
 
+  parseWordlist(): { wordlist: string; contentType: string } {
+    switch (this.fileType) {
+      case FileType.PLAINTEXT:
+        return toPlaintext(this.wordlist);
+      case FileType.XML:
+        return toXML(this.wordlist);
+    }
+  }
+
   removeCharset(i) {
-    this.charsets.removeAt(i);
+    if (this.charsets.length > 1) {
+      this.charsets.removeAt(i);
+    }
   }
 
   removeDuplicates = (unfiltered) => [...new Set(unfiltered)].join('');
