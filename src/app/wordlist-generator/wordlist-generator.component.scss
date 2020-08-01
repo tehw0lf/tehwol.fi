@@ -24,35 +24,13 @@
         color: $linkcolor;
         margin-right: 10px;
       }
-
-      .charset {
-        width: 304px;
-
-        .charset-label {
-          color: $linkcolor;
-        }
-
-        .mat-form-field-infix {
-          border: 0;
-          padding: 1em 0 0.5em 0;
-        }
-        .mat-form-field-label {
-          transition: none !important; /*transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        color 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);*/
-        }
-      }
     }
 
-    .mat-form-field-should-float {
-      .mat-form-field-label-wrapper {
-        top: -0.1em;
-        padding-top: 0.1em;
-      }
-      .mat-form-field-label {
-        transition: none !important; /*transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        color 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);*/
+    .charset {
+      width: 18.875em;
+
+      .charset-label {
+        color: $linkcolor;
       }
     }
 
@@ -70,7 +48,7 @@
 
     .generate-wordlist {
       color: $linkcolor;
-      margin: 0 0 10px 34px;
+      margin: 0 0 10px 0;
       width: 150px;
     }
 
@@ -100,4 +78,35 @@
 
 button.mat-menu-item {
   color: $linkcolor;
+}
+
+.mat-form-field-infix {
+  border: 0;
+  padding: 1em 0 0.5em 0;
+}
+
+.mat-form-field-label {
+  transition: none !important; /*transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+        color 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+        width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);*/
+}
+
+.mat-form-field-should-float {
+  .mat-form-field-label-wrapper {
+    top: -0.1em;
+    padding-top: 0.1em;
+  }
+  .mat-form-field-label {
+    transition: none !important; /*transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+        color 400ms cubic-bezier(0.25, 0.8, 0.25, 1),
+        width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);*/
+  }
+}
+
+.fix {
+  width: 21em;
+
+  .fix-label {
+    color: $linkcolor;
+  }
 }
