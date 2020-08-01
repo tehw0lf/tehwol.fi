@@ -37,7 +37,7 @@
     </div>
     <form [formGroup]="charsetForm">
       <mat-form-field class="fix" appearance="outline">
-        <mat-label class="fix-label">prefix</mat-label>
+        <mat-label class="fix-label">prefix (optional)</mat-label>
         <input matInput type="text" id="prefix" formControlName="prefix" />
       </mat-form-field>
       <div formArrayName="charsets">
@@ -87,7 +87,7 @@
         </div>
       </div>
       <mat-form-field class="fix" appearance="outline">
-        <mat-label class="fix-label">suffix</mat-label>
+        <mat-label class="fix-label">suffix (optional)</mat-label>
         <input matInput type="text" id="suffix" formControlName="suffix" />
       </mat-form-field>
     </form>
