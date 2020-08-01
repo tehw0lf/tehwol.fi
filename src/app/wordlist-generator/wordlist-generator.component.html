@@ -36,7 +36,12 @@
       </button>
     </div>
     <form [formGroup]="charsetForm">
+      <mat-form-field class="fix" appearance="outline">
+        <mat-label class="fix-label">prefix</mat-label>
+        <input matInput type="text" id="prefix" formControlName="prefix" />
+      </mat-form-field>
       <div formArrayName="charsets">
+        <div class="charset"></div>
         <div cdkDropList (cdkDropListDropped)="drop($event)">
           <div
             class="charset-container"
@@ -53,6 +58,7 @@
                 type="text"
                 id="position-{{ i }}"
                 [formControlName]="i"
+                required
               />
             </mat-form-field>
             <button
@@ -80,6 +86,10 @@
           </div>
         </div>
       </div>
+      <mat-form-field class="fix" appearance="outline">
+        <mat-label class="fix-label">suffix</mat-label>
+        <input matInput type="text" id="suffix" formControlName="suffix" />
+      </mat-form-field>
     </form>
   </div>
   <div class="wordlist-container" *ngIf="wordlist" fxLayout="column" fxFlex>

@@ -26,6 +26,7 @@ describe('WordlistGeneratorComponent', () => {
   let fixture: ComponentFixture<WordlistGeneratorComponent>;
 
   global.URL.createObjectURL = jest.fn();
+  global.window.URL.revokeObjectURL = jest.fn();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -97,6 +98,29 @@ describe('WordlistGeneratorComponent', () => {
     );
   });
 
+  it('should provide a downloadable file', () => {
+    const before = document.body.innerHTML;
+    component.downloadWordlist();
+    const after = document.body.innerHTML;
+    expect(before).not.toEqual(after);
+  });
+
+  it('should prepend the prefix', () => {
+    component.charsetForm.get('prefix').setValue('abc');
+    component.charsets.at(0).setValue('123');
+    component.generateWordlist();
+
+    expect(component.wordlist).toEqual(['abc123']);
+  });
+
+  it('should append the suffix', () => {
+    component.charsetForm.get('suffix').setValue('xyz');
+    component.charsets.at(0).setValue('123');
+    component.generateWordlist();
+
+    expect(component.wordlist).toEqual(['123xyz']);
+  });
+
   it('should parse a wordlist to plain text', () => {
     component.fileType = FileType.PLAINTEXT;
     const result = component.parseWordlist();
@@ -113,12 +137,5 @@ describe('WordlistGeneratorComponent', () => {
 
     expect(result.wordlist).toEqual(xmlSample);
     expect(result.contentType).toEqual('text/xml');
-  });
-
-  it('should provide a downloadable file', () => {
-    const before = document.body.innerHTML;
-    component.downloadWordlist();
-    const after = document.body.innerHTML;
-    expect(before).not.toEqual(after);
   });
 });
