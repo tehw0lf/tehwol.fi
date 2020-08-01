@@ -88,7 +88,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     this.charsetForm = this.formBuilder.group({
       charsets: this.formBuilder.array([
         this.formBuilder.control('', Validators.required)
-      ])
+      ]),
+      prefix: this.formBuilder.control(''),
+      suffix: this.formBuilder.control('')
     });
   }
 
@@ -104,7 +106,11 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((wordlist) => {
           for (const word of wordlist) {
-            this.wordlist.push(word.join(''));
+            this.wordlist.push(
+              this.charsetForm.get('prefix').value +
+                word.join('') +
+                this.charsetForm.get('suffix').value
+            );
           }
         });
     }
