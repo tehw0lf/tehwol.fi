@@ -31,7 +31,8 @@
         *ngIf="this.wordlist"
         (click)="downloadWordlist()"
       >
-        Download wordlist
+        Download as
+        <ng-container *ngIf="this.fileType">{{ this.fileType }}</ng-container>
       </button>
     </div>
     <form [formGroup]="charsetForm">
