@@ -80,7 +80,7 @@ button.mat-menu-item {
   color: $linkcolor;
 }
 
-.mat-form-field-infix {
+.mat-form-field-appearance-outline .mat-form-field-infix {
   border: 0;
   padding: 1em 0 0.5em 0;
 }
@@ -109,4 +109,8 @@ button.mat-menu-item {
   .fix-label {
     color: $linkcolor;
   }
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.5em;
 }
