@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
 import { GithubRepository } from './github-repository-type';
 import { GithubService } from './github.service';
@@ -37,11 +37,11 @@ export class GithubComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  copyToClipboard(githubRepo: GithubRepository) {
+  copyToClipboard(githubRepo: GithubRepository): void {
     this.currentRepo = githubRepo;
   }
 
-  isCopiedToClipboard(githubRepo: GithubRepository) {
+  isCopiedToClipboard(githubRepo: GithubRepository): boolean {
     if (!this.currentRepo) {
       return false;
     }
@@ -51,13 +51,16 @@ export class GithubComponent implements OnInit, OnDestroy {
   fetchAndSortRepositories(): void {
     this.githubService
       .fetchRepositories()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((githubRepos: GithubRepository[]) => {
-        this.allGithubRepositories = githubRepos.sort(
-          (repo1, repo2) => repo2.stargazers_count - repo1.stargazers_count
-        );
-        this.filterRepositories();
-      });
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        tap((githubRepos: GithubRepository[]) => {
+          this.allGithubRepositories = githubRepos.sort(
+            (repo1, repo2) => repo2.stargazers_count - repo1.stargazers_count
+          );
+          this.filterRepositories();
+        })
+      )
+      .subscribe();
   }
 
   filterRepositories(): void {
