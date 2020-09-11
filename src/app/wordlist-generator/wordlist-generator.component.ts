@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toPlaintext, toXML } from './parsers';
@@ -28,24 +28,24 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     private wordlistGenerator: WordlistGeneratorService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.generateForm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  get charsets() {
+  get charsets(): FormArray {
     return this.charsetForm.get('charsets') as FormArray;
   }
 
-  addCharset() {
+  addCharset(): void {
     this.charsets.push(this.formBuilder.control('', Validators.required));
   }
 
-  cloneCharset(index: number) {
+  cloneCharset(index: number): void {
     const charset = this.charsets.value[index];
     this.charsets.insert(
       index,
@@ -75,7 +75,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(
       this.charsets.controls,
       event.previousIndex,
@@ -84,7 +84,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     this.charsets.updateValueAndValidity();
   }
 
-  generateForm() {
+  generateForm(): void {
     this.charsetForm = this.formBuilder.group({
       charsets: this.formBuilder.array([
         this.formBuilder.control('', Validators.required)
@@ -94,7 +94,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     });
   }
 
-  generateWordlist() {
+  generateWordlist(): void {
     if (this.charsets.valid) {
       this.wordlist = [];
       const filteredCharset = [];
@@ -103,16 +103,19 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       );
       this.wordlistGenerator
         .generateWordlist(...filteredCharset)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((wordlist) => {
-          for (const word of wordlist) {
-            this.wordlist.push(
-              this.charsetForm.get('prefix').value +
-                word.join('') +
-                this.charsetForm.get('suffix').value
-            );
-          }
-        });
+        .pipe(
+          takeUntil(this.unsubscribe$),
+          tap((wordlist) => {
+            for (const word of wordlist) {
+              this.wordlist.push(
+                this.charsetForm.get('prefix').value +
+                  word.join('') +
+                  this.charsetForm.get('suffix').value
+              );
+            }
+          })
+        )
+        .subscribe();
     }
   }
 
@@ -125,11 +128,12 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeCharset(i) {
+  removeCharset(i: number): void {
     if (this.charsets.length > 1) {
       this.charsets.removeAt(i);
     }
   }
 
-  removeDuplicates = (unfiltered) => [...new Set(unfiltered)].join('');
+  removeDuplicates = (unfiltered: string): string =>
+    [...new Set(unfiltered)].join('');
 }
