@@ -11,7 +11,7 @@ export class PortfolioComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.githubUser = environment.GITHUB_USER;
   }
 }

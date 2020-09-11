@@ -24,9 +24,9 @@ export class RepoCardComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  copiedToClipboard() {
+  copiedToClipboard(): void {
     this.copiedToClipboardEvent.emit();
   }
 }
