@@ -1,4 +1,4 @@
-import { Component, DebugElement, Renderer2, Type } from '@angular/core';
+import { Component, DebugElement, Renderer2 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,11 +10,8 @@ import { OcticonDirective } from './octicon.directive';
 class TestOcticonDirectiveComponent {}
 
 describe('OcticonDirective', () => {
-  let component: TestOcticonDirectiveComponent;
   let fixture: ComponentFixture<TestOcticonDirectiveComponent>;
   let inputEl: DebugElement;
-  let renderer: Renderer2;
-  let rendererSpy: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,11 +20,6 @@ describe('OcticonDirective', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestOcticonDirectiveComponent);
-    renderer = fixture.componentRef.injector.get<Renderer2>(
-      Renderer2 as Type<Renderer2>
-    );
-    rendererSpy = jest.spyOn(renderer, 'setStyle');
-    component = fixture.componentInstance;
     inputEl = fixture.debugElement.query(By.css('div'));
 
     fixture.detectChanges();
