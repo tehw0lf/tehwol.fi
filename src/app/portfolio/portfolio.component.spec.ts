@@ -1,6 +1,6 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ClipboardModule } from 'ngx-clipboard';
 import { of } from 'rxjs';
 
 import { GithubRepository } from './github/github-repository-type';
