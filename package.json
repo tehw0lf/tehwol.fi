@@ -33,7 +33,6 @@
     "@scullyio/scully": "latest",
     "cartesian-product-generator": "^1.1.1",
     "github-language-colors": "^1.0.0",
-    "ngx-clipboard": "^13.0.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
