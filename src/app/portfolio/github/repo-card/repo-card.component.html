@@ -57,9 +57,8 @@
     <span class="mat-footer-cell">
       <button
         mat-button
-        ngxClipboard
-        (cbOnSuccess)="copiedToClipboard()"
-        [cbContent]="githubRepo.clone_url"
+        [cdkCopyToClipboard]="githubRepo.clone_url"
+        (cdkCopyToClipboardCopied)="copiedToClipboard()"
         class="clipboard-button"
       >
         <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
