@@ -1,6 +1,6 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ClipboardModule } from 'ngx-clipboard';
 
 import { GithubRepository } from '../github-repository-type';
 import { RepoCardComponent } from './repo-card.component';
@@ -144,7 +144,7 @@ describe('RepoCardComponent', () => {
     const sub = component.copiedToClipboardEvent
       .asObservable()
       .subscribe((copied) => {
-        expect(copied).toBe(true);
+        expect(copied).toBeTruthy;
       });
     component.copiedToClipboard();
     sub.unsubscribe();
