@@ -104,7 +104,6 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       this.wordlistGenerator
         .generateWordlist(...filteredCharset)
         .pipe(
-          takeUntil(this.unsubscribe$),
           tap((wordlist) => {
             for (const word of wordlist) {
               this.wordlist.push(
@@ -113,7 +112,8 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
                   this.charsetForm.get('suffix').value
               );
             }
-          })
+          }),
+          takeUntil(this.unsubscribe$)
         )
         .subscribe();
     }
