@@ -2,12 +2,12 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2021,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "ignorePatterns": ["**/node_modules/**", "dist", "cypress"],
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "rxjs", "rxjs-angular"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -18,7 +18,14 @@
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-parameter-properties": "off"
+    "@typescript-eslint/no-parameter-properties": "off",
+    "rxjs/no-async-subscribe": "error",
+    "rxjs/no-ignored-observable": "error",
+    "rxjs/no-nested-subscribe": "warn",
+    "rxjs/no-unbound-methods": "error",
+    "rxjs/throw-error": "error",
+    "rxjs/no-unsafe-takeuntil": "error",
+    "rxjs-angular/prefer-async-pipe": "warn"
   },
   "overrides": [
     {

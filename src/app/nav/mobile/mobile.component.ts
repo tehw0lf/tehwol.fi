@@ -20,10 +20,10 @@ export class MobileComponent implements OnInit, OnDestroy {
     this.sidenavService.setSidenav(this.sidenav);
     this.router.events
       .pipe(
-        takeUntil(this.unsubscribe$),
         tap(() => {
           this.sidenavService.close();
-        })
+        }),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe();
   }
