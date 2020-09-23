@@ -52,13 +52,13 @@ export class GithubComponent implements OnInit, OnDestroy {
     this.githubService
       .fetchRepositories()
       .pipe(
-        takeUntil(this.unsubscribe$),
         tap((githubRepos: GithubRepository[]) => {
           this.allGithubRepositories = githubRepos.sort(
             (repo1, repo2) => repo2.stargazers_count - repo1.stargazers_count
           );
           this.filterRepositories();
-        })
+        }),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe();
   }
