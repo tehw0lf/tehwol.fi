@@ -51,7 +51,6 @@ describe('WordlistGeneratorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WordlistGeneratorComponent);
     component = fixture.componentInstance;
-    component.wordlist = ['13', '23', '14', '24'];
     fixture.detectChanges();
   });
 
@@ -99,6 +98,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should provide a downloadable file', () => {
+    component.wordlist = ['13', '23', '14', '24'];
     const before = document.body.innerHTML;
     component.downloadWordlist();
     const after = document.body.innerHTML;
@@ -122,6 +122,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to plain text', () => {
+    component.wordlist = ['13', '23', '14', '24'];
     component.fileType = FileType.PLAINTEXT;
     const result = component.parseWordlist();
 
@@ -132,10 +133,16 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to XML', () => {
+    component.wordlist = ['13', '23', '14', '24'];
     component.fileType = FileType.XML;
     const result = component.parseWordlist();
 
     expect(result.wordlist).toEqual(xmlSample);
     expect(result.contentType).toEqual('text/xml');
+  });
+
+  it('should do nothing if the charset is not valid', () => {
+    component.generateWordlist();
+    expect(component.wordlist).toBeUndefined();
   });
 });
