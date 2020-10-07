@@ -3,33 +3,33 @@ import { TestBed } from '@angular/core/testing';
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
 const actualWordlist = [
-  ['0', '3', '7'],
-  ['1', '3', '7'],
-  ['2', '3', '7'],
-  ['0', '4', '7'],
-  ['1', '4', '7'],
-  ['2', '4', '7'],
-  ['0', '5', '7'],
-  ['1', '5', '7'],
-  ['2', '5', '7'],
-  ['0', '3', '8'],
-  ['1', '3', '8'],
-  ['2', '3', '8'],
-  ['0', '4', '8'],
-  ['1', '4', '8'],
-  ['2', '4', '8'],
-  ['0', '5', '8'],
-  ['1', '5', '8'],
-  ['2', '5', '8'],
-  ['0', '3', '9'],
-  ['1', '3', '9'],
-  ['2', '3', '9'],
-  ['0', '4', '9'],
-  ['1', '4', '9'],
-  ['2', '4', '9'],
-  ['0', '5', '9'],
-  ['1', '5', '9'],
-  ['2', '5', '9']
+  '037',
+  '137',
+  '237',
+  '047',
+  '147',
+  '247',
+  '057',
+  '157',
+  '257',
+  '038',
+  '138',
+  '238',
+  '048',
+  '148',
+  '248',
+  '058',
+  '158',
+  '258',
+  '039',
+  '139',
+  '239',
+  '049',
+  '149',
+  '249',
+  '059',
+  '159',
+  '259'
 ];
 
 describe('WordlistGeneratorService', () => {
@@ -50,13 +50,9 @@ describe('WordlistGeneratorService', () => {
     const charset1 = '012';
     const charset2 = '345';
     const charset3 = '789';
-    service
-      .generateWordlist(charset1, charset2, charset3)
-      .subscribe((wordlist) => {
-        for (const word of wordlist) {
-          expectedWordlist.push(word);
-        }
-      });
-    expect(actualWordlist).toEqual(expectedWordlist);
+    service.generateWordlist(charset1, charset2, charset3).subscribe((word) => {
+      expectedWordlist.push(word);
+    });
+    expect(expectedWordlist).toEqual(actualWordlist);
   });
 });

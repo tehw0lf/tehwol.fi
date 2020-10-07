@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { product } from 'cartesian-product-generator';
-import { Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,11 @@ import { Observable, of } from 'rxjs';
 export class WordlistGeneratorService {
   constructor() {}
 
-  generateWordlist(
-    ...charsets: string[]
-  ): Observable<IterableIterator<string[]>> {
-    return of(product(...charsets));
+  generateWordlist(...charsets: string[]): Observable<string> {
+    return from(product(...charsets)).pipe(
+      map((word: string[]) => {
+        return word.join('');
+      })
+    );
   }
 }
