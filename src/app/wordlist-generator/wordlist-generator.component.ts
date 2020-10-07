@@ -1,8 +1,8 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toPlaintext, toXML } from './parsers';
@@ -17,6 +17,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   charsetForm: FormGroup;
   wordlist: string[];
+  wordlist$: Observable<string>;
 
   fileType = FileType.PLAINTEXT;
   fileTypes = Object.values(FileType);
@@ -104,14 +105,15 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       this.wordlistGenerator
         .generateWordlist(...filteredCharset)
         .pipe(
-          tap((wordlist) => {
-            for (const word of wordlist) {
-              this.wordlist.push(
-                this.charsetForm.get('prefix').value +
-                  word.join('') +
-                  this.charsetForm.get('suffix').value
-              );
-            }
+          map((word: string) => {
+            return (
+              this.charsetForm.get('prefix').value +
+              word +
+              this.charsetForm.get('suffix').value
+            );
+          }),
+          tap((word: string) => {
+            this.wordlist.push(word);
           }),
           takeUntil(this.unsubscribe$)
         )
