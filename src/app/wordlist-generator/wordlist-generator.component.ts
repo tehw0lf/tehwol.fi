@@ -98,7 +98,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   generateWordlist(): void {
     if (this.charsets.valid) {
       this.wordlist = [];
-      const filteredCharset = [];
+      const filteredCharset: string[] = [];
+      const prefix = this.charsetForm.get('prefix').value;
+      const suffix = this.charsetForm.get('suffix').value;
       this.charsets.value.map((charset: string) =>
         filteredCharset.push(this.removeDuplicates(charset))
       );
@@ -106,11 +108,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         .generateWordlist(...filteredCharset)
         .pipe(
           map((word: string) => {
-            return (
-              this.charsetForm.get('prefix').value +
-              word +
-              this.charsetForm.get('suffix').value
-            );
+            return prefix + word + suffix;
           }),
           tap((word: string) => {
             this.wordlist.push(word);
