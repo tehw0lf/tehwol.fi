@@ -1,7 +1,7 @@
 export const toPlaintext = (
   wordlist: string
 ): { wordlist: string; contentType: string } => ({
-  wordlist: wordlist.replace(/,/g, '\n'),
+  wordlist,
   contentType: 'text/plain'
 });
 
@@ -12,7 +12,7 @@ export const toXML = (
   const glue = '</word><word>';
   const tail = '</word></wordlist>';
   return {
-    wordlist: head + wordlist.replace(/,/g, glue) + tail,
+    wordlist: head + wordlist.replace(/\n/g, glue) + tail,
     contentType: 'text/xml'
   };
 };
