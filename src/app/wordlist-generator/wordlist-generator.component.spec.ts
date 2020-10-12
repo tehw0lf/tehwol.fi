@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
@@ -13,7 +14,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 
 const wordlistGeneratorServiceMock = {
   generateWordlist: jest.fn(() => {
-    return of([['123']]);
+    return of('123');
   })
 };
 
@@ -98,33 +99,45 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should provide a downloadable file', () => {
-    component.wordlist = ['13', '23', '14', '24'];
     const before = document.body.innerHTML;
     component.downloadWordlist();
     const after = document.body.innerHTML;
     expect(before).not.toEqual(after);
   });
 
-  it('should prepend the prefix', () => {
+  it('should prepend the prefix', (done) => {
     component.charsetForm.get('prefix').setValue('abc');
     component.charsets.at(0).setValue('123');
     component.generateWordlist();
 
-    expect(component.wordlist).toEqual(['abc123']);
+    component
+      .getWordlist()
+      .pipe(
+        tap((wordlist: string) => {
+          expect(wordlist).toEqual('abc123');
+        })
+      )
+      .subscribe(() => done());
   });
 
-  it('should append the suffix', () => {
+  it('should append the suffix', (done) => {
     component.charsetForm.get('suffix').setValue('xyz');
     component.charsets.at(0).setValue('123');
     component.generateWordlist();
 
-    expect(component.wordlist).toEqual(['123xyz']);
+    component
+      .getWordlist()
+      .pipe(
+        tap((wordlist: string) => {
+          expect(wordlist).toEqual('123xyz');
+        })
+      )
+      .subscribe(() => done());
   });
 
   it('should parse a wordlist to plain text', () => {
-    component.wordlist = ['13', '23', '14', '24'];
     component.fileType = FileType.PLAINTEXT;
-    const result = component.parseWordlist();
+    const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(JSON.stringify(result.wordlist)).toEqual(
       JSON.stringify(plaintextSample)
@@ -133,9 +146,8 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to XML', () => {
-    component.wordlist = ['13', '23', '14', '24'];
     component.fileType = FileType.XML;
-    const result = component.parseWordlist();
+    const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(result.wordlist).toEqual(xmlSample);
     expect(result.contentType).toEqual('text/xml');
@@ -143,6 +155,6 @@ describe('WordlistGeneratorComponent', () => {
 
   it('should do nothing if the charset is not valid', () => {
     component.generateWordlist();
-    expect(component.wordlist).toBeUndefined();
+    expect(component.wordlist$).toBeUndefined();
   });
 });
