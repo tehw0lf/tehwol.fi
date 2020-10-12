@@ -117,7 +117,13 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       this.charsets.value.map((charset: string) =>
         this.filteredCharset.push(this.removeDuplicates(charset))
       );
-      this.displayWordlist = this.filteredCharset.length < 10; // = n(words) <== 100
+      const wordsGenerated = this.filteredCharset
+        .map((charset: string) => charset.length)
+        .reduce(
+          (previousLength: number, currentLength: number) =>
+            previousLength * currentLength
+        );
+      this.displayWordlist = wordsGenerated <= 100;
       this.wordlist$ = this.getWordlist();
     }
   }
