@@ -108,9 +108,7 @@
   <div class="wordlist-container" *ngIf="wordlist" fxLayout="column" fxFlex>
     <h3 class="wordlist-header">Generated wordlist:</h3>
     <code class="wordlist">
-      <ng-container *ngFor="let word of wordlist; let i = index">
-        <div class="word" *ngIf="i <= 100">{{ word }}</div>
-      </ng-container>
+      {{ wordlist }}
     </code>
   </div>
 </div>
