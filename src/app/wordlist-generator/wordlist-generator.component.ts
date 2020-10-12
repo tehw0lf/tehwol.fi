@@ -16,6 +16,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   charsetForm: FormGroup;
+  wordsGenerated: number;
   wordlist$: Observable<string>;
 
   displayWordlist = false;
@@ -58,7 +59,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   }
 
   downloadWordlist(): void {
-    const filename = `wordlist_${this.charsets.length}_positions.${this.fileType}`;
+    const filename = `wordlist_${this.wordsGenerated}_words_${this.charsets.length}_positions.${this.fileType}`;
     this.getWordlist()
       .pipe(
         tap((wordlist: string) => {
@@ -118,13 +119,13 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       this.charsets.value.map((charset: string) =>
         this.filteredCharset.push(this.removeDuplicates(charset))
       );
-      const wordsGenerated = this.filteredCharset
+      this.wordsGenerated = this.filteredCharset
         .map((charset: string) => charset.length)
         .reduce(
           (previousLength: number, currentLength: number) =>
             previousLength * currentLength
         );
-      this.displayWordlist = wordsGenerated <= 100;
+      this.displayWordlist = this.wordsGenerated <= 100;
       this.wordlist$ = this.getWordlist();
     }
   }
