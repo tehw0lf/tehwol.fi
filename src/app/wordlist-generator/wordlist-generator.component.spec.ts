@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
@@ -110,14 +109,12 @@ describe('WordlistGeneratorComponent', () => {
     component.charsets.at(0).setValue('123');
     component.generateWordlist();
 
-    component
-      .getWordlist()
-      .pipe(
-        tap((wordlist: string) => {
-          expect(wordlist).toEqual('abc123');
-        })
-      )
-      .subscribe(() => done());
+    component.getWordlist().subscribe({
+      next: (wordlist: string) => {
+        expect(wordlist).toEqual('\nabc123');
+      },
+      complete: () => done()
+    });
   });
 
   it('should append the suffix', (done) => {
@@ -125,14 +122,12 @@ describe('WordlistGeneratorComponent', () => {
     component.charsets.at(0).setValue('123');
     component.generateWordlist();
 
-    component
-      .getWordlist()
-      .pipe(
-        tap((wordlist: string) => {
-          expect(wordlist).toEqual('123xyz');
-        })
-      )
-      .subscribe(() => done());
+    component.getWordlist().subscribe({
+      next: (wordlist: string) => {
+        expect(wordlist).toEqual('\n123xyz');
+      },
+      complete: () => done()
+    });
   });
 
   it('should parse a wordlist to plain text', () => {
