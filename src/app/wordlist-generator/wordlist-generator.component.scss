@@ -67,7 +67,8 @@
 
     .wordlist {
       margin-left: 1em;
-      overflow: auto;
+      overflow-wrap: normal;
+      width: 1%;
     }
   }
 }
