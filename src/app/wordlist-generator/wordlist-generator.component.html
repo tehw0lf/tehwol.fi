@@ -12,7 +12,7 @@
         class="choose-format"
         mat-raised-button
         [matMenuTriggerFor]="menu"
-        *ngIf="this.wordlist"
+        *ngIf="wordlist$"
       >
         Choose format
       </button>
@@ -28,8 +28,8 @@
       <button
         class="download-wordlist"
         mat-raised-button
-        *ngIf="this.wordlist"
-        (click)="downloadWordlist()"
+        *ngIf="wordlist$"
+        (click)="downloadWordlist(wordlist$)"
       >
         Download as
         <ng-container *ngIf="this.fileType">{{ this.fileType }}</ng-container>
@@ -105,12 +105,16 @@
       </mat-form-field>
     </form>
   </div>
-  <div class="wordlist-container" *ngIf="wordlist" fxLayout="column" fxFlex>
-    <h3 class="wordlist-header">Generated wordlist:</h3>
-    <code class="wordlist">
-      <ng-container *ngFor="let word of wordlist; let i = index">
-        <div class="word" *ngIf="i <= 100">{{ word }}</div>
-      </ng-container>
-    </code>
+  <div class="wordlist-container" *ngIf="wordlist$" fxLayout="column" fxFlex>
+    <ng-container *ngIf="displayWordlist; else wordlistTooLarge">
+      <h3 class="wordlist-header">Generated wordlist:</h3>
+      <code class="wordlist">
+        {{ wordlist$ | async }}
+      </code></ng-container
+    >
+    <ng-template #wordlistTooLarge>
+      The generated wordlist is too large to be displayed. You can still
+      download it.
+    </ng-template>
   </div>
 </div>
