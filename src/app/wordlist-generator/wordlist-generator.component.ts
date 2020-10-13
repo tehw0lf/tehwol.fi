@@ -136,7 +136,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
       .pipe(
         reduce(
           (wordlist: string, word: string) =>
-            `${wordlist}\n${this.prefix}${word}${this.suffix}`,
+            `${wordlist}${this.prefix}${word}${this.suffix}\n`,
           ''
         ),
         takeUntil(this.unsubscribe$)
