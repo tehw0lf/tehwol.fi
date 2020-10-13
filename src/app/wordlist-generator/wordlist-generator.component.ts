@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { reduce, takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toPlaintext, toXML } from './parsers';
@@ -16,11 +16,15 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   charsetForm: FormGroup;
-  wordlist: string[];
+  wordsGenerated: number;
   wordlist$: Observable<string>;
 
+  displayWordlist = false;
   fileType = FileType.PLAINTEXT;
   fileTypes = Object.values(FileType);
+  filteredCharset: string[] = [];
+  prefix = '';
+  suffix = '';
 
   private unsubscribe$ = new Subject<void>();
 
@@ -55,25 +59,33 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   }
 
   downloadWordlist(): void {
-    if (this.wordlist) {
-      const filename = `wordlist_${this.charsets.length}_positions.${this.fileType}`;
-      const parsed = this.parseWordlist();
-      const file = new Blob([parsed.wordlist], { type: parsed.contentType });
-      if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(file, filename);
-      } else {
-        const a = document.createElement('a');
-        const url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }, 0);
-      }
-    }
+    const filename = `wordlist_${this.wordsGenerated}_words_${this.charsets.length}_positions.${this.fileType}`;
+    this.getWordlist()
+      .pipe(
+        tap((wordlist: string) => {
+          if (wordlist.length > 0) {
+            const parsed = this.parseWordlist(wordlist);
+            const file = new Blob([parsed.wordlist], {
+              type: parsed.contentType
+            });
+            if (window.navigator.msSaveOrOpenBlob) {
+              window.navigator.msSaveOrOpenBlob(file, filename);
+            } else {
+              const a = document.createElement('a');
+              const url = URL.createObjectURL(file);
+              a.href = url;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+              }, 0);
+            }
+          }
+        })
+      )
+      .subscribe();
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -97,36 +109,46 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   generateWordlist(): void {
     if (this.charsets.valid) {
-      this.wordlist = [];
-      const filteredCharset = [];
+      this.filteredCharset = [];
+      this.prefix = this.charsetForm.get('prefix').value
+        ? this.charsetForm.get('prefix').value
+        : '';
+      this.suffix = this.charsetForm.get('suffix').value
+        ? this.charsetForm.get('suffix').value
+        : '';
       this.charsets.value.map((charset: string) =>
-        filteredCharset.push(this.removeDuplicates(charset))
+        this.filteredCharset.push(this.removeDuplicates(charset))
       );
-      this.wordlistGenerator
-        .generateWordlist(...filteredCharset)
-        .pipe(
-          map((word: string) => {
-            return (
-              this.charsetForm.get('prefix').value +
-              word +
-              this.charsetForm.get('suffix').value
-            );
-          }),
-          tap((word: string) => {
-            this.wordlist.push(word);
-          }),
-          takeUntil(this.unsubscribe$)
-        )
-        .subscribe();
+      this.wordsGenerated = this.filteredCharset
+        .map((charset: string) => charset.length)
+        .reduce(
+          (previousLength: number, currentLength: number) =>
+            previousLength * currentLength
+        );
+      this.displayWordlist = this.wordsGenerated <= 100;
+      this.wordlist$ = this.getWordlist();
     }
   }
 
-  parseWordlist(): { wordlist: string; contentType: string } {
+  getWordlist(): Observable<string> {
+    return this.wordlistGenerator
+      .generateWordlist(...this.filteredCharset)
+      .pipe(
+        reduce(
+          (wordlist: string, word: string) =>
+            `${wordlist}\n${this.prefix}${word}${this.suffix}`,
+          ''
+        ),
+        takeUntil(this.unsubscribe$)
+      );
+  }
+
+  parseWordlist(wordlist: string): { wordlist: string; contentType: string } {
     switch (this.fileType) {
       case FileType.PLAINTEXT:
-        return toPlaintext(this.wordlist);
+        return toPlaintext(wordlist);
       case FileType.XML:
-        return toXML(this.wordlist);
+        return toXML(wordlist);
     }
   }
 
