@@ -59,6 +59,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   }
 
   downloadWordlist(): void {
+    if (this.filteredCharset !== this.filterCharset(this.charsets.value)) {
+      this.generateWordlist();
+    }
     const filename = `wordlist_${this.wordsGenerated}_words_${this.charsets.length}_positions.${this.fileType}`;
     this.getWordlist()
       .pipe(
@@ -109,16 +112,14 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   generateWordlist(): void {
     if (this.charsets.valid) {
-      this.filteredCharset = [];
+      this.filteredCharset = this.filterCharset(this.charsets.value);
       this.prefix = this.charsetForm.get('prefix').value
         ? this.charsetForm.get('prefix').value
         : '';
       this.suffix = this.charsetForm.get('suffix').value
         ? this.charsetForm.get('suffix').value
         : '';
-      this.charsets.value.map((charset: string) =>
-        this.filteredCharset.push(this.removeDuplicates(charset))
-      );
+
       this.wordsGenerated = this.filteredCharset
         .map((charset: string) => charset.length)
         .reduce(
@@ -141,6 +142,10 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.unsubscribe$)
       );
+  }
+
+  filterCharset(charsets: string[]): string[] {
+    return charsets.map((charset: string) => this.removeDuplicates(charset));
   }
 
   parseWordlist(wordlist: string): { wordlist: string; contentType: string } {
