@@ -111,7 +111,7 @@ describe('WordlistGeneratorComponent', () => {
 
     component.getWordlist().subscribe({
       next: (wordlist: string) => {
-        expect(wordlist).toEqual('\nabc123');
+        expect(wordlist).toEqual('abc123\n');
       },
       complete: () => done()
     });
@@ -124,7 +124,7 @@ describe('WordlistGeneratorComponent', () => {
 
     component.getWordlist().subscribe({
       next: (wordlist: string) => {
-        expect(wordlist).toEqual('\n123xyz');
+        expect(wordlist).toEqual('123xyz\n');
       },
       complete: () => done()
     });
