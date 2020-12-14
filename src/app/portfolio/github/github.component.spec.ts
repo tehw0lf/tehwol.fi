@@ -1,5 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
 
@@ -131,7 +131,7 @@ describe('GithubComponent', () => {
   let component: GithubComponent;
   let fixture: ComponentFixture<GithubComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, ClipboardModule],
       declarations: [GithubComponent, RepoCardComponent],
