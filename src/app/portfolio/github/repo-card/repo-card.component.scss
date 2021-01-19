@@ -1,4 +1,4 @@
-@import "src/assets/styles/config.scss";
+@import 'src/assets/styles/config.scss';
 
 .clipboard-button {
   line-height: $line-height-button-clippy !important;
@@ -25,6 +25,8 @@
   display: flex;
   flex-direction: column;
   width: 450px;
+  background-color: $card-backgroundcolor;
+  backdrop-filter: blur(50px);
 }
 
 .mat-card-avatar {
