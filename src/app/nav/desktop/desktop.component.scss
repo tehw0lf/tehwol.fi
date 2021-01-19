@@ -1,4 +1,4 @@
-@import "src/assets/styles/config.scss";
+@import 'src/assets/styles/config.scss';
 
 .link-active {
   border-bottom: 2px solid $linkcolor;
@@ -26,4 +26,11 @@
 
 .nav-row {
   background: $bgcolor-nav;
+  border-radius: 4px;
+  backdrop-filter: blur(15px);
+}
+
+.mat-toolbar-multiple-rows {
+  border-radius: 4px;
+  backdrop-filter: blur(15px);
 }
