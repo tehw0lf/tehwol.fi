@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { GitProviders } from './git-portfolio/git-repositories-type';
+import { GitProviders } from '../../../projects/git-portfolio/src/lib/git-repositories-type';
 
 @Component({
   selector: 'app-portfolio',

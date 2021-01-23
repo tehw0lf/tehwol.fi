@@ -7,6 +7,12 @@
     "sourceMap": true,
     "declaration": false,
     "module": "es2020",
+    "paths": {
+      "git-portfolio": [
+        "dist/git-portfolio/git-portfolio",
+        "dist/git-portfolio"
+      ]
+    },
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
