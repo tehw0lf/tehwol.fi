@@ -15,8 +15,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { GitPortfolioComponent, RepoCardComponent } from 'git-portfolio';
 
-import { GitPortfolioComponent, RepoCardComponent } from '../../dist/git-portfolio/git-portfolio';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
