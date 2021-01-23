@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import githubLanguageColors from 'github-language-colors/colors.json';
 
-import { GithubRepository } from '../github-repository-type';
+import { GitRepository } from '../git-repository-type';
 
 @Component({
   selector: 'app-repo-card',
@@ -10,15 +10,13 @@ import { GithubRepository } from '../github-repository-type';
 })
 export class RepoCardComponent implements OnInit {
   @Input()
-  githubRepo: GithubRepository;
+  gitRepo: GitRepository;
 
   @Input()
   public isCopied = false;
 
   @Output()
-  public copiedToClipboardEvent: EventEmitter<boolean> = new EventEmitter<
-    boolean
-  >();
+  public copiedToClipboardEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public githubLanguageColors = githubLanguageColors;
 

@@ -24,9 +24,9 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { OcticonDirective } from './octicon.directive';
-import { GithubComponent } from './portfolio/github/github.component';
-import { GithubService } from './portfolio/github/github.service';
-import { RepoCardComponent } from './portfolio/github/repo-card/repo-card.component';
+import { GitProviderComponent } from './portfolio/git-portfolio/git-portfolio.component';
+import { GitProviderService } from './portfolio/git-portfolio/git-provider.service';
+import { RepoCardComponent } from './portfolio/git-portfolio/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
@@ -38,7 +38,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     DesktopComponent,
     MobileComponent,
     PortfolioComponent,
-    GithubComponent,
+    GitProviderComponent,
     RepoCardComponent,
     OcticonDirective,
     WordlistGeneratorComponent
@@ -62,7 +62,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     FlexLayoutModule,
     ScullyLibModule
   ],
-  providers: [GithubService, SidenavService],
+  providers: [GitProviderService, SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

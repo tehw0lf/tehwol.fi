@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+import { GitProviders } from './git-portfolio/git-repositories-type';
+
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
-  githubUser: string;
+  gitProviderUserNames: Map<GitProviders, string>;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.githubUser = environment.GITHUB_USER;
+    this.gitProviderUserNames = new Map<GitProviders, string>();
+    this.gitProviderUserNames.set(GitProviders.github, environment.GITHUB_USER);
+    this.gitProviderUserNames.set(GitProviders.gitlab, environment.GITLAB_USER);
   }
 }

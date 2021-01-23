@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
 
-  API_URL: 'https://api.github.com',
-  GITHUB_USER: 'tehw0lf'
+  GITHUB_USER: 'tehw0lf',
+  GITLAB_USER: 'tehw0lf'
 };
