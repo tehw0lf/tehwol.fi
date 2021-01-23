@@ -16,6 +16,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 
+import { GitPortfolioComponent } from '../../projects/git-portfolio/src/lib/git-portfolio.component';
+import { GitProviderService } from '../../projects/git-portfolio/src/lib/git-provider.service';
+import { RepoCardComponent } from '../../projects/git-portfolio/src/lib/repo-card/repo-card.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -24,9 +27,6 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { OcticonDirective } from './octicon.directive';
-import { GitProviderComponent } from './portfolio/git-portfolio/git-portfolio.component';
-import { GitProviderService } from './portfolio/git-portfolio/git-provider.service';
-import { RepoCardComponent } from './portfolio/git-portfolio/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
@@ -38,7 +38,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     DesktopComponent,
     MobileComponent,
     PortfolioComponent,
-    GitProviderComponent,
+    GitPortfolioComponent,
     RepoCardComponent,
     OcticonDirective,
     WordlistGeneratorComponent
