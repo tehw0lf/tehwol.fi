@@ -11,7 +11,7 @@ import { RepoCardComponent } from './repo-card/repo-card.component';
 const GIT_REPO = new GitRepository();
 
 const gitProviderServiceStub = {
-  fetchRepositories() {
+  fetchRepositories: () => {
     return of([GIT_REPO]);
   }
 };
