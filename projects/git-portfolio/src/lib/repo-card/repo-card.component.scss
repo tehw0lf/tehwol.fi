@@ -1,31 +1,29 @@
-@import 'src/assets/styles/config.scss';
-
 .clipboard-button {
-  line-height: $line-height-button-clippy !important;
+  line-height: 24px !important;
   padding: 0;
   margin-bottom: 0;
 
   span {
-    font-size: $fontsize-button-clippy;
+    font-size: 20px;
   }
 }
 
 .mat-button {
-  color: $linkcolor;
+  color: #cc7832;
   vertical-align: middle;
   line-height: 36px;
-  font-size: $fontsize-button-md;
+  font-size: 24px;
   margin: 0 10px 0 0;
   text-align: center;
   text-decoration: none;
 }
 
 .mat-card {
-  color: $card-fontcolor;
+  color: lightgray;
   display: flex;
   flex-direction: column;
   width: 450px;
-  background-color: $card-backgroundcolor;
+  background-color: rgba(34, 34, 34, 0.75);
   backdrop-filter: blur(50px);
 }
 
@@ -52,9 +50,9 @@
 }
 
 .footer-span {
-  color: $card-fontcolor;
+  color: lightgray;
   display: block;
-  font-size: $fontsize-mat-footer-span;
+  font-size: 12px;
 }
 
 .language-icon {
