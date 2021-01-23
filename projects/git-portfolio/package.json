@@ -2,8 +2,14 @@
   "name": "git-portfolio",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^11.1.0",
-    "@angular/core": "^11.1.0"
+    "@angular/animations": "~11.1.0",
+    "@angular/cdk": "^11.1.0",
+    "@angular/flex-layout": "^11.0.0-beta.33",
+    "@angular/material": "^11.1.0",
+    "github-language-colors": "^1.0.0",
+    "@primer/octicons": "^11.2.0",
+    "@angular/common": "~11.1.0",
+    "@angular/core": "~11.1.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
