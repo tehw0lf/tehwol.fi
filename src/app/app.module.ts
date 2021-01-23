@@ -16,9 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 
-import { GitPortfolioComponent } from '../../projects/git-portfolio/src/lib/git-portfolio.component';
-import { GitProviderService } from '../../projects/git-portfolio/src/lib/git-provider.service';
-import { RepoCardComponent } from '../../projects/git-portfolio/src/lib/repo-card/repo-card.component';
+import { GitPortfolioComponent, RepoCardComponent } from '../../dist/git-portfolio/public-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -62,7 +60,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     FlexLayoutModule,
     ScullyLibModule
   ],
-  providers: [GitProviderService, SidenavService],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
