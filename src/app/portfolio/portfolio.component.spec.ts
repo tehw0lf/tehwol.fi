@@ -2,8 +2,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 
-import { GitPortfolioComponent } from '../../../projects/git-portfolio/src/lib/git-portfolio.component';
-import { RepoCardComponent } from '../../../projects/git-portfolio/src/lib/repo-card/repo-card.component';
+import { GitPortfolioComponent, RepoCardComponent } from '../../../dist/git-portfolio/git-portfolio';
 import { PortfolioComponent } from './portfolio.component';
 
 describe('PortfolioComponent', () => {
