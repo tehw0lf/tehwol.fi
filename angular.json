@@ -22,10 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.svg",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.svg", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
@@ -86,22 +83,14 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "assets": [
-              "src/favicon.svg",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.svg", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "cypress-run": {
@@ -139,6 +128,42 @@
             "production": {
               "devServerTarget": "tehwolfi:serve:production"
             }
+          }
+        }
+      }
+    },
+    "git-portfolio": {
+      "projectType": "library",
+      "root": "projects/git-portfolio",
+      "sourceRoot": "projects/git-portfolio/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/git-portfolio/tsconfig.lib.json",
+            "project": "projects/git-portfolio/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/git-portfolio/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "tsConfig": "projects/git-portfolio/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/git-portfolio/tsconfig.lib.json",
+              "projects/git-portfolio/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

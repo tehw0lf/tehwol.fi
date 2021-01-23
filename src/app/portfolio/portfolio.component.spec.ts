@@ -3,10 +3,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
 
-import { GitProviderComponent } from './git-portfolio/git-portfolio.component';
-import { GitProviderService } from './git-portfolio/git-provider.service';
-import { GitRepository } from './git-portfolio/git-repository-type';
-import { RepoCardComponent } from './git-portfolio/repo-card/repo-card.component';
+import { GitPortfolioComponent } from '../../../projects/git-portfolio/src/lib/git-portfolio.component';
+import { GitProviderService } from '../../../projects/git-portfolio/src/lib/git-provider.service';
+import { GitRepository } from '../../../projects/git-portfolio/src/lib/git-repository-type';
+import { RepoCardComponent } from '../../../projects/git-portfolio/src/lib/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio.component';
 
 const GIT_REPO = new GitRepository();
@@ -27,7 +27,7 @@ describe('PortfolioComponent', () => {
         imports: [MatCardModule, ClipboardModule],
         declarations: [
           PortfolioComponent,
-          GitProviderComponent,
+          GitPortfolioComponent,
           RepoCardComponent
         ],
         providers: [
