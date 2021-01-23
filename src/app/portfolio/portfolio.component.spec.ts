@@ -1,8 +1,9 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { GitPortfolioComponent, RepoCardComponent } from 'git-portfolio';
 
-import { GitPortfolioComponent, RepoCardComponent } from '../../../dist/git-portfolio/git-portfolio';
 import { PortfolioComponent } from './portfolio.component';
 
 describe('PortfolioComponent', () => {
@@ -12,7 +13,7 @@ describe('PortfolioComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [MatCardModule, ClipboardModule],
+        imports: [MatCardModule, ClipboardModule, HttpClientTestingModule],
         declarations: [
           GitPortfolioComponent,
           PortfolioComponent,
