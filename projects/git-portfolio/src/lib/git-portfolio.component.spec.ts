@@ -3,17 +3,12 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
 
-import { GitProviderComponent } from './git-portfolio.component';
+import { GitPortfolioComponent } from './git-portfolio.component';
 import { GitProviderService } from './git-provider.service';
-import { GitRepositories } from './git-repositories-type';
 import { GitRepository } from './git-repository-type';
 import { RepoCardComponent } from './repo-card/repo-card.component';
 
 const GIT_REPO = new GitRepository();
-const GIT_REPOSITORIES: GitRepositories = {
-  github: { own: [GIT_REPO], forked: [GIT_REPO] },
-  gitlab: { own: [GIT_REPO], forked: [GIT_REPO] }
-};
 
 const gitProviderServiceStub = {
   fetchRepositories() {
@@ -22,14 +17,14 @@ const gitProviderServiceStub = {
 };
 
 describe('GitProviderComponent', () => {
-  let component: GitProviderComponent;
-  let fixture: ComponentFixture<GitProviderComponent>;
+  let component: GitPortfolioComponent;
+  let fixture: ComponentFixture<GitPortfolioComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [MatCardModule, ClipboardModule],
-        declarations: [GitProviderComponent, RepoCardComponent],
+        declarations: [GitPortfolioComponent, RepoCardComponent],
         providers: [
           { provide: GitProviderService, useValue: gitProviderServiceStub }
         ]
@@ -38,7 +33,7 @@ describe('GitProviderComponent', () => {
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GitProviderComponent);
+    fixture = TestBed.createComponent(GitPortfolioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

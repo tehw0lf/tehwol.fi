@@ -10,7 +10,7 @@ import { GitRepository } from './git-repository-type';
   templateUrl: './git-portfolio.component.html',
   styleUrls: ['./git-portfolio.component.scss']
 })
-export class GitProviderComponent implements OnInit {
+export class GitPortfolioComponent implements OnInit {
   @Input()
   gitProviderUserNames: Map<GitProviders, string>;
 
