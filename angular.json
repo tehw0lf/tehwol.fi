@@ -87,10 +87,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "cypress-run": {
@@ -134,7 +133,7 @@
     },
     "git-portfolio": {
       "projectType": "library",
-      "root": "projects/git-portfolio",
+      "root": "",
       "sourceRoot": "projects/git-portfolio/src",
       "prefix": "lib",
       "architect": {
@@ -157,13 +156,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/git-portfolio/tsconfig.lib.json",
-              "projects/git-portfolio/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
