@@ -16,7 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 
-import { GitPortfolioComponent, RepoCardComponent } from '../../dist/git-portfolio/public-api';
+import { GitPortfolioComponent, RepoCardComponent } from '../../dist/git-portfolio/git-portfolio';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
