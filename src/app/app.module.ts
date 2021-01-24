@@ -15,7 +15,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
-import { GitPortfolioComponent, RepoCardComponent } from 'git-portfolio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,8 +35,6 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     DesktopComponent,
     MobileComponent,
     PortfolioComponent,
-    GitPortfolioComponent,
-    RepoCardComponent,
     OcticonDirective,
     WordlistGeneratorComponent
   ],
