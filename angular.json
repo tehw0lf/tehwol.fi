@@ -130,38 +130,6 @@
           }
         }
       }
-    },
-    "git-portfolio": {
-      "projectType": "library",
-      "root": "",
-      "sourceRoot": "projects/git-portfolio/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/git-portfolio/tsconfig.lib.json",
-            "project": "projects/git-portfolio/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/git-portfolio/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "tsConfig": "projects/git-portfolio/tsconfig.spec.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
-          }
-        }
-      }
     }
   },
   "defaultProject": "tehwolfi"
