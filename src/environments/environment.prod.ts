@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
 
-  GITHUB_USER: 'tehw0lf',
-  GITLAB_USER: 'tehw0lf'
+  githubUser: 'tehw0lf',
+  gitlabUser: 'tehw0lf'
 };
