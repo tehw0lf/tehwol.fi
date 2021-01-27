@@ -1,4 +1,5 @@
+/* eslint-disable no-shadow */
 export enum FileType {
-  PLAINTEXT = 'txt',
-  XML = 'xml'
+  plaintext = 'txt',
+  xml = 'xml'
 }
