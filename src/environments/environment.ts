@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  API_URL: 'https://api.github.com',
-  GITHUB_USER: 'tehw0lf'
+  githubUser: 'tehw0lf',
+  gitlabUser: 'tehw0lf'
 };
 
 /*
