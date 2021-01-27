@@ -7,13 +7,6 @@
     "sourceMap": true,
     "declaration": false,
     "module": "es2020",
-    "paths": {
-      "asdlj": ["dist/asdlj/asdlj", "dist/asdlj"],
-      "git-portfolio": [
-        "dist/git-portfolio/git-portfolio",
-        "dist/git-portfolio"
-      ]
-    },
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
