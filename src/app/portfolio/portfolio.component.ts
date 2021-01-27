@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { environment } from '../../environments/environment.prod';
+
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -7,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PortfolioComponent implements OnInit {
   gitProviderConfig: { github: string; gitlab: string } = {
-    github: 'tehw0lf',
-    gitlab: 'tehw0lf'
+    github: environment.githubUser,
+    gitlab: environment.gitlabUser
   };
 
   constructor() {}
