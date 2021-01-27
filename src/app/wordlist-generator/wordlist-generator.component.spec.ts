@@ -28,25 +28,27 @@ describe('WordlistGeneratorComponent', () => {
   global.URL.createObjectURL = jest.fn();
   global.window.URL.revokeObjectURL = jest.fn();
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [WordlistGeneratorComponent],
-      imports: [
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatMenuModule
-      ],
-      providers: [
-        {
-          provide: WordlistGeneratorService,
-          useValue: wordlistGeneratorServiceMock
-        }
-      ]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [WordlistGeneratorComponent],
+        imports: [
+          BrowserAnimationsModule,
+          ReactiveFormsModule,
+          MatFormFieldModule,
+          MatIconModule,
+          MatInputModule,
+          MatMenuModule
+        ],
+        providers: [
+          {
+            provide: WordlistGeneratorService,
+            useValue: wordlistGeneratorServiceMock
+          }
+        ]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WordlistGeneratorComponent);
@@ -131,7 +133,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to plain text', () => {
-    component.fileType = FileType.PLAINTEXT;
+    component.fileType = FileType.plaintext;
     const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(JSON.stringify(result.wordlist)).toEqual(
@@ -141,7 +143,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to XML', () => {
-    component.fileType = FileType.XML;
+    component.fileType = FileType.xml;
     const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(result.wordlist).toEqual(xmlSample);

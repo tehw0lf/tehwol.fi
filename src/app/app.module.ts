@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,9 +25,6 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { OcticonDirective } from './octicon.directive';
-import { GithubComponent } from './portfolio/github/github.component';
-import { GithubService } from './portfolio/github/github.service';
-import { RepoCardComponent } from './portfolio/github/repo-card/repo-card.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
@@ -38,8 +36,6 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     DesktopComponent,
     MobileComponent,
     PortfolioComponent,
-    GithubComponent,
-    RepoCardComponent,
     OcticonDirective,
     WordlistGeneratorComponent
   ],
@@ -60,9 +56,10 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatSidenavModule,
     MatButtonModule,
     FlexLayoutModule,
+    NgGitPortfolioModule,
     ScullyLibModule
   ],
-  providers: [GithubService, SidenavService],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

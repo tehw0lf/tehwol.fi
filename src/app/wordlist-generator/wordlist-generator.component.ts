@@ -20,7 +20,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   wordlist$: Observable<string>;
 
   displayWordlist = false;
-  fileType = FileType.PLAINTEXT;
+  fileType = FileType.plaintext;
   fileTypes = Object.values(FileType);
   filteredCharset: string[] = [];
   prefix = '';
@@ -150,9 +150,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   parseWordlist(wordlist: string): { wordlist: string; contentType: string } {
     switch (this.fileType) {
-      case FileType.PLAINTEXT:
+      case FileType.plaintext:
         return toPlaintext(wordlist);
-      case FileType.XML:
+      case FileType.xml:
         return toXML(wordlist);
     }
   }
