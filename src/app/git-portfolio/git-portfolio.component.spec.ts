@@ -1,28 +1,28 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
-import { PortfolioComponent } from './portfolio.component';
+import { GitPortfolioComponent } from './git-portfolio.component';
 
-describe('PortfolioComponent', () => {
-  let component: PortfolioComponent;
-  let fixture: ComponentFixture<PortfolioComponent>;
+describe("GitPortfolioComponent", () => {
+  let component: GitPortfolioComponent;
+  let fixture: ComponentFixture<GitPortfolioComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [NgGitPortfolioModule],
-        declarations: [PortfolioComponent]
+        declarations: [GitPortfolioComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PortfolioComponent);
+    fixture = TestBed.createComponent(GitPortfolioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
