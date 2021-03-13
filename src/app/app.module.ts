@@ -19,13 +19,13 @@ import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GitPortfolioComponent } from './git-portfolio/git-portfolio.component';
 import { HomeComponent } from './home/home.component';
 import { DesktopComponent } from './nav/desktop/desktop.component';
 import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { OcticonDirective } from './octicon.directive';
-import { PortfolioComponent } from './portfolio/portfolio.component';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
 @NgModule({
@@ -35,9 +35,9 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     NavComponent,
     DesktopComponent,
     MobileComponent,
-    PortfolioComponent,
+    GitPortfolioComponent,
     OcticonDirective,
-    WordlistGeneratorComponent
+    WordlistGeneratorComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -57,9 +57,9 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatButtonModule,
     FlexLayoutModule,
     NgGitPortfolioModule,
-    ScullyLibModule
+    ScullyLibModule,
   ],
   providers: [SidenavService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
