@@ -31,7 +31,6 @@
     "@scullyio/init": "^1.0.1",
     "@scullyio/ng-lib": "^1.0.2",
     "@scullyio/scully": "^1.0.10",
-    "@tehw0lf/ng-git-portfolio": "0.0.7",
     "cartesian-product-generator": "^1.1.1",
     "github-language-colors": "^1.0.0",
     "rxjs": "~6.6.6",
