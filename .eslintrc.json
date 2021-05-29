@@ -1,9 +1,16 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*", "**/node_modules/**", "dist", "cypress"],
+  "ignorePatterns": [
+    "projects/**/*",
+    "**/node_modules/**",
+    "dist",
+    "cypress"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "ecmaVersion": 2021,
@@ -11,7 +18,11 @@
         "project": "./tsconfig.json",
         "createDefaultProgram": true
       },
-      "plugins": ["@typescript-eslint", "rxjs", "rxjs-angular"],
+      "plugins": [
+        "@typescript-eslint",
+        "rxjs",
+        "rxjs-angular"
+      ],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
@@ -36,18 +47,26 @@
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
       "rules": {}
     },
     {
-      "files": ["*.tsx"],
+      "files": [
+        "*.tsx"
+      ],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off"
       }
     },
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "rules": {
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-empty-function": "off"
