@@ -1,17 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
+import { PrivacyDialogComponent } from '../privacy-dialog/privacy-dialog.component';
 import { GitPortfolioComponent } from './git-portfolio.component';
 
-describe("GitPortfolioComponent", () => {
+describe('GitPortfolioComponent', () => {
   let component: GitPortfolioComponent;
   let fixture: ComponentFixture<GitPortfolioComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [NgGitPortfolioModule],
-        declarations: [GitPortfolioComponent],
+        imports: [NgGitPortfolioModule, MatDialogModule],
+        declarations: [GitPortfolioComponent, PrivacyDialogComponent]
       }).compileComponents();
     })
   );
@@ -22,7 +24,7 @@ describe("GitPortfolioComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
