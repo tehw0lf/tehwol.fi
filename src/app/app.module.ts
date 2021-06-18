@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -26,6 +27,7 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { OcticonDirective } from './octicon.directive';
+import { PrivacyDialogComponent } from './privacy-dialog/privacy-dialog.component';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
 @NgModule({
@@ -38,6 +40,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     GitPortfolioComponent,
     OcticonDirective,
     WordlistGeneratorComponent,
+    PrivacyDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -48,6 +51,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     ClipboardModule,
     HttpClientModule,
     MatCardModule,
+    MatDialogModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
@@ -57,9 +61,9 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatButtonModule,
     FlexLayoutModule,
     NgGitPortfolioModule,
-    ScullyLibModule,
+    ScullyLibModule
   ],
   providers: [SidenavService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
