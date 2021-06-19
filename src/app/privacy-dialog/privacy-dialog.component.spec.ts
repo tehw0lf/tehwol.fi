@@ -15,6 +15,7 @@ const mockMatDialog = {
     };
   }
 };
+
 describe('PrivacyDialogComponent', () => {
   let component: PrivacyDialogComponent;
   let fixture: ComponentFixture<PrivacyDialogComponent>;
