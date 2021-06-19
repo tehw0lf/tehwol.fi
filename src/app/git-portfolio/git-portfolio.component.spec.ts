@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
 import { PrivacyDialogComponent } from '../privacy-dialog/privacy-dialog.component';
@@ -14,7 +15,13 @@ describe('GitPortfolioComponent', () => {
       TestBed.configureTestingModule({
         imports: [NgGitPortfolioModule, MatDialogModule],
         declarations: [GitPortfolioComponent, PrivacyDialogComponent]
-      }).compileComponents();
+      })
+        .overrideModule(BrowserDynamicTestingModule, {
+          set: {
+            entryComponents: [PrivacyDialogComponent]
+          }
+        })
+        .compileComponents();
     })
   );
 
@@ -24,7 +31,17 @@ describe('GitPortfolioComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    window.localStorage.clear();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should retrieve the saved decision', () => {
+    window.localStorage.setItem('privacyNoticeAccepted', 'true');
+    component.ngOnInit();
+    expect(component.cachedPrivacyDecision).toBeTruthy();
   });
 });
