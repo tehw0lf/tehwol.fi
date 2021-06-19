@@ -17,6 +17,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
     gitlab: environment.gitlabUser
   };
   cachedPrivacyDecision = false;
+  privacyDialogRef: MatDialogRef<PrivacyDialogComponent, boolean>;
   privacyNoticeAccepted: Observable<boolean>;
   unsubscribe$ = new Subject<void>();
 
@@ -39,9 +40,10 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   private createPrivacyDialog(): void {
-    const privacyDialogRef: MatDialogRef<PrivacyDialogComponent, boolean> =
-      this.dialog.open(PrivacyDialogComponent);
-    this.privacyNoticeAccepted = privacyDialogRef.afterClosed().pipe(
+    if (!this.privacyDialogRef) {
+      this.privacyDialogRef = this.dialog.open(PrivacyDialogComponent);
+    }
+    this.privacyNoticeAccepted = this.privacyDialogRef.afterClosed().pipe(
       tap((decision) => {
         if (decision === true) {
           window.localStorage.setItem(
