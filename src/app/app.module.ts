@@ -31,7 +31,6 @@ import { PrivacyDialogComponent } from './privacy-dialog/privacy-dialog.componen
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
 @NgModule({
-  entryComponents: [PrivacyDialogComponent],
   declarations: [
     AppComponent,
     HomeComponent,
