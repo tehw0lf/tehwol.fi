@@ -1,4 +1,4 @@
-name: 'tehw0lf build for frontend and portfolio library'
+name: tehw0lf build for frontend and portfolio library
 
 on:
   push:
@@ -11,7 +11,8 @@ jobs:
       matrix:
         node-version: [16.4.2]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -23,34 +24,40 @@ jobs:
           key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install pnpm
         run: curl -f https://get.pnpm.io/v6.7.js | node - add --global pnpm@6
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint --parallel #affected:lint
-      - run: pnpm test --parallel #affected:test
-      - run: pnpm e2e #affected:e2e
-      - run: pnpm build #affected:build
-      - run: pnpm run scully
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint --parallel #affected:lint
+      - name: Test
+        run: pnpm test --parallel #affected:test
+      - name: Run end to end tests
+        run: pnpm e2e #affected:e2e
+      - name: Build
+        run: pnpm build #affected:build
+      - name: Run scully
+        run: pnpm run scully
       - name: Publish library to npm registry
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          run: |
-            npm publish --access public --dry-run
-            npm publish --access public
+        run: |
+          npm publish --access public --dry-run
+          npm publish --access public
       - name: Prepare frontend deployment
         with:
           deploy_key: ${{ secrets.DEPLOY_KEY }}
           deploy_key_iv: ${{ secrets.DEPLOY_KEY_IV }}
           deploy_rsa: ${{ secrets.DEPLOY_RSA }}
           deploy_rsa_iv: ${{ secrets.DEPLOY_RSA_IV }}
-          run: |
-            openssl aes-256-cbc -K $deploy_key -iv $deploy_key_iv -in deploy_key.enc -out deploy_key -d
-            openssl aes-256-cbc -K $deploy_rsa -iv $deploy_rsa_iv -in deploy_rsa.enc -out deploy_rsa -d
-            chmod 0600 deploy_*
+        run: |
+          openssl aes-256-cbc -K $deploy_key -iv $deploy_key_iv -in deploy_key.enc -out deploy_key -d
+          openssl aes-256-cbc -K $deploy_rsa -iv $deploy_rsa_iv -in deploy_rsa.enc -out deploy_rsa -d
+          chmod 0600 deploy_*
       - name: Deploy frontend
         uses: matheusvanzan/sshpass-action@v2
         with:
           host: tehwol.fi
           port: 3695
-          run: |
-            sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $TRAVIS_BUILD_DIR/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
-            rm deploy_*
+        run: |
+          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $TRAVIS_BUILD_DIR/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
+          rm deploy_*
