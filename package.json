@@ -6,7 +6,7 @@
     "ng": "nx",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
-    "compress": "gzipper --verbose ./dist",
+    "compress": "gzipper compress --verbose ./dist/static",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
