@@ -25,13 +25,13 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint
-        run: pnpm lint --parallel #affected:lint
+        run: pnpm affected:lint --parallel
       - name: Test
-        run: pnpm test --parallel #affected:test
+        run: pnpm affected:test --parallel
       #- name: Run end to end tests # works locally, but not on ci
       #run: pnpm affected:e2e
       - name: Build
-        run: pnpm build #affected:build
+        run: pnpm affected:build
       - name: Run scully
         run: pnpm run scully
       - name: Compress (gzip)
