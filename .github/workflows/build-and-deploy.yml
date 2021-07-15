@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
       - name: Cache .pnpm-store
         uses: actions/cache@v1
         with:
@@ -27,41 +28,41 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint
-        run: pnpm lint --parallel #affected:lint
+        run: pnpm affected:lint --parallel
       - name: Test
-        run: pnpm test --parallel #affected:test
+        run: pnpm affected:test --parallel
       #- name: Run end to end tests # works locally, but not on ci
       #run: pnpm affected:e2e
       - name: Build
-        run: pnpm build #affected:build
+        run: pnpm affected:build
       - name: Run scully
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
-      - name: Prepare publish
-        uses: JS-DevTools/npm-publish@v1
       - name: Publish library to npm registry
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
         run: |
           npm publish --access public --dry-run
-          npm publish --access public
+          npm publich --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Prepare frontend deployment
-        with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
-          deploy_key_iv: ${{ secrets.DEPLOY_KEY_IV }}
-          deploy_rsa: ${{ secrets.DEPLOY_RSA }}
-          deploy_rsa_iv: ${{ secrets.DEPLOY_RSA_IV }}
         run: |
-          openssl aes-256-cbc -K $deploy_key -iv $deploy_key_iv -in deploy_key.enc -out deploy_key -d
-          openssl aes-256-cbc -K $deploy_rsa -iv $deploy_rsa_iv -in deploy_rsa.enc -out deploy_rsa -d
+          openssl aes-256-cbc -K $DEPLOY_KEY -iv $DEPLOY_KEY_IV -in deploy_key.enc -out deploy_key -d
+          openssl aes-256-cbc -K $DEPLOY_RSA -iv $DEPLOY_RSA_IV -in deploy_rsa.enc -out deploy_rsa -d
           chmod 0600 deploy_*
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KEY_IV: ${{ secrets.DEPLOY_KEY_IV }}
+          DEPLOY_RSA: ${{ secrets.DEPLOY_RSA }}
+          DEPLOY_RSA_IV: ${{ secrets.DEPLOY_RSA_IV }}
       - name: Prepare deploy
         uses: matheusvanzan/sshpass-action@v2
       - name: Deploy frontend
-        with:
-          host: tehwol.fi
-          port: 3695
         run: |
-          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
+          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P $PORT -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* $USER@$HOST:/home/$USER/public_html/
           rm deploy_*
+        env:
+          HOST: tehwol.fi
+          PORT: 3695
+          USER: tehwolfi
