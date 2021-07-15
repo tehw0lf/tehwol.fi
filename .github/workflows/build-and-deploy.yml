@@ -36,6 +36,8 @@ jobs:
         run: pnpm build #affected:build
       - name: Run scully
         run: pnpm run scully
+      - name: Compress (gzip)
+        run: pnpm run compress
       - name: Prepare publish
         uses: JS-DevTools/npm-publish@v1
       - name: Publish library to npm registry
