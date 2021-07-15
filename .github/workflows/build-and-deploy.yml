@@ -1,4 +1,4 @@
-name: tehw0lf build for frontend and portfolio library
+name: tehw0lf build frontend and portfolio library
 
 on:
   push:
