@@ -1,0 +1,44 @@
+{
+  "npmScope": "tehw0lf",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "OWE3NDA2ZDQtMjI2OS00MmVlLWJjMGMtOTljN2QzMGZmOWFjfHJlYWQtd3JpdGU=",
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "projects": {
+    "ng-git-portfolio": {
+      "tags": []
+    },
+    "tehwolfi": {
+      "tags": []
+    },
+    "tehwolfi-e2e": {
+      "tags": [],
+      "implicitDependencies": ["tehwolfi"]
+    }
+  }
+}
