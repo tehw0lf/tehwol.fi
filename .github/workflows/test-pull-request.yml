@@ -1,4 +1,4 @@
-name: tehw0lf build for frontend and portfolio library
+name: tehw0lf test frontend and portfolio library
 
 on: [pull_request]
 
@@ -35,9 +35,3 @@ jobs:
         run: pnpm affected:test --parallel -- --base=origin/master --head=HEAD
       #- name: Run end to end tests # works locally, but not on ci
       #run: pnpm affected:e2e -- --base=origin/master --head=HEAD
-      - name: Build
-        run: pnpm affected:build -- --base=origin/master --head=HEAD
-      - name: Run scully
-        run: pnpm run scully
-      - name: Compress (gzip)
-        run: pnpm run compress
