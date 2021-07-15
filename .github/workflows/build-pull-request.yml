@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Fetch
+        run: git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -25,13 +30,13 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint
-        run: pnpm affected:lint --parallel
+        run: pnpm affected:lint --parallel -- --base=origin/master --head=HEAD
       - name: Test
-        run: pnpm affected:test --parallel
+        run: pnpm affected:test --parallel -- --base=origin/master --head=HEAD
       #- name: Run end to end tests # works locally, but not on ci
-      #run: pnpm affected:e2e
+      #run: pnpm affected:e2e -- --base=origin/master --head=HEAD
       - name: Build
-        run: pnpm affected:build
+        run: pnpm affected:build -- --base=origin/master --head=HEAD
       - name: Run scully
         run: pnpm run scully
       - name: Compress (gzip)
