@@ -1,76 +1,35 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "**/node_modules/**",
-    "dist",
-    "cypress"
-  ],
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "ecmaVersion": 2021,
-        "sourceType": "module",
-        "project": "./tsconfig.json",
-        "createDefaultProgram": true
-      },
-      "plugins": [
-        "@typescript-eslint",
-        "rxjs",
-        "rxjs-angular"
-      ],
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "prettier",
-        "prettier/@typescript-eslint"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@typescript-eslint/explicit-member-accessibility": "off",
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-parameter-properties": "off",
-        "rxjs/no-async-subscribe": "error",
-        "rxjs/no-ignored-observable": "error",
-        "rxjs/no-nested-subscribe": "warn",
-        "rxjs/no-unbound-methods": "error",
-        "rxjs/throw-error": "error",
-        "rxjs/no-unsafe-takeuntil": "error",
-        "rxjs-angular/prefer-async-pipe": "warn"
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
-      "files": [
-        "*.tsx"
-      ],
-      "rules": {
-        "@typescript-eslint/no-unused-vars": "off"
-      }
-    },
-    {
-      "files": [
-        "*.ts"
-      ],
-      "rules": {
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/no-empty-function": "off"
-      }
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
     }
   ]
 }
