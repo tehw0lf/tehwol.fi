@@ -61,5 +61,5 @@ jobs:
           host: tehwol.fi
           port: 3695
         run: |
-          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $TRAVIS_BUILD_DIR/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
+          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p 3695 -o StrictHostKeyChecking=no tehwolfi@tehwol.fi "find /home/tehwolfi/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P 3695 -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* tehwolfi@tehwol.fi:/home/tehwolfi/public_html/
           rm deploy_*
