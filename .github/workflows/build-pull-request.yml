@@ -1,0 +1,38 @@
+name: tehw0lf build for frontend and portfolio library
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.4.2]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache .pnpm-store
+        uses: actions/cache@v1
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Install pnpm
+        run: curl -f https://get.pnpm.io/v6.7.js | node - add --global pnpm@6
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint --parallel #affected:lint
+      - name: Test
+        run: pnpm test --parallel #affected:test
+      - name: Run end to end tests
+        run: pnpm e2e #affected:e2e
+      - name: Build
+        run: pnpm build #affected:build
+      - name: Run scully
+        run: pnpm run scully
+      - name: Compress (gzip)
+        run: pnpm run compress
