@@ -47,8 +47,12 @@ jobs:
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
-      - name: Publish library to npm registry
-        if: ${{ github.event_name == 'push' }}
+      - name: Check if published library version is outdated
+        run: |
+          "latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
+          "package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
+      - name: Publish library to npm registry if local package is newer
+        if: ${{ github.event_name == 'push' && !latest_version == package_version }}
         run: |
           pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
           pnpm publish dist/libs/ng-git-portfolio --access public
