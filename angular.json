@@ -1,6 +1,47 @@
 {
   "version": 1,
   "projects": {
+    "airbash-database-editor": {
+      "projectType": "library",
+      "root": "libs/airbash-database-editor",
+      "sourceRoot": "libs/airbash-database-editor/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/airbash-database-editor"],
+          "options": {
+            "project": "libs/airbash-database-editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/airbash-database-editor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/airbash-database-editor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/airbash-database-editor"],
+          "options": {
+            "jestConfig": "libs/airbash-database-editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/airbash-database-editor/src/**/*.ts",
+              "libs/airbash-database-editor/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "ng-git-portfolio": {
       "projectType": "library",
       "root": "libs/ng-git-portfolio",

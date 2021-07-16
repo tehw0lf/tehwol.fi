@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tehw0lf/airbash-database-editor": [
+        "libs/airbash-database-editor/src/index.ts"
+      ],
       "@tehw0lf/ng-git-portfolio": ["libs/ng-git-portfolio/src/index.ts"],
       "@tehw0lf/ng-wordlist-generator": [
         "libs/ng-wordlist-generator/src/index.ts"
