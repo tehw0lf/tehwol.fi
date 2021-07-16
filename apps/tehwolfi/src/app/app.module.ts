@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 
+import { NgWordlistGeneratorModule } from '../../../../libs/ng-wordlist-generator/src';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GitPortfolioComponent } from './git-portfolio/git-portfolio.component';
@@ -59,6 +60,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatButtonModule,
     FlexLayoutModule,
     NgGitPortfolioModule,
+    NgWordlistGeneratorModule,
     ScullyLibModule
   ],
   providers: [SidenavService],
