@@ -47,6 +47,17 @@ jobs:
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
+      - name: Check if published airbash database analyzer library version is outdated
+        run: |
+          echo "airbash-database-analyzer_latest_version=$(pnpm view @tehw0lf/ng-airbash-database-analyzer .dist-tags.latest)" >> $GITHUB_ENV
+          echo "airbash-database-analyzer_package_version=$(jq -r ".version" dist/libs/ng-airbash-database-analyzer/package.json)" >> $GITHUB_ENV
+      - name: Publish library to npm registry if local package is newer
+        if: ${{ github.event_name == 'push' && env.airbash-database-analyzer_latest_version != env.airbash-database-analyzer_package_version }}
+        run: |
+          pnpm publish dist/libs/ng-airbash-database-analyzer --access public --dry-run
+          pnpm publish dist/libs/ng-airbash-database-analyzer --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published portfolio library version is outdated
         run: |
           echo "portfolio_latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
@@ -56,8 +67,6 @@ jobs:
         run: |
           pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
           pnpm publish dist/libs/ng-git-portfolio --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published wordlist generator library version is outdated
         run: |
           echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/ng-wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
