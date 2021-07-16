@@ -47,15 +47,15 @@ jobs:
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
-      ### deploy if pushed to master
       - name: Publish library to npm registry
+        if: ${{ github.event_name == 'push' }}
         run: |
           npm publish --access public --dry-run
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Prepare frontend deployment
+        if: ${{ github.event_name == 'push' }}
         run: |
           openssl aes-256-cbc -K $DEPLOY_KEY -iv $DEPLOY_KEY_IV -in deploy_key.enc -out deploy_key -d
           openssl aes-256-cbc -K $DEPLOY_RSA -iv $DEPLOY_RSA_IV -in deploy_rsa.enc -out deploy_rsa -d
@@ -66,8 +66,10 @@ jobs:
           DEPLOY_RSA: ${{ secrets.DEPLOY_RSA }}
           DEPLOY_RSA_IV: ${{ secrets.DEPLOY_RSA_IV }}
       - name: Prepare deploy
+        if: ${{ github.event_name == 'push' }}
         uses: matheusvanzan/sshpass-action@v2
       - name: Deploy frontend
+        if: ${{ github.event_name == 'push' }}
         run: |
           sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P $PORT -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* $USER@$HOST:/home/$USER/public_html/
           rm deploy_*
