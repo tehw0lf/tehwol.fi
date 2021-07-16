@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WordlistGeneratorService } from './wordlist-generator.service';
+import { NgWordlistGeneratorService } from './ng-wordlist-generator.service';
 
 const actualWordlist = [
   '037',
@@ -32,20 +32,20 @@ const actualWordlist = [
   '259',
 ];
 
-describe('WordlistGeneratorService', () => {
+describe('NgWordlistGeneratorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: WordlistGeneratorService = TestBed.inject(
-      WordlistGeneratorService
+    const service: NgWordlistGeneratorService = TestBed.inject(
+      NgWordlistGeneratorService
     );
     expect(service).toBeTruthy();
   });
 
   it('should create a wordlist', () => {
     const expectedWordlist: string[] = [];
-    const service: WordlistGeneratorService = TestBed.inject(
-      WordlistGeneratorService
+    const service: NgWordlistGeneratorService = TestBed.inject(
+      NgWordlistGeneratorService
     );
     const charset1 = '012';
     const charset2 = '345';
