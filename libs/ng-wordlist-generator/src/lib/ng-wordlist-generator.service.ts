@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class WordlistGeneratorService {
+export class NgWordlistGeneratorService {
   constructor() {
     //
   }
