@@ -1,6 +1,9 @@
-name: tehw0lf build frontend and portfolio library
+name: tehw0lf frontend and portfolio library pipeline
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
@@ -13,6 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Fetch
+        run: git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -28,21 +36,22 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint
-        run: pnpm affected:lint --parallel -- --base=origin/master --head=HEAD
+        run: pnpm lint --parallel
       - name: Test
-        run: pnpm affected:test --parallel -- --base=origin/master --head=HEAD
+        run: pnpm test --parallel
       #- name: Run end to end tests # works locally, but not on ci
-      #run: pnpm affected:e2e -- --base=origin/master --head=HEAD
+      #run: pnpm e2e
       - name: Build
-        run: pnpm affected:build -- --base=origin/master --head=HEAD
+        run: pnpm build --parallel
       - name: Run scully
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
+      ### deploy if pushed to master
       - name: Publish library to npm registry
         run: |
           npm publish --access public --dry-run
-          npm publich --access public
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
