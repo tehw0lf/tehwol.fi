@@ -48,6 +48,7 @@ jobs:
       - name: Compress (gzip)
         run: pnpm run compress
       - name: Check if published portfolio library version is outdated
+        if: ${{ github.event_name == 'push' }}
         run: |
           echo "portfolio_latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
           echo "portfolio_package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
@@ -59,6 +60,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published wordlist generator library version is outdated
+        if: ${{ github.event_name == 'push' }}
         run: |
           echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/ng-wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
           echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/ng-wordlist-generator/package.json)" >> $GITHUB_ENV
