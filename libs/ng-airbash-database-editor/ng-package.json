@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/libs/airbash-database-editor",
+  "dest": "../../dist/libs/ng-airbash-database-editor",
   "lib": {
     "entryFile": "src/index.ts"
   }

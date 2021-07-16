@@ -11,4 +11,4 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatButtonModule,]
 })
-export class AirbashDatabaseEditorModule {}
+export class NgAirbashDatabaseEditorModule {}

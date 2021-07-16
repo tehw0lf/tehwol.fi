@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'airbash-database-editor',
+  displayName: 'ng-airbash-database-editor',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$'
     }
   },
-  coverageDirectory: '../../coverage/libs/airbash-database-editor',
+  coverageDirectory: '../../coverage/libs/ng-airbash-database-editor',
   transform: {
     '^.+\\.(ts|js|html)$': 'jest-preset-angular'
   },

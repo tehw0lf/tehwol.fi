@@ -56,7 +56,7 @@ jobs:
         if: ${{ github.event_name == 'push' && env.database_editor_latest_version != env.database_editor_package_version }}
         run: |
           pnpm publish dist/libs/ng-airbash-database-editor --access public --dry-run
-          pnpm publish dist/libs/airbash-database-editor --access public
+          pnpm publish dist/libs/ng-airbash-database-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published portfolio library version is outdated
