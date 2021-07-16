@@ -59,7 +59,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
-        #if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           echo "$SSH_KEY" > ssh_key
           echo "$SSH_PASS" > ssh_pass
@@ -68,7 +68,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
       - name: Deploy frontend
-        #if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           sshpass -f ssh_pass -P 'Enter passphrase' ssh -i ssh_key -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P $PORT -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* $USER@$HOST:/home/$USER/public_html/
           rm ssh_*
