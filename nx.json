@@ -30,6 +30,9 @@
     ]
   },
   "projects": {
+    "ng-airbash-database-analyzer": {
+      "tags": []
+    },
     "ng-git-portfolio": {
       "tags": []
     },

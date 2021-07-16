@@ -1,6 +1,47 @@
 {
   "version": 1,
   "projects": {
+    "ng-airbash-database-analyzer": {
+      "projectType": "library",
+      "root": "libs/ng-airbash-database-analyzer",
+      "sourceRoot": "libs/ng-airbash-database-analyzer/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/ng-airbash-database-analyzer"],
+          "options": {
+            "project": "libs/ng-airbash-database-analyzer/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ng-airbash-database-analyzer/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ng-airbash-database-analyzer/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ng-airbash-database-analyzer"],
+          "options": {
+            "jestConfig": "libs/ng-airbash-database-analyzer/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ng-airbash-database-analyzer/src/**/*.ts",
+              "libs/ng-airbash-database-analyzer/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "ng-git-portfolio": {
       "projectType": "library",
       "root": "libs/ng-git-portfolio",

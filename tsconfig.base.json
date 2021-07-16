@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tehw0lf/ng-airbash-database-analyzer": [
+        "libs/ng-airbash-database-analyzer/src/index.ts"
+      ],
       "@tehw0lf/ng-git-portfolio": ["libs/ng-git-portfolio/src/index.ts"]
     }
   },
