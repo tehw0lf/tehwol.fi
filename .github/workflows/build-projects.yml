@@ -50,29 +50,27 @@ jobs:
       - name: Publish library to npm registry
         if: ${{ github.event_name == 'push' }}
         run: |
-          npm publish dist/libs/ng-git-portfolio --access public --dry-run
-          npm publish dist/libs/ng-git-portfolio --access public
+          pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
+          pnpm publish dist/libs/ng-git-portfolio --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
         if: ${{ github.event_name == 'push' }}
         run: |
-          openssl aes-256-cbc -K $DEPLOY_KEY -iv $DEPLOY_KEY_IV -in deploy_key.enc -out deploy_key -d
-          openssl aes-256-cbc -K $DEPLOY_RSA -iv $DEPLOY_RSA_IV -in deploy_rsa.enc -out deploy_rsa -d
-          chmod 0600 deploy_*
+          echo $SSH_KEY > ssh_key
+          echo $SSH_PASS > ssh_pass
+          chmod 0600 ssh_key
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          DEPLOY_KEY_IV: ${{ secrets.DEPLOY_KEY_IV }}
-          DEPLOY_RSA: ${{ secrets.DEPLOY_RSA }}
-          DEPLOY_RSA_IV: ${{ secrets.DEPLOY_RSA_IV }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
       - name: Prepare deploy
         if: ${{ github.event_name == 'push' }}
         uses: matheusvanzan/sshpass-action@v2
       - name: Deploy frontend
         if: ${{ github.event_name == 'push' }}
         run: |
-          sshpass -f deploy_key -P 'Enter passphrase' ssh -i deploy_rsa -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P $PORT -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* $USER@$HOST:/home/$USER/public_html/
-          rm deploy_*
+          sshpass -f ssh_pass -P 'Enter passphrase' ssh -i ssh_key -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f deploy_key -P 'Enter passphrase' scp -i deploy_rsa -P $PORT -o StrictHostKeyChecking=no -rp $${{ github.workspace }}/dist/static/* $USER@$HOST:/home/$USER/public_html/
+          rm ssh_*
         env:
           HOST: tehwol.fi
           PORT: 3695
