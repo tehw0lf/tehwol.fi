@@ -47,17 +47,26 @@ jobs:
         run: pnpm run scully
       - name: Compress (gzip)
         run: pnpm run compress
-      - name: Check if published library version is outdated
+      - name: Check if published portfolio library version is outdated
         run: |
-          echo "latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
-          echo "package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
+          echo "portfolio_latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
+          echo "portfolio_package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && env.latest_version != env.package_version }}
+        if: ${{ github.event_name == 'push' && env.portfolio_latest_version != env.portfolio_package_version }}
         run: |
           pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
           pnpm publish dist/libs/ng-git-portfolio --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Check if published wordlist generator library version is outdated
+        run: |
+          echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/ng-wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
+          echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/ng-wordlist-generator/package.json)" >> $GITHUB_ENV
+      - name: Publish library to npm registry if local package is newer
+        if: ${{ github.event_name == 'push' && env.wordlist_generator_latest_version != env.wordlist_generator_package_version }}
+        run: |
+          pnpm publish dist/libs/ng-wordlist_generator --access public --dry-run
+          pnpm publish dist/libs/ng-wordlist_generator --access public
       - name: Prepare frontend deployment
         if: ${{ github.event_name == 'push' }}
         run: |
