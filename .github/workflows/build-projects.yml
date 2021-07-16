@@ -50,8 +50,8 @@ jobs:
       - name: Publish library to npm registry
         if: ${{ github.event_name == 'push' }}
         run: |
-          npm publish --access public --dry-run
-          npm publish --access public
+          npm publish dist/libs/ng-git-portfolio --access public --dry-run
+          npm publish dist/libs/ng-git-portfolio --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
