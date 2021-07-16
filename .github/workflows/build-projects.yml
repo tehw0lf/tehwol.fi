@@ -67,9 +67,6 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
-      - name: Prepare deploy
-        if: ${{ github.event_name == 'push' }}
-        uses: matheusvanzan/sshpass-action@v2
       - name: Deploy frontend
         if: ${{ github.event_name == 'push' }}
         run: |
