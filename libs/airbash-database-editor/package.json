@@ -1,9 +1,19 @@
 {
-  "name": "@tehw0lf/airbash-database-editor",
+  "name": "@tehw0lf/ng-airbash-database-editor",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tehw0lf/tehwol.fi.git"
+  },
   "peerDependencies": {
-    "@angular/common": "^12.1.1",
-    "@angular/core": "^12.1.1"
+    "@angular/animations": "^12.0.0",
+    "@angular/cdk": "^12.0.0",
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/flex-layout": "^12.0.0-beta.34",
+    "@angular/material": "^12.0.0"
   },
   "dependencies": {
     "tslib": "^2.2.0"
