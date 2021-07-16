@@ -59,11 +59,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
-        if: ${{ github.event_name == 'push' }}
+        #if: ${{ github.event_name == 'push' }}
         run: |
-          echo $SSH_KEY > ssh_key
-          echo $SSH_PASS > ssh_pass
+          echo "$SSH_KEY" > ssh_key
+          echo "$SSH_PASS" > ssh_pass
           chmod 0600 ssh_key
+          file ssh_key
+          file ssh_pass
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
