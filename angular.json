@@ -42,6 +42,47 @@
         }
       }
     },
+    "ng-wordlist-generator": {
+      "projectType": "library",
+      "root": "libs/ng-wordlist-generator",
+      "sourceRoot": "libs/ng-wordlist-generator/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/ng-wordlist-generator"],
+          "options": {
+            "project": "libs/ng-wordlist-generator/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ng-wordlist-generator/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ng-wordlist-generator/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ng-wordlist-generator"],
+          "options": {
+            "jestConfig": "libs/ng-wordlist-generator/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ng-wordlist-generator/src/**/*.ts",
+              "libs/ng-wordlist-generator/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "tehwolfi": {
       "projectType": "application",
       "root": "apps/tehwolfi",
