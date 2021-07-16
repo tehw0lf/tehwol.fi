@@ -49,6 +49,17 @@ jobs:
         run: pnpm run compress
       - name: Check if published portfolio library version is outdated
         run: |
+          echo "database_editor_latest_version=$(pnpm view @tehw0lf/ng-airbash-database-editor .dist-tags.latest)" >> $GITHUB_ENV
+          echo "database_editor_package_version=$(jq -r ".version" dist/libs/ng-airbash-database-editor/package.json)" >> $GITHUB_ENV
+      - name: Publish library to npm registry if local package is newer
+        if: ${{ github.event_name == 'push' && env.database_editor_latest_version != env.database_editor_package_version }}
+        run: |
+          pnpm publish dist/libs/ng-airbash-database-editor --access public --dry-run
+          pnpm publish dist/libs/airbash-database-editor --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Check if published portfolio library version is outdated
+        run: |
           echo "portfolio_latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
           echo "portfolio_package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
@@ -56,8 +67,6 @@ jobs:
         run: |
           pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
           pnpm publish dist/libs/ng-git-portfolio --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published wordlist generator library version is outdated
         run: |
           echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/ng-wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
