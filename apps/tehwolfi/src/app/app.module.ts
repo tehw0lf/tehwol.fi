@@ -16,9 +16,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { NgAirbashDatabaseEditorModule } from '@tehw0lf/ng-airbash-database-editor';
 import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
 import { NgWordlistGeneratorModule } from '@tehw0lf/ng-wordlist-generator';
 
+import { AirbashDatabaseEditorComponent } from './airbash-database-editor/airbash-database-editor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GitPortfolioComponent } from './git-portfolio/git-portfolio.component';
@@ -39,7 +41,8 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MobileComponent,
     GitPortfolioComponent,
     OcticonDirective,
-    WordlistGeneratorComponent
+    WordlistGeneratorComponent,
+    AirbashDatabaseEditorComponent
   ],
   imports: [
     AppRoutingModule,
@@ -59,6 +62,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatSidenavModule,
     MatButtonModule,
     FlexLayoutModule,
+    NgAirbashDatabaseEditorModule,
     NgGitPortfolioModule,
     NgWordlistGeneratorModule,
     ScullyLibModule
