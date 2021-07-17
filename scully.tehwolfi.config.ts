@@ -1,7 +1,7 @@
 import { ScullyConfig } from '@scullyio/scully';
 
 export const config: ScullyConfig = {
-  projectRoot: './apps/tehwolfi/src',
+  projectRoot: './',
   projectName: 'tehwolfi',
   outDir: './dist/static',
   routes: {}
