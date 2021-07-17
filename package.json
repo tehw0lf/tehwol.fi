@@ -11,7 +11,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx run-many --all --target=test",
-    "lint": "nx workspace-lint && ng lint run-many --all --target=lint",
+    "lint": "nx workspace-lint && ng run-many --all --target=lint",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
