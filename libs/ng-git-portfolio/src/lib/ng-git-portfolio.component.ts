@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { GitProviderConfig } from './git-provider-config-type';
 import { GitProviderService } from './git-provider.service';
@@ -13,7 +14,7 @@ import { GitRepository } from './git-repository-type';
   templateUrl: './ng-git-portfolio.component.html',
   styleUrls: ['./ng-git-portfolio.component.scss']
 })
-export class NgGitPortfolioComponent implements OnInit {
+export class NgGitPortfolioComponent implements OnInit, OnDestroy {
   @Input()
   gitProviderConfig: GitProviderConfig = { github: '', gitlab: '' };
 
@@ -26,11 +27,16 @@ export class NgGitPortfolioComponent implements OnInit {
   gitProviders = GitProviders;
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private gitProviderService: GitProviderService) {}
 
   ngOnInit(): void {
     this.getRepositories();
+  }
+  
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();this.unsubscribe$.complete()
   }
 
   copyToClipboard(githubRepo: GitRepository): void {
@@ -47,7 +53,7 @@ export class NgGitPortfolioComponent implements OnInit {
   getRepositories(): void {
     this.gitRepositories$ = this.gitProviderService.fetchRepositories(
       this.gitProviderConfig
-    );
+    ).pipe(takeUntil(this.unsubscribe$));
   }
 
   getOwnGitRepositories(
