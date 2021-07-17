@@ -9,7 +9,7 @@
     "compress": "gzipper compress --verbose ./dist/static",
     "nx": "nx",
     "start": "nx serve",
-    "build": "nx build",
+    "build": "nx run-many --all --target=build",
     "test": "nx run-many --all --target=test",
     "lint": "nx workspace-lint && ng run-many --all --target=lint",
     "e2e": "nx e2e",
