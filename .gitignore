@@ -13,6 +13,7 @@ scully.log
 
 # dependencies
 /node_modules
+/libs/*/node_modules
 
 # IDEs and editors
 /.idea
