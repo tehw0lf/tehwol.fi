@@ -1,7 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/tehwolfi',
-    '<rootDir>/libs/ng-git-portfolio',
-    '<rootDir>/libs/ng-wordlist-generator'
-  ]
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
