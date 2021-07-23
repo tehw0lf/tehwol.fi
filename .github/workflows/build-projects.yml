@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.4.2]
+        node-version: [16.5.0]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -42,11 +42,11 @@ jobs:
       #- name: Run end to end tests # works locally, but not on ci
       #run: pnpm e2e
       - name: Build
-        run: pnpm build:production
+        run: pnpm build
       - name: Run scully
-        run: pnpm run scully
-      - name: Compress (gzip)
-        run: pnpm run compress
+        run: pnpm scully
+      #- name: Compress (gzip) # not supported by current host
+      #run: pnpm run compress
       - name: Check if published portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
