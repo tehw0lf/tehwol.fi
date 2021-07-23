@@ -45,8 +45,8 @@ jobs:
         run: pnpm build:production
       - name: Run scully
         run: pnpm run scully
-      - name: Compress (gzip)
-        run: pnpm run compress
+      #- name: Compress (gzip)
+      #run: pnpm run compress
       - name: Check if published portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
