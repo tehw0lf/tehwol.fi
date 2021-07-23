@@ -69,6 +69,8 @@ jobs:
         run: |
           pnpm publish dist/libs/ng-wordlist-generator --access public --dry-run
           pnpm publish dist/libs/ng-wordlist-generator --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
         if: ${{ github.event_name == 'push' }}
         run: |
