@@ -44,7 +44,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Run scully
-        run: pnpm run scully
+        run: pnpm scully
       #- name: Compress (gzip)
       #run: pnpm run compress
       - name: Check if published portfolio library version is outdated
