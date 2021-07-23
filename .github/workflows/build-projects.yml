@@ -42,7 +42,7 @@ jobs:
       #- name: Run end to end tests # works locally, but not on ci
       #run: pnpm e2e
       - name: Build
-        run: pnpm build:production
+        run: pnpm build
       - name: Run scully
         run: pnpm run scully
       #- name: Compress (gzip)
