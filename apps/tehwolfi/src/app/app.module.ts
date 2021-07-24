@@ -26,7 +26,6 @@ import { DesktopComponent } from './nav/desktop/desktop.component';
 import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
-import { OcticonDirective } from './octicon.directive';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     DesktopComponent,
     MobileComponent,
     GitPortfolioComponent,
-    OcticonDirective,
     WordlistGeneratorComponent
   ],
   imports: [

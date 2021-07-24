@@ -25,7 +25,7 @@ import { RepoCardComponent } from './repo-card/repo-card.component';
     ClipboardModule,
     FlexLayoutModule
   ],
-  exports: [NgGitPortfolioComponent],
+  exports: [NgGitPortfolioComponent, OcticonDirective],
   providers: [GitProviderService]
 })
 export class NgGitPortfolioModule {}
