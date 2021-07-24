@@ -15,7 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
-import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
+import { NgGitPortfolioModule, OcticonDirective } from '@tehw0lf/ng-git-portfolio';
 import { NgWordlistGeneratorModule } from '@tehw0lf/ng-wordlist-generator';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +26,6 @@ import { DesktopComponent } from './nav/desktop/desktop.component';
 import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
-import { OcticonDirective } from './octicon.directive';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
 
 @NgModule({
