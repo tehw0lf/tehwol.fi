@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, zip } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, zip } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { GitProviderConfig } from './git-provider-config-type';
 import { GitRepositories } from './git-repositories-type';
@@ -11,25 +11,49 @@ import { GitRepository } from './git-repository-type';
   providedIn: 'root'
 })
 export class GitProviderService {
+  private repositorySubject = new BehaviorSubject<GitRepositories>({});
+
   constructor(private http: HttpClient) {}
 
+  getRepositories(
+    gitProviderUserNames?: GitProviderConfig
+  ): Observable<GitRepositories> {
+    if (
+      this.repositorySubject.value.github === undefined &&
+      this.repositorySubject.value.gitlab === undefined
+    ) {
+      this.fetchRepositories(gitProviderUserNames)
+        .pipe(
+          tap((repositories: GitRepositories) => {
+            this.repositorySubject.next(repositories);
+          })
+        )
+        .subscribe();
+    }
+    return this.repositorySubject.asObservable();
+  }
+
   fetchRepositories(
-    gitProviderUserNames: GitProviderConfig
+    gitProviderUserNames?: GitProviderConfig
   ): Observable<GitRepositories> {
     return zip(
-      this.fetchGithubRepositories(gitProviderUserNames.github ?? ''),
-      this.fetchGitlabRepositories(gitProviderUserNames.gitlab ?? '')
+      this.fetchGithubRepositories(gitProviderUserNames?.github ?? ''),
+      this.fetchGitlabRepositories(gitProviderUserNames?.gitlab ?? '')
     ).pipe(
-      map((gitRepositoryArray: [GitRepository[], GitRepository[]]) => ({
-        github: this.filterAndSortGitRepositories(gitRepositoryArray[0]),
-        gitlab: this.filterAndSortGitRepositories(gitRepositoryArray[1])
-      }))
+      map((gitRepositoryArray: [GitRepository[], GitRepository[]]) => {
+        const repositories: GitRepositories = {
+          github: this.filterAndSortGitRepositories(gitRepositoryArray[0]),
+          gitlab: this.filterAndSortGitRepositories(gitRepositoryArray[1])
+        };
+        return repositories;
+      })
     );
   }
 
-  private filterAndSortGitRepositories(
-    gitRepositoryArray: GitRepository[]
-  ): { own: GitRepository[]; forked: GitRepository[] } {
+  private filterAndSortGitRepositories(gitRepositoryArray: GitRepository[]): {
+    own: GitRepository[];
+    forked: GitRepository[];
+  } {
     return {
       own: gitRepositoryArray
         .filter((gitRepository: GitRepository) => !gitRepository.fork)
