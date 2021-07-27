@@ -34,9 +34,10 @@ export class NgGitPortfolioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getRepositories();
   }
-  
+
   ngOnDestroy(): void {
-    this.unsubscribe$.next();this.unsubscribe$.complete()
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   copyToClipboard(githubRepo: GitRepository): void {
@@ -51,9 +52,9 @@ export class NgGitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   getRepositories(): void {
-    this.gitRepositories$ = this.gitProviderService.fetchRepositories(
-      this.gitProviderConfig
-    ).pipe(takeUntil(this.unsubscribe$));
+    this.gitRepositories$ = this.gitProviderService
+      .getRepositories(this.gitProviderConfig)
+      .pipe(takeUntil(this.unsubscribe$));
   }
 
   getOwnGitRepositories(
