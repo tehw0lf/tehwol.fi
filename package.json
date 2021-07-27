@@ -10,7 +10,7 @@
     "nx": "nx",
     "start": "nx serve",
     "build": "nx run-many --all --target=build",
-    "test": "nx run-many --all --target=test",
+    "test": "nx run-many --all --target=test -- --detect-open-handles",
     "lint": "nx workspace-lint && ng run-many --all --target=lint",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
