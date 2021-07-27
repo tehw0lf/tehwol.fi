@@ -33,9 +33,9 @@ describe('GitProviderService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch repos', (done) => {
+  it('should get repos', (done) => {
     service
-      .fetchRepositories(GIT_PROVIDER_USER_NAMES)
+      .getRepositories(GIT_PROVIDER_USER_NAMES)
       .subscribe((githubRepositories: GitRepositories) => {
         expect(githubRepositories).toEqual(GIT_REPOSITORIES);
         done();
