@@ -24,12 +24,15 @@ export class NgGitPortfolioComponent implements OnInit, OnDestroy {
   @Input()
   showOwn = true;
 
+  loading: Observable<boolean>;
   gitProviders = GitProviders;
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private gitProviderService: GitProviderService) {}
+  constructor(private gitProviderService: GitProviderService) {
+    this.loading = this.gitProviderService.loading;
+  }
 
   ngOnInit(): void {
     this.getRepositories();
@@ -111,5 +114,28 @@ export class NgGitPortfolioComponent implements OnInit, OnDestroy {
     } else {
       return [];
     }
+  }
+
+  hasRepositories(
+    gitRepositories: GitRepositories,
+    gitProvider: string,
+    type: 'own' | 'forked'
+  ): boolean {
+    if (gitRepositories) {
+      switch (gitProvider) {
+        case 'github':
+          if (gitRepositories.github) {
+            return gitRepositories.github[type].length > 0;
+          }
+          break;
+
+        case 'gitlab':
+          if (gitRepositories.gitlab) {
+            return gitRepositories.gitlab[type].length > 0;
+          }
+          break;
+      }
+    }
+    return false;
   }
 }
