@@ -11,9 +11,14 @@ import { GitRepository } from './git-repository-type';
   providedIn: 'root'
 })
 export class GitProviderService {
+  private loadingStateSubject = new BehaviorSubject<boolean>(true);
   private repositorySubject = new BehaviorSubject<GitRepositories>({});
 
   constructor(private http: HttpClient) {}
+
+  get loading(): Observable<boolean> {
+    return this.loadingStateSubject.asObservable();
+  }
 
   getRepositories(
     gitProviderUserNames?: GitProviderConfig
@@ -26,6 +31,7 @@ export class GitProviderService {
         .pipe(
           tap((repositories: GitRepositories) => {
             this.repositorySubject.next(repositories);
+            this.loadingStateSubject.next(false);
           })
         )
         .subscribe();
