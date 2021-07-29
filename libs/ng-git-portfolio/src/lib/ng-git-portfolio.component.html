@@ -30,7 +30,7 @@
         </tehw0lf-repo-card>
         <div
           *ngIf="
-            !loading &&
+            (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'own')
           "
         >
@@ -66,7 +66,7 @@
         ></tehw0lf-repo-card>
         <div
           *ngIf="
-            !loading &&
+            (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'forked')
           "
         >
