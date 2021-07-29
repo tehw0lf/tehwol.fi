@@ -1,6 +1,7 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { of } from 'rxjs';
 
 import { GitProviderService } from './git-provider.service';
@@ -21,7 +22,7 @@ describe('NgGitPortfolioComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [MatCardModule, ClipboardModule],
+        imports: [MatProgressSpinnerModule, MatCardModule, ClipboardModule],
         declarations: [NgGitPortfolioComponent, RepoCardComponent],
         providers: [
           { provide: GitProviderService, useValue: gitProviderServiceStub }
