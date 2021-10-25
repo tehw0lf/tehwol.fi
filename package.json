@@ -89,5 +89,8 @@
     "ts-jest": "27.0.3",
     "ts-node": "~9.1.1",
     "typescript": "4.3.5"
+  },
+  "resolutions": {
+    "**/ua-parser-js": "0.7.28"
   }
 }
