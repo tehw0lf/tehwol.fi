@@ -38,9 +38,11 @@
               "libs/ng-git-portfolio/src/**/*.ts",
               "libs/ng-git-portfolio/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ng-wordlist-generator": {
       "projectType": "library",
@@ -79,9 +81,11 @@
               "libs/ng-wordlist-generator/src/**/*.ts",
               "libs/ng-wordlist-generator/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "tehwolfi": {
       "projectType": "application",
@@ -167,7 +171,8 @@
               "apps/tehwolfi/src/**/*.ts",
               "apps/tehwolfi/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -177,7 +182,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "tehwolfi-e2e": {
       "root": "apps/tehwolfi-e2e",
@@ -201,40 +207,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/tehwolfi-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
+      "tags": [],
+      "implicitDependencies": ["tehwolfi"]
     }
-  },
-  "defaultProject": "tehwolfi"
+  }
 }
