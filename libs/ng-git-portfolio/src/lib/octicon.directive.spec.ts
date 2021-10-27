@@ -5,13 +5,15 @@ import { By } from '@angular/platform-browser';
 import { OcticonDirective } from './octicon.directive';
 
 @Component({
-  template: ` <div octicon="star" color="gold" width="20px"></div> `
+  template: `
+    <div id="working-octicon" octicon="star" color="gold" width="20px"></div>
+  `
 })
 class TestOcticonDirectiveComponent {}
 
 describe('OcticonDirective', () => {
   let fixture: ComponentFixture<TestOcticonDirectiveComponent>;
-  let inputEl: DebugElement;
+  let workingElement: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,14 +22,14 @@ describe('OcticonDirective', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestOcticonDirectiveComponent);
-    inputEl = fixture.debugElement.query(By.css('div'));
+    workingElement = fixture.debugElement.query(By.css('div'));
 
     fixture.detectChanges();
   });
 
   it('should create a div with golden octicon star svg as innerHTML', () => {
-    expect(inputEl.attributes.color).toBe('gold');
-    expect(inputEl.attributes.octicon).toBe('star');
-    expect(inputEl.attributes.width).toBe('20px');
+    expect(workingElement.attributes.color).toBe('gold');
+    expect(workingElement.attributes.octicon).toBe('star');
+    expect(workingElement.attributes.width).toBe('20px');
   });
 });
