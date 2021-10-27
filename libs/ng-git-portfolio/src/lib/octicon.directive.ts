@@ -17,16 +17,21 @@ export class OcticonDirective implements OnInit {
   ngOnInit(): void {
     const el: HTMLElement = this.elementRef.nativeElement;
     if (this.octicon) {
-      el.innerHTML = octicons[this.octicon].toSVG();
+      if (octicons[this.octicon] !== undefined) {
+        el.innerHTML = octicons[this.octicon].toSVG();
 
-      const icon: Node | null = el.firstChild;
+        const icon: Node | null = el.firstChild;
 
-      if (this.color && icon) {
-        this.renderer.setStyle(icon, 'fill', this.color);
-      }
-      if (this.width && icon) {
-        this.renderer.setStyle(icon, 'width', this.width);
-        this.renderer.setStyle(icon, 'height', this.width);
+        if (this.color && icon) {
+          this.renderer.setStyle(icon, 'fill', this.color);
+        }
+        if (this.width && icon) {
+          this.renderer.setStyle(icon, 'width', this.width);
+          this.renderer.setStyle(icon, 'height', this.width);
+        }
+      } else {
+        el.innerHTML = octicons['alert'].toSVG();
+        this.renderer.setStyle(el.firstChild, 'fill', 'red');
       }
     }
   }
