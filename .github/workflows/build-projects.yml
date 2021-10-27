@@ -44,7 +44,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Run scully
-        run: pnpm scully
+        run: pnpm scully -- --project tehwolfi
       #- name: Compress (gzip) # not supported by current host
       #run: pnpm run compress
       - name: Check if published portfolio library version is outdated
