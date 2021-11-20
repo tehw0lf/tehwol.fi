@@ -15,10 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tehw0lf/git-portfolio": ["libs/git-portfolio/src/index.ts"],
       "@tehw0lf/ng-git-portfolio": ["libs/ng-git-portfolio/src/index.ts"],
       "@tehw0lf/ng-wordlist-generator": [
         "libs/ng-wordlist-generator/src/index.ts"
-      ]
+      ],
+      "@tehw0lf/wordlist-generator": ["libs/wordlist-generator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

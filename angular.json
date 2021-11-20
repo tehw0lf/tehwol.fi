@@ -1,6 +1,32 @@
 {
   "version": 1,
   "projects": {
+    "git-portfolio": {
+      "projectType": "library",
+      "root": "libs/git-portfolio",
+      "sourceRoot": "libs/git-portfolio/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/git-portfolio"],
+          "options": {
+            "jestConfig": "libs/git-portfolio/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/git-portfolio/src/**/*.ts",
+              "libs/git-portfolio/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "ng-git-portfolio": {
       "projectType": "library",
       "root": "libs/ng-git-portfolio",
@@ -213,6 +239,32 @@
       },
       "tags": [],
       "implicitDependencies": ["tehwolfi"]
+    },
+    "wordlist-generator": {
+      "projectType": "library",
+      "root": "libs/wordlist-generator",
+      "sourceRoot": "libs/wordlist-generator/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/wordlist-generator"],
+          "options": {
+            "jestConfig": "libs/wordlist-generator/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/wordlist-generator/src/**/*.ts",
+              "libs/wordlist-generator/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
   }
 }
