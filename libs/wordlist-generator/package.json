@@ -1,0 +1,21 @@
+{
+  "name": "@tehw0lf/wordlist-generator",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tehw0lf/tehwol.fi.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^12.2.11",
+    "@angular/core": "^12.2.11",
+    "@angular/cdk": "^12.2.11",
+    "@angular/forms": "^12.2.11",
+    "@angular/material": "^12.2.11",
+    "@angular/platform-browser": "^12.2.11"
+  },
+  "dependencies": {
+    "tslib": "^2.2.0"
+  }
+}
