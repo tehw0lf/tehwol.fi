@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { GitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
+import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
 
