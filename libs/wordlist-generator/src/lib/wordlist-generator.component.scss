@@ -7,31 +7,20 @@
     float: left;
 
     .charset-container {
-      .add-charset {
-        color: $linkcolor;
-      }
-
       .drag-indicator {
-        color: $linkcolor;
         margin-right: 10px;
       }
 
       .clone-charset {
-        color: $linkcolor;
         margin: 0 10px;
       }
       .remove-charset {
-        color: $linkcolor;
         margin-right: 10px;
       }
     }
 
     .charset {
       width: 18.875em;
-
-      .charset-label {
-        color: $linkcolor;
-      }
     }
 
     .charset-container:not(:last-child) {
@@ -41,19 +30,16 @@
     }
 
     .choose-format {
-      color: $linkcolor;
       margin: 0 34px 10px 34px;
       width: 150px;
     }
 
     .generate-wordlist {
-      color: $linkcolor;
       margin: 0 0 10px 0;
       width: 150px;
     }
 
     .download-wordlist {
-      color: $linkcolor;
       margin: 0 0 10px 0;
       width: 150px;
     }
@@ -75,10 +61,6 @@
 
 .mat-menu-panel {
   width: 150px;
-}
-
-button.mat-menu-item {
-  color: $linkcolor;
 }
 
 .mat-form-field-appearance-outline {
@@ -112,8 +94,4 @@ button.mat-menu-item {
 
 .fix {
   width: 21em;
-
-  .fix-label {
-    color: $linkcolor;
-  }
 }

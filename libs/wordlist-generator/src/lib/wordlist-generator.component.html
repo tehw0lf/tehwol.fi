@@ -3,6 +3,7 @@
     <div fxLayout="row wrap">
       <button
         class="generate-wordlist"
+        [ngStyle]="{ color: buttonColor }"
         mat-raised-button
         (click)="generateWordlist()"
       >
@@ -10,6 +11,7 @@
       </button>
       <button
         class="choose-format"
+        [ngStyle]="{ color: buttonColor }"
         mat-raised-button
         [matMenuTriggerFor]="menu"
         *ngIf="wordlist$"
@@ -18,6 +20,7 @@
       </button>
       <mat-menu #menu="matMenu">
         <button
+          [ngStyle]="{ color: buttonColor }"
           mat-menu-item
           *ngFor="let type of fileTypes"
           (click)="fileType = type"
@@ -27,6 +30,7 @@
       </mat-menu>
       <button
         class="download-wordlist"
+        [ngStyle]="{ color: buttonColor }"
         mat-raised-button
         *ngIf="wordlist$"
         (click)="downloadWordlist()"
@@ -37,7 +41,9 @@
     </div>
     <form *ngIf="charsetForm" [formGroup]="charsetForm">
       <mat-form-field class="fix" appearance="outline">
-        <mat-label class="fix-label">prefix (optional)</mat-label>
+        <mat-label [ngStyle]="{ color: textColor }"
+          >prefix (optional)</mat-label
+        >
         <input
           matInput
           type="text"
@@ -54,9 +60,11 @@
             cdkDrag
             *ngFor="let charset of charsets?.controls; let i = index"
           >
-            <mat-icon class="drag-indicator">drag_indicator</mat-icon>
+            <mat-icon class="drag-indicator" [ngStyle]="{ color: buttonColor }"
+              >drag_indicator</mat-icon
+            >
             <mat-form-field class="charset" appearance="outline">
-              <mat-label class="charset-label">
+              <mat-label [ngStyle]="{ color: textColor }">
                 character set for string position {{ i }}
               </mat-label>
               <input
@@ -71,6 +79,7 @@
             <button
               mat-raised-button
               class="clone-charset"
+              [ngStyle]="{ color: buttonColor }"
               (click)="cloneCharset(i)"
             >
               <mat-icon>content_copy</mat-icon>
@@ -78,6 +87,7 @@
             <button
               mat-raised-button
               class="remove-charset"
+              [ngStyle]="{ color: buttonColor }"
               (click)="removeCharset(i)"
               [disabled]="this.charsets?.value.length === 1"
             >
@@ -85,7 +95,7 @@
             </button>
             <button
               mat-raised-button
-              class="add-charset"
+              [ngStyle]="{ color: buttonColor }"
               (click)="addCharset()"
             >
               <mat-icon>add</mat-icon>
@@ -94,7 +104,9 @@
         </div>
       </div>
       <mat-form-field class="fix" appearance="outline">
-        <mat-label class="fix-label">suffix (optional)</mat-label>
+        <mat-label [ngStyle]="{ color: textColor }"
+          >suffix (optional)</mat-label
+        >
         <input
           matInput
           type="text"
