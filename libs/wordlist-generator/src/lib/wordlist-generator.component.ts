@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
@@ -16,6 +16,9 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   encapsulation: ViewEncapsulation.None
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
+  @Input() buttonColor = '#cc7832';
+  @Input() textColor = '#cc7832';
+
   charsetForm: FormGroup | undefined;
   wordsGenerated: number | undefined;
   wordlist$: Observable<string> | undefined;
