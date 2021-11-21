@@ -1,4 +1,10 @@
-<mat-card>
+<mat-card
+  [ngStyle]="{
+    color: cardColor,
+    'background-color': backgroundColor,
+    'backdrop-filter': backdropFilter
+  }"
+>
   <mat-card-header>
     <div
       mat-card-avatar
@@ -14,6 +20,7 @@
     <mat-card-title
       ><a
         mat-button
+        [ngStyle]="{ color: buttonColor }"
         target="_blank"
         href="{{ gitRepo.html_url || gitRepo.web_url }}"
       >
@@ -57,14 +64,17 @@
   </mat-card-content>
   <mat-card-footer fxLayout="row" fxLayoutGap="12px">
     <span class="mat-footer-cell" fxFlex>
-      <span class="footer-span">Created: {{ gitRepo.created_at | date }}</span>
-      <span class="footer-span"
+      <span class="footer-span" [ngStyle]="{ color: cardColor }"
+        >Created: {{ gitRepo.created_at | date }}</span
+      >
+      <span class="footer-span" [ngStyle]="{ color: cardColor }"
         >Updated:
         {{ gitRepo.pushed_at || gitRepo.last_activity_at | date }}</span
       >
     </span>
     <span class="mat-footer-cell">
       <button
+        [ngStyle]="{ color: buttonColor }"
         mat-button
         [cdkCopyToClipboard]="
           gitRepo.clone_url || gitRepo.http_url_to_repo || ''
