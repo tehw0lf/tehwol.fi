@@ -57,9 +57,23 @@ Then, in the template, the portfolio can be added by its tag:
 <git-portfolio [gitProviderConfig]="gitProviderConfig"></git-portfolio>
 ```
 
+In addition to the git provider configuration, the types of repositories displayed can be customized with optional input parameters:
+
+```ts
+showForked; //display forked repositories. default: true
+showOwn; //display own repositories. default: true
+```
+
 ## Theming
 
-At the moment there is only a dark theme. A light theme will be added in the future.
+The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
+
+```ts
+backgroundColor; //default: 'rgba(34, 34, 34, 0.75)';
+backdropFilter; //default: 'blur(50px)';
+buttonColor; //default: '#cc7832';
+cardColor; //default: 'lightgray';
+```
 
 ## Development
 

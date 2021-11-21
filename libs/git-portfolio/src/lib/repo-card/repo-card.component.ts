@@ -12,6 +12,11 @@ const githubLanguageColors = require('github-language-colors/colors.json');
   styleUrls: ['./repo-card.component.scss']
 })
 export class RepoCardComponent {
+  @Input() backgroundColor!: string;
+  @Input() backdropFilter!: string;
+  @Input() buttonColor!: string;
+  @Input() cardColor!: string;
+
   @Input()
   gitRepo!: GitRepository;
 
