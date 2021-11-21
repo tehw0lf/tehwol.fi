@@ -1,0 +1,58 @@
+.clipboard-button {
+  line-height: 24px !important;
+  padding: 0;
+  margin-bottom: 0;
+
+  span {
+    font-size: 20px;
+  }
+}
+
+.mat-button {
+  vertical-align: middle;
+  line-height: 36px;
+  font-size: 24px;
+  margin: 0 10px 0 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+}
+
+.mat-card-avatar {
+  height: 53px;
+  width: 53px;
+}
+
+.mat-card-subtitle {
+  padding-left: 16px;
+}
+
+.mat-card-header {
+  flex-shrink: 0;
+}
+
+.mat-card-content {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.mat-card-footer {
+  padding: 16px 16px 16px 16px;
+}
+
+.footer-span {
+  display: block;
+  font-size: 12px;
+}
+
+.language-icon {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  margin-top: 2px;
+}

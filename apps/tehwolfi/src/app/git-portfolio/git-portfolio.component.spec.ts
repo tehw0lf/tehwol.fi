@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgGitPortfolioModule } from '@tehw0lf/ng-git-portfolio';
+import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
 
@@ -10,7 +10,7 @@ describe('GitPortfolioComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [NgGitPortfolioModule],
+        imports: [GitPortfolioModule],
         declarations: [GitPortfolioComponent]
       }).compileComponents();
     })

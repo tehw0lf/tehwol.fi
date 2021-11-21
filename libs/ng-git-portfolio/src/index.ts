@@ -1,3 +1,0 @@
-export * from './lib/ng-git-portfolio.component';
-export * from './lib/ng-git-portfolio.module';
-export * from './lib/octicon.directive';

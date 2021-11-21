@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgWordlistGeneratorModule } from '@tehw0lf/ng-wordlist-generator';
+import { WordlistGeneratorModule } from '@tehw0lf/wordlist-generator';
 
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
-
 
 describe('WordlistGeneratorComponent', () => {
   let component: WordlistGeneratorComponent;
@@ -11,7 +10,7 @@ describe('WordlistGeneratorComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [NgWordlistGeneratorModule],
+        imports: [WordlistGeneratorModule],
         declarations: [WordlistGeneratorComponent]
       }).compileComponents();
     })

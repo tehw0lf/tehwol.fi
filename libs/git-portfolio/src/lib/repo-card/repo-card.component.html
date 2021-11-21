@@ -1,0 +1,98 @@
+<mat-card
+  [ngStyle]="{
+    color: cardColor,
+    'background-color': backgroundColor,
+    'backdrop-filter': backdropFilter
+  }"
+>
+  <mat-card-header>
+    <div
+      mat-card-avatar
+      [ngStyle]="{
+        'background-image':
+          'url(' +
+          (gitRepo.owner?.avatar_url || gitRepo.namespace?.avatar_url) +
+          ')',
+        'background-size': 'cover',
+        'border-radius': 0
+      }"
+    ></div>
+    <mat-card-title
+      ><a
+        mat-button
+        [ngStyle]="{ color: buttonColor }"
+        target="_blank"
+        href="{{ gitRepo.html_url || gitRepo.web_url }}"
+      >
+        {{ gitRepo.name }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle fxLayout="row" fxLayoutGap="12px">
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div
+          [ngStyle]="{
+            'background-color':
+              gitRepo.language !== undefined
+                ? githubLanguageColors[gitRepo.language]
+                : 'transparent'
+          }"
+          class="language-icon"
+        ></div>
+        <div>{{ gitRepo.language }}</div>
+      </div>
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div octicon="star" color="gold"></div>
+        <div>{{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}</div>
+      </div>
+      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div octicon="repo-forked" color="#437da8"></div>
+        <div>{{ gitRepo.forks_count }}</div>
+      </div>
+      <div
+        *ngIf="gitRepo.open_issues_count"
+        class="info-item"
+        fxLayout="row"
+        fxLayoutGap="5px"
+      >
+        <div octicon="issue-opened" color="rgb(56, 224, 56)"></div>
+        <div>{{ gitRepo.open_issues_count }}</div>
+      </div>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ gitRepo.description }}</p>
+  </mat-card-content>
+  <mat-card-footer fxLayout="row" fxLayoutGap="12px">
+    <span class="mat-footer-cell" fxFlex>
+      <span class="footer-span" [ngStyle]="{ color: cardColor }"
+        >Created: {{ gitRepo.created_at | date }}</span
+      >
+      <span class="footer-span" [ngStyle]="{ color: cardColor }"
+        >Updated:
+        {{ gitRepo.pushed_at || gitRepo.last_activity_at | date }}</span
+      >
+    </span>
+    <span class="mat-footer-cell">
+      <button
+        [ngStyle]="{ color: buttonColor }"
+        mat-button
+        [cdkCopyToClipboard]="
+          gitRepo.clone_url || gitRepo.http_url_to_repo || ''
+        "
+        (cdkCopyToClipboardCopied)="copiedToClipboard()"
+        class="clipboard-button"
+      >
+        <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
+          <div
+            *ngIf="isCopied"
+            octicon="check"
+            color="#38e038"
+            width="24"
+          ></div>
+          <div octicon="paste" color="#cc7832" width="24px"></div>
+          <span>Copy URL</span>
+        </span>
+      </button>
+    </span>
+  </mat-card-footer>
+</mat-card>
