@@ -9,6 +9,11 @@ Current Features:
 - GitHub/GitLab portfolio
 - Wordlist Generator
 
-## ng-git-portfolio
+## git-portfolio
 
-Portfolio library
+Customizable portfolio library for Git repositories. Currently supporting GitHub and GitLab.
+[It has its own README](libs/git-portfolio/README.md)
+
+## wordlist-generator
+
+A wordlist generator based on the cartesian product.

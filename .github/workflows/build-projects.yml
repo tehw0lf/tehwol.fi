@@ -45,30 +45,28 @@ jobs:
         run: pnpm build
       - name: Run scully
         run: pnpm scully -- --project tehwolfi
-      #- name: Compress (gzip) # not supported by current host
-      #run: pnpm run compress
-      - name: Check if published portfolio library version is outdated
+      - name: Check if published git portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
-          echo "portfolio_latest_version=$(pnpm view @tehw0lf/ng-git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
-          echo "portfolio_package_version=$(jq -r ".version" dist/libs/ng-git-portfolio/package.json)" >> $GITHUB_ENV
+          echo "portfolio_latest_version=$(pnpm view @tehw0lf/git-portfolio .dist-tags.latest)" >> $GITHUB_ENV
+          echo "portfolio_package_version=$(jq -r ".version" dist/libs/git-portfolio/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.portfolio_latest_version != env.portfolio_package_version }}
         run: |
-          pnpm publish dist/libs/ng-git-portfolio --access public --dry-run
-          pnpm publish dist/libs/ng-git-portfolio --access public
+          pnpm publish dist/libs/git-portfolio --access public --dry-run
+          pnpm publish dist/libs/git-portfolio --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published wordlist generator library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
-          echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/ng-wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
-          echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/ng-wordlist-generator/package.json)" >> $GITHUB_ENV
+          echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/wordlist-generator .dist-tags.latest)" >> $GITHUB_ENV
+          echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/wordlist-generator/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.wordlist_generator_latest_version != env.wordlist_generator_package_version }}
         run: |
-          pnpm publish dist/libs/ng-wordlist-generator --access public --dry-run
-          pnpm publish dist/libs/ng-wordlist-generator --access public
+          pnpm publish dist/libs/wordlist-generator --access public --dry-run
+          pnpm publish dist/libs/wordlist-generator --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment

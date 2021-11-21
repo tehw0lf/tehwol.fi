@@ -1,33 +1,33 @@
 {
   "version": 1,
   "projects": {
-    "ng-git-portfolio": {
+    "git-portfolio": {
       "projectType": "library",
-      "root": "libs/ng-git-portfolio",
-      "sourceRoot": "libs/ng-git-portfolio/src",
+      "root": "libs/git-portfolio",
+      "sourceRoot": "libs/git-portfolio/src",
       "prefix": "tehw0lf",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ng-git-portfolio"],
+          "outputs": ["dist/libs/git-portfolio"],
           "options": {
-            "project": "libs/ng-git-portfolio/ng-package.json"
+            "project": "libs/git-portfolio/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/ng-git-portfolio/tsconfig.lib.prod.json"
+              "tsConfig": "libs/git-portfolio/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libs/ng-git-portfolio/tsconfig.lib.json"
+              "tsConfig": "libs/git-portfolio/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ng-git-portfolio"],
+          "outputs": ["coverage/libs/git-portfolio"],
           "options": {
-            "jestConfig": "libs/ng-git-portfolio/jest.config.js",
+            "jestConfig": "libs/git-portfolio/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -35,54 +35,10 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ng-git-portfolio/src/**/*.ts",
-              "libs/ng-git-portfolio/src/**/*.html"
+              "libs/git-portfolio/src/**/*.ts",
+              "libs/git-portfolio/src/**/*.html"
             ]
-          },
-          "outputs": ["{options.outputFile}"]
-        }
-      },
-      "tags": []
-    },
-    "ng-wordlist-generator": {
-      "projectType": "library",
-      "root": "libs/ng-wordlist-generator",
-      "sourceRoot": "libs/ng-wordlist-generator/src",
-      "prefix": "tehw0lf",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ng-wordlist-generator"],
-          "options": {
-            "project": "libs/ng-wordlist-generator/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/ng-wordlist-generator/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "libs/ng-wordlist-generator/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ng-wordlist-generator"],
-          "options": {
-            "jestConfig": "libs/ng-wordlist-generator/jest.config.js",
-            "passWithNoTests": true
           }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/ng-wordlist-generator/src/**/*.ts",
-              "libs/ng-wordlist-generator/src/**/*.html"
-            ]
-          },
-          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": []
@@ -213,6 +169,48 @@
       },
       "tags": [],
       "implicitDependencies": ["tehwolfi"]
+    },
+    "wordlist-generator": {
+      "projectType": "library",
+      "root": "libs/wordlist-generator",
+      "sourceRoot": "libs/wordlist-generator/src",
+      "prefix": "tehw0lf",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/ng-wordlist-generator"],
+          "options": {
+            "project": "libs/wordlist-generator/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/wordlist-generator/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/wordlist-generator/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/wordlist-generator"],
+          "options": {
+            "jestConfig": "libs/wordlist-generator/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/wordlist-generator/src/**/*.ts",
+              "libs/wordlist-generator/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
   }
 }
