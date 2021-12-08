@@ -1,1 +1,30 @@
-<p>contact-form works!</p>
+<form [formGroup]="formGroup" (ngSubmit)="submitFormData(formGroup.value)">
+  <div>
+    <label for="from">Email</label>
+    <input
+      type="email"
+      name="from"
+      placeholder="ihre@mail.de"
+      formControlName="from"
+    />
+  </div>
+  <div>
+    <label for="name">Name</label>
+    <input type="text" name="name" placeholder="Name" formControlName="name" />
+  </div>
+  <div>
+    <label for="subject">Betreff</label>
+    <input
+      type="text"
+      name="subject"
+      placeholder="Betreff"
+      formControlName="subject"
+    />
+  </div>
+  <div>
+    <label for="message">Nachricht</label>
+    <textarea formControlName="message" name="message"> </textarea>
+  </div>
+  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+</form>
+<div *ngIf="callResult !== ''">{{ callResult }}</div>
