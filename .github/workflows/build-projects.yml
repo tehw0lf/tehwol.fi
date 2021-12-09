@@ -69,6 +69,18 @@ jobs:
           pnpm publish dist/libs/wordlist-generator --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Check if published contact-form library version is outdated
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "contact_form_latest_version=$(pnpm view @tehw0lf/contact-form .dist-tags.latest)" >> $GITHUB_ENV
+          echo "contact_form_package_version=$(jq -r ".version" dist/libs/contact-form/package.json)" >> $GITHUB_ENV
+      - name: Publish library to npm registry if local package is newer
+        if: ${{ github.event_name == 'push' && env.contact_form_latest_version != env.contact_form_package_version }}
+        run: |
+          pnpm publish dist/libs/contact-form --access public --dry-run
+          pnpm publish dist/libs/contact-form --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
         if: ${{ github.event_name == 'push' }}
         run: |
