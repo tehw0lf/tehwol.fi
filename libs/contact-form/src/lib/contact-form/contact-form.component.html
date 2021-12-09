@@ -31,8 +31,11 @@
   <button class="form-button" type="submit" [disabled]="!formGroup.valid">
     Senden
   </button>
+  <div class="form-status" *ngIf="(emailSent$ | async) === true">
+    E-Mail erfolgreich versendet!
+  </div>
+  <div class="form-status" *ngIf="(emailSent$ | async) === false">
+    Fehler: E-Mail konnte nicht versendet werden
+  </div>
+  <div class="form-status" *ngIf="(emailSent$ | async) === null"></div>
 </form>
-<div *ngIf="(emailSent$ | async) === true">E-Mail erfolgreich versendet!</div>
-<div *ngIf="(emailSent$ | async) === false">
-  Fehler: E-Mail konnte nicht versendet werden
-</div>
