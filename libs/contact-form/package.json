@@ -2,9 +2,13 @@
   "name": "@tehw0lf/contact-form",
   "version": "0.0.2",
   "peerDependencies": {
+    "@angular/animations": "^13.1.0",
+    "@angular/cdk": "^13.1.0",
     "@angular/common": "^13.1.0",
     "@angular/core": "^13.1.0",
-    "@angular/forms": "^13.1.0"
+    "@angular/flex-layout": "^13.1.0",
+    "@angular/forms": "^13.1.0",
+    "@angular/material": "^13.1.0"
   },
   "dependencies": {
     "tslib": "^2.2.0"
