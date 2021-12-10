@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/git-portfolio",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
@@ -8,12 +8,12 @@
     "url": "https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
-    "@angular/animations": "^12.2.11",
-    "@angular/cdk": "^12.2.11",
-    "@angular/common": "^12.2.11",
-    "@angular/core": "^12.2.11",
-    "@angular/flex-layout": "^12.0.0-beta.35",
-    "@angular/material": "^12.2.11",
+    "@angular/animations": "^13.1.0",
+    "@angular/cdk": "^13.1.0",
+    "@angular/common": "^13.1.0",
+    "@angular/core": "^13.1.0",
+    "@angular/flex-layout": "^13.0.0-beta.36",
+    "@angular/material": "^13.1.0",
     "github-language-colors": "^1.0.0",
     "@primer/octicons": "^16.1.1"
   },
