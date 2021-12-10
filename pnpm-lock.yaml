@@ -18,7 +18,7 @@ importers:
       '@angular/compiler': 13.1.0
       '@angular/compiler-cli': 13.1.0
       '@angular/core': 13.1.0
-      '@angular/flex-layout': ^12.0.0-beta.35
+      '@angular/flex-layout': ^13.0.0-beta.36
       '@angular/forms': 13.1.0
       '@angular/language-service': 13.1.0
       '@angular/material': 13.1.0
@@ -70,7 +70,7 @@ importers:
       '@angular/common': 13.1.0_@angular+core@13.1.0+rxjs@7.4.0
       '@angular/compiler': 13.1.0
       '@angular/core': 13.1.0_rxjs@7.4.0+zone.js@0.11.4
-      '@angular/flex-layout': 12.0.0-beta.35_132c2b525a9d87a1f11a9b8c13ceac0a
+      '@angular/flex-layout': 13.0.0-beta.36_132c2b525a9d87a1f11a9b8c13ceac0a
       '@angular/forms': 13.1.0_3a603c5d19fdb4a491507d1568bbdc1d
       '@angular/material': 13.1.0_0927a349b17874cc2a7309a538f5b04d
       '@angular/platform-browser': 13.1.0_c9e48258c56445dd190cc2a07fd70b29
@@ -549,21 +549,21 @@ packages:
       zone.js: 0.11.4
     dev: false
 
-  /@angular/flex-layout/12.0.0-beta.35_132c2b525a9d87a1f11a9b8c13ceac0a:
-    resolution: {integrity: sha512-nPi2MGDFuCacwWHqxF/G7lUJd2X99HbLjjUvKXnyLwyCIVgH1sfS52su2wYbVYWJRqAVAB2/VMlrtW8Khr8hDA==}
+  /@angular/flex-layout/13.0.0-beta.36_132c2b525a9d87a1f11a9b8c13ceac0a:
+    resolution: {integrity: sha512-JLC3C1oEKVu9lLyottvHbfyCf/pOPzjXfFO3qOPBbWyVqxuQkfkd2NILZZh4DHsKYbBxIZ01vnfQHCV8NdaZ3w==}
     peerDependencies:
-      '@angular/cdk': ^12.0.0
-      '@angular/common': '>=12.0.0'
-      '@angular/core': '>=12.0.0'
-      '@angular/platform-browser': '>=12.0.0'
-      rxjs: ^6.0.0 || ^7.0.0
+      '@angular/cdk': ^13.0.0
+      '@angular/common': ^13.0.0
+      '@angular/core': ^13.0.0
+      '@angular/platform-browser': ^13.0.0
+      rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/cdk': 13.1.0_9b99a5b0ad73166bfacb227b0c874177
       '@angular/common': 13.1.0_@angular+core@13.1.0+rxjs@7.4.0
       '@angular/core': 13.1.0_rxjs@7.4.0+zone.js@0.11.4
       '@angular/platform-browser': 13.1.0_c9e48258c56445dd190cc2a07fd70b29
       rxjs: 7.4.0
-      tslib: 2.3.0
+      tslib: 2.3.1
     dev: false
 
   /@angular/forms/13.1.0_3a603c5d19fdb4a491507d1568bbdc1d:
