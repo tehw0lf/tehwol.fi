@@ -5,14 +5,57 @@ The component takes as input an API-URL.
 
 Default is 'https://forwardmethis.com/tehwolf@pm.me' - please change it, as you will need to confirm the API access for the first email you will receive.
 
-```html
-<contact-form [apiURL]="emailBackendURL"></contact-form>
+## Installation
+
+### Peer Dependencies
+
+The following dependencies are needed:
+
+```bash
+    @angular/animations
+    @angular/cdk
+    @angular/common
+    @angular/core
+    @angular/flex-layout
+    @angular/forms
+    @angular/material
 ```
 
-In your component, set the `emailBackendURL` property. The naming of this variable is arbitrary:
+### Module
+
+Run `ng add @tehw0lf/contact-form` in the workspace root of your angular application.
+In app.module.ts, import ContactFormModule and add it to the module's import section:
+
+```ts
+import { ContactFormModule } from '@tehw0lf/contact-form';
+
+@NgModule({
+    ...
+  imports: [
+      ...
+    ContactFormModule
+  ],
+  ...
+})
+export class AppModule {}
+```
+
+## Usage
+
+The contact form component takes an apiURL and an email as input. By default, this is set to [ForwardMeThis](https://forwardmethis.com) and the email address is blank. You can set the variables on the component tag:
+
+```html
+<contact-form
+  [apiURL]="emailBackendURL"
+  [email]="yourEmailAddress"
+></contact-form>
+```
+
+In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:
 
 ```ts
 emailBackendURL = 'https://forwardmethis.com/my@email.com';
+yourEmailAddress = 'my@mail.com';
 ```
 
 This contact form will send a POST request to the API, containing the following data structure:
@@ -25,4 +68,41 @@ This contact form will send a POST request to the API, containing the following 
 }
 ```
 
-You can of course use your own backend with this data structure, as the API-URL can be overridden as shown above.
+You can of course use your own backend with this data structure, as the API-URL and E-Mail address can be overridden as shown above.
+
+## Theming
+
+The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
+
+```ts
+backgroundColor; //default: 'rgba(34, 34, 34, 0.75)';
+backdropFilter; //default: 'blur(50px)';
+buttonColor; //default: '#cc7832';
+buttonBackgroundColor; //default: ''
+buttonTextColor; //default: '#cc7832';
+labelColor; //default: 'lightgray';
+textColor; //default: 'lightgray';
+```
+
+## Development
+
+### Serve
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Build
+
+Run `ng build contact-form` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build (e.g. when building to publish to npm).
+
+### Running unit tests
+
+Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
+
+## To Do
+
+Expand schematic to add module entry
+Install dependencies automatically
+
+## Contributing
+
+Contributions are welcome, although the library is still in an alpha stage. Feel free to open a PR and I'll have a look!
