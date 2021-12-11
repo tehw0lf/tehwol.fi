@@ -54,8 +54,8 @@ The contact form component takes an apiURL and an email as input. By default, th
 In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:
 
 ```ts
-emailBackendURL = 'https://forwardmethis.com/my@email.com';
-yourEmailAddress = 'my@mail.com';
+emailBackendURL = 'https://forwardmethis.com/';
+yourEmailAddress = 'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
 ```
 
 This contact form will send a POST request to the API, containing the following data structure:
