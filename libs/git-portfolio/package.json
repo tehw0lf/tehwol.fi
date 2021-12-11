@@ -29,7 +29,7 @@
     "save": "dependencies"
   },
   "devDependencies": {
-    "copyfiles": "file:../../node_modules/copyfiles",
+    "copyfiles": "2.4.1",
     "typescript": "file:../../node_modules/typescript"
   }
 }
