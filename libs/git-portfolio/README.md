@@ -27,7 +27,7 @@ Run `ng add @tehw0lf/git-portfolio` in the workspace root of your angular applic
 In app.module.ts, import GitPortfolioModule and add it to the module's import section:
 
 ```ts
-import { GitPortfolioModule } from '../../../git-portfolio/src/public-api';
+import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
 
 @NgModule({
     ...
