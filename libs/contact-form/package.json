@@ -1,6 +1,16 @@
 {
   "name": "@tehw0lf/contact-form",
   "version": "0.0.2",
+  "license": "MIT",
+  "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tehw0lf/tehwol.fi.git"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.schematics.json",
+    "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/contact-form/"
+  },
   "peerDependencies": {
     "@angular/animations": "^13.1.0",
     "@angular/cdk": "^13.1.0",
@@ -12,5 +22,13 @@
   },
   "dependencies": {
     "tslib": "^2.2.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "devDependencies": {
+    "copyfiles": "file:../../node_modules/copyfiles",
+    "typescript": "file:../../node_modules/typescript"
   }
 }

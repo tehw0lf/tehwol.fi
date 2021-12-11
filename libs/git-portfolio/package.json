@@ -7,6 +7,10 @@
     "type": "git",
     "url": "https://github.com/tehw0lf/tehwol.fi.git"
   },
+  "scripts": {
+    "build": "tsc -p tsconfig.schematics.json",
+    "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/git-portfolio/"
+  },
   "peerDependencies": {
     "@angular/animations": "^13.1.0",
     "@angular/cdk": "^13.1.0",
@@ -23,5 +27,9 @@
   "schematics": "./schematics/collection.json",
   "ng-add": {
     "save": "dependencies"
+  },
+  "devDependencies": {
+    "copyfiles": "file:../../node_modules/copyfiles",
+    "typescript": "file:../../node_modules/typescript"
   }
 }
