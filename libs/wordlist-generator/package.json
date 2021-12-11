@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.schematics.json",
-    "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/wordlist-generator/"
+    "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/libs/wordlist-generator/"
   },
   "peerDependencies": {
     "@angular/common": "^13.1.0",
