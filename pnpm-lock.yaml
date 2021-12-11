@@ -43,6 +43,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1
       '@typescript-eslint/parser': 5.3.1
       cartesian-product-generator: ^1.1.1
+      copyfiles: 2.4.1
       cypress: ^8.7.0
       dotenv: 10.0.0
       eslint: 8.2.0
@@ -106,6 +107,7 @@ importers:
       '@types/node': 14.17.5
       '@typescript-eslint/eslint-plugin': 5.3.1_4653b7803b7453f5f37717b7e1448517
       '@typescript-eslint/parser': 5.3.1_eslint@8.2.0+typescript@4.4.4
+      copyfiles: 2.4.1
       cypress: 8.7.0
       dotenv: 10.0.0
       eslint: 8.2.0
@@ -126,21 +128,36 @@ importers:
 
   libs/contact-form:
     specifiers:
+      copyfiles: 2.4.1
       tslib: ^2.2.0
+      typescript: file:../../node_modules/typescript
     dependencies:
       tslib: 2.3.0
+    devDependencies:
+      copyfiles: 2.4.1
+      typescript: link:../../node_modules/typescript
 
   libs/git-portfolio:
     specifiers:
+      copyfiles: 2.4.1
       tslib: ^2.2.0
+      typescript: file:../../node_modules/typescript
     dependencies:
       tslib: 2.3.0
+    devDependencies:
+      copyfiles: 2.4.1
+      typescript: link:../../node_modules/typescript
 
   libs/wordlist-generator:
     specifiers:
+      copyfiles: 2.4.1
       tslib: ^2.2.0
+      typescript: file:../../node_modules/typescript
     dependencies:
       tslib: 2.3.0
+    devDependencies:
+      copyfiles: 2.4.1
+      typescript: link:../../node_modules/typescript
 
 packages:
 
@@ -4389,7 +4406,7 @@ packages:
     engines: {node: 10.* || >= 12.*}
     dependencies:
       object-assign: 4.1.1
-      string-width: 4.2.2
+      string-width: 4.2.3
     optionalDependencies:
       colors: 1.4.0
     dev: true
@@ -4399,7 +4416,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       slice-ansi: 3.0.0
-      string-width: 4.2.2
+      string-width: 4.2.3
 
   /cli-width/3.0.0:
     resolution: {integrity: sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==}
@@ -4627,6 +4644,19 @@ packages:
       schema-utils: 3.1.0
       serialize-javascript: 6.0.0
       webpack: 5.64.1
+    dev: true
+
+  /copyfiles/2.4.1:
+    resolution: {integrity: sha512-fereAvAvxDrQDOXybk3Qu3dPbOoKoysFMWtkY3mv5BsL8//OSZVL5DCLYqgRfY5cWirgRzlC+WSrxp6Bo3eNZg==}
+    hasBin: true
+    dependencies:
+      glob: 7.2.0
+      minimatch: 3.0.4
+      mkdirp: 1.0.4
+      noms: 0.0.0
+      through2: 2.0.5
+      untildify: 4.0.0
+      yargs: 16.2.0
     dev: true
 
   /core-js-compat/3.19.3:
@@ -7211,6 +7241,10 @@ packages:
     dependencies:
       is-docker: 2.2.1
 
+  /isarray/0.0.1:
+    resolution: {integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=}
+    dev: true
+
   /isarray/1.0.0:
     resolution: {integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=}
 
@@ -8694,6 +8728,13 @@ packages:
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
 
+  /noms/0.0.0:
+    resolution: {integrity: sha1-2o69nzr51nYJGbJ9nNyAkqczKFk=}
+    dependencies:
+      inherits: 2.0.4
+      readable-stream: 1.0.34
+    dev: true
+
   /nopt/5.0.0:
     resolution: {integrity: sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==}
     engines: {node: '>=6'}
@@ -9944,6 +9985,15 @@ packages:
       normalize-package-data: 2.5.0
       path-type: 3.0.0
 
+  /readable-stream/1.0.34:
+    resolution: {integrity: sha1-Elgg40vIQtLyqq+v5MKRbuMsFXw=}
+    dependencies:
+      core-util-is: 1.0.2
+      inherits: 2.0.4
+      isarray: 0.0.1
+      string_decoder: 0.10.31
+    dev: true
+
   /readable-stream/2.3.7:
     resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
     dependencies:
@@ -10730,6 +10780,10 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.1.3
 
+  /string_decoder/0.10.31:
+    resolution: {integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=}
+    dev: true
+
   /string_decoder/1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
@@ -10961,7 +11015,6 @@ packages:
     dependencies:
       readable-stream: 2.3.7
       xtend: 4.0.2
-    dev: false
 
   /thunky/1.1.0:
     resolution: {integrity: sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==}
@@ -11604,7 +11657,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       ansi-styles: 4.3.0
-      string-width: 4.2.2
+      string-width: 4.2.3
       strip-ansi: 6.0.1
 
   /wrap-ansi/7.0.0:
@@ -11612,8 +11665,8 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       ansi-styles: 4.3.0
-      string-width: 4.2.2
-      strip-ansi: 6.0.0
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
 
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
@@ -11690,7 +11743,6 @@ packages:
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
-    dev: false
 
   /xxhashjs/0.2.2:
     resolution: {integrity: sha512-AkTuIuVTET12tpsVIQo+ZU6f/qDmKuRUcjaqR+OIvm+aCBsZ95i7UVY5WJ9TMsSaZ0DA2WxoZ4acu0sPH+OKAw==}

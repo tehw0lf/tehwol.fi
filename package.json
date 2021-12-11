@@ -63,6 +63,7 @@
     "@angular/cli": "13.0.4",
     "@angular/compiler-cli": "13.1.0",
     "@angular/language-service": "13.1.0",
+    "copyfiles": "2.4.1",
     "@nrwl/cli": "13.3.0",
     "@nrwl/cypress": "13.3.0",
     "@nrwl/eslint-plugin-nx": "13.3.0",
