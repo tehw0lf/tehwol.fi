@@ -19,6 +19,7 @@ The following dependencies are needed:
 
 ### Module
 
+If it's not added already, please run `ng add @angular/material` prior to adding this module.
 Run `ng add @tehw0lf/wordlist-generator` in the workspace root of your angular application.
 
 ## Usage
