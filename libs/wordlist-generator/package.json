@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "copyfiles": "2.4.1",
-    "typescript": "file:../../node_modules/typescript"
+    "typescript": "4.4.4"
   }
 }
