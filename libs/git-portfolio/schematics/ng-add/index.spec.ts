@@ -31,7 +31,7 @@ describe('ng-add schematic with material present', () => {
   });
 
   describe('add module', () => {
-    it('should add the GitPortfolioModule to the project module if material is in the project', async () => {
+    it('should add the GitPortfolioModule to the project module', async () => {
       const tree = await runner
         .runSchematicAsync('ng-add', {}, appTree)
         .toPromise();
