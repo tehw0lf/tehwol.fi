@@ -42,6 +42,13 @@ export default function (options: Schema): Rule {
     );
     const angularDependencyVersion = coreVersion || '0.0.0';
 
+    if (project.extensions.projectType !== ProjectType.Application) {
+      context.logger.error(
+        'This library needs to be added to an application project'
+      );
+      return;
+    }
+
     if (!materialVersion || materialVersion !== coreVersion) {
       context.logger
         .error(`@angular/material ${angularDependencyVersion} not found.
@@ -90,7 +97,7 @@ export default function (options: Schema): Rule {
     if (project.extensions.projectType === ProjectType.Application) {
       return chain([addGitPortfolioModule(options)]);
     }
-    context.logger.warn('Please specify an application project');
+    context.logger.error('Failed to add module');
     return;
   };
 }
