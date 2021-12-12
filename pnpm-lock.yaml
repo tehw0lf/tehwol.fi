@@ -8,6 +8,7 @@ importers:
   .:
     specifiers:
       '@angular-devkit/build-angular': 13.0.4
+      '@angular-devkit/schematics': 13.0.4
       '@angular-eslint/eslint-plugin': 13.0.1
       '@angular-eslint/eslint-plugin-template': 13.0.1
       '@angular-eslint/template-parser': 13.0.1
@@ -89,6 +90,7 @@ importers:
       zone.js: 0.11.4
     devDependencies:
       '@angular-devkit/build-angular': 13.0.4_bb98301442007a385cc4cf974a7ccd1f
+      '@angular-devkit/schematics': 13.0.4
       '@angular-eslint/eslint-plugin': 13.0.1_eslint@8.2.0+typescript@4.4.4
       '@angular-eslint/eslint-plugin-template': 13.0.1_eslint@8.2.0+typescript@4.4.4
       '@angular-eslint/template-parser': 13.0.1_eslint@8.2.0+typescript@4.4.4
@@ -2220,7 +2222,7 @@ packages:
       micromatch: 4.0.4
       rimraf: 3.0.2
       slash: 3.0.0
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -3757,11 +3759,6 @@ packages:
   /ansi-regex/2.1.1:
     resolution: {integrity: sha1-w7M6te42DYbg5ijwRorn7yfWVN8=}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /ansi-regex/5.0.0:
-    resolution: {integrity: sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==}
-    engines: {node: '>=8'}
     dev: true
 
   /ansi-regex/5.0.1:
@@ -9754,7 +9751,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': 27.2.5
-      ansi-regex: 5.0.0
+      ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
     dev: true
