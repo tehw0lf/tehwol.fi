@@ -2,8 +2,10 @@
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ng-add": {
-      "description": "Add wordlist-generator library to the project.",
-      "factory": "./ng-add/index#ngAdd"
+      "description": "Add contact-form library to the project.",
+      "factory": "./ng-add/index",
+      "schema": "./ng-add/schema.json",
+      "aliases": ["install"]
     }
   }
 }
