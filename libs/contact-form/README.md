@@ -86,6 +86,7 @@ Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
 
 ## To Do
 
+Apply Material Design
 Extract CSS variables
 
 ## Contributing
