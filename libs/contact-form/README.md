@@ -24,21 +24,6 @@ The following dependencies are needed:
 ### Module
 
 Run `ng add @tehw0lf/contact-form` in the workspace root of your angular application.
-In app.module.ts, import ContactFormModule and add it to the module's import section:
-
-```ts
-import { ContactFormModule } from '@tehw0lf/contact-form';
-
-@NgModule({
-    ...
-  imports: [
-      ...
-    ContactFormModule
-  ],
-  ...
-})
-export class AppModule {}
-```
 
 ## Usage
 
@@ -100,8 +85,7 @@ Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
 
 ## To Do
 
-Expand schematic to add module entry
-Install dependencies automatically
+Extract CSS variables
 
 ## Contributing
 
