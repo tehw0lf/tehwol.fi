@@ -9,15 +9,82 @@ import {
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
 
+import { addPackageToPackageJson, getPackageVersionFromPackageJson } from './package-config';
 import { Schema } from './schema';
 
 const gitPortfolioModuleName = 'GitPortfolioModule';
 const gitPortfolioPackageName = '@tehw0lf/git-portfolio';
+const flexLayoutFallbackVersion = '^13.0.0-beta.36';
+const githubLanguageColorsFallbackVersion = '^1.0.0';
+const octiconsFallbackVersion = '^16.1.1';
 
 export default function (options: Schema): Rule {
   return async (host: Tree, context: SchematicContext) => {
     const workspace = await getWorkspace(host);
     const project = getProjectFromWorkspace(workspace, options.project);
+
+    const coreVersion = getPackageVersionFromPackageJson(host, '@angular/core');
+    const flexLayoutVersion = getPackageVersionFromPackageJson(
+      host,
+      '@angular/flex-layout'
+    );
+    const githubLanguageColorsVersion = getPackageVersionFromPackageJson(
+      host,
+      'github-language-colors'
+    );
+    const octiconsVersion = getPackageVersionFromPackageJson(
+      host,
+      '@primer/octicons'
+    );
+    const materialVersion = getPackageVersionFromPackageJson(
+      host,
+      '@angular/material'
+    );
+    const dependencyVersion = coreVersion || '0.0.0';
+
+    if (!flexLayoutVersion || flexLayoutVersion !== flexLayoutFallbackVersion) {
+      addPackageToPackageJson(
+        host,
+        '@angular/flex-layout',
+        flexLayoutFallbackVersion
+      );
+
+      context.logger.info(
+        `@angular/flex-layout ${flexLayoutFallbackVersion} was added to dependencies.`
+      );
+    }
+
+    if (
+      !githubLanguageColorsVersion ||
+      githubLanguageColorsVersion !== githubLanguageColorsFallbackVersion
+    ) {
+      addPackageToPackageJson(
+        host,
+        'github-language-colors',
+        githubLanguageColorsFallbackVersion
+      );
+
+      context.logger.info(
+        `github-language-colors ${githubLanguageColorsFallbackVersion} was added to dependencies.`
+      );
+    }
+
+    if (!octiconsVersion || octiconsVersion !== octiconsFallbackVersion) {
+      addPackageToPackageJson(
+        host,
+        '@primer/octicons',
+        octiconsFallbackVersion
+      );
+      context.logger.info(
+        `@primer/octicons ${octiconsFallbackVersion} was added to dependencies.`
+      );
+    }
+
+    if (!materialVersion || materialVersion !== coreVersion) {
+      context.logger.error(`@angular/material ${dependencyVersion} not found.
+       Please run 'ng add @angular/material' first`);
+      return;
+    }
 
     if (project.extensions.projectType === ProjectType.Application) {
       return chain([addGitPortfolioModule(options)]);
