@@ -9,19 +9,33 @@ import {
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
 
+import { getPackageVersionFromPackageJson } from './package-config';
 import { Schema } from './schema';
 
-const ordlistGeneratorModuleName = 'WordlistGeneratorModule';
-const ordlistGeneratorPackageName = '@tehw0lf/wordlist-generator';
+const wordlistGeneratorModuleName = 'WordlistGeneratorModule';
+const wordlistGeneratorPackageName = '@tehw0lf/wordlist-generator';
 
 export default function (options: Schema): Rule {
   return async (host: Tree, context: SchematicContext) => {
     const workspace = await getWorkspace(host);
     const project = getProjectFromWorkspace(workspace, options.project);
 
+    const coreVersion = getPackageVersionFromPackageJson(host, '@angular/core');
+    const materialVersion = getPackageVersionFromPackageJson(
+      host,
+      '@angular/material'
+    );
+    const dependencyVersion = coreVersion || '0.0.0';
+
+    if (!materialVersion || materialVersion !== coreVersion) {
+      context.logger.error(`@angular/material ${dependencyVersion} not found.
+       Please run 'ng add @angular/material' first`);
+    }
+
     if (project.extensions.projectType === ProjectType.Application) {
       return chain([addWordlistGeneratorModule(options)]);
     }
+
     context.logger.warn('Please specify an application project');
     return;
   };
@@ -33,11 +47,11 @@ function addWordlistGeneratorModule(options: Schema) {
     const project = getProjectFromWorkspace(workspace, options.project);
     const appModulePath = getAppModulePath(host, getProjectMainFile(project));
 
-    if (!hasNgModuleImport(host, appModulePath, ordlistGeneratorModuleName)) {
+    if (!hasNgModuleImport(host, appModulePath, wordlistGeneratorModuleName)) {
       addModuleImportToRootModule(
         host,
-        ordlistGeneratorModuleName,
-        ordlistGeneratorPackageName,
+        wordlistGeneratorModuleName,
+        wordlistGeneratorPackageName,
         project
       );
     }
