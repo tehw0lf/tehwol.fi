@@ -1,4 +1,4 @@
-import { chain, Rule, Tree } from '@angular-devkit/schematics';
+import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import {
   addModuleImportToRootModule,
   getAppModulePath,
@@ -11,17 +11,18 @@ import { ProjectType } from '@schematics/angular/utility/workspace-models';
 
 import { Schema } from './schema';
 
-const gitPortfolioModuleName = 'gitPortfolioModule';
+const gitPortfolioModuleName = 'GitPortfolioModule';
 const gitPortfolioPackageName = '@tehw0lf/git-portfolio';
 
 export default function (options: Schema): Rule {
-  return async (host: Tree) => {
+  return async (host: Tree, context: SchematicContext) => {
     const workspace = await getWorkspace(host);
     const project = getProjectFromWorkspace(workspace, options.project);
 
     if (project.extensions.projectType === ProjectType.Application) {
       return chain([addGitPortfolioModule(options)]);
     }
+    context.logger.warn('Please specify an application project');
     return;
   };
 }
