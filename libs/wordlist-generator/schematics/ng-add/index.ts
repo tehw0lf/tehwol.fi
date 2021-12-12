@@ -30,6 +30,7 @@ export default function (options: Schema): Rule {
     if (!materialVersion || materialVersion !== coreVersion) {
       context.logger.error(`@angular/material ${dependencyVersion} not found.
        Please run 'ng add @angular/material' first`);
+      return;
     }
 
     if (project.extensions.projectType === ProjectType.Application) {
