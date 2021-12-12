@@ -28,7 +28,10 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   cardColor = 'lightgray';
 
   @Input()
-  gitProviderConfig: GitProviderConfig = { github: '', gitlab: '' };
+  gitProviderConfig: GitProviderConfig = {
+    github: 'tehw0lf',
+    gitlab: 'tehw0lf'
+  };
 
   @Input()
   showForked = true;

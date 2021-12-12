@@ -23,22 +23,8 @@ The following dependencies are needed:
 
 ### Module
 
+If it's not added already, please run `ng add @angular/material` prior to adding this module.
 Run `ng add @tehw0lf/git-portfolio` in the workspace root of your angular application.
-In app.module.ts, import GitPortfolioModule and add it to the module's import section:
-
-```ts
-import { GitPortfolioModule } from '../../../git-portfolio/src/public-api';
-
-@NgModule({
-    ...
-  imports: [
-      ...
-    GitPortfolioModule
-  ],
-  ...
-})
-export class AppModule {}
-```
 
 ## Usage
 
@@ -88,11 +74,6 @@ Run `ng build git-portfolio` to build the project. The build artifacts will be s
 ### Running unit tests
 
 Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
-
-## To Do
-
-Expand schematic to add module entry
-Install dependencies automatically
 
 ## Contributing
 

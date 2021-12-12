@@ -12,7 +12,8 @@ import { EmailApiService } from '../email-api.service';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnDestroy {
-  @Input() apiURL = 'https://forwardmethis.com/tehwolf@pm.me';
+  @Input() apiURL = 'https://forwardmethis.com/';
+  @Input() email = '';
 
   formGroup: FormGroup;
   emailSent: Subject<boolean | null> = new Subject();
@@ -39,7 +40,7 @@ export class ContactFormComponent implements OnDestroy {
 
   submitFormData(formData: FormGroup) {
     this.emailService
-      .sendEmail(this.apiURL, formData.value)
+      .sendEmail(`${this.apiURL}${this.email}`, formData.value)
       .pipe(
         tap((response: string) => {
           if (response === 'OK') {
