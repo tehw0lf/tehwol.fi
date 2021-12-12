@@ -3,7 +3,9 @@
   "schematics": {
     "ng-add": {
       "description": "Add contact-form library to the project.",
-      "factory": "./ng-add/index#ngAdd"
+      "factory": "./ng-add/index",
+      "schema": "./ng-add/schema.json",
+      "aliases": ["install"]
     }
   }
 }

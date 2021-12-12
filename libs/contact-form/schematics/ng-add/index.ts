@@ -1,10 +1,10 @@
-import { chain, Rule, Tree } from '@angular-devkit/schematics';
+import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import {
-  addModuleImportToRootModule,
-  getAppModulePath,
-  getProjectFromWorkspace,
-  getProjectMainFile,
-  hasNgModuleImport
+    addModuleImportToRootModule,
+    getAppModulePath,
+    getProjectFromWorkspace,
+    getProjectMainFile,
+    hasNgModuleImport
 } from '@angular/cdk/schematics';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
@@ -15,13 +15,14 @@ const contactFormModuleName = 'ContactFormModule';
 const contactFormPackageName = '@tehw0lf/contact-form';
 
 export default function (options: Schema): Rule {
-  return async (host: Tree) => {
+  return async (host: Tree, context: SchematicContext) => {
     const workspace = await getWorkspace(host);
     const project = getProjectFromWorkspace(workspace, options.project);
 
     if (project.extensions.projectType === ProjectType.Application) {
       return chain([addContactFormModule(options)]);
     }
+    context.logger.warn('Please specify an application project');
     return;
   };
 }
