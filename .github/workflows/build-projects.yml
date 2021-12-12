@@ -45,17 +45,14 @@ jobs:
         run: |
           cd libs/contact-form
           npm run build
-          cd ..
       - name: Build library schematics for git-portfolio
         run: |
           cd libs/git-portfolio
           npm run build
-          cd ..
       - name: Build library schematics for wordlist-generator
         run: |
-          cd wordlist-generator
+          cd libs/wordlist-generator
           npm run build
-          cd ../..
       - name: Run scully
         run: npm run scully -- --project tehwolfi
       - name: Check if published git portfolio library version is outdated
