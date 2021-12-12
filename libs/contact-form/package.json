@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/contact-form",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
@@ -16,7 +16,7 @@
     "@angular/cdk": "^13.1.0",
     "@angular/common": "^13.1.0",
     "@angular/core": "^13.1.0",
-    "@angular/flex-layout": "^13.1.0",
+    "@angular/flex-layout": "^13.0.0-beta.36",
     "@angular/forms": "^13.1.0",
     "@angular/material": "^13.1.0"
   },
