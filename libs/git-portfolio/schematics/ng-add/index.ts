@@ -40,7 +40,14 @@ export default function (options: Schema): Rule {
       host,
       '@angular/material'
     );
-    const dependencyVersion = coreVersion || '0.0.0';
+    const angularDependencyVersion = coreVersion || '0.0.0';
+
+    if (!materialVersion || materialVersion !== coreVersion) {
+      context.logger
+        .error(`@angular/material ${angularDependencyVersion} not found.
+       Please run 'ng add @angular/material' first`);
+      return;
+    }
 
     if (!flexLayoutVersion || flexLayoutVersion !== flexLayoutFallbackVersion) {
       addPackageToPackageJson(
@@ -78,12 +85,6 @@ export default function (options: Schema): Rule {
       context.logger.info(
         `@primer/octicons ${octiconsFallbackVersion} was added to dependencies.`
       );
-    }
-
-    if (!materialVersion || materialVersion !== coreVersion) {
-      context.logger.error(`@angular/material ${dependencyVersion} not found.
-       Please run 'ng add @angular/material' first`);
-      return;
     }
 
     if (project.extensions.projectType === ProjectType.Application) {
