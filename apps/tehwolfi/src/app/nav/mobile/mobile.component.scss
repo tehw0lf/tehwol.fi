@@ -15,7 +15,11 @@
 }
 
 .mat-drawer {
-  background-color: $bgcolor-nav;
+  background-color: $bgcolor-main;
+}
+
+.mat-drawer-container {
+  background-color: $bgcolor-main;
 }
 
 .mat-icon-button {
@@ -29,7 +33,6 @@
 }
 
 .main-content {
-  background-color: $bgcolor-main;
   color: $fontcolor;
   padding: 32px 0 0 32px;
 }

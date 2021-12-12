@@ -39,10 +39,20 @@ jobs:
         run: pnpm lint --parallel
       - name: Test
         run: pnpm test --parallel
-      #- name: Run end to end tests # works locally, but not on ci
-      #run: pnpm e2e
       - name: Build
         run: pnpm build
+      - name: Build library schematics for contact-form
+        run: |
+          cd libs/contact-form
+          pnpm build
+      - name: Build library schematics for git-portfolio
+        run: |
+          cd libs/git-portfolio
+          pnpm build
+      - name: Build library schematics for wordlist-generator
+        run: |
+          cd libs/wordlist-generator
+          pnpm build
       - name: Run scully
         run: pnpm scully -- --project tehwolfi
       - name: Check if published git portfolio library version is outdated
