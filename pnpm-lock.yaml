@@ -36,6 +36,7 @@ importers:
       '@nrwl/tao': 13.3.0
       '@nrwl/workspace': 13.3.0
       '@primer/octicons': ^16.1.1
+      '@schematics/angular': 13.0.4
       '@scullyio/init': ^2.0.1
       '@scullyio/ng-lib': ^2.0.0
       '@scullyio/scully': ^2.0.1
@@ -105,6 +106,7 @@ importers:
       '@nrwl/nx-cloud': 13.0.0
       '@nrwl/tao': 13.3.0
       '@nrwl/workspace': 13.3.0_b853ef2fa726a6dbb7b1d2a66930f141
+      '@schematics/angular': 13.0.4
       '@types/jest': 27.0.2
       '@types/node': 14.17.5
       '@typescript-eslint/eslint-plugin': 5.3.1_4653b7803b7453f5f37717b7e1448517
@@ -132,34 +134,34 @@ importers:
     specifiers:
       copyfiles: 2.4.1
       tslib: ^2.2.0
-      typescript: file:../../node_modules/typescript
+      typescript: 4.4.4
     dependencies:
       tslib: 2.3.0
     devDependencies:
       copyfiles: 2.4.1
-      typescript: link:../../node_modules/typescript
+      typescript: 4.4.4
 
   libs/git-portfolio:
     specifiers:
       copyfiles: 2.4.1
       tslib: ^2.2.0
-      typescript: file:../../node_modules/typescript
+      typescript: 4.4.4
     dependencies:
       tslib: 2.3.0
     devDependencies:
       copyfiles: 2.4.1
-      typescript: link:../../node_modules/typescript
+      typescript: 4.4.4
 
   libs/wordlist-generator:
     specifiers:
       copyfiles: 2.4.1
       tslib: ^2.2.0
-      typescript: file:../../node_modules/typescript
+      typescript: 4.4.4
     dependencies:
       tslib: 2.3.0
     devDependencies:
       copyfiles: 2.4.1
-      typescript: link:../../node_modules/typescript
+      typescript: 4.4.4
 
 packages:
 
@@ -5255,6 +5257,7 @@ packages:
   /errno/0.1.8:
     resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
     hasBin: true
+    requiresBuild: true
     dependencies:
       prr: 1.0.1
     dev: true
