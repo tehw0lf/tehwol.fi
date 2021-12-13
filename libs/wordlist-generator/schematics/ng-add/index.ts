@@ -34,7 +34,10 @@ export default function (options: Schema): Rule {
       return;
     }
 
-    if (!materialVersion || materialVersion !== coreVersion) {
+    if (
+      !materialVersion ||
+      isSameVersion(angularDependencyVersion, materialVersion)
+    ) {
       context.logger
         .error(`@angular/material ${angularDependencyVersion} not found.
        Please run 'ng add @angular/material' first`);
@@ -65,4 +68,16 @@ function addWordlistGeneratorModule(options: Schema) {
       );
     }
   };
+}
+
+function isSameVersion(coreVersion: string, moduleVersion: string): boolean {
+  if (isNaN(parseInt(coreVersion[0]))) {
+    coreVersion = coreVersion.slice(1);
+  }
+
+  if (isNaN(parseInt(moduleVersion[0]))) {
+    moduleVersion = moduleVersion.slice(1);
+  }
+
+  return coreVersion === moduleVersion;
 }
