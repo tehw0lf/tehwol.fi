@@ -4,9 +4,8 @@ import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { getFileContent } from '../testing/file-content';
 import { createTestApp, createTestAppWithMaterial } from '../testing/test-app';
 import { createTestLibrary } from '../testing/test-library';
-import { getPackageVersionFromPackageJson } from './package-config';
 
-describe('ng-add schematic with material present', () => {
+describe('ng-add-setup schematic with material present', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
   let errorOutput: string[];
@@ -33,7 +32,7 @@ describe('ng-add schematic with material present', () => {
   describe('add module', () => {
     it('should add the GitPortfolioModule to the project module', async () => {
       const tree = await runner
-        .runSchematicAsync('ng-add', {}, appTree)
+        .runSchematicAsync('ng-add-setup', {}, appTree)
         .toPromise();
       const fileContent = getFileContent(
         tree,
@@ -80,17 +79,11 @@ describe('ng-add schematic without material present', () => {
         '/projects/material/src/app/app.module.ts'
       );
 
-      const coreVersion = getPackageVersionFromPackageJson(
-        tree,
-        '@angular/core'
-      );
-
       expect(fileContent).not.toContain('GitPortfolioModule');
 
       expect(errorOutput.length).toBe(1);
       expect(warnOutput.length).toBe(0);
-      expect(errorOutput[0])
-        .toMatch(`@angular/material ${coreVersion} not found.
+      expect(errorOutput[0]).toMatch(`@angular/material not found.
        Please run 'ng add @angular/material' first`);
     });
   });
