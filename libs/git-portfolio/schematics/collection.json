@@ -2,10 +2,15 @@
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ng-add": {
-      "description": "Add git-portfolio library to the project.",
+      "description": "Add git-portfolio library to the project if material is installed.",
       "factory": "./ng-add/index",
-      "schema": "./ng-add/schema.json",
-      "aliases": ["install"]
+      "schema": "./ng-add/schema.json"
+    },
+    "ng-add-setup": {
+      "description": "Install dependencies and add the library to the project",
+      "private": true,
+      "factory": "./ng-add/setup",
+      "schema": "./ng-add/schema.json"
     }
   }
 }
