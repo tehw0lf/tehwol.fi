@@ -46,14 +46,17 @@ jobs:
       - name: Build library schematics for contact-form
         run: |
           cd libs/contact-form
+          echo "`jq '.name="@tehw0lf/contact-form"' package.json`" > package.json
           pnpm build
       - name: Build library schematics for git-portfolio
         run: |
           cd libs/git-portfolio
+          echo "`jq '.name="@tehw0lf/git-portfolio"' package.json`" > package.json
           pnpm build
       - name: Build library schematics for wordlist-generator
         run: |
           cd libs/wordlist-generator
+          echo "`jq '.name="@tehw0lf/wordlist-generator"' package.json`" > package.json
           pnpm build
       - name: Run scully
         run: pnpm scully -- --project tehwolfi
