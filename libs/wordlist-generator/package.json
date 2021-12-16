@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/wordlist-generator",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
@@ -23,9 +23,6 @@
     "tslib": "^2.2.0"
   },
   "schematics": "./schematics/collection.json",
-  "ng-add": {
-    "save": "dependencies"
-  },
   "devDependencies": {
     "copyfiles": "2.4.1",
     "typescript": "4.4.4"
