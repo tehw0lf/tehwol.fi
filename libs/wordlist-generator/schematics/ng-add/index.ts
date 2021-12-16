@@ -1,6 +1,5 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { RunSchematicTask } from '@angular-devkit/schematics/tasks';
-import { getProjectFromWorkspace } from '@angular/cdk/schematics';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
 
@@ -14,7 +13,18 @@ export default function (options: Schema): Rule {
       '@angular/material'
     );
     const workspace = await getWorkspace(host);
-    const project = getProjectFromWorkspace(workspace, options.project);
+    const defaultProject = workspace.extensions.defaultProject as string;
+
+    const project = options.project
+      ? workspace.projects.get(options.project)
+      : workspace.projects.get(defaultProject);
+
+    if (!project) {
+      context.logger.error(
+        `No project specified and can not find default project ${project}`
+      );
+      return;
+    }
 
     if (project.extensions.projectType !== ProjectType.Application) {
       context.logger.error(
