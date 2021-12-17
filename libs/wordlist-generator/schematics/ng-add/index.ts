@@ -1,5 +1,5 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import { RunSchematicTask } from '@angular-devkit/schematics/tasks';
+import { NodePackageInstallTask, RunSchematicTask } from '@angular-devkit/schematics/tasks';
 import { removePackageJsonDependency } from '@schematics/angular/utility/dependencies';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
@@ -25,6 +25,7 @@ export default function (options: Schema): Rule {
       context.logger.error(
         `No project specified and can not find default project ${project}`
       );
+      context.addTask(new NodePackageInstallTask());
       return;
     }
 
@@ -33,6 +34,7 @@ export default function (options: Schema): Rule {
       context.logger.error(
         'This library needs to be added to an application project'
       );
+      context.addTask(new NodePackageInstallTask());
       return;
     }
 
@@ -40,6 +42,7 @@ export default function (options: Schema): Rule {
       removePackageJsonDependency(host, '@tehw0lf/wordlist-generator');
       context.logger.error(`@angular/material not found.
        Please run 'ng add @angular/material' first`);
+      context.addTask(new NodePackageInstallTask());
       return;
     }
 
