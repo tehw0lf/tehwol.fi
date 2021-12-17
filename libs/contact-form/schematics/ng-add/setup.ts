@@ -1,9 +1,4 @@
-import {
-  chain,
-  Rule,
-  SchematicContext,
-  Tree
-} from '@angular-devkit/schematics';
+import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addModuleImportToRootModule,
@@ -14,10 +9,7 @@ import {
 } from '@angular/cdk/schematics';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
-import {
-  addPackageToPackageJson,
-  getPackageVersionFromPackageJson
-} from './package-config';
+import { addPackageToPackageJson, getPackageVersionFromPackageJson } from './package-config';
 import { Schema } from './schema';
 
 const contactFormModuleName = 'ContactFormModule';
@@ -43,8 +35,9 @@ function addContactFormModule(options: Schema): Rule {
         contactFormPackageName,
         project
       );
+    } else {
+      context.logger.warn('Library is already installed, nothing to do.');
     }
-    context.logger.warn('Library is already installed, nothing to do.');
     return;
   };
 }
