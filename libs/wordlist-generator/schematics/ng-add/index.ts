@@ -21,7 +21,7 @@ export default function (options: Schema): Rule {
       : workspace.projects.get(defaultProject);
 
     if (!project) {
-      removePackageJsonDependency(host, '@atehw0lf/wordlist-generator');
+      removePackageJsonDependency(host, '@tehw0lf/wordlist-generator');
       context.logger.error(
         `No project specified and can not find default project ${project}`
       );
@@ -29,7 +29,7 @@ export default function (options: Schema): Rule {
     }
 
     if (project.extensions.projectType !== ProjectType.Application) {
-      removePackageJsonDependency(host, '@atehw0lf/wordlist-generator');
+      removePackageJsonDependency(host, '@tehw0lf/wordlist-generator');
       context.logger.error(
         'This library needs to be added to an application project'
       );
@@ -37,7 +37,7 @@ export default function (options: Schema): Rule {
     }
 
     if (!materialVersion) {
-      removePackageJsonDependency(host, '@atehw0lf/wordlist-generator');
+      removePackageJsonDependency(host, '@tehw0lf/wordlist-generator');
       context.logger.error(`@angular/material not found.
        Please run 'ng add @angular/material' first`);
       return;
