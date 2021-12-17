@@ -35,8 +35,9 @@ function addWordlistGeneratorModule(options: Schema): Rule {
         wordlistGeneratorPackageName,
         project
       );
+    } else {
+      context.logger.warn('Library is already installed, nothing to do.');
     }
-    context.logger.warn('Library is already installed, nothing to do.');
     return;
   };
 }
