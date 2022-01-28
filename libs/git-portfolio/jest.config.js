@@ -8,6 +8,8 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$'
     }
   },
+  collectCoverage: true,
+  coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/libs/git-portfolio',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular'
