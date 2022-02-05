@@ -37,6 +37,7 @@ importers:
       '@scullyio/init': ^2.1.11
       '@scullyio/ng-lib': ^2.1.11
       '@scullyio/scully': ^2.1.11
+      '@scullyio/scully-plugin-puppeteer': ^2.1.11
       '@types/jest': 27.0.2
       '@types/node': ^14.14.33
       '@typescript-eslint/eslint-plugin': 5.10.2
@@ -80,6 +81,7 @@ importers:
       '@scullyio/init': 2.1.11_722dcb4b9b1e49426f7864bcefa0d6da
       '@scullyio/ng-lib': 2.1.11_a191cc72511446c2e48253d7e46b5b20
       '@scullyio/scully': 2.1.11_10cfe1568a4c82780cdb2fa31fa31155
+      '@scullyio/scully-plugin-puppeteer': 2.1.11_117c48737e095695fa15b15805a66379
       cartesian-product-generator: 1.1.1
       github-language-colors: 1.0.0
       rxjs: 7.5.2
@@ -2908,6 +2910,39 @@ packages:
       '@angular/router': 13.2.1_067d20683e3610fe477d10fcb63a25eb
       rxjs: 7.5.2
       tslib: 2.3.1
+    dev: false
+
+  /@scullyio/scully-plugin-puppeteer/2.1.11_117c48737e095695fa15b15805a66379:
+    resolution: {integrity: sha512-wqPT5RD/ySxEGn4+mMTkb62LXLtQ3zaEms0uj68LilHXkHBuvdl6S42N7gzNA16iSFMts59pZLAbIJ9E12WheA==}
+    peerDependencies:
+      '@scullyio/scully': '*'
+      puppeteer: ^10.2.0
+    dependencies:
+      os: 0.1.2
+      '@angular/common': 12.2.6_@angular+core@12.2.6+rxjs@7.5.2
+      '@angular/core': 12.2.6_rxjs@7.5.2+zone.js@0.11.4
+      '@angular/platform-server': 12.2.16_b16d82942e207ae9e6f9d5390d495b82
+      '@scullyio/scully': 2.1.11_10cfe1568a4c82780cdb2fa31fa31155
+      '@sentry/node': 6.13.3
+      asciidoctor: 2.2.6
+      chalk: 4.1.2
+      compression: 1.7.4
+      cors: 2.8.5
+      express: 4.17.1
+      js-yaml: 4.1.0
+      prismjs: 1.25.0
+      rxjs: 7.5.2
+      tslib: 1.14.1
+      ws: 8.2.3
+      zone.js: 0.11.4
+    transitivePeerDependencies:
+      - '@angular/animations'
+      - '@angular/compiler'
+      - '@angular/platform-browser'
+      - '@angular/platform-browser-dynamic'
+      - bufferutil
+      - supports-color
+      - utf-8-validate
     dev: false
 
   /@scullyio/scully/2.1.11_10cfe1568a4c82780cdb2fa31fa31155:
