@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/wordlist-generator",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
@@ -12,12 +12,12 @@
     "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/libs/wordlist-generator/"
   },
   "peerDependencies": {
-    "@angular/animations": "^13.1.0",
-    "@angular/cdk": "^13.1.0",
-    "@angular/common": "^13.1.0",
-    "@angular/core": "^13.1.0",
-    "@angular/forms": "^13.1.0",
-    "@angular/material": "^13.1.0"
+    "@angular/animations": "^13.2.1",
+    "@angular/cdk": "^13.2.1",
+    "@angular/common": "^13.2.1",
+    "@angular/core": "^13.2.1",
+    "@angular/forms": "^13.2.1",
+    "@angular/material": "^13.2.1"
   },
   "dependencies": {
     "tslib": "^2.2.0"
