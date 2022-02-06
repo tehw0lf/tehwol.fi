@@ -24,7 +24,15 @@ $warn-dark: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
 
 @include angular-material-theme($light-theme);
+$bgcolor-main: white;
+$bgcolor-nav: rgba(255, 255, 255, 0.75);
+$fontcolor: #437da8;
+$linkcolor: #cc7832;
 
 .dark-theme {
   @include angular-material-theme($dark-theme);
+
+  /* Colors */
+  $bgcolor-main: #1a1a1a;
+  $bgcolor-nav: rgba(34, 34, 34, 0.75);
 }
