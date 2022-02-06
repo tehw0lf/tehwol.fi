@@ -25,7 +25,22 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   buttonColor = '#cc7832';
 
   @Input()
-  cardColor = 'lightgray';
+  cardColor = '#437da8';
+
+  @Input()
+  checkColor = '#38e038';
+
+  @Input()
+  forkColor = '#437da8';
+
+  @Input()
+  issueColor = 'rgb(56, 224, 56)';
+
+  @Input()
+  pasteColor = '#cc7832';
+
+  @Input()
+  starColor = 'gold';
 
   @Input()
   gitProviderConfig: GitProviderConfig = {
