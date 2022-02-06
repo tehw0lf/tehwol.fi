@@ -7,9 +7,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class WordlistGeneratorComponent {
-  constructor(
-  ) {
+  buttonBackgroundColor = 'rgba(34, 34, 34, 0.75)';
+
+  constructor() {
     //
   }
 
+  switchToLight(): void {
+    this.buttonBackgroundColor = 'rgba(255, 255, 255, 0.75)';
+  }
+
+  switchToDark(): void {
+    this.buttonBackgroundColor = 'rgba(34, 34, 34, 0.75)';
+  }
 }
