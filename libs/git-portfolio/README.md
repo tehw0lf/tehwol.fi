@@ -58,7 +58,12 @@ The colors of card background, button and text as well as the backdrop filter ca
 backgroundColor; //default: 'rgba(34, 34, 34, 0.75)';
 backdropFilter; //default: 'blur(50px)';
 buttonColor; //default: '#cc7832';
-cardColor; //default: 'lightgray';
+cardColor; //default: '#437da8';
+checkColor; //default: '#38e038';
+forkColor; //default: '#437da8';
+issueColor; //default: 'rgb(56, 224, 56)';
+pasteColor; //default: '#cc7832';
+starColor; //default: 'gold';
 ```
 
 ## Development

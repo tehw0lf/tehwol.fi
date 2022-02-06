@@ -41,13 +41,13 @@
         <div [ngStyle]="{ color: cardColor }">{{ gitRepo.language }}</div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div octicon="star" color="gold"></div>
+        <div octicon="star" [color]="starColor"></div>
         <div [ngStyle]="{ color: cardColor }">
           {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
         </div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div octicon="repo-forked" color="#437da8"></div>
+        <div octicon="repo-forked" [color]="forkColor"></div>
         <div [ngStyle]="{ color: cardColor }">{{ gitRepo.forks_count }}</div>
       </div>
       <div
@@ -56,7 +56,7 @@
         fxLayout="row"
         fxLayoutGap="5px"
       >
-        <div octicon="issue-opened" color="rgb(56, 224, 56)"></div>
+        <div octicon="issue-opened" [color]="issueColor"></div>
         <div [ngStyle]="{ color: cardColor }">
           {{ gitRepo.open_issues_count }}
         </div>
@@ -90,10 +90,10 @@
           <div
             *ngIf="isCopied"
             octicon="check"
-            color="#38e038"
+            [color]="checkColor"
             width="24"
           ></div>
-          <div octicon="paste" [color]="buttonColor" width="24px"></div>
+          <div octicon="paste" [color]="pasteColor" width="24px"></div>
           <span>Copy URL</span>
         </span>
       </button>

@@ -16,6 +16,11 @@ export class RepoCardComponent {
   @Input() backdropFilter!: string;
   @Input() buttonColor!: string;
   @Input() cardColor!: string;
+  @Input() checkColor!: string;
+  @Input() forkColor!: string;
+  @Input() issueColor!: string;
+  @Input() pasteColor!: string;
+  @Input() starColor!: string;
 
   @Input()
   gitRepo!: GitRepository;
