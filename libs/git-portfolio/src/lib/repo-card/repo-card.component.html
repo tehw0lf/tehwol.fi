@@ -38,15 +38,17 @@
           }"
           class="language-icon"
         ></div>
-        <div>{{ gitRepo.language }}</div>
+        <div [ngStyle]="{ color: cardColor }">{{ gitRepo.language }}</div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
         <div octicon="star" color="gold"></div>
-        <div>{{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}</div>
+        <div [ngStyle]="{ color: cardColor }">
+          {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
+        </div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
         <div octicon="repo-forked" color="#437da8"></div>
-        <div>{{ gitRepo.forks_count }}</div>
+        <div [ngStyle]="{ color: cardColor }">{{ gitRepo.forks_count }}</div>
       </div>
       <div
         *ngIf="gitRepo.open_issues_count"
@@ -55,7 +57,9 @@
         fxLayoutGap="5px"
       >
         <div octicon="issue-opened" color="rgb(56, 224, 56)"></div>
-        <div>{{ gitRepo.open_issues_count }}</div>
+        <div [ngStyle]="{ color: cardColor }">
+          {{ gitRepo.open_issues_count }}
+        </div>
       </div>
     </mat-card-subtitle>
   </mat-card-header>
@@ -89,7 +93,7 @@
             color="#38e038"
             width="24"
           ></div>
-          <div octicon="paste" color="#cc7832" width="24px"></div>
+          <div octicon="paste" [color]="buttonColor" width="24px"></div>
           <span>Copy URL</span>
         </span>
       </button>
