@@ -12,7 +12,11 @@ import { ThemeService } from '../theme.service';
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   backgroundColor = 'rgba(34, 34, 34, 0.75)';
-  cardStyle: string[] = [`"background-color": ${this.backgroundColor}`];
+  cardStyle: string[] = [
+    'color: "#437da8"',
+    `"background-color": ${this.backgroundColor}`,
+    '"backdrop-filter": "blur(50px)"'
+  ];
 
   gitProviderConfig: { github: string; gitlab: string } = {
     github: environment.githubUser,
@@ -24,8 +28,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   constructor(private themeService: ThemeService) {}
 
   ngOnInit(): void {
-    this.themeService
-      .isLight()
+    this.themeService.isLight
       .pipe(
         tap((isLight: boolean) => {
           isLight ? this.switchToLight() : this.switchToDark();
