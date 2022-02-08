@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment.prod';
 })
 export class GitPortfolioComponent {
   backgroundColor = 'rgba(34, 34, 34, 0.75)';
+  cardStyle: string[] = [`"background-color": ${this.backgroundColor}`];
 
   gitProviderConfig: { github: string; gitlab: string } = {
     github: environment.githubUser,
