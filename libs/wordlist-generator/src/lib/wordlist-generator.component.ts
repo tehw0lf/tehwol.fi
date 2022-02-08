@@ -16,9 +16,12 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   encapsulation: ViewEncapsulation.None
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
-  @Input() buttonBackgroundColor = '#424242';
-  @Input() buttonTextColor = '#cc7832';
-  @Input() textColor = '#cc7832';
+  @Input() buttonStyle: string[] = [
+    '"background-color": "#424242"',
+    'color: "#cc7832"'
+  ];
+  @Input() dragStyle: string[] = ['color: "#cc7832"'];
+  @Input() textStyle: string[] = ['color: "#cc7832"'];
 
   charsetForm: FormGroup | undefined;
   wordsGenerated: number | undefined;
