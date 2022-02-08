@@ -1,8 +1,8 @@
 <div *ngIf="gitRepositories$ | async as gitRepositories">
   <div *ngFor="let gitProvider of gitProviders | keyvalue">
-    <h1 [ngStyle]="{ color: cardColor }">{{ gitProvider.value }}</h1>
+    <h1 [ngClass]="textStyle">{{ gitProvider.value }}</h1>
     <div *ngIf="showOwn">
-      <h2 [ngStyle]="{ color: cardColor }" class="mat-headline">Own Repos</h2>
+      <h2 [ngClass]="textStyle" class="mat-headline">Own Repos</h2>
       <div
         fxLayout="row wrap"
         fxLayout.lt-sm="column"
@@ -18,10 +18,9 @@
               gitProvider.key
             )
           "
-          [backgroundColor]="backgroundColor"
-          [backdropFilter]="backdropFilter"
-          [buttonColor]="buttonColor"
-          [cardColor]="cardColor"
+          [buttonStyle]="buttonStyle"
+          [cardStyle]="cardStyle"
+          [textStyle]="textStyle"
           [checkColor]="checkColor"
           [forkColor]="forkColor"
           [issueColor]="issueColor"
@@ -38,7 +37,7 @@
         >
         </repo-card>
         <div
-          [ngStyle]="{ color: cardColor }"
+          [ngClass]="textStyle"
           *ngIf="
             (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'own')
@@ -49,9 +48,7 @@
       </div>
     </div>
     <div *ngIf="showForked">
-      <h2 [ngStyle]="{ color: cardColor }" class="mat-headline">
-        Forked Repos
-      </h2>
+      <h2 [ngClass]="textStyle" class="mat-headline">Forked Repos</h2>
       <div
         fxLayout="row wrap"
         fxLayout.lt-sm="column"
@@ -67,10 +64,14 @@
               gitProvider.key
             )
           "
-          [backgroundColor]="backgroundColor"
-          [backdropFilter]="backdropFilter"
-          [buttonColor]="buttonColor"
-          [cardColor]="cardColor"
+          [buttonStyle]="buttonStyle"
+          [cardStyle]="cardStyle"
+          [textStyle]="textStyle"
+          [checkColor]="checkColor"
+          [forkColor]="forkColor"
+          [issueColor]="issueColor"
+          [pasteColor]="pasteColor"
+          [starColor]="starColor"
           [gitRepo]="gitRepo"
           [isCopied]="isCopiedToClipboard(gitRepo)"
           (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
@@ -81,7 +82,7 @@
           fxLayoutAlign="stretch"
         ></repo-card>
         <div
-          [ngStyle]="{ color: cardColor }"
+          [ngClass]="textStyle"
           *ngIf="
             (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'forked')

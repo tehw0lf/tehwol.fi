@@ -1,10 +1,4 @@
-<mat-card
-  [ngStyle]="{
-    color: cardColor,
-    'background-color': backgroundColor,
-    'backdrop-filter': backdropFilter
-  }"
->
+<mat-card [ngClass]="cardStyle">
   <mat-card-header>
     <div
       mat-card-avatar
@@ -20,7 +14,7 @@
     <mat-card-title
       ><a
         mat-button
-        [ngStyle]="{ color: buttonColor }"
+        [ngClass]="buttonStyle"
         target="_blank"
         href="{{ gitRepo.html_url || gitRepo.web_url }}"
       >
@@ -38,17 +32,17 @@
           }"
           class="language-icon"
         ></div>
-        <div [ngStyle]="{ color: cardColor }">{{ gitRepo.language }}</div>
+        <div [ngClass]="textStyle">{{ gitRepo.language }}</div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
         <div octicon="star" [color]="starColor"></div>
-        <div [ngStyle]="{ color: cardColor }">
+        <div [ngClass]="textStyle">
           {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
         </div>
       </div>
       <div class="info-item" fxLayout="row" fxLayoutGap="5px">
         <div octicon="repo-forked" [color]="forkColor"></div>
-        <div [ngStyle]="{ color: cardColor }">{{ gitRepo.forks_count }}</div>
+        <div [ngClass]="textStyle">{{ gitRepo.forks_count }}</div>
       </div>
       <div
         *ngIf="gitRepo.open_issues_count"
@@ -57,7 +51,7 @@
         fxLayoutGap="5px"
       >
         <div octicon="issue-opened" [color]="issueColor"></div>
-        <div [ngStyle]="{ color: cardColor }">
+        <div [ngClass]="textStyle">
           {{ gitRepo.open_issues_count }}
         </div>
       </div>
@@ -68,17 +62,17 @@
   </mat-card-content>
   <mat-card-footer fxLayout="row" fxLayoutGap="12px">
     <span class="mat-footer-cell" fxFlex>
-      <span class="footer-span" [ngStyle]="{ color: cardColor }"
+      <span class="footer-span" [ngClass]="textStyle"
         >Created: {{ gitRepo.created_at | date }}</span
       >
-      <span class="footer-span" [ngStyle]="{ color: cardColor }"
+      <span class="footer-span" [ngClass]="textStyle"
         >Updated:
         {{ gitRepo.pushed_at || gitRepo.last_activity_at | date }}</span
       >
     </span>
     <span class="mat-footer-cell">
       <button
-        [ngStyle]="{ color: buttonColor }"
+        [ngClass]="buttonStyle"
         mat-button
         [cdkCopyToClipboard]="
           gitRepo.clone_url || gitRepo.http_url_to_repo || ''
