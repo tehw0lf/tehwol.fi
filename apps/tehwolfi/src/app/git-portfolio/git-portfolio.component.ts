@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment.prod';
+import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'tehw0lf-git-portfolio',
@@ -8,7 +10,7 @@ import { environment } from '../../environments/environment.prod';
   templateUrl: './git-portfolio.component.html',
   styleUrls: ['./git-portfolio.component.scss']
 })
-export class GitPortfolioComponent {
+export class GitPortfolioComponent implements OnInit, OnDestroy {
   backgroundColor = 'rgba(34, 34, 34, 0.75)';
   cardStyle: string[] = [`"background-color": ${this.backgroundColor}`];
 
@@ -17,8 +19,25 @@ export class GitPortfolioComponent {
     gitlab: environment.gitlabUser
   };
 
-  constructor() {
-    //
+  private unsubscribe$: Subject<void> = new Subject();
+
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit(): void {
+    this.themeService
+      .isLight()
+      .pipe(
+        tap((isLight: boolean) => {
+          isLight ? this.switchToLight() : this.switchToDark();
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   switchToLight(): void {
