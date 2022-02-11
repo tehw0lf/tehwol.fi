@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  lightTheme = false;
   title = 'tehwol.fi';
 
   constructor(private router: Router) {}
