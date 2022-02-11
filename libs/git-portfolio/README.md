@@ -55,7 +55,10 @@ showOwn; //display own repositories. default: true
 The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
 
 ```ts
-buttonStyle; //default: ['color": "#cc7832"'];
+buttonStyle; /*default: [
+                          '"background-color": "#424242"',
+                          'color": "#cc7832"'
+                        ];*/
 cardStyle; /*default: [
                        'color: "#437da8"',
                        '"background-color": "rgba(34, 34, 34, 0.75)"',
