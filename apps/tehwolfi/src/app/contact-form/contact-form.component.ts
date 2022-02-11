@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'tehw0lf-contact-form',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss']
 })

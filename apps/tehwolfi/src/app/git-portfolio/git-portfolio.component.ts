@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment.prod';
@@ -6,7 +6,6 @@ import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'tehw0lf-git-portfolio',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './git-portfolio.component.html',
   styleUrls: ['./git-portfolio.component.scss']
 })
