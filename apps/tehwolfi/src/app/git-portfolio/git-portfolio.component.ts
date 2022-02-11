@@ -10,6 +10,11 @@ import { ThemeService } from '../theme.service';
   styleUrls: ['./git-portfolio.component.scss']
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
+  buttonStyle = {
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    color: '#cc7832'
+  };
+
   cardStyle = {
     color: '#437da8',
     'background-color': 'rgba(34, 34, 34, 0.75)',
@@ -42,6 +47,11 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   switchToLight(): void {
+    this.buttonStyle = {
+      'background-color': 'rgba(255, 255, 255, 0.75)',
+      color: '#cc7832'
+    };
+
     this.cardStyle = {
       color: '#437da8',
       'background-color': 'rgba(255, 255, 255, 0.75)',
@@ -50,6 +60,11 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   switchToDark(): void {
+    this.buttonStyle = {
+      'background-color': 'rgba(34, 34, 34, 0.75)',
+      color: '#cc7832'
+    };
+
     this.cardStyle = {
       color: '#437da8',
       'background-color': 'rgba(34, 34, 34, 0.75)',
