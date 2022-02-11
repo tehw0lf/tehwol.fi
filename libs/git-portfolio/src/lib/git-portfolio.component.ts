@@ -15,8 +15,10 @@ import { GitRepository } from './types/git-repository-type';
   styleUrls: ['./git-portfolio.component.scss']
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
-  @Input()
-  buttonStyle: string[] = ['color": "#cc7832"'];
+  @Input() buttonStyle: string[] = [
+    '"background-color": "#424242"',
+    'color: "#cc7832"'
+  ];
 
   @Input()
   cardStyle: string[] = [
