@@ -40,9 +40,38 @@
           <span>GitHub</span>
         </span>
       </a>
-      <button id="menu" type="button" (click)="toggleSidenav()" mat-icon-button>
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+      <div>
+        <button
+          id="menu"
+          type="button"
+          (click)="toggleSidenav()"
+          mat-icon-button
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <button
+          *ngIf="(isLight | async) === false"
+          id="light"
+          class="light-theme-button"
+          type="button"
+          (click)="switchToLight()"
+          fxLayoutGap="20px"
+          mat-icon-button
+        >
+          <mat-icon>light_mode</mat-icon>
+        </button>
+        <button
+          *ngIf="(isLight | async) === true"
+          id="dark"
+          class="dark-theme-button"
+          type="button"
+          (click)="switchToDark()"
+          fxLayoutGap="20px"
+          mat-icon-button
+        >
+          <mat-icon>dark_mode</mat-icon>
+        </button>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="main-content" fxFlexFill>
