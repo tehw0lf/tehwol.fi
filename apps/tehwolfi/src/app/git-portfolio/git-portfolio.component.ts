@@ -11,12 +11,11 @@ import { ThemeService } from '../theme.service';
   styleUrls: ['./git-portfolio.component.scss']
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
-  backgroundColor = 'rgba(34, 34, 34, 0.75)';
-  cardStyle: string[] = [
-    'color: "#437da8"',
-    `"background-color": ${this.backgroundColor}`,
-    '"backdrop-filter": "blur(50px)"'
-  ];
+  cardStyle = {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)'
+  };
 
   gitProviderConfig: { github: string; gitlab: string } = {
     github: environment.githubUser,
@@ -44,10 +43,18 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   switchToLight(): void {
-    this.backgroundColor = 'rgba(255, 255, 255, 0.75)';
+    this.cardStyle = {
+      color: '#437da8',
+      'background-color': 'rgba(255, 255, 255, 0.75)',
+      'backdrop-filter': 'blur(50px)'
+    };
   }
 
   switchToDark(): void {
-    this.backgroundColor = 'rgba(34, 34, 34, 0.75)';
+    this.cardStyle = {
+      color: '#437da8',
+      'background-color': 'rgba(34, 34, 34, 0.75)',
+      'backdrop-filter': 'blur(50px)'
+    };
   }
 }

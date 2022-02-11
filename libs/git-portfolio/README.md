@@ -55,16 +55,13 @@ showOwn; //display own repositories. default: true
 The styles of card background, button and text as well as the octicon colors can be customized with optional input parameters:
 
 ```ts
-buttonStyle; /*default: [
-                          '"background-color": "#424242"',
-                          'color": "#cc7832"'
-                        ];*/
-cardStyle; /*default: [
-                       'color: "#437da8"',
-                       '"background-color": "rgba(34, 34, 34, 0.75)"',
-                       '"backdrop-filter": "blur(50px)"'
-                      ];*/
-textStyle; //default: ['color": "#437da8"'];
+buttonStyle; // { 'background-color': '#424242', color: '#cc7832' }
+cardStyle; /* {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)'
+  }*/
+textStyle; //default: { color: '#437da8' };
 checkColor; //default: '#38e038';
 forkColor; //default: '#437da8';
 issueColor; //default: 'rgb(56, 224, 56)';

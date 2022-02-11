@@ -61,26 +61,26 @@ You can of course use your own backend with this data structure, as the API-URL 
 The styles of form background, button, input and text can be customized with optional input parameters:
 
 ```ts
-buttonStyle; /* default: [
-                          '"background-color": "#424242"',
-                          '"border": "1px solid #ced4da;"',
-                          'color: "#cc7832"'
-                        ];*/
+buttonStyle; /* {
+    'background-color': '#424242',
+    border: '1px solid #ced4da',
+    color: '#cc7832'
+  }*/
 
-formStyle; /* default: [
-                        'color: "#437da8"',
-                        '"background-color": "rgba(34, 34, 34, 0.75)"',
-                        '"backdrop-filter": "blur(50px)"',
-                        '"box-shadow": "0 2px 10px rgba(0, 0, 0, 0.075)"'
-                      ];*/
+formStyle; /* {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)',
+    'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
+  }*/
 
-inputStyle; /* default: [
-                          'color: "#282b2e"',
-                          '"background-color": "#fff"',
-                          'border: "1px solid #ced4da"'
-                      ];*/
+inputStyle; /* {
+    color: '#282b2e',
+    'background-color': '#fff',
+    border: '1px solid #ced4da'
+  }*/
 
-textStyle; //default: ['color: "#cc7832"'];
+textStyle; // { color: '#cc7832' };
 ```
 
 ## Development

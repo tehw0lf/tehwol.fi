@@ -10,11 +10,10 @@ import { ThemeService } from '../theme.service';
   encapsulation: ViewEncapsulation.None
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
-  buttonBackgroundColor = 'rgba(34, 34, 34, 0.75)';
-  buttonStyle: string[] = [
-    `"background-color": "${this.buttonBackgroundColor}"`,
-    'color: "#cc7832"'
-  ];
+  buttonStyle = {
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    color: '#cc7832'
+  };
 
   private unsubscribe$: Subject<void> = new Subject();
 
@@ -37,10 +36,16 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   }
 
   switchToLight(): void {
-    this.buttonBackgroundColor = 'rgba(255, 255, 255, 0.75)';
+    this.buttonStyle = {
+      'background-color': 'rgba(255, 255, 255, 0.75)',
+      color: '#cc7832'
+    };
   }
 
   switchToDark(): void {
-    this.buttonBackgroundColor = 'rgba(34, 34, 34, 0.75)';
+    this.buttonStyle = {
+      'background-color': 'rgba(34, 34, 34, 0.75)',
+      color: '#cc7832'
+    };
   }
 }

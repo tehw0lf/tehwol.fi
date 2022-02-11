@@ -1,8 +1,8 @@
 <div *ngIf="gitRepositories$ | async as gitRepositories">
   <div *ngFor="let gitProvider of gitProviders | keyvalue">
-    <h1 [ngClass]="textStyle">{{ gitProvider.value }}</h1>
+    <h1 [ngStyle]="textStyle">{{ gitProvider.value }}</h1>
     <div *ngIf="showOwn">
-      <h2 [ngClass]="textStyle" class="mat-headline">Own Repos</h2>
+      <h2 [ngStyle]="textStyle" class="mat-headline">Own Repos</h2>
       <div
         fxLayout="row wrap"
         fxLayout.lt-sm="column"
@@ -37,7 +37,7 @@
         >
         </repo-card>
         <div
-          [ngClass]="textStyle"
+          [ngStyle]="textStyle"
           *ngIf="
             (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'own')
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div *ngIf="showForked">
-      <h2 [ngClass]="textStyle" class="mat-headline">Forked Repos</h2>
+      <h2 [ngStyle]="textStyle" class="mat-headline">Forked Repos</h2>
       <div
         fxLayout="row wrap"
         fxLayout.lt-sm="column"
@@ -82,7 +82,7 @@
           fxLayoutAlign="stretch"
         ></repo-card>
         <div
-          [ngClass]="textStyle"
+          [ngStyle]="textStyle"
           *ngIf="
             (loading | async) === false &&
             !hasRepositories(gitRepositories, gitProvider.key, 'forked')
