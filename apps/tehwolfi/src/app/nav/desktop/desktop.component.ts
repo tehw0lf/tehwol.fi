@@ -1,20 +1,24 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
+import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
 
-//import { SidenavService } from 'src/app/nav/sidenav.service';
 @Component({
   selector: 'tehw0lf-desktop',
   templateUrl: './desktop.component.html',
-  styleUrls: ['./desktop.component.scss'],
+  styleUrls: ['./desktop.component.scss']
 })
-export class DesktopComponent implements AfterViewInit {
+export class DesktopComponent implements AfterViewInit, OnInit {
+  isLight: Observable<boolean> = of(false);
+
   constructor(
     private focusMonitor: FocusMonitor,
     private router: Router,
-    private sidenavService: SidenavService
+    private sidenavService: SidenavService,
+    private themeService: ThemeService
   ) {}
 
   ngAfterViewInit(): void {
@@ -22,6 +26,10 @@ export class DesktopComponent implements AfterViewInit {
     if (menu) {
       this.focusMonitor.stopMonitoring(menu);
     }
+  }
+
+  ngOnInit(): void {
+    this.isLight = this.themeService.isLight;
   }
 
   isActive(): boolean {
@@ -32,5 +40,13 @@ export class DesktopComponent implements AfterViewInit {
 
   toggleSidenav(): void {
     this.sidenavService.toggle();
+  }
+
+  switchToLight(): void {
+    this.themeService.light();
+  }
+
+  switchToDark(): void {
+    this.themeService.dark();
   }
 }
