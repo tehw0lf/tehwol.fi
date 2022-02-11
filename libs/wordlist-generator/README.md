@@ -32,12 +32,17 @@ The wordlist generator component just needs to be added by its tag:
 
 ## Theming
 
-The colors of button background, button and text can be customized with optional input parameters:
+The styles of form background, button, input and text can be customized with optional input parameters:
 
 ```ts
-buttonBackgroundColor; //default: '#424242';
-buttonTextColor; //default: '##cc7832';
-textColor; //default: '#cc7832';
+buttonStyle; /* default: [
+                          '"background-color": "#424242"',
+                          'color: "#cc7832"'
+                        ];*/
+
+dragStyle; //default: ['color: "#cc7832"'];
+
+textStyle; //default: ['color: "#cc7832"'];
 ```
 
 ## Development
