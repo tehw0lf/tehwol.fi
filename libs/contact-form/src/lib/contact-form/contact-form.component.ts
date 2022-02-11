@@ -14,13 +14,21 @@ import { EmailApiService } from '../email-api.service';
 export class ContactFormComponent implements OnDestroy {
   @Input() buttonStyle: string[] = [
     '"background-color": "#424242"',
+    '"border": "1px solid #ced4da;"',
     'color: "#cc7832"'
   ];
 
   @Input() formStyle: string[] = [
     'color: "#437da8"',
     '"background-color": "rgba(34, 34, 34, 0.75)"',
-    '"backdrop-filter": "blur(50px)"'
+    '"backdrop-filter": "blur(50px)"',
+    '"box-shadow": "0 2px 10px rgba(0, 0, 0, 0.075)"'
+  ];
+
+  @Input() inputStyle: string[] = [
+    'color: "#282b2e"',
+    '"background-color": "#fff"',
+    'border: "1px solid #ced4da"'
   ];
 
   @Input() textStyle: string[] = ['color: "#cc7832"'];
