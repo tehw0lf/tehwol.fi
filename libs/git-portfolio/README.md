@@ -52,7 +52,7 @@ showOwn; //display own repositories. default: true
 
 ## Theming
 
-The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
+The styles of card background, button and text as well as the octicon colors can be customized with optional input parameters:
 
 ```ts
 buttonStyle; /*default: [
