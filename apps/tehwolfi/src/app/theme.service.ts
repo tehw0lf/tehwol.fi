@@ -10,7 +10,6 @@ export class ThemeService {
   isLight: Observable<boolean>;
 
   constructor() {
-    //
     this.isLight = this.isLightSubject.asObservable();
   }
 
