@@ -12,6 +12,19 @@ import { EmailApiService } from '../email-api.service';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnDestroy {
+  @Input() buttonStyle: string[] = [
+    '"background-color": "#424242"',
+    'color: "#cc7832"'
+  ];
+
+  @Input() formStyle: string[] = [
+    'color: "#437da8"',
+    '"background-color": "rgba(34, 34, 34, 0.75)"',
+    '"backdrop-filter": "blur(50px)"'
+  ];
+
+  @Input() textStyle: string[] = ['color: "#cc7832"'];
+
   @Input() apiURL = 'https://forwardmethis.com/';
   @Input() email = '';
 

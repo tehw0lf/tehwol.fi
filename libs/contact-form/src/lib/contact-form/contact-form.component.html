@@ -1,11 +1,13 @@
 <form
+  [ngClass]="formStyle"
   class="contact-form"
   [formGroup]="formGroup"
   (ngSubmit)="submitFormData(formGroup)"
 >
   <div class="form-group">
-    <label for="name">Ihr Name</label>
+    <label [ngClass]="textStyle" for="name">Ihr Name</label>
     <input
+      [ngClass]="textStyle"
       class="form-control"
       type="text"
       name="name"
@@ -14,8 +16,9 @@
     />
   </div>
   <div class="form-group">
-    <label for="email">Ihre E-Mail Adresse</label>
+    <label [ngClass]="textStyle" for="email">Ihre E-Mail Adresse</label>
     <input
+      [ngClass]="textStyle"
       class="form-control"
       type="email"
       name="email"
@@ -24,17 +27,35 @@
     />
   </div>
   <div class="form-group">
-    <label for="message">Ihre Nachricht</label>
-    <textarea class="form-control" formControlName="message" name="message">
+    <label [ngClass]="textStyle" for="message">Ihre Nachricht</label>
+    <textarea
+      [ngClass]="textStyle"
+      class="form-control"
+      formControlName="message"
+      name="message"
+    >
     </textarea>
   </div>
-  <button class="form-button" type="submit" [disabled]="!formGroup.valid">
+  <button
+    [ngClass]="buttonStyle"
+    class="form-button"
+    type="submit"
+    [disabled]="!formGroup.valid"
+  >
     Senden
   </button>
-  <div class="form-status" *ngIf="(emailSent$ | async) === true">
+  <div
+    [ngClass]="textStyle"
+    class="form-status"
+    *ngIf="(emailSent$ | async) === true"
+  >
     E-Mail erfolgreich versendet!
   </div>
-  <div class="form-status" *ngIf="(emailSent$ | async) === false">
+  <div
+    [ngClass]="textStyle"
+    class="form-status"
+    *ngIf="(emailSent$ | async) === false"
+  >
     Fehler: E-Mail konnte nicht versendet werden
   </div>
 </form>
