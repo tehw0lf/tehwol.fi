@@ -1,4 +1,11 @@
-<mat-sidenav-container hasBackdrop="false" fxFlexFill>
+<mat-sidenav-container
+  [ngClass]="{
+    'light-theme': (isLight | async) === true,
+    'dark-theme': (isLight | async) === false
+  }"
+  hasBackdrop="false"
+  fxFlexFill
+>
   <mat-sidenav #sidenav mode="over" fixedInViewport="true">
     <mat-nav-list fxLayoutGap="20px" fxLayout="column" fxFlex>
       <a
@@ -74,7 +81,14 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content class="main-content" fxFlexFill>
+  <mat-sidenav-content
+    [ngClass]="{
+      'light-theme': (isLight | async) === true,
+      'dark-theme': (isLight | async) === false
+    }"
+    class="main-content"
+    fxFlexFill
+  >
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
