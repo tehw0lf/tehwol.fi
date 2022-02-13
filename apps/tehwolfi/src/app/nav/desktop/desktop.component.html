@@ -1,4 +1,9 @@
-<mat-toolbar>
+<mat-toolbar
+  [ngClass]="{
+    'light-theme': (isLight | async) === true,
+    'dark-theme': (isLight | async) === false
+  }"
+>
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
