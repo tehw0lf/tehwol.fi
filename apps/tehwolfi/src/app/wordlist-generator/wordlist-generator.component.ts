@@ -11,7 +11,7 @@ import { ThemeService } from '../theme.service';
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   buttonStyle = {
-    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'background-color': '#333333',
     color: '#cc7832'
   };
 
@@ -44,7 +44,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   switchToDark(): void {
     this.buttonStyle = {
-      'background-color': 'rgba(34, 34, 34, 0.75)',
+      'background-color': '#333333',
       color: '#cc7832'
     };
   }
