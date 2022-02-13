@@ -1,6 +1,6 @@
 <tehw0lf-nav
   [ngClass]="{
-    'light-theme': (isLight | async),
-    'dark-theme': !(isLight | async)
+    'light-theme': (isLight | async) === true,
+    'dark-theme': (isLight | async) === false
   }"
 ></tehw0lf-nav>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { SidenavService } from '../sidenav.service';
 
 @Component({
   selector: 'tehw0lf-mobile',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile.component.html',
   styleUrls: ['./mobile.component.scss']
 })
