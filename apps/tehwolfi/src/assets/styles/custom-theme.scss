@@ -37,13 +37,18 @@ $dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
 $bgcolor-main: #1a1a1a;
 $bgcolor-nav: rgba(34, 34, 34, 0.75);
 
+body {
+  background-color: #1a1a1a;
+  font-family: $font;
+}
+
+body.light-theme {
+  background-color: white;
+  font-family: $font;
+}
+
 .light-theme {
   @include angular-material-theme($light-theme);
   $bgcolor-main: white;
   $bgcolor-nav: rgba(255, 255, 255, 0.75);
-}
-
-html {
-  background-color: $bgcolor-main;
-  font-family: $font;
 }
