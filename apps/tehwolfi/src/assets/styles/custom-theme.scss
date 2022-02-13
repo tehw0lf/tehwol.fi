@@ -8,6 +8,15 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+// Global variables
+/* Font */
+$font: Roboto, 'Helvetica Neue', sans-serif;
+$fontsize-button-md: 24px;
+
+/* Text color */
+$fontcolor: #437da8;
+$linkcolor: #cc7832;
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -16,15 +25,13 @@ $accent-light: mat-palette($mat-light-green);
 $warn-light: mat-palette($mat-red);
 
 $light-theme: mat-light-theme($primary-light, $accent-light, $warn-light);
+
 //for dark theme
 $primary-dark: mat-palette($mat-orange);
 $accent-dark: mat-palette($mat-yellow);
 $warn-dark: mat-palette($mat-red);
 
 $dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
-
-$fontcolor: #437da8;
-$linkcolor: #cc7832;
 
 @include angular-material-theme($dark-theme);
 $bgcolor-main: #1a1a1a;
@@ -34,4 +41,9 @@ $bgcolor-nav: rgba(34, 34, 34, 0.75);
   @include angular-material-theme($light-theme);
   $bgcolor-main: white;
   $bgcolor-nav: rgba(255, 255, 255, 0.75);
+}
+
+html {
+  background-color: $bgcolor-main;
+  font-family: $font;
 }
