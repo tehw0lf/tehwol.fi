@@ -34,8 +34,6 @@ $warn-dark: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
 
 @include angular-material-theme($dark-theme);
-$bgcolor-main: #1a1a1a;
-$bgcolor-nav: rgba(34, 34, 34, 0.75);
 
 body {
   background-color: #1a1a1a;
@@ -49,6 +47,4 @@ body.light-theme {
 
 .light-theme {
   @include angular-material-theme($light-theme);
-  $bgcolor-main: white;
-  $bgcolor-nav: rgba(255, 255, 255, 0.75);
 }

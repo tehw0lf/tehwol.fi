@@ -10,8 +10,8 @@ import { ThemeService } from '../theme.service';
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   buttonStyle = {
-    'background-color': '#424242',
-    border: '1px solid #ced4da',
+    'background-color': '#333333',
+    border: 'none',
     color: '#cc7832'
   };
 
@@ -24,8 +24,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   inputStyle = {
     color: '#282b2e',
-    'background-color': '#fff',
-    border: '1px solid #ced4da'
+    'background-color': '#fff'
   };
   private unsubscribe$: Subject<void> = new Subject();
 
@@ -50,7 +49,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   switchToLight(): void {
     this.buttonStyle = {
       'background-color': 'rgba(255, 255, 255, 0.75)',
-      border: '1px solid #ced4da',
+      border: 'none',
       color: '#cc7832'
     };
 
@@ -63,15 +62,14 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
     this.inputStyle = {
       color: '#282b2e',
-      'background-color': '#fff',
-      border: '1px solid #ced4da'
+      'background-color': '#fff'
     };
   }
 
   switchToDark(): void {
     this.buttonStyle = {
-      'background-color': '#424242',
-      border: '1px solid #ced4da',
+      'background-color': '#333333',
+      border: 'none',
       color: '#cc7832'
     };
 
@@ -84,8 +82,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
     this.inputStyle = {
       color: '#282b2e',
-      'background-color': '#fff',
-      border: '1px solid #ced4da'
+      'background-color': '#fff'
     };
   }
 }

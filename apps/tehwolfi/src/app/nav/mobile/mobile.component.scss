@@ -24,6 +24,14 @@
   margin: 0 4px 0 0;
 }
 
+.mat-drawer-container.dark-theme {
+  background-color: #1a1a1a;
+}
+
+.mat-drawer-container.light-theme {
+  background-color: white;
+}
+
 .main-content {
   color: $fontcolor;
   padding: 32px 0 0 32px;
