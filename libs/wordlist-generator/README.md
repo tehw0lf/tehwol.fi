@@ -36,7 +36,7 @@ The styles of form background, button, input and text can be customized with opt
 
 ```ts
 buttonStyle; /* {
-    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'background-color': '#333333',
     color: '#cc7832'
   }*/
 
