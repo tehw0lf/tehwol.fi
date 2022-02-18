@@ -52,13 +52,21 @@ showOwn; //display own repositories. default: true
 
 ## Theming
 
-The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
+The styles of card background, button and text as well as the octicon colors can be customized with optional input parameters:
 
 ```ts
-backgroundColor; //default: 'rgba(34, 34, 34, 0.75)';
-backdropFilter; //default: 'blur(50px)';
-buttonColor; //default: '#cc7832';
-cardColor; //default: 'lightgray';
+buttonStyle; // { 'background-color': '#424242', color: '#cc7832' }
+cardStyle; /* {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)'
+  }*/
+textStyle; //default: { color: '#437da8' };
+checkColor; //default: '#38e038';
+forkColor; //default: '#437da8';
+issueColor; //default: 'rgb(56, 224, 56)';
+pasteColor; //default: '#cc7832';
+starColor; //default: 'gold';
 ```
 
 ## Development
