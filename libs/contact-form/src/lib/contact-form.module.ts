@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { EmailApiService } from './email-api.service';
@@ -11,6 +12,7 @@ import { EmailApiService } from './email-api.service';
   imports: [
     CommonModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule
   ],
