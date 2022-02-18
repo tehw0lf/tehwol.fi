@@ -1,4 +1,6 @@
-<head>
-  <base href="/" />
-</head>
-<tehw0lf-nav></tehw0lf-nav>
+<tehw0lf-nav
+  [ngClass]="{
+    'light-theme': (isLight | async) === true,
+    'dark-theme': (isLight | async) === false
+  }"
+></tehw0lf-nav>

@@ -1,29 +1,29 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
-import { environment } from '../../environments/environment.prod';
 import { ThemeService } from '../theme.service';
 
 @Component({
-  selector: 'tehw0lf-git-portfolio',
-  templateUrl: './git-portfolio.component.html',
-  styleUrls: ['./git-portfolio.component.scss']
+  selector: 'tehw0lf-contact-form',
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.scss']
 })
-export class GitPortfolioComponent implements OnInit, OnDestroy {
+export class ContactFormComponent implements OnInit, OnDestroy {
   buttonStyle = {
-    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'background-color': '#333333',
+    border: 'none',
     color: '#cc7832'
   };
 
-  cardStyle = {
+  formStyle = {
     color: '#437da8',
     'background-color': 'rgba(34, 34, 34, 0.75)',
-    'backdrop-filter': 'blur(50px)'
+    'backdrop-filter': 'blur(50px)',
+    'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   };
 
-  gitProviderConfig: { github: string; gitlab: string } = {
-    github: environment.githubUser,
-    gitlab: environment.gitlabUser
+  inputStyle = {
+    color: '#282b2e'
   };
 
   private unsubscribe$: Subject<void> = new Subject();
@@ -49,26 +49,38 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   switchToLight(): void {
     this.buttonStyle = {
       'background-color': 'rgba(255, 255, 255, 0.75)',
+      border: 'none',
       color: '#cc7832'
     };
 
-    this.cardStyle = {
+    this.formStyle = {
       color: '#437da8',
       'background-color': 'rgba(255, 255, 255, 0.75)',
-      'backdrop-filter': 'blur(50px)'
+      'backdrop-filter': 'blur(50px)',
+      'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
+    };
+
+    this.inputStyle = {
+      color: '#282b2e'
     };
   }
 
   switchToDark(): void {
     this.buttonStyle = {
-      'background-color': 'rgba(34, 34, 34, 0.75)',
+      'background-color': '#333333',
+      border: 'none',
       color: '#cc7832'
     };
 
-    this.cardStyle = {
+    this.formStyle = {
       color: '#437da8',
       'background-color': 'rgba(34, 34, 34, 0.75)',
-      'backdrop-filter': 'blur(50px)'
+      'backdrop-filter': 'blur(50px)',
+      'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
+    };
+
+    this.inputStyle = {
+      color: '#282b2e'
     };
   }
 }

@@ -15,11 +15,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { ContactFormModule } from '@tehw0lf/contact-form';
 import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
 import { WordlistGeneratorModule } from '@tehw0lf/wordlist-generator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 import { GitPortfolioComponent } from './git-portfolio/git-portfolio.component';
 import { HomeComponent } from './home/home.component';
 import { DesktopComponent } from './nav/desktop/desktop.component';
@@ -35,6 +37,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     NavComponent,
     DesktopComponent,
     MobileComponent,
+    ContactFormComponent,
     GitPortfolioComponent,
     WordlistGeneratorComponent
   ],
@@ -55,6 +58,7 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatSidenavModule,
     MatButtonModule,
     FlexLayoutModule,
+    ContactFormModule,
     GitPortfolioModule,
     WordlistGeneratorModule,
     ScullyLibModule

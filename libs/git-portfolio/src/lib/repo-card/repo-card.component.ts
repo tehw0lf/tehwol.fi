@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { GitRepository } from '../types/git-repository-type';
@@ -12,10 +13,14 @@ const githubLanguageColors = require('github-language-colors/colors.json');
   styleUrls: ['./repo-card.component.scss']
 })
 export class RepoCardComponent {
-  @Input() backgroundColor!: string;
-  @Input() backdropFilter!: string;
-  @Input() buttonColor!: string;
-  @Input() cardColor!: string;
+  @Input() buttonStyle!: any;
+  @Input() cardStyle!: any;
+  @Input() textStyle!: any;
+  @Input() checkColor!: string;
+  @Input() forkColor!: string;
+  @Input() issueColor!: string;
+  @Input() pasteColor!: string;
+  @Input() starColor!: string;
 
   @Input()
   gitRepo!: GitRepository;

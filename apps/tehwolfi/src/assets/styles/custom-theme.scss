@@ -1,0 +1,43 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+@import 'global.scss';
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$primary-light: mat-palette($mat-light-blue);
+$accent-light: mat-palette($mat-light-green);
+$warn-light: mat-palette($mat-red);
+
+$light-theme: mat-light-theme($primary-light, $accent-light, $warn-light);
+
+//for dark theme
+$primary-dark: mat-palette($mat-orange);
+$accent-dark: mat-palette($mat-yellow);
+$warn-dark: mat-palette($mat-red);
+
+$dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
+
+@include angular-material-theme($dark-theme);
+
+body {
+  background-color: #1a1a1a;
+  font-family: $font;
+}
+
+body.light-theme {
+  background-color: white;
+  font-family: $font;
+}
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+}

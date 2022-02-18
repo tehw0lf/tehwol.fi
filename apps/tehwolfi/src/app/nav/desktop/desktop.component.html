@@ -1,4 +1,9 @@
-<mat-toolbar>
+<mat-toolbar
+  [ngClass]="{
+    'light-theme': (isLight | async) === true,
+    'dark-theme': (isLight | async) === false
+  }"
+>
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
@@ -48,6 +53,32 @@
         </a>
       </div>
     </div>
+    <button
+      *ngIf="(isLight | async) === false"
+      id="light"
+      class="light-theme-button"
+      type="button"
+      (click)="switchToLight()"
+      fxLayoutGap="20px"
+      fxShow="true"
+      fxHide.lt-md="true"
+      mat-icon-button
+    >
+      <mat-icon>light_mode</mat-icon>
+    </button>
+    <button
+      *ngIf="(isLight | async) === true"
+      id="dark"
+      class="dark-theme-button"
+      type="button"
+      (click)="switchToDark()"
+      fxLayoutGap="20px"
+      fxShow="true"
+      fxHide.lt-md="true"
+      mat-icon-button
+    >
+      <mat-icon>dark_mode</mat-icon>
+    </button>
     <div fxLayoutGap="20px" fxShow="true" fxHide.lt-md="true">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">

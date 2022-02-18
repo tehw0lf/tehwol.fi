@@ -1,25 +1,17 @@
-@import '../../../assets/styles/config.scss';
+@import '../../../assets/styles/global.scss';
 
 .link-active {
   border-bottom: 2px solid $linkcolor;
 }
 
 .mat-button {
-  color: $linkcolor;
+  color: $linkcolor !important;
   vertical-align: middle;
   line-height: 36px;
   font-size: 18px;
   margin: 0 10px 0 0;
   text-align: center;
   text-decoration: none;
-}
-
-.mat-drawer {
-  background-color: $bgcolor-main;
-}
-
-.mat-drawer-container {
-  background-color: $bgcolor-main;
 }
 
 .mat-icon-button {
@@ -32,7 +24,37 @@
   margin: 0 4px 0 0;
 }
 
+.mat-drawer-container.dark-theme {
+  background-color: #1a1a1a;
+
+  .mat-drawer {
+    background-color: #1a1a1a;
+  }
+}
+
+.mat-drawer-container.light-theme {
+  background-color: white;
+
+  .mat-drawer {
+    background-color: white;
+  }
+}
+
 .main-content {
   color: $fontcolor;
   padding: 32px 0 0 32px;
+}
+
+.dark-theme-button {
+  color: black;
+  height: 48px;
+  width: 48px;
+  margin: 4px 4px 4px 4px;
+}
+
+.light-theme-button {
+  color: yellow;
+  height: 48px;
+  width: 48px;
+  margin: 4px 4px 4px 4px;
 }

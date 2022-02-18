@@ -15,17 +15,31 @@ import { GitRepository } from './types/git-repository-type';
   styleUrls: ['./git-portfolio.component.scss']
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
-  @Input()
-  backgroundColor = 'rgba(34, 34, 34, 0.75)';
+  @Input() buttonStyle = { 'background-color': '#424242', color: '#cc7832' };
+
+  @Input() cardStyle = {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)'
+  };
 
   @Input()
-  backdropFilter = 'blur(50px)';
+  textStyle = { color: '#437da8' };
 
   @Input()
-  buttonColor = '#cc7832';
+  checkColor = '#38e038';
 
   @Input()
-  cardColor = 'lightgray';
+  forkColor = '#437da8';
+
+  @Input()
+  issueColor = 'rgb(56, 224, 56)';
+
+  @Input()
+  pasteColor = '#cc7832';
+
+  @Input()
+  starColor = 'gold';
 
   @Input()
   gitProviderConfig: GitProviderConfig = {

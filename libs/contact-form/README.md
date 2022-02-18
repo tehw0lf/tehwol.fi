@@ -40,8 +40,8 @@ The contact form component takes an apiURL and an email as input. By default, th
 In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:
 
 ```ts
-emailBackendURL = 'https://forwardmethis.com/';
-yourEmailAddress = 'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
+emailBackendURL; //'https://forwardmethis.com/';
+yourEmailAddress; //'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
 ```
 
 This contact form will send a POST request to the API, containing the following data structure:
@@ -58,16 +58,47 @@ You can of course use your own backend with this data structure, as the API-URL 
 
 ## Theming
 
-The colors of card background, button and text as well as the backdrop filter can be customized with optional input parameters:
+The styles of form background, button, input and text can be customized with optional input parameters:
 
 ```ts
-backgroundColor; //default: 'rgba(34, 34, 34, 0.75)';
-backdropFilter; //default: 'blur(50px)';
-buttonColor; //default: '#cc7832';
-buttonBackgroundColor; //default: ''
-buttonTextColor; //default: '#cc7832';
-labelColor; //default: 'lightgray';
-textColor; //default: 'lightgray';
+buttonStyle; /* {
+    border: 'none',
+    'background-color': '#333333',
+    color: '#cc7832'
+  }*/
+
+formStyle; /* {
+    color: '#437da8',
+    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'backdrop-filter': 'blur(50px)',
+    'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
+  }*/
+
+inputStyle; /* {
+    border: 'none',
+    color: '#282b2e',
+    'background-color': '#fff'
+  }*/
+
+textStyle; //{ color: '#cc7832' };
+```
+
+## Text
+
+You can specify your own texts for the fields and labels, or leave the default English version
+
+```ts
+nameLabel; //'Your Name';
+
+emailAddressLabel; //'Your E-Mail Address';
+
+messageLabel; //'Your Message';
+
+sendText; //'Send';
+
+sendSuccessfulText; //'E-Mail successfully sent';
+
+sendErrorText; //'Send error';
 ```
 
 ## Development

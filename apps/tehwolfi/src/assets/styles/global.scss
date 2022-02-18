@@ -1,6 +1,8 @@
-@import 'config.scss';
+// Global variables
+/* Font */
+$font: Roboto, 'Helvetica Neue', sans-serif;
+$fontsize-button-md: 24px;
 
-html {
-  background-color: $bgcolor-main;
-  font-family: $font;
-}
+/* Text color */
+$fontcolor: #437da8;
+$linkcolor: #cc7832;
