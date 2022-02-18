@@ -40,7 +40,7 @@
       </button>
     </div>
     <form *ngIf="charsetForm" [formGroup]="charsetForm">
-      <mat-form-field class="fix" appearance="outline">
+      <mat-form-field class="fixed-width" appearance="outline">
         <mat-label [ngStyle]="textStyle">prefix (optional)</mat-label>
         <input
           [ngStyle]="textStyle"
@@ -103,7 +103,7 @@
           </div>
         </div>
       </div>
-      <mat-form-field class="fix" appearance="outline">
+      <mat-form-field class="fixed-width" appearance="outline">
         <mat-label [ngStyle]="textStyle">suffix (optional)</mat-label>
         <input
           [ngStyle]="textStyle"
