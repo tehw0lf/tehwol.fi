@@ -26,10 +26,18 @@
 
 .mat-drawer-container.dark-theme {
   background-color: #1a1a1a;
+
+  .mat-drawer {
+    background-color: #1a1a1a;
+  }
 }
 
 .mat-drawer-container.light-theme {
   background-color: white;
+
+  .mat-drawer {
+    background-color: white;
+  }
 }
 
 .main-content {
