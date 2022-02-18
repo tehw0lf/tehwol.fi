@@ -23,9 +23,9 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   };
 
   inputStyle = {
-    color: '#282b2e',
-    'background-color': '#fff'
+    color: '#282b2e'
   };
+
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor(private themeService: ThemeService) {}
@@ -61,8 +61,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     };
 
     this.inputStyle = {
-      color: '#282b2e',
-      'background-color': '#fff'
+      color: '#282b2e'
     };
   }
 
@@ -81,8 +80,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     };
 
     this.inputStyle = {
-      color: '#282b2e',
-      'background-color': '#fff'
+      color: '#282b2e'
     };
   }
 }
