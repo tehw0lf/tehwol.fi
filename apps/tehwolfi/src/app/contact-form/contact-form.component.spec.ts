@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactFormModule } from '@tehw0lf/contact-form';
 
 import { ContactFormComponent } from './contact-form.component';
@@ -11,7 +10,7 @@ describe('ContactFormComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [BrowserAnimationsModule, ContactFormModule],
+        imports: [ContactFormModule],
         declarations: [ContactFormComponent]
       }).compileComponents();
     })
