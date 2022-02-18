@@ -40,8 +40,8 @@ The contact form component takes an apiURL and an email as input. By default, th
 In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:
 
 ```ts
-emailBackendURL = 'https://forwardmethis.com/';
-yourEmailAddress = 'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
+emailBackendURL; //'https://forwardmethis.com/';
+yourEmailAddress; //'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
 ```
 
 This contact form will send a POST request to the API, containing the following data structure:
@@ -62,8 +62,8 @@ The styles of form background, button, input and text can be customized with opt
 
 ```ts
 buttonStyle; /* {
-    'background-color': '#424242',
-    border: '1px solid #ced4da',
+    border: 'none',
+    'background-color': '#333333',
     color: '#cc7832'
   }*/
 
@@ -75,12 +75,30 @@ formStyle; /* {
   }*/
 
 inputStyle; /* {
+    border: 'none',
     color: '#282b2e',
-    'background-color': '#fff',
-    border: '1px solid #ced4da'
+    'background-color': '#fff'
   }*/
 
-textStyle; // { color: '#cc7832' };
+textStyle; //{ color: '#cc7832' };
+```
+
+## Text
+
+You can specify your own texts for the fields and labels, or leave the default English version
+
+```ts
+nameLabel; //'Your Name';
+
+emailAddressLabel; //'Your E-Mail Address';
+
+messageLabel; //'Your Message';
+
+sendText; //'Send';
+
+sendSuccessfulText; //'E-Mail successfully sent';
+
+sendErrorText; //'Send error';
 ```
 
 ## Development

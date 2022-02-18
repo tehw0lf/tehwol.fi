@@ -6,27 +6,11 @@
 }
 
 .form-button {
+  margin-top: 3rem;
   display: block;
   border-radius: 0.25rem;
-  width: 96%;
+  width: 98%;
   padding: 0.375rem 0.75rem;
-}
-
-.form-control {
-  display: block;
-  width: 90%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  background-clip: padding-box;
-  border-radius: 0.25rem;
-  margin-top: 0.5rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-group {
-  margin-bottom: 1rem;
 }
 
 .form-status {
@@ -34,6 +18,42 @@
 }
 
 textarea {
+  color: inherit !important;
+  background: none !important;
   overflow: auto;
   resize: vertical;
+}
+
+.mat-form-field-appearance-outline {
+  .mat-form-field-infix {
+    border: 0;
+    padding: 1em 0 0.5em 0;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0.25em;
+  }
+}
+
+.mat-form-field-label {
+  transition: none !important;
+}
+
+.mat-form-field-should-float {
+  .mat-form-field-label-wrapper {
+    top: -0.1em;
+    padding-top: 0.1em;
+  }
+  .mat-form-field-label {
+    transition: none !important;
+  }
+}
+
+.form-field {
+  align-self: center;
+  width: 98%;
+}
+
+.form-field:last-of-type {
+  margin-top: 1rem;
 }
