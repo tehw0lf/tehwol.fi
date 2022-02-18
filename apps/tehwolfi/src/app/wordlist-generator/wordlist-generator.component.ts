@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
@@ -6,8 +6,7 @@ import { ThemeService } from '../theme.service';
 @Component({
   selector: 'tehw0lf-wordlist-generator',
   templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./wordlist-generator.component.scss']
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   buttonStyle = {
