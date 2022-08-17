@@ -38,11 +38,11 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint
-        run: pnpm lint --parallel
+        run: pnpm affected:lint
       - name: Test
-        run: pnpm test --parallel
+        run: pnpm affected:test
       - name: Build
-        run: pnpm build
+        run: pnpm affected:build
       - name: Build library schematics for contact-form
         run: |
           cd libs/contact-form
@@ -56,7 +56,7 @@ jobs:
           cd libs/wordlist-generator
           pnpm build
       - name: Run scully
-        run: pnpm scully -- --project tehwolfi
+        run: pnpm scully
       #- name: Check if published git portfolio library version is outdated
       #  if: ${{ github.event_name == 'push' }}
       #  run: |
