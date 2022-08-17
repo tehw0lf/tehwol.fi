@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'contact-form',
+/* eslint-disable */
+export default {
+  displayName: 'git-portfolio',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -10,7 +11,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coverageDirectory: '../../coverage/libs/contact-form',
+  coverageDirectory: '../../coverage/libs/git-portfolio',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular'
   },

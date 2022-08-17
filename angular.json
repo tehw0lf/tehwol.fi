@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "contact-form": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/contact-form",
       "sourceRoot": "libs/contact-form/src",
@@ -9,9 +10,7 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": [
-            "dist/libs/contact-form"
-          ],
+          "outputs": ["dist/libs/contact-form"],
           "options": {
             "project": "libs/contact-form/ng-package.json"
           },
@@ -27,11 +26,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/contact-form"
-          ],
+          "outputs": ["coverage/libs/contact-form"],
           "options": {
-            "jestConfig": "libs/contact-form/jest.config.js",
+            "jestConfig": "libs/contact-form/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -48,6 +45,7 @@
       "tags": []
     },
     "git-portfolio": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/git-portfolio",
       "sourceRoot": "libs/git-portfolio/src",
@@ -55,9 +53,7 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": [
-            "dist/libs/git-portfolio"
-          ],
+          "outputs": ["dist/libs/git-portfolio"],
           "options": {
             "project": "libs/git-portfolio/ng-package.json"
           },
@@ -73,11 +69,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/git-portfolio"
-          ],
+          "outputs": ["coverage/libs/git-portfolio"],
           "options": {
-            "jestConfig": "libs/git-portfolio/jest.config.js",
+            "jestConfig": "libs/git-portfolio/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -94,6 +88,7 @@
       "tags": []
     },
     "tehwolfi": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/tehwolfi",
       "sourceRoot": "apps/tehwolfi/src",
@@ -101,9 +96,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/tehwolfi",
             "index": "apps/tehwolfi/src/index.html",
@@ -180,17 +173,13 @@
               "apps/tehwolfi/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/tehwolfi"
-          ],
+          "outputs": ["coverage/apps/tehwolfi"],
           "options": {
-            "jestConfig": "apps/tehwolfi/jest.config.js",
+            "jestConfig": "apps/tehwolfi/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -198,6 +187,7 @@
       "tags": []
     },
     "tehwolfi-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/tehwolfi-e2e",
       "sourceRoot": "apps/tehwolfi-e2e/src",
       "projectType": "application",
@@ -218,21 +208,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/tehwolfi-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/tehwolfi-e2e/**/*.{js,ts}"]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "tehwolfi"
-      ]
+      "implicitDependencies": ["tehwolfi"]
     },
     "wordlist-generator": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/wordlist-generator",
       "sourceRoot": "libs/wordlist-generator/src",
@@ -240,9 +225,7 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": [
-            "dist/libs/wordlist-generator"
-          ],
+          "outputs": ["dist/libs/wordlist-generator"],
           "options": {
             "project": "libs/wordlist-generator/ng-package.json"
           },
@@ -258,11 +241,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/wordlist-generator"
-          ],
+          "outputs": ["coverage/libs/wordlist-generator"],
           "options": {
-            "jestConfig": "libs/wordlist-generator/jest.config.js",
+            "jestConfig": "libs/wordlist-generator/jest.config.ts",
             "passWithNoTests": true
           }
         },
