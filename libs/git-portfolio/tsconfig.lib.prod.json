@@ -2,11 +2,10 @@
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
     "declarationMap": false,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
   "angularCompilerOptions": {
     "compilationMode": "partial"
-  }
+  },
+  "exclude": ["jest.config.ts"]
 }

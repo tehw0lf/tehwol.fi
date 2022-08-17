@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'wordlist-generator',
+/* eslint-disable */
+export default {
+  displayName: 'contact-form',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -10,7 +11,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coverageDirectory: '../../coverage/libs/wordlist-generator',
+  coverageDirectory: '../../coverage/libs/contact-form',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular'
   },
