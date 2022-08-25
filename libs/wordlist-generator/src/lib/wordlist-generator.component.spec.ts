@@ -25,30 +25,28 @@ describe('WordlistGeneratorComponent', () => {
   let component: WordlistGeneratorComponent;
   let fixture: ComponentFixture<WordlistGeneratorComponent>;
 
-  global.URL.createObjectURL = jest.fn();
+  global.URL.createObjectURL = jest.fn(() => '');
   global.window.URL.revokeObjectURL = jest.fn();
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [WordlistGeneratorComponent],
-        imports: [
-          BrowserAnimationsModule,
-          ReactiveFormsModule,
-          MatFormFieldModule,
-          MatIconModule,
-          MatInputModule,
-          MatMenuModule
-        ],
-        providers: [
-          {
-            provide: WordlistGeneratorService,
-            useValue: wordlistGeneratorServiceMock
-          }
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [WordlistGeneratorComponent],
+      imports: [
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule
+      ],
+      providers: [
+        {
+          provide: WordlistGeneratorService,
+          useValue: wordlistGeneratorServiceMock
+        }
+      ]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WordlistGeneratorComponent);
@@ -99,11 +97,26 @@ describe('WordlistGeneratorComponent', () => {
     );
   });
 
-  it('should provide a downloadable file', () => {
+  it('should provide a downloadable file for non IE browsers', () => {
     const before = document.body.innerHTML;
     component.downloadWordlist();
     const after = document.body.innerHTML;
     expect(before).not.toEqual(after);
+  });
+
+  it('should provide a downloadable file for IE', () => {
+    const nav: any = Object.defineProperty(
+      global.window.navigator,
+      'msSaveOrOpenBlob',
+      {
+        value: jest.fn()
+      }
+    );
+    component.downloadWordlist();
+    expect(nav.msSaveOrOpenBlob).toHaveBeenCalledTimes(1);
+    Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
+      value: undefined
+    });
   });
 
   it('should prepend the prefix', (done) => {
