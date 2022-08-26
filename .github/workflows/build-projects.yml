@@ -32,7 +32,7 @@ jobs:
       - name: Enable pre and post scripts
         run: pnpm config set enable-pre-post-scripts true
       - name: Enable Nx SHAs
-      - uses: nrwl/nx-set-shas@v2
+        uses: nrwl/nx-set-shas@v2
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: Lint workspace
