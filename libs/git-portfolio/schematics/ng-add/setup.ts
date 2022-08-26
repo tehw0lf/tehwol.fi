@@ -14,7 +14,7 @@ import { Schema } from './schema';
 
 const gitPortfolioModuleName = 'GitPortfolioModule';
 const gitPortfolioPackageName = '@tehw0lf/git-portfolio';
-const flexLayoutFallbackVersion = '^13.0.0-beta.36';
+const flexLayoutFallbackVersion = '^14.0.0-beta.40';
 
 export default function (options: Schema): Rule {
   return async () => {
