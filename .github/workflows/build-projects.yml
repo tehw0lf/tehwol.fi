@@ -1,12 +1,11 @@
 name: tehw0lf frontend and portfolio library pipeline
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,26 +31,20 @@ jobs:
         run: npm install -g pnpm
       - name: Enable pre and post scripts
         run: pnpm config set enable-pre-post-scripts true
+      - name: Enable Nx SHAs
+      - uses: nrwl/nx-set-shas@v2
       - name: Install packages
         run: pnpm install --frozen-lockfile
-      - name: Lint (master)
-        if: contains(env.TAG, 'master') == true
-        run: pnpm affected:lint
-      - name: Lint (branch)
-        if: github.event.pull_request.merged == true
-        run: pnpm affected:lint --base=remotes/origin/master
-      - name: Test (master)
-        if: contains(env.TAG, 'master') == true
-        run: pnpm affected:test
-      - name: Test (branch)
-        if: github.event.pull_request.merged == true
-        run: pnpm affected:test --base=remotes/origin/master
-      - name: Build (master)
-        if: contains(env.TAG, 'master') == true
-        run: pnpm affected:build
-      - name: Build (branch)
-        if: github.event.pull_request.merged == true
-        run: pnpm affected:build --base=remotes/origin/master
+      - name: Lint workspace
+      - run: npx nx workspace-lint
+      - name: Check format
+      - run: npx nx format:check
+      - name: Lint
+        run: pnpm affected:lint  --parallel=3
+      - name: Test
+        run: pnpm affected:test --parallel=3 --ci --code-coverage
+      - name: Build
+        run: pnpm affected:build  --parallel=3
       - name: Build library schematics for contact-form
         run: |
           cd libs/contact-form
