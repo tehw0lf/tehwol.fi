@@ -1,5 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask, RunSchematicTask } from '@angular-devkit/schematics/tasks';
+import { getProjectFromWorkspace } from '@angular/cdk/schematics';
 import { removePackageJsonDependency } from '@schematics/angular/utility/dependencies';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType } from '@schematics/angular/utility/workspace-models';
@@ -14,11 +15,8 @@ export default function (options: Schema): Rule {
       '@angular/material'
     );
     const workspace = await getWorkspace(host);
-    const defaultProject = workspace.extensions.defaultProject as string;
 
-    const project = options.project
-      ? workspace.projects.get(options.project)
-      : workspace.projects.get(defaultProject);
+    const project = getProjectFromWorkspace(workspace, options.project);
 
     if (!project) {
       removePackageJsonDependency(host, '@tehw0lf/wordlist-generator');

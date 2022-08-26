@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -47,21 +47,21 @@ export class ContactFormComponent implements OnDestroy {
   @Input() apiURL = 'https://forwardmethis.com/';
   @Input() email = '';
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   emailSent: Subject<boolean | null> = new Subject();
   emailSent$ = this.emailSent.asObservable();
 
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor(
-    private builder: FormBuilder,
+    private builder: UntypedFormBuilder,
     private emailService: EmailApiService
   ) {
     this.emailSent.next(null);
     this.formGroup = this.builder.group({
-      name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      message: new FormControl('', [Validators.required])
+      name: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      message: new UntypedFormControl('', [Validators.required])
     });
   }
 
@@ -70,7 +70,7 @@ export class ContactFormComponent implements OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  submitFormData(formData: FormGroup) {
+  submitFormData(formData: UntypedFormGroup) {
     this.emailService
       .sendEmail(`${this.apiURL}${this.email}`, formData.value)
       .pipe(
