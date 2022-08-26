@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Fetch
+        run: git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
