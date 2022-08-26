@@ -39,14 +39,16 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint workspace
         run: npx nx workspace-lint
-      - name: Check format
-        run: npx nx format:check
       - name: Lint
-        run: pnpm affected:lint  --parallel=3
+        run: pnpm affected:lint
       - name: Test
-        run: pnpm affected:test --parallel=3 --ci --code-coverage
-      - name: Build
-        run: pnpm affected:build  --parallel=3
+        run: pnpm affected:test --ci --code-coverage
+      - name: Build on branch
+        if: ${{ github.event_name != 'push' }}
+        run: pnpm affected:build
+      - name: Build on master
+        if: ${{ github.event_name == 'push' }}
+        run: pnpm affected:build --skip-nx-cache
       - name: Build library schematics for contact-form
         run: |
           cd libs/contact-form
@@ -61,6 +63,10 @@ jobs:
           pnpm build
       - name: Run scully
         run: pnpm scully
+      #- name: Serve scully for e2e tests
+      #  run: pnpm scully:serve
+      #- name: Run end to end tests
+      #  run: pnpm e2e
       - name: Check if published git portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
