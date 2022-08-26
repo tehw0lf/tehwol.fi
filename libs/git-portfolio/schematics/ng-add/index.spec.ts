@@ -5,6 +5,8 @@ import { getFileContent } from '../testing/file-content';
 import { createTestApp, createTestAppWithMaterial } from '../testing/test-app';
 import { createTestLibrary } from '../testing/test-library';
 
+const testProjectName = 'test-project';
+
 describe('ng-add-setup schematic with material present', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
@@ -31,11 +33,11 @@ describe('ng-add-setup schematic with material present', () => {
 
   it('should add the GitPortfolioModule to the project module', async () => {
     const tree = await runner
-      .runSchematicAsync('ng-add-setup', {}, appTree)
+      .runSchematicAsync('ng-add-setup', { project: testProjectName }, appTree)
       .toPromise();
     const fileContent = getFileContent(
       tree,
-      '/projects/material/src/app/app.module.ts'
+      `/projects/${testProjectName}/src/app/app.module.ts`
     );
 
     expect(fileContent).toContain('GitPortfolioModule');
@@ -68,12 +70,12 @@ describe('ng-add schematic without material present', () => {
 
   it('should fail to add module if material is missing', async () => {
     const tree = await runner
-      .runSchematicAsync('ng-add', {}, appTree)
+      .runSchematicAsync('ng-add', { project: testProjectName }, appTree)
       .toPromise();
 
     const fileContent = getFileContent(
       tree,
-      '/projects/material/src/app/app.module.ts'
+      `/projects/${testProjectName}/src/app/app.module.ts`
     );
 
     expect(fileContent).not.toContain('GitPortfolioModule');
@@ -110,7 +112,9 @@ describe('ng-add schematic - library project', () => {
   });
 
   it('should do nothing if a library project is targeted', async () => {
-    await runner.runSchematicAsync('ng-add', {}, libraryTree).toPromise();
+    await runner
+      .runSchematicAsync('ng-add', { project: testProjectName }, libraryTree)
+      .toPromise();
 
     expect(errorOutput.length).toBe(1);
     expect(errorOutput[0]).toMatch(
