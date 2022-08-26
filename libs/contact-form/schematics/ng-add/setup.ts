@@ -14,7 +14,7 @@ import { Schema } from './schema';
 
 const contactFormModuleName = 'ContactFormModule';
 const contactFormPackageName = '@tehw0lf/contact-form';
-const flexLayoutFallbackVersion = '^13.0.0-beta.36';
+const flexLayoutFallbackVersion = '^14.0.0-beta.40';
 
 export default function (options: Schema): Rule {
   return async () => {
