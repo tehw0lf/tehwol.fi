@@ -29,18 +29,16 @@ describe('ng-add-setup schematic with material present', () => {
     });
   });
 
-  describe('add module', () => {
-    it('should add the WordlistGeneratorModule to the project module', async () => {
-      const tree = await runner
-        .runSchematicAsync('ng-add-setup', {}, appTree)
-        .toPromise();
-      const fileContent = getFileContent(
-        tree,
-        '/projects/material/src/app/app.module.ts'
-      );
+  it('should add the WordlistGeneratorModule to the project module', async () => {
+    const tree = await runner
+      .runSchematicAsync('ng-add-setup', {}, appTree)
+      .toPromise();
+    const fileContent = getFileContent(
+      tree,
+      '/projects/material/src/app/app.module.ts'
+    );
 
-      expect(fileContent).toContain('WordlistGeneratorModule');
-    });
+    expect(fileContent).toContain('WordlistGeneratorModule');
   });
 });
 
@@ -68,24 +66,22 @@ describe('ng-add schematic without material present', () => {
     });
   });
 
-  describe('fail to add module', () => {
-    it('should fail if material is missing', async () => {
-      const tree = await runner
-        .runSchematicAsync('ng-add', {}, appTree)
-        .toPromise();
+  it('should fail to add module if material is missing', async () => {
+    const tree = await runner
+      .runSchematicAsync('ng-add', {}, appTree)
+      .toPromise();
 
-      const fileContent = getFileContent(
-        tree,
-        '/projects/material/src/app/app.module.ts'
-      );
+    const fileContent = getFileContent(
+      tree,
+      '/projects/material/src/app/app.module.ts'
+    );
 
-      expect(fileContent).not.toContain('WordlistGeneratorModule');
+    expect(fileContent).not.toContain('WordlistGeneratorModule');
 
-      expect(errorOutput.length).toBe(1);
-      expect(warnOutput.length).toBe(0);
-      expect(errorOutput[0]).toMatch(`@angular/material not found.
+    expect(errorOutput.length).toBe(1);
+    expect(warnOutput.length).toBe(0);
+    expect(errorOutput[0]).toMatch(`@angular/material not found.
        Please run 'ng add @angular/material' first`);
-    });
   });
 });
 
