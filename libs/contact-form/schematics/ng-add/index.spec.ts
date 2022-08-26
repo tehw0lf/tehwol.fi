@@ -5,6 +5,8 @@ import { getFileContent } from '../testing/file-content';
 import { createTestApp, createTestAppWithMaterial } from '../testing/test-app';
 import { createTestLibrary } from '../testing/test-library';
 
+const testProjectName = 'test-project';
+
 describe('ng-add-setup schematic with material present', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
@@ -29,18 +31,16 @@ describe('ng-add-setup schematic with material present', () => {
     });
   });
 
-  describe('add module', () => {
-    it('should add the ContactFormModule to the project module', async () => {
-      const tree = await runner
-        .runSchematicAsync('ng-add-setup', {}, appTree)
-        .toPromise();
-      const fileContent = getFileContent(
-        tree,
-        '/projects/material/src/app/app.module.ts'
-      );
+  it('should add the ContactFormModule to the project module', async () => {
+    const tree = await runner
+      .runSchematicAsync('ng-add-setup', { project: testProjectName }, appTree)
+      .toPromise();
+    const fileContent = getFileContent(
+      tree,
+      `/projects/${testProjectName}/src/app/app.module.ts`
+    );
 
-      expect(fileContent).toContain('ContactFormModule');
-    });
+    expect(fileContent).toContain('ContactFormModule');
   });
 });
 
@@ -68,24 +68,22 @@ describe('ng-add schematic without material present', () => {
     });
   });
 
-  describe('fail to add module', () => {
-    it('should fail if material is missing', async () => {
-      const tree = await runner
-        .runSchematicAsync('ng-add', {}, appTree)
-        .toPromise();
+  it('should fail to add module if material is missing', async () => {
+    const tree = await runner
+      .runSchematicAsync('ng-add', { project: testProjectName }, appTree)
+      .toPromise();
 
-      const fileContent = getFileContent(
-        tree,
-        '/projects/material/src/app/app.module.ts'
-      );
+    const fileContent = getFileContent(
+      tree,
+      `/projects/${testProjectName}/src/app/app.module.ts`
+    );
 
-      expect(fileContent).not.toContain('ContactFormModule');
+    expect(fileContent).not.toContain('ContactFormModule');
 
-      expect(errorOutput.length).toBe(1);
-      expect(warnOutput.length).toBe(0);
-      expect(errorOutput[0]).toMatch(`@angular/material not found.
+    expect(errorOutput.length).toBe(1);
+    expect(warnOutput.length).toBe(0);
+    expect(errorOutput[0]).toMatch(`@angular/material not found.
        Please run 'ng add @angular/material' first`);
-    });
   });
 });
 
@@ -114,7 +112,9 @@ describe('ng-add schematic - library project', () => {
   });
 
   it('should do nothing if a library project is targeted', async () => {
-    await runner.runSchematicAsync('ng-add', {}, libraryTree).toPromise();
+    await runner
+      .runSchematicAsync('ng-add', { project: testProjectName }, libraryTree)
+      .toPromise();
 
     expect(errorOutput.length).toBe(1);
     expect(errorOutput[0]).toMatch(

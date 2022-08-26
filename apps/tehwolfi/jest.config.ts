@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'git-portfolio',
+/* eslint-disable */
+export default {
+  displayName: 'tehwolfi',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -10,7 +11,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coverageDirectory: '../../coverage/libs/git-portfolio',
+  coverageDirectory: '../../coverage/apps/tehwolfi',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular'
   },

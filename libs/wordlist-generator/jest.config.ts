@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'tehwolfi',
+/* eslint-disable */
+export default {
+  displayName: 'wordlist-generator',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -10,7 +11,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coverageDirectory: '../../coverage/apps/tehwolfi',
+  coverageDirectory: '../../coverage/libs/wordlist-generator',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular'
   },

@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   @Input() dragStyle = { color: '#cc7832' };
   @Input() textStyle = { color: '#cc7832' };
 
-  charsetForm: FormGroup | undefined;
+  charsetForm: UntypedFormGroup | undefined;
   wordsGenerated: number | undefined;
   wordlist$: Observable<string> | undefined;
 
@@ -38,7 +38,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private wordlistGenerator: WordlistGeneratorService
   ) {}
 
@@ -51,9 +51,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  get charsets(): FormArray | undefined {
+  get charsets(): UntypedFormArray | undefined {
     if (this.charsetForm) {
-      return this.charsetForm.get('charsets') as FormArray;
+      return this.charsetForm.get('charsets') as UntypedFormArray;
     }
     return undefined;
   }
