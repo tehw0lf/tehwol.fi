@@ -111,6 +111,9 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
+      - name: Add avatars to package
+        if: ${{ github.event_name == 'push' }}
+        run: mv -fv avatar* dist/static/
       - name: Deploy frontend
         if: ${{ github.event_name == 'push' }}
         run: |
