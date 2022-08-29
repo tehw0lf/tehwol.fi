@@ -11,7 +11,7 @@ Coming soon:
 
 - Contact Form
 
-## Angular
+## Angular libraries
 
 ## git-portfolio
 
