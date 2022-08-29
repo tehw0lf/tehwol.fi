@@ -43,7 +43,7 @@ importers:
       '@typescript-eslint/parser': 5.33.1
       cartesian-product-generator: ^1.1.1
       copyfiles: 2.4.1
-      cypress: ^10.6.0
+      cypress: ^9.7.0
       dotenv: 10.0.0
       eslint: 8.15.0
       eslint-config-prettier: 8.3.0
@@ -76,7 +76,7 @@ importers:
       '@angular/platform-browser': 14.1.3_o5te6wrnhvakv4ov4ar255pcsi
       '@angular/platform-browser-dynamic': 14.1.3_pfueecypdzafpquildxokoe23y
       '@angular/router': 14.1.3_iwkqqt2nupzuzcint76ec7avme
-      '@nrwl/angular': 14.5.10_nbziretuqdroyem4ihoxhmapqq
+      '@nrwl/angular': 14.5.10_d2ibz7ilnd5o664ysjgjofi2au
       '@primer/octicons': 17.4.1
       '@scullyio/init': 2.1.36_dzot3ofwrkdlhs2hkvvnc23fyy
       '@scullyio/ng-lib': 2.1.36_d4h6gykl4hwfhkxka3hl7tnxti
@@ -97,7 +97,7 @@ importers:
       '@angular/compiler-cli': 14.1.3_qojfq3xayca5hnab24uayitgi4
       '@angular/language-service': 14.1.3
       '@nrwl/cli': 14.5.10
-      '@nrwl/cypress': 14.5.10_yj5ubgorfh6zyzdanopdnjqvym
+      '@nrwl/cypress': 14.5.10_j4yawwlmok3qxkdlflqt5zvrm4
       '@nrwl/eslint-plugin-nx': 14.5.10_5wkvo6dzdofk67w5tcuf6si2gy
       '@nrwl/jest': 14.5.10_oqd6w67pqggug57az6damxqvgm
       '@nrwl/linter': 14.5.10_xijpp6rqonz7g5muf5ockh66km
@@ -109,7 +109,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.33.1_m7xvcpf4u5pta577mmcxmrpwhu
       '@typescript-eslint/parser': 5.33.1_4hx5bygx4rxgd7xwyndf6ymwce
       copyfiles: 2.4.1
-      cypress: 10.6.0
+      cypress: 9.7.0
       dotenv: 10.0.0
       eslint: 8.15.0
       eslint-config-prettier: 8.3.0_eslint@8.15.0
@@ -353,7 +353,7 @@ packages:
         optional: true
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       jsonc-parser: 3.1.0
       rxjs: 6.6.7
       source-map: 0.7.4
@@ -369,7 +369,7 @@ packages:
         optional: true
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       chokidar: 3.5.3
       jsonc-parser: 3.1.0
       rxjs: 6.6.7
@@ -3124,7 +3124,7 @@ packages:
       is-typedarray: 1.0.0
       isstream: 0.1.2
       json-stringify-safe: 5.0.1
-      mime-types: 2.1.31
+      mime-types: 2.1.35
       performance-now: 2.1.0
       qs: 6.5.2
       safe-buffer: 5.2.1
@@ -3559,17 +3559,17 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/14.5.10_nbziretuqdroyem4ihoxhmapqq:
+  /@nrwl/angular/14.5.10_d2ibz7ilnd5o664ysjgjofi2au:
     resolution: {integrity: sha512-jFcqZuTWz64X0DtR1NzjtEAK4NIqjKn5cH2k9xJxOdidBvNNTi19IoQgXbvIS3oIK4Jk2fWMqaava9ZbP1AQHQ==}
     requiresBuild: true
     dependencies:
       '@angular-devkit/schematics': 14.1.3_chokidar@3.5.3
-      '@nrwl/cypress': 14.5.10_yj5ubgorfh6zyzdanopdnjqvym
+      '@nrwl/cypress': 14.5.10_j4yawwlmok3qxkdlflqt5zvrm4
       '@nrwl/devkit': 14.5.10_friigstnlhuirqu4wr7dfbyroa
       '@nrwl/jest': 14.5.10_oqd6w67pqggug57az6damxqvgm
       '@nrwl/linter': 14.5.10_xijpp6rqonz7g5muf5ockh66km
-      '@nrwl/storybook': 14.5.10_kuevvn3eizjyfvd3ocirzzwtdu
-      '@nrwl/web': 14.5.10_toqqi34bk3wnx4hbzfd4chizdq
+      '@nrwl/storybook': 14.5.10_lkqetszc6oft6yndkcrpi5vgum
+      '@nrwl/web': 14.5.10_6zcwnveka3ahulmaarpomalihy
       '@nrwl/workspace': 14.5.10_snzlogj2r56slreejrjgnylbaa
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.7.4
       '@schematics/angular': 14.1.3_chokidar@3.5.3
@@ -3629,7 +3629,7 @@ packages:
       - '@swc-node/register'
       - '@swc/core'
 
-  /@nrwl/cypress/14.5.10_yj5ubgorfh6zyzdanopdnjqvym:
+  /@nrwl/cypress/14.5.10_j4yawwlmok3qxkdlflqt5zvrm4:
     resolution: {integrity: sha512-NymwWehtpgCNZBLV/jwvKFCHWz4mw8+YG70uAheyO4ybkCmA2ghvaOG3shni9MG9mOMfRGz5Cc23/ScIekxA2w==}
     peerDependencies:
       cypress: '>= 3 < 11'
@@ -3646,7 +3646,7 @@ packages:
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.7.4
       babel-loader: 8.2.5_t5lqpictcry45jvv466griokye
       chalk: 4.1.0
-      cypress: 10.6.0
+      cypress: 9.7.0
       dotenv: 10.0.0
       enhanced-resolve: 5.10.0
       fork-ts-checker-webpack-plugin: 7.2.13_3o2jfq6vfqxns3sz6wn2nnc3ei
@@ -3817,10 +3817,10 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/storybook/14.5.10_kuevvn3eizjyfvd3ocirzzwtdu:
+  /@nrwl/storybook/14.5.10_lkqetszc6oft6yndkcrpi5vgum:
     resolution: {integrity: sha512-CIeVgxYvkEvVDo3RaHS49bbqm97Mpv+g3iM8lFU11yz5ImJdnJkjZOF8AHl1jLJpyFj1nAXdmWtbTzULAObgTw==}
     dependencies:
-      '@nrwl/cypress': 14.5.10_yj5ubgorfh6zyzdanopdnjqvym
+      '@nrwl/cypress': 14.5.10_j4yawwlmok3qxkdlflqt5zvrm4
       '@nrwl/devkit': 14.5.10_friigstnlhuirqu4wr7dfbyroa
       '@nrwl/linter': 14.5.10_xijpp6rqonz7g5muf5ockh66km
       '@nrwl/workspace': 14.5.10_snzlogj2r56slreejrjgnylbaa
@@ -3857,7 +3857,7 @@ packages:
       - '@swc-node/register'
       - '@swc/core'
 
-  /@nrwl/web/14.5.10_toqqi34bk3wnx4hbzfd4chizdq:
+  /@nrwl/web/14.5.10_6zcwnveka3ahulmaarpomalihy:
     resolution: {integrity: sha512-mMlHRgywmSJIRfKyfDfVbOt0NnAPf+tV2gEAYnXt8GF0SfcQhG1xpn3A6oQgl36fpZ78FzO2Z+txw4OiKk+lrw==}
     dependencies:
       '@babel/core': 7.18.10
@@ -3868,7 +3868,7 @@ packages:
       '@babel/preset-env': 7.18.6_@babel+core@7.18.10
       '@babel/preset-typescript': 7.18.6_@babel+core@7.18.10
       '@babel/runtime': 7.18.6
-      '@nrwl/cypress': 14.5.10_yj5ubgorfh6zyzdanopdnjqvym
+      '@nrwl/cypress': 14.5.10_j4yawwlmok3qxkdlflqt5zvrm4
       '@nrwl/devkit': 14.5.10_friigstnlhuirqu4wr7dfbyroa
       '@nrwl/jest': 14.5.10_oqd6w67pqggug57az6damxqvgm
       '@nrwl/js': 14.5.10_osi6wrjvgk2m6vo5if6ik6tnji
@@ -4985,7 +4985,7 @@ packages:
     resolution: {integrity: sha512-Il80Qs2WjYlJIBNzNkK6KYqlVMTbZLXgHx2oT0pU/fjRHyEp+PEfEPY0R3WCwAGVOtauxh1hOxNgIf5bv7dQpA==}
     engines: {node: '>= 0.6'}
     dependencies:
-      mime-types: 2.1.31
+      mime-types: 2.1.35
       negotiator: 0.6.2
 
   /accepts/1.3.8:
@@ -5072,8 +5072,10 @@ packages:
       clean-stack: 2.2.0
       indent-string: 4.0.0
 
-  /ajv-formats/2.1.1:
+  /ajv-formats/2.1.1_ajv@8.11.0:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -5249,9 +5251,6 @@ packages:
     dependencies:
       lodash: 4.17.21
     dev: false
-
-  /async/3.2.0:
-    resolution: {integrity: sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw==}
 
   /async/3.2.4:
     resolution: {integrity: sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==}
@@ -5973,7 +5972,7 @@ packages:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
     engines: {node: '>= 0.6'}
     dependencies:
-      mime-db: 1.48.0
+      mime-db: 1.52.0
 
   /compression/1.7.4:
     resolution: {integrity: sha512-jaSIDzP9pZVS4ZfQ+TzvtiWhdpFhE2RDHz8QJkpX9SIpLq88VueF5jJw6t+6CUQcAoA6t+x89MLrWAqpfDE8iQ==}
@@ -6100,7 +6099,7 @@ packages:
     dev: false
 
   /core-util-is/1.0.2:
-    resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
+    resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
 
   /cors/2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
@@ -6417,8 +6416,8 @@ packages:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
     dev: true
 
-  /cypress/10.6.0:
-    resolution: {integrity: sha512-6sOpHjostp8gcLO34p6r/Ci342lBs8S5z9/eb3ZCQ22w2cIhMWGUoGKkosabPBfKcvRS9BE4UxybBtlIs8gTQA==}
+  /cypress/9.7.0:
+    resolution: {integrity: sha512-+1EE1nuuuwIt/N1KXRR2iWHU+OiIt7H28jJDyyI4tiUftId/DrXYEwoDa5+kH2pki1zxnA0r6HrUGHV5eLbF5Q==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     requiresBuild: true
@@ -7851,7 +7850,7 @@ packages:
   /getos/3.2.1:
     resolution: {integrity: sha512-U56CfOK17OKgTVqozZjUKNdkfEv6jk5WISBJ8SHoagjE6L69zOwl3Z+O8myjY9MEW3i2HPWQBt/LTbCgcC973Q==}
     dependencies:
-      async: 3.2.0
+      async: 3.2.4
 
   /getpass/0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}
@@ -12278,7 +12277,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.9
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       ajv-keywords: 5.1.0_ajv@8.11.0
 
   /secure-compare/3.0.1:
@@ -12370,7 +12369,7 @@ packages:
       debug: 2.6.9
       escape-html: 1.0.3
       http-errors: 1.6.3
-      mime-types: 2.1.31
+      mime-types: 2.1.35
       parseurl: 1.3.3
     transitivePeerDependencies:
       - supports-color
@@ -13215,7 +13214,7 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       media-typer: 0.3.0
-      mime-types: 2.1.31
+      mime-types: 2.1.35
 
   /typed-assert/1.0.8:
     resolution: {integrity: sha512-5NkbXZUlmCE73Fs7gvkp1XXJWHYetPkg60QnQ2NXQmBYNFxbBr2zA8GCtaH4K2s2WhOmSlgiSTmrjrcm5tnM5g==}
