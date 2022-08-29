@@ -36,6 +36,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint workspace
         run: npx nx workspace-lint
+      - name: Check format
+        run: pnpm format
       - name: Lint
         run: pnpm affected:lint
       - name: Test
