@@ -9,18 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.5.0]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Install node
+        uses: actions/setup-node@v3.4.1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
       - name: Cache .pnpm-store
         uses: actions/cache@v1
@@ -75,10 +72,11 @@ jobs:
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.portfolio_latest_version != env.portfolio_package_version }}
         run: |
-          pnpm publish dist/libs/git-portfolio --access public --dry-run
-          pnpm publish dist/libs/git-portfolio --access public
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          npm publish dist/libs/git-portfolio --access public --dry-run
+          npm publish dist/libs/git-portfolio --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published wordlist generator library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
@@ -87,10 +85,11 @@ jobs:
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.wordlist_generator_latest_version != env.wordlist_generator_package_version }}
         run: |
-          pnpm publish dist/libs/wordlist-generator --access public --dry-run
-          pnpm publish dist/libs/wordlist-generator --access public
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          npm publish dist/libs/wordlist-generator --access public --dry-run
+          npm publish dist/libs/wordlist-generator --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check if published contact-form library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
@@ -99,10 +98,11 @@ jobs:
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.contact_form_latest_version != env.contact_form_package_version }}
         run: |
-          pnpm publish dist/libs/contact-form --access public --dry-run
-          pnpm publish dist/libs/contact-form --access public
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          npm publish dist/libs/contact-form --access public --dry-run
+          npm publish dist/libs/contact-form --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Prepare frontend deployment
         if: ${{ github.event_name == 'push' }}
         run: |
