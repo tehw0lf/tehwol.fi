@@ -7,7 +7,15 @@
   fxFlexFill
 >
   <mat-sidenav #sidenav mode="over" fixedInViewport="true">
-    <mat-nav-list fxLayoutGap="20px" fxLayout="column" fxFlex>
+    <mat-nav-list
+      [ngClass]="{
+        'light-theme': (isLight | async) === true,
+        'dark-theme': (isLight | async) === false
+      }"
+      fxLayoutGap="20px"
+      fxLayout="column"
+      fxFlex
+    >
       <a
         class="mat-button"
         [ngClass]="{ 'link-active': isActive() }"
