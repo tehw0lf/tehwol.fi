@@ -1,4 +1,5 @@
 {
+  "name": "git-portfolio",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/git-portfolio/src",
@@ -6,7 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/git-portfolio"],
+      "outputs": ["{workspaceRoot}/dist/libs/git-portfolio"],
       "options": {
         "project": "libs/git-portfolio/ng-package.json"
       },
@@ -22,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/git-portfolio"],
+      "outputs": ["{workspaceRoot}/coverage/libs/git-portfolio"],
       "options": {
         "jestConfig": "libs/git-portfolio/jest.config.ts",
         "passWithNoTests": true

@@ -1,4 +1,5 @@
 {
+  "name": "tehwolfi-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/tehwolfi-e2e/src",
   "projectType": "application",
