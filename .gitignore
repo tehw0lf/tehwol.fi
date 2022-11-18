@@ -3,9 +3,6 @@
 # Nx
 migrations.json
 
-# pnpm
-.pnpm-debug.log
-
 # scully
 scully.log
 
