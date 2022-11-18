@@ -2,7 +2,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -57,7 +56,6 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    FlexLayoutModule,
     ContactFormModule,
     GitPortfolioModule,
     WordlistGeneratorModule,
