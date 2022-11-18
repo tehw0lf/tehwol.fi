@@ -26,7 +26,7 @@ jobs:
         with:
           main-branch-name: master
       - name: Install packages
-        run: npm install --frozen-lockfile
+        run: npm ci
       - name: Lint workspace
         run: npx nx workspace-lint
       - name: Check format
