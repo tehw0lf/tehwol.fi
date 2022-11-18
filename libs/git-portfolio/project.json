@@ -1,0 +1,42 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/git-portfolio/src",
+  "prefix": "tehw0lf",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/git-portfolio"],
+      "options": {
+        "project": "libs/git-portfolio/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/git-portfolio/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/git-portfolio/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/git-portfolio"],
+      "options": {
+        "jestConfig": "libs/git-portfolio/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/git-portfolio/src/**/*.ts",
+          "libs/git-portfolio/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
