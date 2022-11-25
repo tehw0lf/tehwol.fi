@@ -30,33 +30,33 @@ jobs:
       - name: Lint workspace
         run: npx nx workspace-lint
       - name: Check format
-        run: npm format
+        run: npm run format
       - name: Lint
-        run: npm affected:lint
+        run: npm run affected:lint
       - name: Test
-        run: npm affected:test --ci --code-coverage
+        run: npm run affected:test --ci --code-coverage
       - name: Build on branch
         if: ${{ github.event_name != 'push' }}
-        run: npm affected:build
+        run: npm run affected:build
       - name: Build on master
         if: ${{ github.event_name == 'push' }}
         run: npm affected:build --skip-nx-cache
       - name: Build library schematics for contact-form
         run: |
           cd libs/contact-form
-          npm build
+          npm run build
       - name: Build library schematics for git-portfolio
         run: |
           cd libs/git-portfolio
-          npm build
+          npm run build
       - name: Build library schematics for wordlist-generator
         run: |
           cd libs/wordlist-generator
-          npm build
+          npm run build
       - name: Run scully
-        run: npm scully
+        run: npm run scully
       - name: Run end to end tests
-        run: npm e2e
+        run: npm run e2e
       - name: Check if published git portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
