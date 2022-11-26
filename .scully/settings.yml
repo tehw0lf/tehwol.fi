@@ -1,2 +1,11 @@
 identifier: kbq7y411kegbxbrb
 allowErrorCollect: false
+appPort: 1864
+staticPort: 1668
+reloadPort: 2667
+hostName: localhost
+projectName: tehwolfi
+homeFolder: /home/tehwolf/Nextcloud/Coding/TypeScript/tehw0lf
+distFolder: dist/apps/tehwolfi
+outDir: /home/tehwolf/Nextcloud/Coding/TypeScript/tehw0lf/dist/static
+handle404: ''
