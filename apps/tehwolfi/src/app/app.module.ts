@@ -28,6 +28,7 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     ContactFormModule,
     GitPortfolioModule,
     WordlistGeneratorModule,
-    ScullyLibModule
+    ScullyLibModule,
+    NgbModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
