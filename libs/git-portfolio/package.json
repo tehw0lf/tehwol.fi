@@ -12,12 +12,11 @@
     "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/libs/git-portfolio/"
   },
   "peerDependencies": {
-    "@angular/animations": "15.0.0",
-    "@angular/cdk": "15.0.0",
     "@angular/common": "15.0.0",
     "@angular/core": "15.0.0",
-    "@angular/material": "15.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^14.0.0",
     "@primer/octicons": "^17.9.0",
+    "bootstrap": "^5.2.3",
     "github-language-colors": "^1.0.0"
   },
   "dependencies": {

@@ -12,12 +12,11 @@
     "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/libs/contact-form/"
   },
   "peerDependencies": {
-    "@angular/animations": "15.0.0",
-    "@angular/cdk": "15.0.0",
     "@angular/common": "15.0.0",
     "@angular/core": "15.0.0",
     "@angular/forms": "15.0.0",
-    "@angular/material": "15.0.0"
+    "@ng-bootstrap/ng-bootstrap": "^14.0.0",
+    "bootstrap": "^5.2.3"
   },
   "dependencies": {
     "tslib": "^2.2.0"
