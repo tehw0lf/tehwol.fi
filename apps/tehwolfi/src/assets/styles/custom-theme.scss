@@ -1,5 +1,3 @@
-@use '@angular/material' as mat;
-@include mat.core();
 @import 'global.scss';
 
 // Define a dark theme
@@ -41,6 +39,7 @@ $light-theme: mat.define-light-theme(
 body {
   background-color: #1a1a1a;
   font-family: $font;
+  margin: 8px;
 }
 
 body.light-theme {

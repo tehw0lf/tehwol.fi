@@ -17,7 +17,8 @@
       fxFlex
     >
       <a
-        class="mat-button"
+        [ngStyle]="buttonStyle"
+        mat-button
         [ngClass]="{ 'link-active': isActive() }"
         routerLink="/home"
         routerLinkActive="link-active"
@@ -28,14 +29,16 @@
           <span>Home </span>
         </span> </a
       ><a
-        class="mat-button"
+        [ngStyle]="buttonStyle"
+        mat-button
         routerLink="/portfolio"
         routerLinkActive="link-active"
         mat-list-item
       >
         <span class="mat-button-wrapper"> <span>Portfolio</span> </span> </a
       ><a
-        class="mat-button"
+        [ngStyle]="buttonStyle"
+        mat-button
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
@@ -45,7 +48,8 @@
         </span>
       </a>
       <a
-        class="mat-button"
+        [ngStyle]="buttonStyle"
+        mat-button
         target="_blank"
         href="https://github.com/tehw0lf"
         mat-list-item

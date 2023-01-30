@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -14,6 +13,16 @@ import { SidenavService } from '../sidenav.service';
   styleUrls: ['./mobile.component.scss']
 })
 export class MobileComponent implements OnInit, OnDestroy {
+  @Input() buttonStyle = {
+    color: '#cc7832',
+    'vertical-align': 'middle',
+    'line-height': '36px',
+    'font-size': '18px',
+    margin: '0 10px 0 0',
+    'text-align': 'center',
+    'text-decoration': 'none'
+  };
+
   @ViewChild('sidenav', { static: true }) public sidenav:
     | MatSidenav
     | undefined;

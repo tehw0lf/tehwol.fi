@@ -1,9 +1,4 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
@@ -13,27 +8,18 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 
 describe('AppComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserAnimationsModule,
-          MatIconModule,
-          MatListModule,
-          MatToolbarModule,
-          MatSidenavModule
-        ],
-        declarations: [
-          AppComponent,
-          HomeComponent,
-          NavComponent,
-          MobileComponent,
-          DesktopComponent
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [
+        AppComponent,
+        HomeComponent,
+        NavComponent,
+        MobileComponent,
+        DesktopComponent
+      ]
+    }).compileComponents();
+  }));
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

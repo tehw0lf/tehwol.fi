@@ -1,5 +1,5 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -12,6 +12,15 @@ import { SidenavService } from '../sidenav.service';
   styleUrls: ['./desktop.component.scss']
 })
 export class DesktopComponent implements AfterViewInit, OnInit {
+  @Input() buttonStyle = {
+    color: '#cc7832',
+    'vertical-align': 'middle',
+    'line-height': '36px',
+    'font-size': '24px',
+    margin: '0 10px 0 0',
+    'text-align': 'center',
+    'text-decoration': 'none'
+  };
   isLight: Observable<boolean> = of(false);
 
   constructor(

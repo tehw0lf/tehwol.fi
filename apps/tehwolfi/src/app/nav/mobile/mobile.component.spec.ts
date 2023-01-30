@@ -1,8 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SidenavService } from '../sidenav.service';
@@ -19,13 +15,7 @@ describe('MobileComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatListModule,
-        MatSidenavModule
-      ],
+      imports: [RouterTestingModule],
       declarations: [MobileComponent],
       providers: [{ provide: SidenavService, useValue: mockSidenavService }]
     }).compileComponents();

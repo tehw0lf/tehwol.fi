@@ -3,16 +3,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { ContactFormModule } from '@tehw0lf/contact-form';
 import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
@@ -28,7 +20,6 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidenavService } from './nav/sidenav.service';
 import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-generator.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,19 +35,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    BrowserAnimationsModule,
     DragDropModule,
     ReactiveFormsModule,
     ClipboardModule,
     HttpClientModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatButtonModule,
     ContactFormModule,
     GitPortfolioModule,
     WordlistGeneratorModule,

@@ -16,10 +16,7 @@
         "tsConfig": "apps/tehwolfi/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/tehwolfi/src/favicon.svg", "apps/tehwolfi/src/assets"],
-        "styles": [
-          "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-          "apps/tehwolfi/src/styles.scss"
-        ],
+        "styles": ["apps/tehwolfi/src/styles.scss"],
         "scripts": []
       },
       "configurations": {

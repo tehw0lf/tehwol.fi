@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SidenavService } from '../sidenav.service';
@@ -16,7 +14,7 @@ describe('DesktopComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
+      imports: [RouterTestingModule],
       providers: [{ provide: SidenavService, useValue: mockSidenavService }],
       declarations: [DesktopComponent]
     }).compileComponents();
