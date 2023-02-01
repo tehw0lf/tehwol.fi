@@ -1,4 +1,5 @@
 {
+  "name": "wordlist-generator",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/wordlist-generator/src",
@@ -6,7 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/wordlist-generator"],
+      "outputs": ["{workspaceRoot}/dist/libs/wordlist-generator"],
       "options": {
         "project": "libs/wordlist-generator/ng-package.json"
       },
@@ -22,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/wordlist-generator"],
+      "outputs": ["{workspaceRoot}/coverage/libs/wordlist-generator"],
       "options": {
         "jestConfig": "libs/wordlist-generator/jest.config.ts",
         "passWithNoTests": true
