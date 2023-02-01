@@ -1,4 +1,9 @@
-import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import {
+  chain,
+  Rule,
+  SchematicContext,
+  Tree
+} from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addModuleImportToRootModule,
@@ -9,12 +14,15 @@ import {
 } from '@angular/cdk/schematics';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
-import { addPackageToPackageJson, getPackageVersionFromPackageJson } from './package-config';
+import {
+  addPackageToPackageJson,
+  getPackageVersionFromPackageJson
+} from './package-config';
 import { Schema } from './schema';
 
 const gitPortfolioModuleName = 'GitPortfolioModule';
 const gitPortfolioPackageName = '@tehw0lf/git-portfolio';
-const flexLayoutFallbackVersion = '^14.0.0-beta.40';
+const flexLayoutFallbackVersion = '^15.0.0-beta.42';
 
 export default function (options: Schema): Rule {
   return async () => {
