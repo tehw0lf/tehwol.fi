@@ -27,6 +27,6 @@
   "schematics": "./schematics/collection.json",
   "devDependencies": {
     "copyfiles": "2.4.1",
-    "typescript": "4.8.4"
+    "typescript": "4.9.4"
   }
 }
