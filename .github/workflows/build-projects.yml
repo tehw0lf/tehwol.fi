@@ -60,8 +60,8 @@ jobs:
         run: |
           cd libs/wordlist-generator
           pnpm build
-        if: ${{ github.event_name == 'push' }}
       - name: Run scully
+        if: ${{ github.event_name == 'push' }}
         run: pnpm scully
       - name: Run end to end tests
         run: pnpm e2e
