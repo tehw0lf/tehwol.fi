@@ -104,24 +104,12 @@ jobs:
           rm .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Prepare frontend deployment
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "$SSH_KEY" > ssh_key
-          echo "$SSH_PASS" > ssh_pass
-          chmod 0600 ssh_key
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_PASS: ${{ secrets.SSH_PASS }}
       - name: Add avatars to package
         if: ${{ github.event_name == 'push' }}
         run: mv -fv avatar* dist/static/
-      - name: Deploy frontend
+      - name: Build docker image and push to ghcr.io
         if: ${{ github.event_name == 'push' }}
         run: |
-          sshpass -f ssh_pass -P 'Enter passphrase' ssh -i ssh_key -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f ssh_pass -P 'Enter passphrase' scp -i ssh_key -P $PORT -o StrictHostKeyChecking=no -rp dist/static/* $USER@$HOST:/home/$USER/public_html/
-          rm ssh_*
-        env:
-          HOST: tehwol.fi
-          PORT: 3695
-          USER: tehwolfi
+          docker build -t tehwolf.de .
+          docker tag $(docker image ls | grep tehwolf.de | awk '{print $3}') ghcr.io/tehw0lf/tehwolf.de:latest
+          docker push ghcr.io/tehw0lf/tehwolf.de:latest
