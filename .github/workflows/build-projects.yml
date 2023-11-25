@@ -25,7 +25,7 @@ jobs:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-node16-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@7
       - name: Enable pre and post scripts
         run: pnpm config set enable-pre-post-scripts true
       - name: Enable Nx SHAs
