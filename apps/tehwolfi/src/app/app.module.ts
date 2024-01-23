@@ -2,7 +2,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,7 +13,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ScullyLibModule } from '@scullyio/ng-lib';
 import { ContactFormModule } from '@tehw0lf/contact-form';
 import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
 import { WordlistGeneratorModule } from '@tehw0lf/wordlist-generator';
@@ -57,11 +55,9 @@ import { WordlistGeneratorComponent } from './wordlist-generator/wordlist-genera
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    FlexLayoutModule,
     ContactFormModule,
     GitPortfolioModule,
-    WordlistGeneratorModule,
-    ScullyLibModule
+    WordlistGeneratorModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
