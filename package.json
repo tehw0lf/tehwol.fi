@@ -4,8 +4,6 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js",
-    "compress": "gzipper compress --verbose ./dist/static ./dist/compressed",
     "nx": "nx",
     "start": "nx serve",
     "build": "nx build",
