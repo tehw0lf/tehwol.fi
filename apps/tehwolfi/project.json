@@ -12,7 +12,7 @@
         "outputPath": "dist/apps/tehwolfi",
         "index": "apps/tehwolfi/src/index.html",
         "main": "apps/tehwolfi/src/main.ts",
-        "polyfills": "apps/tehwolfi/src/polyfills.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/tehwolfi/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/tehwolfi/src/favicon.svg", "apps/tehwolfi/src/assets"],
