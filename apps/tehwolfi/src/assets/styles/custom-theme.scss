@@ -1,43 +1,40 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
+@use '@angular/material' as mat;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
-@import 'global.scss';
+// Define a dark theme
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$orange-palette),
+      accent: mat.define-palette(mat.$yellow-palette),
+      warn: mat.define-palette(mat.$red-palette)
+    ),
+    // Only include `typography` and `density` in the default dark theme.
+    typography: mat.define-typography-config(),
+    density: 0
+  )
+);
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$primary-light: mat-palette($mat-light-blue);
-$accent-light: mat-palette($mat-light-green);
-$warn-light: mat-palette($mat-red);
+// Define a light theme
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$light-blue-palette),
+      accent: mat.define-palette(mat.$light-green-palette),
+      warn: mat.define-palette(mat.$red-palette)
+    )
+  )
+);
 
-$light-theme: mat-light-theme($primary-light, $accent-light, $warn-light);
+// Apply the dark theme by default
+@include mat.core-theme($dark-theme);
+@include mat.button-theme($dark-theme);
 
-//for dark theme
-$primary-dark: mat-palette($mat-orange);
-$accent-dark: mat-palette($mat-yellow);
-$warn-dark: mat-palette($mat-red);
-
-$dark-theme: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
-
-@include angular-material-theme($dark-theme);
-
-body {
-  background-color: #1a1a1a;
-  font-family: $font;
-}
-
-body.light-theme {
-  background-color: white;
-  font-family: $font;
-}
-
-.light-theme {
-  @include angular-material-theme($light-theme);
+// Apply the light theme only when the user prefers light themes.
+@media (prefers-color-scheme: light) {
+  // Use the `-color` mixins to only apply color styles without reapplying the same
+  // typography and density styles.
+  @include mat.core-color($light-theme);
+  @include mat.button-color($light-theme);
 }

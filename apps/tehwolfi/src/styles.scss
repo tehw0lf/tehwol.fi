@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'assets/styles/custom-theme.scss';
+@import 'assets/styles/global.scss';
+
+body.dark-theme {
+  background-color: #1a1a1a;
+  font-family: $font;
+}
+
+body.light-theme {
+  background-color: white;
+  font-family: $font;
+}
