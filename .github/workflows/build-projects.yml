@@ -41,8 +41,6 @@ jobs:
       - name: Build on master
         if: ${{ github.event_name == 'push' }}
         run: npm affected:build --skip-nx-cache
-      - name: Run scully
-        run: npm run scully
       - name: Run end to end tests
         run: npm run e2e
       - name: Check if published git portfolio library version is outdated
