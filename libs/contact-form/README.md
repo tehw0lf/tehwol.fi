@@ -16,7 +16,6 @@ The following dependencies are needed:
     @angular/cdk
     @angular/common
     @angular/core
-    @angular/flex-layout
     @angular/forms
     @angular/material
 ```
