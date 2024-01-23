@@ -17,7 +17,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v3.4.1
         with:
-          node-version: 20.6.1
+          node-version: 20.9.0
           registry-url: 'https://registry.npmjs.org'
       - name: Enable pre and post scripts
         run: npm config set enable-pre-post-scripts true
