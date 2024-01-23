@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
-import { ContactFormComponent as ContactFormComponent_1 } from '../../../../../libs/contact-form/src/lib/contact-form/contact-form.component';
 
 @Component({
     selector: 'tehw0lf-contact-form',
