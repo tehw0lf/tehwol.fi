@@ -6,12 +6,12 @@
   "prefix": "tehw0lf",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/tehwolfi",
         "index": "apps/tehwolfi/src/index.html",
-        "main": "apps/tehwolfi/src/main.ts",
+        "browser": "apps/tehwolfi/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/tehwolfi/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
@@ -45,9 +45,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
