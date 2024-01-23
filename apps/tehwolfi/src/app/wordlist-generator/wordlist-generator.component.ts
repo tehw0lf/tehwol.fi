@@ -5,11 +5,11 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { ThemeService } from '../theme.service';
 
 @Component({
-    selector: 'tehw0lf-wordlist-generator',
-    templateUrl: './wordlist-generator.component.html',
-    styleUrls: ['./wordlist-generator.component.scss'],
-    standalone: true,
-    imports: [WordlistGeneratorComponent_1]
+  selector: 'tehw0lf-wordlist-generator',
+  templateUrl: './wordlist-generator.component.html',
+  styleUrls: ['./wordlist-generator.component.scss'],
+  standalone: true,
+  imports: [WordlistGeneratorComponent_1]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   buttonStyle = {

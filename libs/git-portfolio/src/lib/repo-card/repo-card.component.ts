@@ -12,12 +12,19 @@ import { MatCardModule } from '@angular/material/card';
 const githubLanguageColors = require('github-language-colors/colors.json');
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'repo-card',
-    templateUrl: './repo-card.component.html',
-    styleUrls: ['./repo-card.component.scss'],
-    standalone: true,
-    imports: [MatCardModule, NgStyle, MatButtonModule, OcticonDirective, ClipboardModule, DatePipe]
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'repo-card',
+  templateUrl: './repo-card.component.html',
+  styleUrls: ['./repo-card.component.scss'],
+  standalone: true,
+  imports: [
+    MatCardModule,
+    NgStyle,
+    MatButtonModule,
+    OcticonDirective,
+    ClipboardModule,
+    DatePipe
+  ]
 })
 export class RepoCardComponent {
   @Input() buttonStyle!: any;
@@ -36,7 +43,8 @@ export class RepoCardComponent {
   public isCopied = false;
 
   @Output()
-  public copiedToClipboardEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public copiedToClipboardEvent: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   public githubLanguageColors = githubLanguageColors;
 

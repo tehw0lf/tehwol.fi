@@ -14,18 +14,20 @@ import { OcticonDirective } from './octicon.directive';
 import { RepoCardComponent } from './repo-card/repo-card.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatCardModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        ClipboardModule,
-        GitPortfolioComponent, RepoCardComponent, OcticonDirective
-    ],
-    exports: [GitPortfolioComponent, OcticonDirective],
-    providers: [GitProviderService]
+  imports: [
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    ClipboardModule,
+    GitPortfolioComponent,
+    RepoCardComponent,
+    OcticonDirective
+  ],
+  exports: [GitPortfolioComponent, OcticonDirective],
+  providers: [GitProviderService]
 })
 export class GitPortfolioModule {}

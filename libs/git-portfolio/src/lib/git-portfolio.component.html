@@ -10,7 +10,7 @@
               fxLayout="row wrap"
               fxLayout.lt-sm="column"
               fxLayoutAlign="flex-start"
-              >
+            >
               @if ((loading | async) === true) {
                 <div>
                   <mat-spinner></mat-spinner>
@@ -18,11 +18,11 @@
               }
               @for (
                 gitRepo of getOwnGitRepositories(
-                gitRepositories,
-                gitProvider.key
-                )
-                ; track
-                gitRepo) {
+                  gitRepositories,
+                  gitProvider.key
+                );
+                track gitRepo
+              ) {
                 <repo-card
                   [buttonStyle]="buttonStyle"
                   [cardStyle]="cardStyle"
@@ -40,16 +40,14 @@
                   fxFlex.lt-md="0 1 calc(50% - 32px)"
                   fxFlex.lt-sm="100%"
                   fxLayoutAlign="stretch"
-                  >
+                >
                 </repo-card>
               }
               @if (
                 (loading | async) === false &&
                 !hasRepositories(gitRepositories, gitProvider.key, 'own')
-                ) {
-                <div
-                  [ngStyle]="textStyle"
-                  >
+              ) {
+                <div [ngStyle]="textStyle">
                   This user has not created any repositories yet
                 </div>
               }
@@ -63,7 +61,7 @@
               fxLayout="row wrap"
               fxLayout.lt-sm="column"
               fxLayoutAlign="flex-start"
-              >
+            >
               @if ((loading | async) === true) {
                 <div>
                   <mat-spinner></mat-spinner>
@@ -71,11 +69,11 @@
               }
               @for (
                 gitRepo of getForkedGitRepositories(
-                gitRepositories,
-                gitProvider.key
-                )
-                ; track
-                gitRepo) {
+                  gitRepositories,
+                  gitProvider.key
+                );
+                track gitRepo
+              ) {
                 <repo-card
                   [buttonStyle]="buttonStyle"
                   [cardStyle]="cardStyle"
@@ -98,10 +96,8 @@
               @if (
                 (loading | async) === false &&
                 !hasRepositories(gitRepositories, gitProvider.key, 'forked')
-                ) {
-                <div
-                  [ngStyle]="textStyle"
-                  >
+              ) {
+                <div [ngStyle]="textStyle">
                   This user has not forked any repositories yet
                 </div>
               }

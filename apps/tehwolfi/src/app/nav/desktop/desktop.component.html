@@ -3,7 +3,7 @@
     'light-theme': (isLight | async) === true,
     'dark-theme': (isLight | async) === false
   }"
-  >
+>
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
@@ -13,7 +13,7 @@
       fxShow="true"
       fxHide.gt-sm
       mat-icon-button
-      >
+    >
       <mat-icon>menu</mat-icon>
     </button>
     <div
@@ -22,14 +22,14 @@
       fxHide.lt-md="true"
       fxLayout="row"
       fxFlex
-      >
+    >
       <div class="nav-item">
         <a
           mat-button
           [ngClass]="{ 'link-active': isActive() }"
           routerLink="/home"
           routerLinkActive="link-active"
-          >
+        >
           <span class="mat-button-wrapper">
             <img alt="tehwol.fi" class="nav-logo" src="../../favicon.svg" />
             <span>Home</span>
@@ -46,7 +46,7 @@
           mat-button
           routerLink="/wordlist-generator"
           routerLinkActive="link-active"
-          >
+        >
           <span class="mat-button-wrapper">
             <span>Wordlist Generator</span>
           </span>
@@ -63,7 +63,7 @@
         fxShow="true"
         fxHide.lt-md="true"
         mat-icon-button
-        >
+      >
         <mat-icon>light_mode</mat-icon>
       </button>
     }
@@ -77,7 +77,7 @@
         fxShow="true"
         fxHide.lt-md="true"
         mat-icon-button
-        >
+      >
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
@@ -89,7 +89,7 @@
               alt="tehwol.fi"
               class="nav-logo"
               src="assets/icons/github.png"
-              />
+            />
             <span>GitHub</span>
           </span>
         </a>

@@ -5,7 +5,7 @@
   (ngSubmit)="submitFormData(formGroup)"
   fxLayout="column"
   fxFlex
-  >
+>
   <mat-form-field class="form-field" appearance="outline" fxFlex>
     <mat-label [ngStyle]="textStyle" for="name">{{ nameLabel }}</mat-label>
     <input
@@ -15,7 +15,7 @@
       type="text"
       name="name"
       formControlName="name"
-      />
+    />
   </mat-form-field>
   <mat-form-field class="form-field" appearance="outline" fxFlex>
     <mat-label [ngStyle]="textStyle" for="email">{{
@@ -28,7 +28,7 @@
       type="email"
       name="email"
       formControlName="email"
-      />
+    />
   </mat-form-field>
   <mat-form-field class="form-field" appearance="outline" fxFlex>
     <mat-label [ngStyle]="textStyle" for="message">
@@ -39,7 +39,7 @@
       matInput
       formControlName="message"
       name="message"
-      >
+    >
     </textarea>
   </mat-form-field>
   <button
@@ -47,22 +47,16 @@
     class="form-button"
     type="submit"
     [disabled]="!formGroup.valid"
-    >
+  >
     {{ sendText }}
   </button>
   @if ((emailSent$ | async) === true) {
-    <div
-      [ngStyle]="textStyle"
-      class="form-status"
-      >
+    <div [ngStyle]="textStyle" class="form-status">
       {{ sendSuccessfulText }}
     </div>
   }
   @if ((emailSent$ | async) === false) {
-    <div
-      [ngStyle]="textStyle"
-      class="form-status"
-      >
+    <div [ngStyle]="textStyle" class="form-status">
       {{ sendErrorText }}
     </div>
   }

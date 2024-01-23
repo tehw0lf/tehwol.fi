@@ -1,6 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -12,12 +23,22 @@ import { MatListModule } from '@angular/material/list';
 import { NgClass, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'tehw0lf-mobile',
-    encapsulation: ViewEncapsulation.None,
-    templateUrl: './mobile.component.html',
-    styleUrls: ['./mobile.component.scss'],
-    standalone: true,
-    imports: [MatSidenavModule, NgClass, MatListModule, RouterLink, RouterLinkActive, MatButtonModule, MatIconModule, RouterOutlet, AsyncPipe]
+  selector: 'tehw0lf-mobile',
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: './mobile.component.html',
+  styleUrls: ['./mobile.component.scss'],
+  standalone: true,
+  imports: [
+    MatSidenavModule,
+    NgClass,
+    MatListModule,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatIconModule,
+    RouterOutlet,
+    AsyncPipe
+  ]
 })
 export class MobileComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) public sidenav:
