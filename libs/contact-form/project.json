@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/libs/contact-form"],
       "options": {
-        "project": "libs/contact-form/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/contact-form/ng-package.json"
       },
       "configurations": {
         "production": {
