@@ -6,126 +6,135 @@
         [ngStyle]="buttonStyle"
         mat-raised-button
         (click)="generateWordlist()"
-      >
+        >
         Generate wordlist
       </button>
-      <button
-        class="choose-format"
-        [ngStyle]="buttonStyle"
-        mat-raised-button
-        [matMenuTriggerFor]="menu"
-        *ngIf="wordlist$"
-      >
-        Choose format
-      </button>
-      <mat-menu #menu="matMenu">
+      @if (wordlist$) {
         <button
+          class="choose-format"
           [ngStyle]="buttonStyle"
-          mat-menu-item
-          *ngFor="let type of fileTypes"
-          (click)="fileType = type"
-        >
-          {{ type }}
-        </button>
-      </mat-menu>
-      <button
-        class="download-wordlist"
-        [ngStyle]="buttonStyle"
-        mat-raised-button
-        *ngIf="wordlist$"
-        (click)="downloadWordlist()"
-      >
-        Download as
-        <ng-container *ngIf="this.fileType">{{ this.fileType }}</ng-container>
-      </button>
-    </div>
-    <form *ngIf="charsetForm" [formGroup]="charsetForm">
-      <mat-form-field class="fixed-width" appearance="outline">
-        <mat-label [ngStyle]="textStyle">prefix (optional)</mat-label>
-        <input
-          [ngStyle]="textStyle"
-          matInput
-          type="text"
-          id="prefix"
-          formControlName="prefix"
-          (keydown.enter)="$event.preventDefault()"
-        />
-      </mat-form-field>
-      <div formArrayName="charsets">
-        <div class="charset"></div>
-        <div cdkDropList (cdkDropListDropped)="drop($event)">
-          <div
-            class="charset-container"
-            cdkDrag
-            *ngFor="let charset of charsets?.controls; let i = index"
+          mat-raised-button
+          [matMenuTriggerFor]="menu"
           >
-            <mat-icon class="drag-indicator" [ngStyle]="dragStyle"
-              >drag_indicator</mat-icon
+          Choose format
+        </button>
+      }
+      <mat-menu #menu="matMenu">
+        @for (type of fileTypes; track type) {
+          <button
+            [ngStyle]="buttonStyle"
+            mat-menu-item
+            (click)="fileType = type"
             >
-            <mat-form-field class="charset" appearance="outline">
-              <mat-label [ngStyle]="textStyle">
-                character set for string position {{ i }}
-              </mat-label>
-              <input
-                [ngStyle]="textStyle"
-                matInput
-                type="text"
-                id="position-{{ i }}"
-                [formControlName]="i"
-                (keydown.enter)="$event.preventDefault()"
-                required
-              />
-            </mat-form-field>
-            <button
-              mat-raised-button
-              class="clone-charset"
-              [ngStyle]="buttonStyle"
-              (click)="cloneCharset(i)"
-            >
-              <mat-icon>content_copy</mat-icon>
-            </button>
-            <button
-              mat-raised-button
-              class="remove-charset"
-              [ngStyle]="buttonStyle"
-              (click)="removeCharset(i)"
-              [disabled]="this.charsets?.value.length === 1"
-            >
-              <mat-icon>remove</mat-icon>
-            </button>
-            <button
-              mat-raised-button
-              [ngStyle]="buttonStyle"
-              (click)="addCharset()"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
+            {{ type }}
+          </button>
+        }
+      </mat-menu>
+      @if (wordlist$) {
+        <button
+          class="download-wordlist"
+          [ngStyle]="buttonStyle"
+          mat-raised-button
+          (click)="downloadWordlist()"
+          >
+          Download as
+          @if (this.fileType) {
+            {{ this.fileType }}
+          }
+        </button>
+      }
+    </div>
+    @if (charsetForm) {
+      <form [formGroup]="charsetForm">
+        <mat-form-field class="fixed-width" appearance="outline">
+          <mat-label [ngStyle]="textStyle">prefix (optional)</mat-label>
+          <input
+            [ngStyle]="textStyle"
+            matInput
+            type="text"
+            id="prefix"
+            formControlName="prefix"
+            (keydown.enter)="$event.preventDefault()"
+            />
+        </mat-form-field>
+        <div formArrayName="charsets">
+          <div class="charset"></div>
+          <div cdkDropList (cdkDropListDropped)="drop($event)">
+            @for (charset of charsets?.controls; track charset; let i = $index) {
+              <div
+                class="charset-container"
+                cdkDrag
+                >
+                <mat-icon class="drag-indicator" [ngStyle]="dragStyle"
+                  >drag_indicator</mat-icon
+                  >
+                  <mat-form-field class="charset" appearance="outline">
+                    <mat-label [ngStyle]="textStyle">
+                      character set for string position {{ i }}
+                    </mat-label>
+                    <input
+                      [ngStyle]="textStyle"
+                      matInput
+                      type="text"
+                      id="position-{{ i }}"
+                      [formControlName]="i"
+                      (keydown.enter)="$event.preventDefault()"
+                      required
+                      />
+                  </mat-form-field>
+                  <button
+                    mat-raised-button
+                    class="clone-charset"
+                    [ngStyle]="buttonStyle"
+                    (click)="cloneCharset(i)"
+                    >
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                  <button
+                    mat-raised-button
+                    class="remove-charset"
+                    [ngStyle]="buttonStyle"
+                    (click)="removeCharset(i)"
+                    [disabled]="this.charsets?.value.length === 1"
+                    >
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <button
+                    mat-raised-button
+                    [ngStyle]="buttonStyle"
+                    (click)="addCharset()"
+                    >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              }
+            </div>
           </div>
-        </div>
+          <mat-form-field class="fixed-width" appearance="outline">
+            <mat-label [ngStyle]="textStyle">suffix (optional)</mat-label>
+            <input
+              [ngStyle]="textStyle"
+              matInput
+              type="text"
+              id="suffix"
+              formControlName="suffix"
+              (keydown.enter)="$event.preventDefault()"
+              />
+          </mat-form-field>
+        </form>
+      }
+    </div>
+    @if (wordlist$) {
+      <div class="wordlist-container" fxLayout="column" fxFlex>
+        @if (displayWordlist) {
+          <h3 class="wordlist-header">Generated wordlist:</h3>
+          <code class="wordlist">
+            {{ wordlist$ | async }}
+          </code>
+        } @else {
+          The generated wordlist is too large to be displayed. You can still
+          download it.
+        }
       </div>
-      <mat-form-field class="fixed-width" appearance="outline">
-        <mat-label [ngStyle]="textStyle">suffix (optional)</mat-label>
-        <input
-          [ngStyle]="textStyle"
-          matInput
-          type="text"
-          id="suffix"
-          formControlName="suffix"
-          (keydown.enter)="$event.preventDefault()"
-        />
-      </mat-form-field>
-    </form>
+    }
   </div>
-  <div class="wordlist-container" *ngIf="wordlist$" fxLayout="column" fxFlex>
-    <ng-container *ngIf="displayWordlist; else wordlistTooLarge">
-      <h3 class="wordlist-header">Generated wordlist:</h3>
-      <code class="wordlist">
-        {{ wordlist$ | async }}
-      </code></ng-container
-    >
-    <ng-template #wordlistTooLarge>
-      The generated wordlist is too large to be displayed. You can still
-      download it.
-    </ng-template>
-  </div>
-</div>
