@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@tehw0lf/wordlist-generator';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
-import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '../../../../../libs/wordlist-generator/src/lib/wordlist-generator.component';
 
 @Component({
     selector: 'tehw0lf-wordlist-generator',
