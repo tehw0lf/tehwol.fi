@@ -2,11 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
+import { ContactFormComponent as ContactFormComponent_1 } from '../../../../../libs/contact-form/src/lib/contact-form/contact-form.component';
 
 @Component({
-  selector: 'tehw0lf-contact-form',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss']
+    selector: 'tehw0lf-contact-form',
+    templateUrl: './contact-form.component.html',
+    styleUrls: ['./contact-form.component.scss'],
+    standalone: true,
+    imports: [ContactFormComponent_1]
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   buttonStyle = {

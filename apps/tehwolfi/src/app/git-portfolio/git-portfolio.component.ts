@@ -3,11 +3,14 @@ import { Subject, takeUntil, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment.prod';
 import { ThemeService } from '../theme.service';
+import { GitPortfolioComponent as GitPortfolioComponent_1 } from '../../../../../libs/git-portfolio/src/lib/git-portfolio.component';
 
 @Component({
-  selector: 'tehw0lf-git-portfolio',
-  templateUrl: './git-portfolio.component.html',
-  styleUrls: ['./git-portfolio.component.scss']
+    selector: 'tehw0lf-git-portfolio',
+    templateUrl: './git-portfolio.component.html',
+    styleUrls: ['./git-portfolio.component.scss'],
+    standalone: true,
+    imports: [GitPortfolioComponent_1]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   buttonStyle = {

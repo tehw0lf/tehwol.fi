@@ -7,12 +7,17 @@ import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitProviders } from './types/git-providers-type';
 import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
+import { RepoCardComponent } from './repo-card/repo-card.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgStyle, AsyncPipe, KeyValuePipe } from '@angular/common';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'git-portfolio',
-  templateUrl: './git-portfolio.component.html',
-  styleUrls: ['./git-portfolio.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'git-portfolio',
+    templateUrl: './git-portfolio.component.html',
+    styleUrls: ['./git-portfolio.component.scss'],
+    standalone: true,
+    imports: [NgStyle, MatProgressSpinnerModule, RepoCardComponent, AsyncPipe, KeyValuePipe]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   @Input() buttonStyle = { 'background-color': '#424242', color: '#cc7832' };

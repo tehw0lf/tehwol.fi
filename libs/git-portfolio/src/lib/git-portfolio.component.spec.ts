@@ -22,12 +22,11 @@ describe('GitPortfolioComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [MatProgressSpinnerModule, MatCardModule, ClipboardModule],
-        declarations: [GitPortfolioComponent, RepoCardComponent],
-        providers: [
-          { provide: GitProviderService, useValue: gitProviderServiceStub }
-        ]
-      }).compileComponents();
+    imports: [MatProgressSpinnerModule, MatCardModule, ClipboardModule, GitPortfolioComponent, RepoCardComponent],
+    providers: [
+        { provide: GitProviderService, useValue: gitProviderServiceStub }
+    ]
+}).compileComponents();
     })
   );
 

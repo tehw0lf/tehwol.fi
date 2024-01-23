@@ -15,9 +15,8 @@ describe('RepoCardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ClipboardModule, MatButtonModule, MatCardModule],
-      declarations: [RepoCardComponent, OcticonDirective]
-    }).compileComponents();
+    imports: [ClipboardModule, MatButtonModule, MatCardModule, RepoCardComponent, OcticonDirective]
+}).compileComponents();
   }));
 
   beforeEach(() => {
