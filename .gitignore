@@ -4,9 +4,6 @@
 /.nx
 migrations.json
 
-# scully
-scully.log
-
 # compiled output
 /dist
 /tmp
