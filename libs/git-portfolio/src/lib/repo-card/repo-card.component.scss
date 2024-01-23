@@ -8,7 +8,7 @@
   }
 }
 
-.mat-button {
+.mat-mdc-button {
   vertical-align: middle;
   line-height: 36px;
   font-size: 24px;
@@ -17,31 +17,31 @@
   text-decoration: none;
 }
 
-.mat-card {
+.mat-mdc-card {
   display: flex;
   flex-direction: column;
   width: 450px;
 }
 
-.mat-card-avatar {
+.mat-mdc-card-avatar {
   height: 53px;
   width: 53px;
 }
 
-.mat-card-subtitle {
+.mat-mdc-card-subtitle {
   padding-left: 16px;
 }
 
-.mat-card-header {
+.mat-mdc-card-header {
   flex-shrink: 0;
 }
 
-.mat-card-content {
+.mat-mdc-card-content {
   flex-grow: 1;
   overflow: auto;
 }
 
-.mat-card-footer {
+.mat-mdc-card-footer {
   padding: 16px 16px 16px 16px;
 }
 
