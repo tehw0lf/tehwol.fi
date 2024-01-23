@@ -17,57 +17,38 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v3.4.1
         with:
-          node-version: 16.x
+          node-version: 20.6.1
           registry-url: 'https://registry.npmjs.org'
-      - name: Cache .pnpm-store
-        uses: actions/cache@v1
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-node16-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - name: Install pnpm
-        run: npm install -g pnpm
       - name: Enable pre and post scripts
-        run: pnpm config set enable-pre-post-scripts true
+        run: npm config set enable-pre-post-scripts true
       - name: Enable Nx SHAs
         uses: nrwl/nx-set-shas@v2
         with:
           main-branch-name: master
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Lint workspace
         run: npx nx workspace-lint
       - name: Check format
-        run: pnpm format
+        run: npm run format
       - name: Lint
-        run: pnpm affected:lint
+        run: npm run affected:lint
       - name: Test
-        run: pnpm affected:test --ci --code-coverage
+        run: npm run affected:test --ci --code-coverage
       - name: Build on branch
         if: ${{ github.event_name != 'push' }}
-        run: pnpm affected:build
+        run: npm run affected:build
       - name: Build on master
         if: ${{ github.event_name == 'push' }}
-        run: pnpm affected:build --skip-nx-cache
-      - name: Build library schematics for contact-form
-        run: |
-          cd libs/contact-form
-          pnpm build
-      - name: Build library schematics for git-portfolio
-        run: |
-          cd libs/git-portfolio
-          pnpm build
-      - name: Build library schematics for wordlist-generator
-        run: |
-          cd libs/wordlist-generator
-          pnpm build
+        run: npm affected:build --skip-nx-cache
       - name: Run scully
-        run: pnpm scully
+        run: npm run scully
       - name: Run end to end tests
-        run: pnpm e2e
+        run: npm run e2e
       - name: Check if published git portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
-          echo "portfolio_latest_version=$(pnpm view @tehw0lf/git-portfolio dist-tags.latest)" >> $GITHUB_ENV
+          echo "portfolio_latest_version=$(npm view @tehw0lf/git-portfolio dist-tags.latest)" >> $GITHUB_ENV
           echo "portfolio_package_version=$(jq -r ".version" dist/libs/git-portfolio/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.portfolio_latest_version != env.portfolio_package_version }}
@@ -80,7 +61,7 @@ jobs:
       - name: Check if published wordlist generator library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
-          echo "wordlist_generator_latest_version=$(pnpm view @tehw0lf/wordlist-generator dist-tags.latest)" >> $GITHUB_ENV
+          echo "wordlist_generator_latest_version=$(npm view @tehw0lf/wordlist-generator dist-tags.latest)" >> $GITHUB_ENV
           echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/wordlist-generator/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.wordlist_generator_latest_version != env.wordlist_generator_package_version }}
@@ -93,7 +74,7 @@ jobs:
       - name: Check if published contact-form library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
-          echo "contact_form_latest_version=$(pnpm view @tehw0lf/contact-form dist-tags.latest)" >> $GITHUB_ENV
+          echo "contact_form_latest_version=$(npm view @tehw0lf/contact-form dist-tags.latest)" >> $GITHUB_ENV
           echo "contact_form_package_version=$(jq -r ".version" dist/libs/contact-form/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
         if: ${{ github.event_name == 'push' && env.contact_form_latest_version != env.contact_form_package_version }}
@@ -104,24 +85,12 @@ jobs:
           rm .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Prepare frontend deployment
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "$SSH_KEY" > ssh_key
-          echo "$SSH_PASS" > ssh_pass
-          chmod 0600 ssh_key
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_PASS: ${{ secrets.SSH_PASS }}
       - name: Add avatars to package
         if: ${{ github.event_name == 'push' }}
         run: mv -fv avatar* dist/static/
-      - name: Deploy frontend
+      - name: Build docker image and push to ghcr.io
         if: ${{ github.event_name == 'push' }}
         run: |
-          sshpass -f ssh_pass -P 'Enter passphrase' ssh -i ssh_key -p $PORT -o StrictHostKeyChecking=no $USER@$HOST "find /home/$USER/public_html/ -type f -name \"[^.]*\" -delete" && sshpass -f ssh_pass -P 'Enter passphrase' scp -i ssh_key -P $PORT -o StrictHostKeyChecking=no -rp dist/static/* $USER@$HOST:/home/$USER/public_html/
-          rm ssh_*
-        env:
-          HOST: tehwol.fi
-          PORT: 3695
-          USER: tehwolfi
+          docker build -t tehwolf.de .
+          docker tag $(docker image ls | grep tehwolf.de | awk '{print $3}') ghcr.io/tehw0lf/tehwolf.de:latest
+          docker push ghcr.io/tehw0lf/tehwolf.de:latest
