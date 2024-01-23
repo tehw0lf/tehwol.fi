@@ -15,21 +15,21 @@ import { WordlistGeneratorComponent } from './wordlist-generator.component';
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
 @NgModule({
-  declarations: [WordlistGeneratorComponent],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    DragDropModule,
-    ReactiveFormsModule,
-    ClipboardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatButtonModule
-  ],
-  exports: [WordlistGeneratorComponent],
-  providers: [WordlistGeneratorService]
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        DragDropModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatButtonModule,
+        WordlistGeneratorComponent
+    ],
+    exports: [WordlistGeneratorComponent],
+    providers: [WordlistGeneratorService]
 })
 export class WordlistGeneratorModule {}

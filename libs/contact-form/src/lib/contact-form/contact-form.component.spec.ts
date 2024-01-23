@@ -13,15 +13,15 @@ describe('ContactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ContactFormComponent],
-      imports: [
+    imports: [
         HttpClientTestingModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatInputModule
-      ]
-    }).compileComponents();
+        MatInputModule,
+        ContactFormComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

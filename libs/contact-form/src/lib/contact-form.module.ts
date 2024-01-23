@@ -10,16 +10,16 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { EmailApiService } from './email-api.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
-  declarations: [ContactFormComponent],
-  exports: [ContactFormComponent],
-  providers: [EmailApiService]
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ContactFormComponent
+    ],
+    exports: [ContactFormComponent],
+    providers: [EmailApiService]
 })
 export class ContactFormModule {}

@@ -2,11 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
+import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '../../../../../libs/wordlist-generator/src/lib/wordlist-generator.component';
 
 @Component({
-  selector: 'tehw0lf-wordlist-generator',
-  templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss']
+    selector: 'tehw0lf-wordlist-generator',
+    templateUrl: './wordlist-generator.component.html',
+    styleUrls: ['./wordlist-generator.component.scss'],
+    standalone: true,
+    imports: [WordlistGeneratorComponent_1]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   buttonStyle = {

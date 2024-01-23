@@ -1,16 +1,21 @@
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 import { EmailApiService } from '../email-api.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgStyle, AsyncPipe } from '@angular/common';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'contact-form',
-  templateUrl: './contact-form.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./contact-form.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'contact-form',
+    templateUrl: './contact-form.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./contact-form.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, NgStyle, MatFormFieldModule, MatInputModule, AsyncPipe]
 })
 export class ContactFormComponent implements OnDestroy {
   @Input() buttonStyle = {
