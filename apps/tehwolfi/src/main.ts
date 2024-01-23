@@ -1,6 +1,9 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,18 +26,32 @@ import { routes } from './app/app.routes';
 import { SidenavService } from './app/nav/sidenav.service';
 import { environment } from './environments/environment';
 
-
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, DragDropModule, ReactiveFormsModule, ClipboardModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatToolbarModule, MatSidenavModule, MatButtonModule, ContactFormModule, GitPortfolioModule, WordlistGeneratorModule),
-        SidenavService,
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideRouter(routes)
-    ]
-})
-  .catch(err => console.error(err));
+  providers: [
+    importProvidersFrom(
+      BrowserModule,
+      DragDropModule,
+      ReactiveFormsModule,
+      ClipboardModule,
+      MatCardModule,
+      MatIconModule,
+      MatInputModule,
+      MatListModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatSidenavModule,
+      MatButtonModule,
+      ContactFormModule,
+      GitPortfolioModule,
+      WordlistGeneratorModule
+    ),
+    SidenavService,
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideRouter(routes)
+  ]
+}).catch((err) => console.error(err));

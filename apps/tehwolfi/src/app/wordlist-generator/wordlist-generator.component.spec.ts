@@ -7,14 +7,12 @@ describe('WordlistGeneratorComponent', () => {
   let component: WordlistGeneratorComponent;
   let fixture: ComponentFixture<WordlistGeneratorComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [WordlistGeneratorModule],
-        declarations: [WordlistGeneratorComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [WordlistGeneratorModule],
+      declarations: [WordlistGeneratorComponent]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WordlistGeneratorComponent);

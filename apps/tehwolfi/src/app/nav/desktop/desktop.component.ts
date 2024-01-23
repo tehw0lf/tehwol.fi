@@ -11,11 +11,19 @@ import { NgClass, AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
-    selector: 'tehw0lf-desktop',
-    templateUrl: './desktop.component.html',
-    styleUrls: ['./desktop.component.scss'],
-    standalone: true,
-    imports: [MatToolbarModule, NgClass, MatButtonModule, MatIconModule, RouterLink, RouterLinkActive, AsyncPipe]
+  selector: 'tehw0lf-desktop',
+  templateUrl: './desktop.component.html',
+  styleUrls: ['./desktop.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbarModule,
+    NgClass,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+    RouterLinkActive,
+    AsyncPipe
+  ]
 })
 export class DesktopComponent implements AfterViewInit, OnInit {
   isLight: Observable<boolean> = of(false);

@@ -1,6 +1,23 @@
-import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  CdkDropList,
+  CdkDrag
+} from '@angular/cdk/drag-drop';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
+import {
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
@@ -16,12 +33,23 @@ import { MatButtonModule } from '@angular/material/button';
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
-    selector: 'wordlist-generator',
-    templateUrl: './wordlist-generator.component.html',
-    styleUrls: ['./wordlist-generator.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [MatButtonModule, NgStyle, MatMenuModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CdkDropList, CdkDrag, MatIconModule, AsyncPipe]
+  selector: 'wordlist-generator',
+  templateUrl: './wordlist-generator.component.html',
+  styleUrls: ['./wordlist-generator.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    NgStyle,
+    MatMenuModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CdkDropList,
+    CdkDrag,
+    MatIconModule,
+    AsyncPipe
+  ]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   @Input() buttonStyle = {

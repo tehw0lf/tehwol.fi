@@ -4,16 +4,19 @@ import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 const octicons = require('@primer/octicons');
 
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[octicon]',
-    standalone: true
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[octicon]',
+  standalone: true
 })
 export class OcticonDirective implements OnInit {
   @Input() octicon: string | undefined;
   @Input() color: string | undefined;
   @Input() width: string | undefined;
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
     const el: HTMLElement = this.elementRef.nativeElement;

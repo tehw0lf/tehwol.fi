@@ -1,5 +1,11 @@
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -9,13 +15,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgStyle, AsyncPipe } from '@angular/common';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'contact-form',
-    templateUrl: './contact-form.component.html',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./contact-form.component.scss'],
-    standalone: true,
-    imports: [ReactiveFormsModule, NgStyle, MatFormFieldModule, MatInputModule, AsyncPipe]
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'contact-form',
+  templateUrl: './contact-form.component.html',
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./contact-form.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgStyle,
+    MatFormFieldModule,
+    MatInputModule,
+    AsyncPipe
+  ]
 })
 export class ContactFormComponent implements OnDestroy {
   @Input() buttonStyle = {
@@ -65,7 +77,10 @@ export class ContactFormComponent implements OnDestroy {
     this.emailSent.next(null);
     this.formGroup = this.builder.group({
       name: new UntypedFormControl('', [Validators.required]),
-      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      email: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
       message: new UntypedFormControl('', [Validators.required])
     });
   }

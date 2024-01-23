@@ -30,10 +30,7 @@ Run `ng add @tehw0lf/contact-form` in the workspace root of your angular applica
 The contact form component takes an apiURL and an email as input. By default, this is set to [ForwardMeThis](https://forwardmethis.com) and the email address is blank. You can set the variables on the component tag:
 
 ```html
-<contact-form
-  [apiURL]="emailBackendURL"
-  [email]="yourEmailAddress"
-></contact-form>
+<contact-form [apiURL]="emailBackendURL" [email]="yourEmailAddress"></contact-form>
 ```
 
 In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:

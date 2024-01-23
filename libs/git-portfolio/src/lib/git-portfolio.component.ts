@@ -12,12 +12,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgStyle, AsyncPipe, KeyValuePipe } from '@angular/common';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'git-portfolio',
-    templateUrl: './git-portfolio.component.html',
-    styleUrls: ['./git-portfolio.component.scss'],
-    standalone: true,
-    imports: [NgStyle, MatProgressSpinnerModule, RepoCardComponent, AsyncPipe, KeyValuePipe]
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'git-portfolio',
+  templateUrl: './git-portfolio.component.html',
+  styleUrls: ['./git-portfolio.component.scss'],
+  standalone: true,
+  imports: [
+    NgStyle,
+    MatProgressSpinnerModule,
+    RepoCardComponent,
+    AsyncPipe,
+    KeyValuePipe
+  ]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   @Input() buttonStyle = { 'background-color': '#424242', color: '#cc7832' };

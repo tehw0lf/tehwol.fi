@@ -5,7 +5,7 @@
   }"
   hasBackdrop="false"
   fxFlexFill
-  >
+>
   <mat-sidenav #sidenav mode="over" fixedInViewport="true">
     <mat-nav-list
       [ngClass]="{
@@ -15,31 +15,31 @@
       fxLayoutGap="20px"
       fxLayout="column"
       fxFlex
-      >
+    >
       <a
         class="mat-button"
         [ngClass]="{ 'link-active': isActive() }"
         routerLink="/home"
         routerLinkActive="link-active"
         mat-list-item
-        >
+      >
         <span class="mat-button-wrapper">
           <img alt="tehwol.fi" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
-        ><a
+      ><a
         class="mat-button"
         routerLink="/portfolio"
         routerLinkActive="link-active"
         mat-list-item
-        >
+      >
         <span class="mat-button-wrapper"> <span>Portfolio</span> </span> </a
-        ><a
+      ><a
         class="mat-button"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
-        >
+      >
         <span class="mat-button-wrapper">
           <span>Wordlist Generator</span>
         </span>
@@ -49,7 +49,7 @@
         target="_blank"
         href="https://github.com/tehw0lf"
         mat-list-item
-        >
+      >
         <span class="mat-button-wrapper">
           <img alt="tehwol.fi" class="nav-logo" src="assets/icons/github.png" />
           <span>GitHub</span>
@@ -61,7 +61,7 @@
           type="button"
           (click)="toggleSidenav()"
           mat-icon-button
-          >
+        >
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
         @if ((isLight | async) === false) {
@@ -72,7 +72,7 @@
             (click)="switchToLight()"
             fxLayoutGap="20px"
             mat-icon-button
-            >
+          >
             <mat-icon>light_mode</mat-icon>
           </button>
         }
@@ -84,7 +84,7 @@
             (click)="switchToDark()"
             fxLayoutGap="20px"
             mat-icon-button
-            >
+          >
             <mat-icon>dark_mode</mat-icon>
           </button>
         }
@@ -98,7 +98,7 @@
     }"
     class="main-content"
     fxFlexFill
-    >
+  >
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

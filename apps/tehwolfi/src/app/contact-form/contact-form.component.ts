@@ -5,11 +5,11 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { ThemeService } from '../theme.service';
 
 @Component({
-    selector: 'tehw0lf-contact-form',
-    templateUrl: './contact-form.component.html',
-    styleUrls: ['./contact-form.component.scss'],
-    standalone: true,
-    imports: [ContactFormComponent_1]
+  selector: 'tehw0lf-contact-form',
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.scss'],
+  standalone: true,
+  imports: [ContactFormComponent_1]
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   buttonStyle = {

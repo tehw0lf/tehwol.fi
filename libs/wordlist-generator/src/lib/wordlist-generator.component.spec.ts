@@ -30,7 +30,7 @@ describe('WordlistGeneratorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -38,14 +38,14 @@ describe('WordlistGeneratorComponent', () => {
         MatInputModule,
         MatMenuModule,
         WordlistGeneratorComponent
-    ],
-    providers: [
+      ],
+      providers: [
         {
-            provide: WordlistGeneratorService,
-            useValue: wordlistGeneratorServiceMock
+          provide: WordlistGeneratorService,
+          useValue: wordlistGeneratorServiceMock
         }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

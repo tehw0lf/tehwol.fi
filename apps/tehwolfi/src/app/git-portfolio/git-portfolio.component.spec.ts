@@ -7,14 +7,12 @@ describe('GitPortfolioComponent', () => {
   let component: GitPortfolioComponent;
   let fixture: ComponentFixture<GitPortfolioComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [GitPortfolioModule],
-        declarations: [GitPortfolioComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [GitPortfolioModule],
+      declarations: [GitPortfolioComponent]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GitPortfolioComponent);
