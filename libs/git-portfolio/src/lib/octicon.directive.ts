@@ -1,8 +1,7 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import octicons, { IconName } from '@primer/octicons';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const octicons = require('@primer/octicons');
-
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[octicon]',
@@ -21,8 +20,8 @@ export class OcticonDirective implements OnInit {
   ngOnInit(): void {
     const el: HTMLElement = this.elementRef.nativeElement;
     if (this.octicon) {
-      if (octicons[this.octicon] !== undefined) {
-        el.innerHTML = octicons[this.octicon].toSVG();
+      if (octicons[this.octicon as IconName] !== undefined) {
+        el.innerHTML = octicons[this.octicon as IconName].toSVG();
 
         const icon: Node | null = el.firstChild;
 
