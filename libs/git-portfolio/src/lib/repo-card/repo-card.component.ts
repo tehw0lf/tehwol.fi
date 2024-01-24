@@ -29,16 +29,16 @@ interface Dictionary {
   ]
 })
 export class RepoCardComponent {
-  @Input() buttonStyle!: any;
-  @Input() cardStyle!: any;
-  @Input() textStyle!: any;
-  @Input() checkColor!: string;
-  @Input() forkColor!: string;
-  @Input() issueColor!: string;
-  @Input() pasteColor!: string;
-  @Input() starColor!: string;
+  @Input({ required: true }) buttonStyle!: any;
+  @Input({ required: true }) cardStyle!: any;
+  @Input({ required: true }) textStyle!: any;
+  @Input({ required: true }) checkColor!: string;
+  @Input({ required: true }) forkColor!: string;
+  @Input({ required: true }) issueColor!: string;
+  @Input({ required: true }) pasteColor!: string;
+  @Input({ required: true }) starColor!: string;
 
-  @Input()
+  @Input({ required: true })
   gitRepo!: GitRepository;
 
   @Input()
