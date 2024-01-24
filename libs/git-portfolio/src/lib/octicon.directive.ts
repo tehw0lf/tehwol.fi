@@ -1,7 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import octicons, { IconName } from '@primer/octicons';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[octicon]',

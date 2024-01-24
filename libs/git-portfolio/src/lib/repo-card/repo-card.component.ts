@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-import { GitRepository } from '../types/git-repository-type';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { OcticonDirective } from '../octicon.directive';
+import { DatePipe, NgStyle } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgStyle, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import * as githubLanguageColors from 'github-language-colors/colors.json';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const githubLanguageColors = require('github-language-colors/colors.json');
+import { OcticonDirective } from '../octicon.directive';
+import { GitRepository } from '../types/git-repository-type';
+
+interface Dictionary {
+  [id: string]: string;
+}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -46,11 +48,8 @@ export class RepoCardComponent {
   public copiedToClipboardEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  public githubLanguageColors = githubLanguageColors;
+  public githubLanguageColors = githubLanguageColors as Dictionary;
 
-  constructor() {
-    //
-  }
   copiedToClipboard(): void {
     this.copiedToClipboardEvent.emit();
   }
