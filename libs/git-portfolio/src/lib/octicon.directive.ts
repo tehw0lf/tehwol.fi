@@ -7,8 +7,8 @@ import octicons, { IconName } from '@primer/octicons';
   standalone: true
 })
 export class OcticonDirective implements OnInit {
-  @Input() octicon: string | undefined;
-  @Input() color: string | undefined;
+  @Input({ required: true }) octicon: string | undefined;
+  @Input({ required: true }) color: string | undefined;
   @Input() width: string | undefined;
 
   constructor(
