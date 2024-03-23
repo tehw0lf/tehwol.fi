@@ -17,9 +17,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { ContactFormModule } from '@tehw0lf/contact-form';
-import { GitPortfolioModule } from '@tehw0lf/git-portfolio';
-import { WordlistGeneratorModule } from '@tehw0lf/wordlist-generator';
 
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
@@ -44,10 +41,7 @@ bootstrapApplication(AppComponent, {
       MatMenuModule,
       MatToolbarModule,
       MatSidenavModule,
-      MatButtonModule,
-      ContactFormModule,
-      GitPortfolioModule,
-      WordlistGeneratorModule
+      MatButtonModule
     ),
     SidenavService,
     provideAnimations(),
