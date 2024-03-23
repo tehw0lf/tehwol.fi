@@ -9,8 +9,7 @@
             <div
               class="flex-align-start"
               [ngClass]="{
-                'flex-row-wrap': viewport === 'medium',
-                'flex-row-wrap': viewport === 'small',
+                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
                 'flex-column': viewport === 'xsmall'
               }"
             >
@@ -64,8 +63,7 @@
             <div
               class="flex-align-start"
               [ngClass]="{
-                'flex-row-wrap': viewport === 'medium',
-                'flex-row-wrap': viewport === 'small',
+                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
                 'flex-column': viewport === 'xsmall'
               }"
             >
