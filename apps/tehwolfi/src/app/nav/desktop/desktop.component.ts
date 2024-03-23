@@ -34,7 +34,8 @@ import { SidenavService } from '../sidenav.service';
 export class DesktopComponent implements AfterViewInit, OnInit {
   isLight: Observable<boolean> = of(false);
 
-  hideOnDesktop = '';
+  burgerStyle = '';
+  buttonStyle = '';
 
   private unsubscribe$: Subject<void> = new Subject();
 
@@ -50,9 +51,11 @@ export class DesktopComponent implements AfterViewInit, OnInit {
       .pipe(
         tap((breakpointState: BreakpointState) => {
           if (breakpointState.matches) {
-            this.hideOnDesktop = 'display: none;';
+            this.burgerStyle = 'display: none;';
+            this.buttonStyle = '';
           } else {
-            this.hideOnDesktop = '';
+            this.burgerStyle = '';
+            this.buttonStyle = 'display: none;';
           }
         }),
         takeUntil(this.unsubscribe$)
