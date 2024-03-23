@@ -13,15 +13,18 @@ export class ThemeService {
   constructor(private rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.isLight = this.isLightSubject.asObservable();
+    this.renderer.addClass(document.body, 'dark-theme');
   }
 
   dark(): void {
     this.isLightSubject.next(false);
     this.renderer.removeClass(document.body, 'light-theme');
+    this.renderer.addClass(document.body, 'dark-theme');
   }
 
   light(): void {
     this.isLightSubject.next(true);
+    this.renderer.removeClass(document.body, 'dark-theme');
     this.renderer.addClass(document.body, 'light-theme');
   }
 }
