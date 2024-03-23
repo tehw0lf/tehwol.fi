@@ -1,18 +1,19 @@
+import { LayoutModule } from '@angular/cdk/layout';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import {
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
+  Validators
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 import { EmailApiService } from '../email-api.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgStyle, AsyncPipe } from '@angular/common';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -22,6 +23,7 @@ import { NgStyle, AsyncPipe } from '@angular/common';
   styleUrls: ['./contact-form.component.scss'],
   standalone: true,
   imports: [
+    LayoutModule,
     ReactiveFormsModule,
     NgStyle,
     MatFormFieldModule,

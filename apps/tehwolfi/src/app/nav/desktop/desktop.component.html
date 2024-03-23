@@ -9,20 +9,12 @@
       id="menu"
       type="button"
       (click)="toggleSidenav()"
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.gt-sm
+      [style]="hideOnDesktop"
       mat-icon-button
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <div
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.lt-md="true"
-      fxLayout="row"
-      fxFlex
-    >
+    <div [style]="hideOnDesktop" class="flex-row flex-fxflex">
       <div class="nav-item">
         <a
           mat-button
@@ -56,12 +48,10 @@
     @if ((isLight | async) === false) {
       <button
         id="light"
-        class="light-theme-button"
+        class="light-theme-button flex-gap-20"
         type="button"
         (click)="switchToLight()"
-        fxLayoutGap="20px"
-        fxShow="true"
-        fxHide.lt-md="true"
+        [style]="hideOnDesktop"
         mat-icon-button
       >
         <mat-icon>light_mode</mat-icon>
@@ -70,18 +60,16 @@
     @if ((isLight | async) === true) {
       <button
         id="dark"
-        class="dark-theme-button"
+        class="dark-theme-button flex-gap-20"
         type="button"
         (click)="switchToDark()"
-        fxLayoutGap="20px"
-        fxShow="true"
-        fxHide.lt-md="true"
+        [style]="hideOnDesktop"
         mat-icon-button
       >
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
-    <div fxLayoutGap="20px" fxShow="true" fxHide.lt-md="true">
+    <div class="flex-gap-20" [style]="hideOnDesktop">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">
           <span class="mat-button-wrapper">

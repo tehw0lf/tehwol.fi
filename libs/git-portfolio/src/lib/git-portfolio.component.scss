@@ -2,3 +2,37 @@
   max-width: 450px;
   margin: 0 32px 32px 0;
 }
+
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.flex-align-start {
+  justify-content: flex-start;
+}
+
+.flex-align-stretch {
+  align-content: stretch;
+  align-items: stretch;
+}
+
+.flex-fxflex {
+  flex: 0 1 calc(33.3% - 32px);
+}
+
+.flex-fxflex-lt-md {
+  flex: 0 1 calc(50% - 32px);
+}
+
+.flex-fxflex-lt-sm {
+  flex: 100%;
+}

@@ -21,8 +21,8 @@
         {{ gitRepo.name }}
       </a>
     </mat-card-title>
-    <mat-card-subtitle fxLayout="row" fxLayoutGap="12px">
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+    <mat-card-subtitle class="flex-row flex-gap-12">
+      <div class="info-item flex-row flex-gap-5">
         <div
           [ngStyle]="{
             'background-color':
@@ -34,18 +34,18 @@
         ></div>
         <div [ngStyle]="textStyle">{{ gitRepo.language }}</div>
       </div>
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+      <div class="info-item flex-row flex-gap-5">
         <div octicon="star" [color]="starColor"></div>
         <div [ngStyle]="textStyle">
           {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
         </div>
       </div>
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+      <div class="info-item flex-row flex-gap-5">
         <div octicon="repo-forked" [color]="forkColor"></div>
         <div [ngStyle]="textStyle">{{ gitRepo.forks_count }}</div>
       </div>
       @if (gitRepo.open_issues_count) {
-        <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+        <div class="info-item flex-row flex-gap-5">
           <div octicon="issue-opened" [color]="issueColor"></div>
           <div [ngStyle]="textStyle">
             {{ gitRepo.open_issues_count }}
@@ -57,8 +57,8 @@
   <mat-card-content>
     <p>{{ gitRepo.description }}</p>
   </mat-card-content>
-  <mat-card-footer fxLayout="row" fxLayoutGap="12px">
-    <span class="mat-footer-cell" fxFlex>
+  <mat-card-footer class="flex-row flex-gap-12">
+    <span class="mat-footer-cell flex-fxflex">
       <span class="footer-span" [ngStyle]="textStyle"
         >Created: {{ gitRepo.created_at | date }}</span
       >
@@ -77,7 +77,7 @@
         (cdkCopyToClipboardCopied)="copiedToClipboard()"
         class="clipboard-button"
       >
-        <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
+        <span class="mat-button-wrapper flex-row flex-gap-5">
           @if (isCopied) {
             <div octicon="check" [color]="checkColor" width="24"></div>
           }

@@ -1,14 +1,19 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
+import {
+  BreakpointObserver,
+  BreakpointState,
+  LayoutModule
+} from '@angular/cdk/layout';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { NgClass, AsyncPipe } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'tehw0lf-desktop',
@@ -16,6 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   styleUrls: ['./desktop.component.scss'],
   standalone: true,
   imports: [
+    LayoutModule,
     MatToolbarModule,
     NgClass,
     MatButtonModule,
@@ -28,12 +34,31 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class DesktopComponent implements AfterViewInit, OnInit {
   isLight: Observable<boolean> = of(false);
 
+  hideOnDesktop = '';
+
+  private unsubscribe$: Subject<void> = new Subject();
+
   constructor(
     private focusMonitor: FocusMonitor,
     private router: Router,
     private sidenavService: SidenavService,
-    private themeService: ThemeService
-  ) {}
+    private themeService: ThemeService,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    breakpointObserver
+      .observe(['(min-width: 960px)'])
+      .pipe(
+        tap((breakpointState: BreakpointState) => {
+          if (breakpointState.matches) {
+            this.hideOnDesktop = 'display: none;';
+          } else {
+            this.hideOnDesktop = '';
+          }
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
+  }
 
   ngAfterViewInit(): void {
     const menu = document.getElementById('menu');

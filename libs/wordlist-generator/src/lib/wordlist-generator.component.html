@@ -1,6 +1,6 @@
-<div class="meta-container" fxLayout="row wrap">
-  <div class="form-container" fxLayout="column" fxFlex>
-    <div fxLayout="row wrap">
+<div class="meta-container flex-row-wrap">
+  <div class="form-container flex-column flex-fxflex">
+    <div class="flex-row-wrap">
       <button
         class="generate-wordlist"
         [ngStyle]="buttonStyle"
@@ -126,7 +126,7 @@
     }
   </div>
   @if (wordlist$) {
-    <div class="wordlist-container" fxLayout="column" fxFlex>
+    <div class="wordlist-container flex-column flex-fxflex">
       @if (displayWordlist) {
         <h3 class="wordlist-header">Generated wordlist:</h3>
         <code class="wordlist">

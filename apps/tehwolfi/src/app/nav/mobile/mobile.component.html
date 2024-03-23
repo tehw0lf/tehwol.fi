@@ -1,10 +1,10 @@
 <mat-sidenav-container
+  class="flex-fxflexfill"
   [ngClass]="{
     'light-theme': (isLight | async) === true,
     'dark-theme': (isLight | async) === false
   }"
   hasBackdrop="false"
-  fxFlexFill
 >
   <mat-sidenav #sidenav mode="over" fixedInViewport="true">
     <mat-nav-list
@@ -12,9 +12,7 @@
         'light-theme': (isLight | async) === true,
         'dark-theme': (isLight | async) === false
       }"
-      fxLayoutGap="20px"
-      fxLayout="column"
-      fxFlex
+      class="flex-column flex-gap-20 flex-fxflex"
     >
       <a
         class="mat-button"
@@ -67,10 +65,9 @@
         @if ((isLight | async) === false) {
           <button
             id="light"
-            class="light-theme-button"
+            class="light-theme-button flex-gap-20"
             type="button"
             (click)="switchToLight()"
-            fxLayoutGap="20px"
             mat-icon-button
           >
             <mat-icon>light_mode</mat-icon>
@@ -79,10 +76,9 @@
         @if ((isLight | async) === true) {
           <button
             id="dark"
-            class="dark-theme-button"
+            class="dark-theme-button flex-gap-20"
             type="button"
             (click)="switchToDark()"
-            fxLayoutGap="20px"
             mat-icon-button
           >
             <mat-icon>dark_mode</mat-icon>
@@ -96,8 +92,7 @@
       'light-theme': (isLight | async) === true,
       'dark-theme': (isLight | async) === false
     }"
-    class="main-content"
-    fxFlexFill
+    class="main-content flex-fxflexfill"
   >
     <router-outlet></router-outlet>
   </mat-sidenav-content>

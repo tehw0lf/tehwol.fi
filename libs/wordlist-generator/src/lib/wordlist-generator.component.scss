@@ -95,3 +95,20 @@
 .fixed-width {
   width: 21em;
 }
+
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.flex-fxflex {
+  flex: 1 1 0%;
+}
