@@ -1,3 +1,5 @@
+import { LayoutModule } from '@angular/cdk/layout';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   Component,
   OnDestroy,
@@ -5,6 +7,9 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import {
   Router,
@@ -17,10 +22,6 @@ import { takeUntil, tap } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { NgClass, AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'tehw0lf-mobile',
@@ -29,6 +30,7 @@ import { NgClass, AsyncPipe } from '@angular/common';
   styleUrls: ['./mobile.component.scss'],
   standalone: true,
   imports: [
+    LayoutModule,
     MatSidenavModule,
     NgClass,
     MatListModule,

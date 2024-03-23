@@ -7,9 +7,12 @@
           <div>
             <h2 [ngStyle]="textStyle" class="mat-headline">Own Repos</h2>
             <div
-              fxLayout="row wrap"
-              fxLayout.lt-sm="column"
-              fxLayoutAlign="flex-start"
+              class="flex-align-start"
+              [ngClass]="{
+                'flex-row-wrap': viewport === 'medium',
+                'flex-row-wrap': viewport === 'small',
+                'flex-column': viewport === 'xsmall'
+              }"
             >
               @if ((loading | async) === true) {
                 <div>
@@ -35,11 +38,12 @@
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
                   (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
-                  class="repository-card"
-                  fxFlex="0 1 calc(33.3% - 32px)"
-                  fxFlex.lt-md="0 1 calc(50% - 32px)"
-                  fxFlex.lt-sm="100%"
-                  fxLayoutAlign="stretch"
+                  class="repository-card flex-align-stretch"
+                  [ngClass]="{
+                    'flex-fxflex': viewport === 'medium',
+                    'flex-fxflex-lt-md': viewport === 'small',
+                    'flex-fxflex-lt-sm': viewport === 'xsmall'
+                  }"
                 >
                 </repo-card>
               }
@@ -58,9 +62,12 @@
           <div>
             <h2 [ngStyle]="textStyle" class="mat-headline">Forked Repos</h2>
             <div
-              fxLayout="row wrap"
-              fxLayout.lt-sm="column"
-              fxLayoutAlign="flex-start"
+              class="flex-align-start"
+              [ngClass]="{
+                'flex-row-wrap': viewport === 'medium',
+                'flex-row-wrap': viewport === 'small',
+                'flex-column': viewport === 'xsmall'
+              }"
             >
               @if ((loading | async) === true) {
                 <div>
@@ -86,11 +93,12 @@
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
                   (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
-                  class="repository-card"
-                  fxFlex="0 1 calc(33.3% - 32px)"
-                  fxFlex.lt-md="0 1 calc(50% - 32px)"
-                  fxFlex.lt-sm="100%"
-                  fxLayoutAlign="stretch"
+                  class="repository-card flex-align-stretch"
+                  [ngClass]="{
+                    'flex-fxflex': viewport === 'medium',
+                    'flex-fxflex-lt-md': viewport === 'small',
+                    'flex-fxflex-lt-sm': viewport === 'xsmall'
+                  }"
                 ></repo-card>
               }
               @if (

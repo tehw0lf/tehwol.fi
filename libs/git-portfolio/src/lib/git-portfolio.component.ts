@@ -1,15 +1,25 @@
+import {
+  BreakpointObserver,
+  BreakpointState,
+  LayoutModule
+} from '@angular/cdk/layout';
+import {
+  AsyncPipe,
+  CommonModule,
+  KeyValuePipe,
+  NgStyle
+} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
 import { GitProviderService } from './git-provider.service';
+import { RepoCardComponent } from './repo-card/repo-card.component';
 import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitProviders } from './types/git-providers-type';
 import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
-import { RepoCardComponent } from './repo-card/repo-card.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgStyle, AsyncPipe, KeyValuePipe } from '@angular/common';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -18,6 +28,8 @@ import { NgStyle, AsyncPipe, KeyValuePipe } from '@angular/common';
   styleUrls: ['./git-portfolio.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    LayoutModule,
     NgStyle,
     MatProgressSpinnerModule,
     RepoCardComponent,
@@ -68,10 +80,35 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   gitProviders = GitProviders;
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
+  viewport = 'desktop';
+
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private gitProviderService: GitProviderService) {
+  constructor(
+    private gitProviderService: GitProviderService,
+    private breakpointObserver: BreakpointObserver
+  ) {
     this.loading = this.gitProviderService.loading;
+
+    breakpointObserver
+      .observe([
+        '(max-width: 599.98px)',
+        '(max-width: 959.98px)',
+        '(min-width: 960px)'
+      ])
+      .pipe(
+        tap((breakpointState: BreakpointState) => {
+          if (breakpointState.breakpoints['(max-width: 599.98px)']) {
+            this.viewport = 'xsmall';
+          } else if (breakpointState.breakpoints['(max-width: 959.98px)']) {
+            this.viewport = 'small';
+          } else {
+            this.viewport = 'medium';
+          }
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
   }
 
   ngOnInit(): void {

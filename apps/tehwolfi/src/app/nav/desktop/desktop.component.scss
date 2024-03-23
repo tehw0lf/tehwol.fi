@@ -55,3 +55,17 @@
 .mat-toolbar-multiple-rows.light-theme {
   background-color: rgb(212, 212, 212);
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.flex-gap-20 {
+  margin-right: 20px;
+}
+
+.flex-fxflex {
+  flex: 1 1 0%;
+}
