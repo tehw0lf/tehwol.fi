@@ -80,7 +80,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   gitProviders = GitProviders;
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
-  viewport = 'desktop';
+  viewport = '';
 
   private unsubscribe$ = new Subject<void>();
 
