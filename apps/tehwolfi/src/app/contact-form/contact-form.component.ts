@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
-import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
 
@@ -11,7 +10,7 @@ import { ThemeService } from '../theme.service';
   standalone: true,
   imports: [ContactFormComponent_1]
 })
-export class ContactFormComponent implements OnInit, OnDestroy {
+export class ContactFormComponent {
   buttonStyle = {
     'background-color': '#333333',
     border: 'none',
@@ -29,24 +28,12 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     color: '#282b2e'
   };
 
-  private unsubscribe$: Subject<void> = new Subject();
-
-  constructor(private themeService: ThemeService) {}
-
-  ngOnInit(): void {
-    this.themeService.isLight
-      .pipe(
-        tap((isLight: boolean) => {
-          isLight ? this.switchToLight() : this.switchToDark();
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  constructor(private themeService: ThemeService) {
+    effect(() =>
+      this.themeService.theme() === 'dark'
+        ? this.switchToDark()
+        : this.switchToLight()
+    );
   }
 
   switchToLight(): void {

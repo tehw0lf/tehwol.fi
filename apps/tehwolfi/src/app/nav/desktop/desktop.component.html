@@ -1,9 +1,4 @@
-<mat-toolbar
-  [ngClass]="{
-    'light-theme': (isLight | async) === true,
-    'dark-theme': (isLight | async) === false
-  }"
->
+<mat-toolbar [ngClass]="themeService.theme()">
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
@@ -45,7 +40,7 @@
         </a>
       </div>
     </div>
-    @if ((isLight | async) === false) {
+    @if (themeService.theme() === 'dark') {
       <button
         id="light"
         class="light-theme-button flex-gap-20"
@@ -56,8 +51,7 @@
       >
         <mat-icon>light_mode</mat-icon>
       </button>
-    }
-    @if ((isLight | async) === true) {
+    } @else {
       <button
         id="dark"
         class="dark-theme-button flex-gap-20"

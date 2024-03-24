@@ -17,7 +17,7 @@ import {
   RouterLinkActive,
   RouterOutlet
 } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
@@ -47,18 +47,14 @@ export class MobileComponent implements OnInit, OnDestroy {
     | MatSidenav
     | undefined;
 
-  isLight: Observable<boolean> = of(false);
-
   private unsubscribe$ = new Subject<void>();
   constructor(
     public router: Router,
-    private sidenavService: SidenavService,
-    private themeService: ThemeService
+    public themeService: ThemeService,
+    private sidenavService: SidenavService
   ) {}
 
   ngOnInit(): void {
-    this.isLight = this.themeService.isLight;
-
     if (this.sidenav) {
       this.sidenavService.setSidenav(this.sidenav);
     }
