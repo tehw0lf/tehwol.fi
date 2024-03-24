@@ -9,40 +9,33 @@
       class="flex-column flex-gap-20 flex-fxflex"
     >
       <a
-        class="mat-button"
         [ngClass]="{ 'link-active': isActive() }"
         routerLink="/home"
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
+        <span>
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
+      ><a routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
+        <span>Portfolio</span> </a
       ><a
-        class="mat-button"
-        routerLink="/portfolio"
-        routerLinkActive="link-active"
-        mat-list-item
-      >
-        <span class="mat-button-wrapper"> <span>Portfolio</span> </span> </a
-      ><a
-        class="mat-button"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
+        <span>
           <span>Wordlist Generator</span>
         </span>
       </a>
       <a
-        class="mat-button"
+        class="mat-mdc-list-item"
         target="_blank"
         href="https://github.com/tehw0lf"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
+        <span>
           <img
             alt="tehwolf.de"
             class="nav-logo"
