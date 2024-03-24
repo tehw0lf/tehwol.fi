@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { GitPortfolioComponent as GitPortfolioComponent_1 } from '@tehw0lf/git-portfolio';
-import { Subject, takeUntil, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment.prod';
 import { ThemeService } from '../theme.service';
@@ -12,7 +11,7 @@ import { ThemeService } from '../theme.service';
   standalone: true,
   imports: [GitPortfolioComponent_1]
 })
-export class GitPortfolioComponent implements OnInit, OnDestroy {
+export class GitPortfolioComponent {
   buttonStyle = {
     'background-color': 'rgba(34, 34, 34, 0.75)',
     color: '#cc7832'
@@ -29,27 +28,15 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
     gitlab: environment.gitlabUser
   };
 
-  private unsubscribe$: Subject<void> = new Subject();
-
-  constructor(private themeService: ThemeService) {}
-
-  ngOnInit(): void {
-    this.themeService.isLight
-      .pipe(
-        tap((isLight: boolean) => {
-          isLight ? this.switchToLight() : this.switchToDark();
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
+  constructor(private themeService: ThemeService) {
+    effect(() =>
+      this.themeService.theme() === 'dark'
+        ? this.switchToDark()
+        : this.switchToLight()
+    );
   }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
   switchToLight(): void {
+    console.log('switching to light');
     this.buttonStyle = {
       'background-color': 'rgba(255, 255, 255, 0.75)',
       color: '#cc7832'
@@ -63,6 +50,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   switchToDark(): void {
+    console.log('switching to dark');
     this.buttonStyle = {
       'background-color': 'rgba(34, 34, 34, 0.75)',
       color: '#cc7832'

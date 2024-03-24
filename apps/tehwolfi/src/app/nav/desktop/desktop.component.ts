@@ -5,12 +5,12 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -31,19 +31,17 @@ import { SidenavService } from '../sidenav.service';
     AsyncPipe
   ]
 })
-export class DesktopComponent implements AfterViewInit, OnInit {
-  isLight: Observable<boolean> = of(false);
-
+export class DesktopComponent implements AfterViewInit, OnDestroy {
   burgerStyle = '';
   buttonStyle = '';
 
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor(
+    public themeService: ThemeService,
     private focusMonitor: FocusMonitor,
     private router: Router,
     private sidenavService: SidenavService,
-    private themeService: ThemeService,
     private breakpointObserver: BreakpointObserver
   ) {
     breakpointObserver
@@ -70,8 +68,9 @@ export class DesktopComponent implements AfterViewInit, OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.isLight = this.themeService.isLight;
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   isActive(): boolean {

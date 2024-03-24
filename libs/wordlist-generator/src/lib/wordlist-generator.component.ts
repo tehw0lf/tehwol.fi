@@ -1,9 +1,10 @@
 import {
+  CdkDrag,
   CdkDragDrop,
-  moveItemInArray,
   CdkDropList,
-  CdkDrag
+  moveItemInArray
 } from '@angular/cdk/drag-drop';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import {
   Component,
   Input,
@@ -12,24 +13,23 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
+  ReactiveFormsModule,
   UntypedFormArray,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
+  Validators
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toPlaintext, toXML } from './parsers';
 import { WordlistGeneratorService } from './wordlist-generator.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatMenuModule } from '@angular/material/menu';
-import { NgStyle, AsyncPipe } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
@@ -124,7 +124,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
               const file = new Blob([parsed.wordlist], {
                 type: parsed.contentType
               });
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               if ((window.navigator as any).msSaveOrOpenBlob) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (window.navigator as any).msSaveOrOpenBlob(file, filename);
               } else {
                 const a = document.createElement('a');
