@@ -81,6 +81,7 @@
   <mat-sidenav-content
     [ngClass]="themeService.theme()"
     class="main-content flex-fxflexfill"
+    (click)="toggleSidenav()"
   >
     <router-outlet></router-outlet>
   </mat-sidenav-content>
