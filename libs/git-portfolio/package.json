@@ -2,10 +2,10 @@
   "name": "@tehw0lf/git-portfolio",
   "version": "0.17.0",
   "license": "MIT",
-  "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
+  "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tehw0lf/tehwol.fi.git"
+    "url": "https://github.com/tehw0lf/tehwolf.de.git"
   },
   "peerDependencies": {
     "@angular/animations": "17.0.9",

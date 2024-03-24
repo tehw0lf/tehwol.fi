@@ -1,6 +1,6 @@
-# tehw0lf and tehwol.fi
+# tehw0lf and tehwolf.de
 
-This monorepo holds my npm packages published under the @tehw0lf namespace and my portfolio website which showcases said packages at [tehwol.fi](https://tehwol.fi).
+This monorepo holds my npm packages published under the @tehw0lf namespace and my portfolio website which showcases said packages at [tehwolf.de](https://tehwolf.de).
 
 Currently featured on the website:
 
