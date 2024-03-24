@@ -79,6 +79,9 @@ export class MobileComponent implements OnInit, OnDestroy {
       this.router.isActive('/', true) || this.router.isActive('/home', true)
     );
   }
+  closeSidenav(): void {
+    this.sidenavService.close();
+  }
 
   toggleSidenav(): void {
     this.sidenavService.toggle();
