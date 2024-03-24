@@ -1,9 +1,6 @@
 # contact-form
 
 This provides a simple way to let your users contact you.
-The component takes as input an API-URL.
-
-Default is 'https://forwardmethis.com/tehwolf@pm.me' - please change it, as you will need to confirm the API access for the first email you will receive.
 
 ## Installation
 
@@ -27,30 +24,28 @@ Run `ng add @tehw0lf/contact-form` in the workspace root of your angular applica
 
 ## Usage
 
-The contact form component takes an apiURL and an email as input. By default, this is set to [ForwardMeThis](https://forwardmethis.com) and the email address is blank. You can set the variables on the component tag:
+The contact form component takes an apiCallback returning a boolean Observable as mandatory input. By default, this is set to a dummy function that returns true if the form's value contains a name and false if not. A more verbose error message can be provided by updating sendErrorMessage with the error message dynamically from the callback.
 
 ```html
-<contact-form [apiURL]="emailBackendURL" [email]="yourEmailAddress"></contact-form>
+<contact-form [apiCallback]="apiCallback"></contact-form>
 ```
 
-In your component, set the `emailBackendURL` and `yourEmailAddress` properties. The naming of these variables is arbitrary:
+In your component, set the `apiCallback` property. The naming of these variables is arbitrary:
 
 ```ts
-emailBackendURL; //'https://forwardmethis.com/';
-yourEmailAddress; //'my@mail.com'; //this is optional, if your API URL doesn't require an email address parameter
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+apiCallback = (formValue: any) => {
+  // run logic and send to api, return true on success and false on failure
+  // update sendErrorText input with error text for more verbose error message
+  if (formValue.name) {
+    return of(true);
+  } else {
+    return of(false);
+  }
+};
 ```
 
-This contact form will send a POST request to the API, containing the following data structure:
-
-```json
-{
-  "name": "your entered name",
-  "email": "your entered email address",
-  "message": "your entered message"
-}
-```
-
-You can of course use your own backend with this data structure, as the API-URL and E-Mail address can be overridden as shown above.
+On submitting the form, your API callback will be executed. The status will be reflected by a message that can be overridden by setting `sendErrorText` and `sendSuccessfulText`.
 
 ## Theming
 

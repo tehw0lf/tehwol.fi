@@ -1,5 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
+import { of } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
 
@@ -26,6 +27,17 @@ export class ContactFormComponent {
 
   inputStyle = {
     color: '#282b2e'
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiCallback = (formValue: any) => {
+    // run logic and send to api, return true on success and false on failure
+    // update sendErrorText input with error text for more verbose error message
+    if (formValue.name) {
+      return of(true);
+    } else {
+      return of(false);
+    }
   };
 
   constructor(private themeService: ThemeService) {
