@@ -10,10 +10,8 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-
-import { EmailApiService } from '../email-api.service';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -63,8 +61,8 @@ export class ContactFormComponent implements OnDestroy {
 
   @Input() sendErrorText = 'Send error';
 
-  @Input() apiURL = 'https://forwardmethis.com/';
-  @Input() email = '';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() apiCallback!: (formValue: any) => Observable<boolean>;
 
   formGroup: UntypedFormGroup;
   emailSent: Subject<boolean | null> = new Subject();
@@ -72,10 +70,7 @@ export class ContactFormComponent implements OnDestroy {
 
   private unsubscribe$: Subject<void> = new Subject();
 
-  constructor(
-    private builder: UntypedFormBuilder,
-    private emailService: EmailApiService
-  ) {
+  constructor(private builder: UntypedFormBuilder) {
     this.emailSent.next(null);
     this.formGroup = this.builder.group({
       name: new UntypedFormControl('', [Validators.required]),
@@ -93,16 +88,9 @@ export class ContactFormComponent implements OnDestroy {
   }
 
   submitFormData(formData: UntypedFormGroup) {
-    this.emailService
-      .sendEmail(`${this.apiURL}${this.email}`, formData.value)
+    this.apiCallback(formData.value)
       .pipe(
-        tap((response: string) => {
-          if (response === 'OK') {
-            this.emailSent.next(true);
-          } else {
-            this.emailSent.next(false);
-          }
-        }),
+        tap((success: boolean) => this.emailSent.next(success)),
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
