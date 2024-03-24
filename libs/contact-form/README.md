@@ -10,12 +10,11 @@ The following dependencies are needed:
 
 ```bash
     @angular/animations
-    @angular/cdk
     @angular/common
     @angular/core
     @angular/forms
-    @angular/material
     @ngx-formly/core
+    @ngx-formly/material
 ```
 
 ### Module
@@ -60,12 +59,13 @@ interface FormConfigEntry {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   required?: boolean;
+  type?: string;
 }
 
 formConfig: FormConfigEntry[] = [
     { field: 'name', required: true },
     { field: 'email', required: true },
-    { field: 'message', required: true }
+    { field: 'message', required: true, type: 'textarea' }
   ];
 ```
 
@@ -81,7 +81,7 @@ sendErrorText; //'Send error';
 
 ## Theming
 
-The styles of form background, button, input and text can be customized with optional input parameters:
+The styles of form background, button and text can be customized with optional input parameters:
 
 ```ts
 buttonStyle; /* {
@@ -95,12 +95,6 @@ formStyle; /* {
     'background-color': 'rgba(34, 34, 34, 0.75)',
     'backdrop-filter': 'blur(50px)',
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-  }*/
-
-inputStyle; /* {
-    border: 'none',
-    color: '#282b2e',
-    'background-color': '#fff'
   }*/
 
 textStyle; //{ color: '#cc7832' };
