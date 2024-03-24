@@ -4,8 +4,7 @@
   border-bottom: 2px solid $linkcolor;
 }
 
-.mat-mdc-button {
-  color: $linkcolor !important;
+.mat-mdc-list-item {
   vertical-align: middle;
   line-height: 36px;
   font-size: 18px;
@@ -14,8 +13,12 @@
   text-decoration: none;
 }
 
-.mat-nav-list.light-theme {
-  background-color: #d4d4d4;
+.mdc-list-item:hover .mdc-list-item__primary-text {
+  color: $linkcolor !important;
+}
+
+.mdc-list-item__primary-text {
+  color: $linkcolor !important;
 }
 
 .mat-mdc-icon-button {
@@ -37,10 +40,10 @@
 }
 
 .mat-drawer-container.light {
-  background-color: white;
+  background-color: #d4d4d4;
 
   .mat-drawer {
-    background-color: white;
+    background-color: #d4d4d4;
   }
 }
 
@@ -49,15 +52,19 @@
   padding: 32px 0 0 32px;
 }
 
+.mat-mdc-icon-button {
+  color: $linkcolor !important;
+}
+
 .dark-theme-button {
-  color: black;
+  color: black !important;
   height: 48px;
   width: 48px;
   margin: 4px 4px 4px 4px;
 }
 
 .light-theme-button {
-  color: yellow;
+  color: yellow !important;
   height: 48px;
   width: 48px;
   margin: 4px 4px 4px 4px;
