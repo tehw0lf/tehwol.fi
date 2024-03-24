@@ -15,6 +15,7 @@ The following dependencies are needed:
     @angular/core
     @angular/forms
     @angular/material
+    @ngx-formly/core
 ```
 
 ### Module
@@ -25,6 +26,8 @@ Run `ng add @tehw0lf/contact-form` in the workspace root of your angular applica
 ## Usage
 
 The contact form component takes an apiCallback returning a boolean Observable as mandatory input. By default, this is set to a dummy function that returns true if the form's value contains a name and false if not. A more verbose error message can be provided by updating sendErrorMessage with the error message dynamically from the callback.
+
+A form can be generated from an arbitrary model. By default, the form contains name, email and message fields.
 
 ```html
 <contact-form [apiCallback]="apiCallback"></contact-form>
@@ -46,6 +49,35 @@ apiCallback = (formValue: any) => {
 ```
 
 On submitting the form, your API callback will be executed. The status will be reflected by a message that can be overridden by setting `sendErrorText` and `sendSuccessfulText`.
+
+## Form Generation
+
+In order to generate the form, a config array can be provided. By default, the config array contains name, email and message fields without default values.
+
+```ts
+interface FormConfigEntry {
+  field: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value?: any;
+  required?: boolean;
+}
+
+formConfig: FormConfigEntry[] = [
+    { field: 'name', required: true },
+    { field: 'email', required: true },
+    { field: 'message', required: true }
+  ];
+```
+
+## Text
+
+The message texts can optionally be specified.
+
+```ts
+sendSuccessfulText; //'E-Mail successfully sent';
+
+sendErrorText; //'Send error';
+```
 
 ## Theming
 
@@ -72,24 +104,6 @@ inputStyle; /* {
   }*/
 
 textStyle; //{ color: '#cc7832' };
-```
-
-## Text
-
-You can specify your own texts for the fields and labels, or leave the default English version
-
-```ts
-nameLabel; //'Your Name';
-
-emailAddressLabel; //'Your E-Mail Address';
-
-messageLabel; //'Your Message';
-
-sendText; //'Send';
-
-sendSuccessfulText; //'E-Mail successfully sent';
-
-sendErrorText; //'Send error';
 ```
 
 ## Development
