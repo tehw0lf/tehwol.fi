@@ -1,50 +1,15 @@
 <form
   [ngStyle]="formStyle"
   class="contact-form flex-column flex-fxflex"
-  [formGroup]="formGroup"
-  (ngSubmit)="submitFormData(formGroup)"
+  [formGroup]="form"
+  (ngSubmit)="submitFormData(model)"
 >
-  <mat-form-field class="form-field flex-fxflex" appearance="outline">
-    <mat-label [ngStyle]="textStyle" for="name">{{ nameLabel }}</mat-label>
-    <input
-      [ngStyle]="textStyle"
-      matInput
-      class="form-control"
-      type="text"
-      name="name"
-      formControlName="name"
-    />
-  </mat-form-field>
-  <mat-form-field class="form-field flex-fxflex" appearance="outline">
-    <mat-label [ngStyle]="textStyle" for="email">{{
-      emailAddressLabel
-    }}</mat-label>
-    <input
-      [ngStyle]="textStyle"
-      matInput
-      class="form-control"
-      type="email"
-      name="email"
-      formControlName="email"
-    />
-  </mat-form-field>
-  <mat-form-field class="form-field flex-fxflex" appearance="outline">
-    <mat-label [ngStyle]="textStyle" for="message">
-      {{ messageLabel }}
-    </mat-label>
-    <textarea
-      [ngStyle]="inputStyle"
-      matInput
-      formControlName="message"
-      name="message"
-    >
-    </textarea>
-  </mat-form-field>
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
   <button
     [ngStyle]="buttonStyle"
     class="form-button"
     type="submit"
-    [disabled]="!formGroup.valid"
+    [disabled]="!form.valid"
   >
     {{ sendText }}
   </button>

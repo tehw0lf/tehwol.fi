@@ -8,9 +8,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -19,6 +18,7 @@ interface FormConfigEntry {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   required?: boolean;
+  type?: string;
 }
 
 @Component({
@@ -32,9 +32,8 @@ interface FormConfigEntry {
     LayoutModule,
     ReactiveFormsModule,
     FormlyModule,
+    FormlyMaterialModule,
     NgStyle,
-    MatFormFieldModule,
-    MatInputModule,
     AsyncPipe
   ]
 })
@@ -52,10 +51,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   };
 
-  @Input() inputStyle = {
-    color: '#282b2e'
-  };
-
   @Input() textStyle = { color: '#cc7832' };
 
   @Input() sendText = 'Send';
@@ -67,7 +62,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   @Input() formConfig: FormConfigEntry[] = [
     { field: 'name', required: true },
     { field: 'email', required: true },
-    { field: 'message', required: true }
+    { field: 'message', required: true, type: 'textarea' }
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,15 +104,33 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       if (entry.value) {
         this.model[entry.field] = entry.value;
       }
+
       this.fields.push({
         key: entry.field,
-        type: 'input',
+        type: entry.type ? entry.type : 'input',
         props: {
           label: entry.field.toLocaleUpperCase(),
           placeholder: 'Enter ' + entry.field,
-          required: true
-        }
+          required: true,
+          attributes: { style: this.flattenStyle(this.textStyle) }
+        },
+        templateOptions:
+          entry.type === 'textarea'
+            ? {
+                autosize: true,
+                minRows: 5,
+                maxRows: 10
+              }
+            : {}
       });
     });
+  }
+
+  private flattenStyle(styleObject: { [key: string]: string }): string {
+    return Object.entries(styleObject)
+      .flatMap((entry) => {
+        return `${entry[0]}: ${entry[1]};`;
+      })
+      .join('');
   }
 }

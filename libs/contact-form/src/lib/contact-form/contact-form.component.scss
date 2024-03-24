@@ -17,53 +17,6 @@
   margin-top: 2rem;
 }
 
-textarea {
-  color: inherit !important;
-  background: none !important;
-  overflow: auto;
-  resize: vertical;
-}
-
-.mat-form-field-appearance-outline {
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-infix {
-    border: 0;
-    padding: 1em 0 0.5em 0;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-wrapper {
-    padding-bottom: 0.25em;
-  }
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-.mat-form-field-label {
-  transition: none !important;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-.mat-form-field-should-float {
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-label-wrapper {
-    top: -0.1em;
-    padding-top: 0.1em;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-label {
-    transition: none !important;
-  }
-}
-
-.form-field {
-  align-self: center;
-  width: 98%;
-}
-
-.form-field:last-of-type {
-  margin-top: 1rem;
-}
-
 .flex-column {
   display: flex;
   flex-direction: column;
