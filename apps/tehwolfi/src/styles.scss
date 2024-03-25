@@ -2,12 +2,14 @@
 @import 'assets/styles/custom-theme.scss';
 @import 'assets/styles/global.scss';
 
+* {
+  font-family: $font;
+}
+
 body.dark {
   background-color: #1a1a1a;
-  font-family: $font;
 }
 
 body.light {
   background-color: white;
-  font-family: $font;
 }
