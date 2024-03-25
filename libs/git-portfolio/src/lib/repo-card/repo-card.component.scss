@@ -26,10 +26,17 @@
 .mat-mdc-card-avatar {
   height: 53px;
   width: 53px;
+  margin: 0;
+}
+
+.mat-mdc-card-title {
+  margin-bottom: 12px;
+  margin-left: 8px;
 }
 
 .mat-mdc-card-subtitle {
-  padding-left: 16px;
+  margin-top: -8px;
+  margin-left: 16px;
 }
 
 .mat-mdc-card-header {
@@ -39,6 +46,14 @@
 .mat-mdc-card-content {
   flex-grow: 1;
   overflow: auto;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.mat-mdc-card-outlined {
+  border: none;
 }
 
 .mat-mdc-card-footer {
