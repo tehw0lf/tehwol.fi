@@ -41,23 +41,30 @@
 
 .mat-mdc-card-header {
   flex-shrink: 0;
+  padding: 0;
+  padding-bottom: 16px;
 }
 
 .mat-mdc-card-content {
   flex-grow: 1;
-  overflow: auto;
+  font-size: 14px;
+
+  margin-bottom: 16px;
+  padding: 0;
 
   p {
     font-size: 14px;
   }
 }
 
-.mat-mdc-card-outlined {
-  border: none;
+.mat-mdc-card {
+  padding: 16px;
 }
 
 .mat-mdc-card-footer {
-  padding: 16px 16px 16px 16px;
+  margin: 0 -16px -16px -16px;
+  padding: 16px;
+  padding-bottom: 10px;
 }
 
 .footer-span {
@@ -88,4 +95,13 @@
 
 .flex-fxflex {
   flex: 1 1 0%;
+}
+
+.info-item {
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+p {
+  margin: 0;
 }
