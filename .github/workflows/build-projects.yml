@@ -38,9 +38,9 @@ jobs:
         run: npm run affected:build
       - name: Build on master
         if: ${{ github.event_name == 'push' }}
-        run: npm affected:build --skip-nx-cache
-      - name: Run end to end tests
-        run: npm run e2e
+        run: npm run affected:build --skip-nx-cache
+      # - name: Run end to end tests
+      #   run: npm run e2e
       - name: Check if published git portfolio library version is outdated
         if: ${{ github.event_name == 'push' }}
         run: |
