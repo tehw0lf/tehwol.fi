@@ -25,10 +25,6 @@ export class ContactFormComponent {
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   };
 
-  inputStyle = {
-    color: '#282b2e'
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   apiCallback = (formValue: any) => {
     // run logic and send to api, return true on success and false on failure
@@ -61,10 +57,6 @@ export class ContactFormComponent {
       'backdrop-filter': 'blur(50px)',
       'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
     };
-
-    this.inputStyle = {
-      color: '#282b2e'
-    };
   }
 
   switchToDark(): void {
@@ -79,10 +71,6 @@ export class ContactFormComponent {
       'background-color': 'rgba(34, 34, 34, 0.75)',
       'backdrop-filter': 'blur(50px)',
       'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-    };
-
-    this.inputStyle = {
-      color: '#282b2e'
     };
   }
 }
