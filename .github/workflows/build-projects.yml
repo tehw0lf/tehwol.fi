@@ -85,6 +85,6 @@ jobs:
       - name: Build docker image and push to ghcr.io
         if: ${{ github.event_name == 'push' }}
         run: |
-          docker build -t tehwolf.de .
+          docker build -t ghcr.io/tehw0lf/tehwolf.de .
           docker tag $(docker image ls | grep tehwolf.de | awk '{print $3}') ghcr.io/tehw0lf/tehwolf.de:latest
           docker push ghcr.io/tehw0lf/tehwolf.de:latest
