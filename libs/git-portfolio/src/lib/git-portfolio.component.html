@@ -1,96 +1,116 @@
-<div *ngIf="gitRepositories$ | async as gitRepositories">
-  <div *ngFor="let gitProvider of gitProviders | keyvalue">
-    <h1 [ngStyle]="textStyle">{{ gitProvider.value }}</h1>
-    <div *ngIf="showOwn">
-      <h2 [ngStyle]="textStyle" class="mat-headline">Own Repos</h2>
-      <div
-        fxLayout="row wrap"
-        fxLayout.lt-sm="column"
-        fxLayoutAlign="flex-start"
-      >
-        <div *ngIf="(loading | async) === true">
-          <mat-spinner></mat-spinner>
-        </div>
-        <repo-card
-          *ngFor="
-            let gitRepo of getOwnGitRepositories(
-              gitRepositories,
-              gitProvider.key
-            )
-          "
-          [buttonStyle]="buttonStyle"
-          [cardStyle]="cardStyle"
-          [textStyle]="textStyle"
-          [checkColor]="checkColor"
-          [forkColor]="forkColor"
-          [issueColor]="issueColor"
-          [pasteColor]="pasteColor"
-          [starColor]="starColor"
-          [gitRepo]="gitRepo"
-          [isCopied]="isCopiedToClipboard(gitRepo)"
-          (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
-          class="repository-card"
-          fxFlex="0 1 calc(33.3% - 32px)"
-          fxFlex.lt-md="0 1 calc(50% - 32px)"
-          fxFlex.lt-sm="100%"
-          fxLayoutAlign="stretch"
-        >
-        </repo-card>
-        <div
-          [ngStyle]="textStyle"
-          *ngIf="
-            (loading | async) === false &&
-            !hasRepositories(gitRepositories, gitProvider.key, 'own')
-          "
-        >
-          This user has not created any repositories yet
-        </div>
+@if (gitRepositories$ | async; as gitRepositories) {
+  <div>
+    @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
+      <div>
+        <h1 [ngStyle]="textStyle">{{ gitProvider.value }}</h1>
+        @if (showOwn) {
+          <div>
+            <h2 [ngStyle]="textStyle" class="mat-headline">Own Repos</h2>
+            <div
+              class="flex-align-start"
+              [ngClass]="{
+                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
+                'flex-column': viewport === 'xsmall'
+              }"
+            >
+              @if ((loading | async) === true) {
+                <div>
+                  <mat-spinner></mat-spinner>
+                </div>
+              }
+              @for (
+                gitRepo of getOwnGitRepositories(
+                  gitRepositories,
+                  gitProvider.key
+                );
+                track gitRepo
+              ) {
+                <repo-card
+                  [buttonStyle]="buttonStyle"
+                  [cardStyle]="cardStyle"
+                  [textStyle]="textStyle"
+                  [checkColor]="checkColor"
+                  [forkColor]="forkColor"
+                  [issueColor]="issueColor"
+                  [pasteColor]="pasteColor"
+                  [starColor]="starColor"
+                  [gitRepo]="gitRepo"
+                  [isCopied]="isCopiedToClipboard(gitRepo)"
+                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  class="repository-card flex-align-stretch"
+                  [ngClass]="{
+                    'flex-fxflex': viewport === 'medium',
+                    'flex-fxflex-lt-md': viewport === 'small',
+                    'flex-fxflex-lt-sm': viewport === 'xsmall'
+                  }"
+                >
+                </repo-card>
+              }
+              @if (
+                (loading | async) === false &&
+                !hasRepositories(gitRepositories, gitProvider.key, 'own')
+              ) {
+                <div [ngStyle]="textStyle">
+                  This user has not created any repositories yet
+                </div>
+              }
+            </div>
+          </div>
+        }
+        @if (showForked) {
+          <div>
+            <h2 [ngStyle]="textStyle" class="mat-headline">Forked Repos</h2>
+            <div
+              class="flex-align-start"
+              [ngClass]="{
+                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
+                'flex-column': viewport === 'xsmall'
+              }"
+            >
+              @if ((loading | async) === true) {
+                <div>
+                  <mat-spinner></mat-spinner>
+                </div>
+              }
+              @for (
+                gitRepo of getForkedGitRepositories(
+                  gitRepositories,
+                  gitProvider.key
+                );
+                track gitRepo
+              ) {
+                <repo-card
+                  [buttonStyle]="buttonStyle"
+                  [cardStyle]="cardStyle"
+                  [textStyle]="textStyle"
+                  [checkColor]="checkColor"
+                  [forkColor]="forkColor"
+                  [issueColor]="issueColor"
+                  [pasteColor]="pasteColor"
+                  [starColor]="starColor"
+                  [gitRepo]="gitRepo"
+                  [isCopied]="isCopiedToClipboard(gitRepo)"
+                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  class="repository-card flex-align-stretch"
+                  [ngClass]="{
+                    'flex-fxflex': viewport === 'medium',
+                    'flex-fxflex-lt-md': viewport === 'small',
+                    'flex-fxflex-lt-sm': viewport === 'xsmall'
+                  }"
+                ></repo-card>
+              }
+              @if (
+                (loading | async) === false &&
+                !hasRepositories(gitRepositories, gitProvider.key, 'forked')
+              ) {
+                <div [ngStyle]="textStyle">
+                  This user has not forked any repositories yet
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
-    </div>
-    <div *ngIf="showForked">
-      <h2 [ngStyle]="textStyle" class="mat-headline">Forked Repos</h2>
-      <div
-        fxLayout="row wrap"
-        fxLayout.lt-sm="column"
-        fxLayoutAlign="flex-start"
-      >
-        <div *ngIf="(loading | async) === true">
-          <mat-spinner></mat-spinner>
-        </div>
-        <repo-card
-          *ngFor="
-            let gitRepo of getForkedGitRepositories(
-              gitRepositories,
-              gitProvider.key
-            )
-          "
-          [buttonStyle]="buttonStyle"
-          [cardStyle]="cardStyle"
-          [textStyle]="textStyle"
-          [checkColor]="checkColor"
-          [forkColor]="forkColor"
-          [issueColor]="issueColor"
-          [pasteColor]="pasteColor"
-          [starColor]="starColor"
-          [gitRepo]="gitRepo"
-          [isCopied]="isCopiedToClipboard(gitRepo)"
-          (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
-          class="repository-card"
-          fxFlex="0 1 calc(33.3% - 32px)"
-          fxFlex.lt-md="0 1 calc(50% - 32px)"
-          fxFlex.lt-sm="100%"
-          fxLayoutAlign="stretch"
-        ></repo-card>
-        <div
-          [ngStyle]="textStyle"
-          *ngIf="
-            (loading | async) === false &&
-            !hasRepositories(gitRepositories, gitProvider.key, 'forked')
-          "
-        >
-          This user has not forked any repositories yet
-        </div>
-      </div>
-    </div>
+    }
   </div>
-</div>
+}

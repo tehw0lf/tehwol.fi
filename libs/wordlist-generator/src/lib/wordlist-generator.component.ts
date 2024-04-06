@@ -1,6 +1,29 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray
+} from '@angular/cdk/drag-drop';
+import { AsyncPipe, NgStyle } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
+import {
+  ReactiveFormsModule,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
@@ -13,7 +36,20 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   selector: 'wordlist-generator',
   templateUrl: './wordlist-generator.component.html',
   styleUrls: ['./wordlist-generator.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    NgStyle,
+    MatMenuModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CdkDropList,
+    CdkDrag,
+    MatIconModule,
+    AsyncPipe
+  ]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   @Input() buttonStyle = {
@@ -88,7 +124,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
               const file = new Blob([parsed.wordlist], {
                 type: parsed.contentType
               });
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               if ((window.navigator as any).msSaveOrOpenBlob) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (window.navigator as any).msSaveOrOpenBlob(file, filename);
               } else {
                 const a = document.createElement('a');

@@ -1,7 +1,23 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
+import { LayoutModule } from '@angular/cdk/layout';
+import { AsyncPipe, NgClass } from '@angular/common';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
+import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
@@ -11,25 +27,34 @@ import { SidenavService } from '../sidenav.service';
   selector: 'tehw0lf-mobile',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile.component.html',
-  styleUrls: ['./mobile.component.scss']
+  styleUrls: ['./mobile.component.scss'],
+  standalone: true,
+  imports: [
+    LayoutModule,
+    MatSidenavModule,
+    NgClass,
+    MatListModule,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatIconModule,
+    RouterOutlet,
+    AsyncPipe
+  ]
 })
 export class MobileComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) public sidenav:
     | MatSidenav
     | undefined;
 
-  isLight: Observable<boolean> = of(false);
-
   private unsubscribe$ = new Subject<void>();
   constructor(
     public router: Router,
-    private sidenavService: SidenavService,
-    private themeService: ThemeService
+    public themeService: ThemeService,
+    private sidenavService: SidenavService
   ) {}
 
   ngOnInit(): void {
-    this.isLight = this.themeService.isLight;
-
     if (this.sidenav) {
       this.sidenavService.setSidenav(this.sidenav);
     }
@@ -53,6 +78,9 @@ export class MobileComponent implements OnInit, OnDestroy {
     return (
       this.router.isActive('/', true) || this.router.isActive('/home', true)
     );
+  }
+  closeSidenav(): void {
+    this.sidenavService.close();
   }
 
   toggleSidenav(): void {

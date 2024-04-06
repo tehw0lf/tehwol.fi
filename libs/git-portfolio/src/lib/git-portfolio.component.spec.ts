@@ -19,17 +19,20 @@ describe('GitPortfolioComponent', () => {
   let component: GitPortfolioComponent;
   let fixture: ComponentFixture<GitPortfolioComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [MatProgressSpinnerModule, MatCardModule, ClipboardModule],
-        declarations: [GitPortfolioComponent, RepoCardComponent],
-        providers: [
-          { provide: GitProviderService, useValue: gitProviderServiceStub }
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        MatProgressSpinnerModule,
+        MatCardModule,
+        ClipboardModule,
+        GitPortfolioComponent,
+        RepoCardComponent
+      ],
+      providers: [
+        { provide: GitProviderService, useValue: gitProviderServiceStub }
+      ]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GitPortfolioComponent);

@@ -30,14 +30,14 @@ describe('WordlistGeneratorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [WordlistGeneratorComponent],
       imports: [
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        MatMenuModule
+        MatMenuModule,
+        WordlistGeneratorComponent
       ],
       providers: [
         {
@@ -109,7 +109,8 @@ describe('WordlistGeneratorComponent', () => {
       global.window.navigator,
       'msSaveOrOpenBlob',
       {
-        value: jest.fn()
+        value: jest.fn(),
+        configurable: true
       }
     );
     component.downloadWordlist();

@@ -1,2 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'assets/styles/custom-theme.scss';
+@import 'assets/styles/global.scss';
+
+* {
+  font-family: $font;
+}
+
+body.dark {
+  background-color: #1a1a1a;
+}
+
+body.light {
+  background-color: white;
+}
+
+.mat-mdc-button {
+  letter-spacing: normal !important;
+}

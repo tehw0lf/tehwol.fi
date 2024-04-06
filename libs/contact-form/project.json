@@ -1,0 +1,36 @@
+{
+  "name": "contact-form",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/contact-form/src",
+  "prefix": "tehw0lf",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/libs/contact-form"],
+      "options": {
+        "project": "libs/contact-form/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/contact-form/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/contact-form/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/contact-form"],
+      "options": {
+        "jestConfig": "libs/contact-form/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": []
+}

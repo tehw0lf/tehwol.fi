@@ -1,15 +1,11 @@
-# tehw0lf and tehwol.fi
+# tehw0lf and tehwolf.de
 
-This monorepo holds my npm packages published under the @tehw0lf namespace and my portfolio website which showcases said packages at [tehwol.fi](https://tehwol.fi).
+This monorepo holds my npm packages published under the @tehw0lf namespace and my portfolio website which showcases said packages at [tehwolf.de](https://tehwolf.de).
 
 Currently featured on the website:
 
 - GitHub/GitLab portfolio
 - Wordlist Generator
-
-Coming soon:
-
-- Contact Form
 
 ## Angular libraries
 
@@ -25,5 +21,5 @@ More info: [README](libs/wordlist-generator/README.md)
 
 ## contact-form
 
-A simple contact form that uses a free service to send emails to a specified address.
+A simple contact form that takes a model json and an API callback to provide maximum flexibility (uses ngx-formly)
 More info: [README](libs/contact-form/README.md)

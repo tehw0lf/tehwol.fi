@@ -13,27 +13,23 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 
 describe('AppComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserAnimationsModule,
-          MatIconModule,
-          MatListModule,
-          MatToolbarModule,
-          MatSidenavModule
-        ],
-        declarations: [
-          AppComponent,
-          HomeComponent,
-          NavComponent,
-          MobileComponent,
-          DesktopComponent
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatListModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        AppComponent,
+        HomeComponent,
+        NavComponent,
+        MobileComponent,
+        DesktopComponent
+      ]
+    }).compileComponents();
+  }));
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

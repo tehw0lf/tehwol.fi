@@ -7,7 +7,8 @@ import { OcticonDirective } from './octicon.directive';
 @Component({
   template: `
     <div id="working-octicon" octicon="star" color="gold" width="20px"></div>
-  `
+  `,
+  standalone: true
 })
 class TestOcticonDirectiveComponent {}
 
@@ -17,7 +18,7 @@ describe('OcticonDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [OcticonDirective, TestOcticonDirectiveComponent],
+      imports: [OcticonDirective, TestOcticonDirectiveComponent],
       providers: [Renderer2]
     }).compileComponents();
 
