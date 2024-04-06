@@ -16,3 +16,13 @@ export const toXML = (
     contentType: 'text/xml'
   };
 };
+
+export const toCSV = (
+  wordlist: string
+): { wordlist: string; contentType: string } => {
+  const glue = ',';
+  return {
+    wordlist: wordlist.replace(/\n/g, glue),
+    contentType: 'text/csv'
+  };
+};

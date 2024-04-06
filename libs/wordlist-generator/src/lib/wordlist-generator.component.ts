@@ -28,7 +28,7 @@ import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
-import { toPlaintext, toXML } from './parsers';
+import { toCSV, toPlaintext, toXML } from './parsers';
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
 /* eslint-disable @angular-eslint/component-selector */
@@ -212,6 +212,8 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
         return toPlaintext(wordlist);
       case FileType.xml:
         return toXML(wordlist);
+      case FileType.csv:
+        return toCSV(wordlist);
     }
   }
 
