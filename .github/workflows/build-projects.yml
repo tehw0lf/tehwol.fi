@@ -20,7 +20,7 @@ jobs:
           node-version: 20.11.0
           registry-url: 'https://registry.npmjs.org'
       - name: Enable Nx SHAs
-        uses: nrwl/nx-set-shas@v2
+        uses: nrwl/nx-set-shas@v4
         with:
           main-branch-name: master
       - name: Install packages
@@ -81,7 +81,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Add avatars to package
         if: ${{ github.event_name == 'push' }}
-        run: mv -fv avatar* dist/static/
+        run: mv -fv avatar* dist/
       - name: Build docker image and push to ghcr.io
         if: ${{ github.event_name == 'push' }}
         run: |
