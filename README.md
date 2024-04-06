@@ -6,6 +6,7 @@ Currently featured on the website:
 
 - GitHub/GitLab portfolio
 - Wordlist Generator
+- Contact Form
 
 ## Angular libraries
 
