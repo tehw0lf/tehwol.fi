@@ -1,5 +1,5 @@
 <mat-sidenav-container
-  class="flex-fxflexfill"
+  class="flex-fxflex-fill"
   [ngClass]="themeService.theme()"
   hasBackdrop="false"
 >
@@ -89,7 +89,7 @@
   </mat-sidenav>
   <mat-sidenav-content
     [ngClass]="themeService.theme()"
-    class="main-content flex-fxflexfill"
+    class="main-content flex-fxflex-fill"
     (click)="closeSidenav()"
   >
     <router-outlet></router-outlet>

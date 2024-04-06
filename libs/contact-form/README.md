@@ -15,6 +15,7 @@ The following dependencies are needed:
     @angular/forms
     @ngx-formly/core
     @ngx-formly/material
+    @tehw0lf/mvc
 ```
 
 ### Module
