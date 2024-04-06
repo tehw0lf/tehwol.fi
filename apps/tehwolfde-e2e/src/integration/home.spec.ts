@@ -1,4 +1,4 @@
-describe('tehwolfi', () => {
+describe('tehwolfde', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
