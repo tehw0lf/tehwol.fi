@@ -20,7 +20,7 @@ jobs:
           node-version: 20.11.0
           registry-url: 'https://registry.npmjs.org'
       - name: Enable Nx SHAs
-        uses: nrwl/nx-set-shas@v2
+        uses: nrwl/nx-set-shas@v4
         with:
           main-branch-name: master
       - name: Install packages
