@@ -14,7 +14,7 @@
     "@angular/forms": "17.3.3",
     "@ngx-formly/core": "^6.3.0",
     "@ngx-formly/material": "^6.3.0",
-    "@tehw0lf/mvc": "^0.0.1"
+    "@tehw0lf/mvc": "^0.0.2"
   },
   "dependencies": {
     "tslib": "^2.2.0"

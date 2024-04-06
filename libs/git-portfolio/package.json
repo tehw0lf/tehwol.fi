@@ -14,7 +14,7 @@
     "@angular/core": "17.3.3",
     "@angular/material": "17.3.3",
     "@primer/octicons": "^19.9.0",
-    "@tehw0lf/mvc": "^0.0.1",
+    "@tehw0lf/mvc": "^0.0.2",
     "github-language-colors": "^1.0.0"
   },
   "dependencies": {

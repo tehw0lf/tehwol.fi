@@ -14,7 +14,7 @@
     "@angular/core": "17.3.3",
     "@angular/forms": "17.3.3",
     "@angular/material": "17.3.3",
-    "@tehw0lf/mvc": "^0.0.1"
+    "@tehw0lf/mvc": "^0.0.2"
   },
   "dependencies": {
     "tslib": "^2.2.0"
