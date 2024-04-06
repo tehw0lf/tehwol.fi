@@ -21,9 +21,7 @@ describe('AppComponent', () => {
         MatIconModule,
         MatListModule,
         MatToolbarModule,
-        MatSidenavModule
-      ],
-      declarations: [
+        MatSidenavModule,
         AppComponent,
         HomeComponent,
         NavComponent,

@@ -16,9 +16,13 @@ describe('DesktopComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
-      providers: [{ provide: SidenavService, useValue: mockSidenavService }],
-      declarations: [DesktopComponent]
+      imports: [
+        RouterTestingModule,
+        MatIconModule,
+        MatToolbarModule,
+        DesktopComponent
+      ],
+      providers: [{ provide: SidenavService, useValue: mockSidenavService }]
     }).compileComponents();
   }));
 

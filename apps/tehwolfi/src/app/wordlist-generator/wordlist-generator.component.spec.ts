@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { WordlistGeneratorModule } from '@tehw0lf/wordlist-generator';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
 
@@ -9,8 +9,7 @@ describe('WordlistGeneratorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [WordlistGeneratorModule],
-      declarations: [WordlistGeneratorComponent]
+      imports: [WordlistGeneratorComponent, NoopAnimationsModule]
     }).compileComponents();
   }));
 
