@@ -70,23 +70,4 @@
   margin: 4px 4px 4px 4px;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.flex-gap-20 {
-  margin-right: 20px;
-}
-
-.flex-fxflex {
-  flex: 1 1 0%;
-}
-
-.flex-fxflexfill {
-  height: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  width: 100%;
-}
+@import '@tehw0lf/mvc';

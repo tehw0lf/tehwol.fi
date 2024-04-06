@@ -19,12 +19,4 @@
   margin-top: 1rem;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.flex-fxflex {
-  flex: 1 1 0%;
-}
+@import '@tehw0lf/mvc';
