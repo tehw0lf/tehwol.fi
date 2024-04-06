@@ -109,7 +109,8 @@ describe('WordlistGeneratorComponent', () => {
       global.window.navigator,
       'msSaveOrOpenBlob',
       {
-        value: jest.fn()
+        value: jest.fn(),
+        configurable: true
       }
     );
     component.downloadWordlist();

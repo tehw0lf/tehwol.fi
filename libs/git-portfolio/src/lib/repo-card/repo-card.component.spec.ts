@@ -1,4 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { Directive } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +9,10 @@ import { GitRepository } from '../types/git-repository-type';
 import { RepoCardComponent } from './repo-card.component';
 
 const GITHUB_REPO: GitRepository = new GitRepository();
+
+// eslint-disable-next-line @angular-eslint/directive-selector
+@Directive({ standalone: true, selector: '[octicon]' })
+class MockOcticonDirectiveDirective {}
 
 describe('RepoCardComponent', () => {
   let component: RepoCardComponent;
@@ -22,7 +27,12 @@ describe('RepoCardComponent', () => {
         RepoCardComponent,
         OcticonDirective
       ]
-    }).compileComponents();
+    })
+      .overrideComponent(RepoCardComponent, {
+        remove: { imports: [OcticonDirective] },
+        add: { imports: [MockOcticonDirectiveDirective] }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
