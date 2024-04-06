@@ -13,14 +13,11 @@
   >
     {{ sendText }}
   </button>
-  @if ((emailSent$ | async) === true) {
-    <div [ngStyle]="textStyle" class="form-status">
+  <div [ngStyle]="textStyle" class="form-status">
+    @if ((emailSent$ | async) === true) {
       {{ sendSuccessfulText }}
-    </div>
-  }
-  @if ((emailSent$ | async) === false) {
-    <div [ngStyle]="textStyle" class="form-status">
+    } @else if ((emailSent$ | async) === false) {
       {{ sendErrorText }}
-    </div>
-  }
+    }
+  </div>
 </form>
