@@ -45,7 +45,7 @@ jobs:
           echo "portfolio_latest_version=$(npm view @tehw0lf/git-portfolio dist-tags.latest)" >> $GITHUB_ENV
           echo "portfolio_package_version=$(jq -r ".version" dist/libs/git-portfolio/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && env.portfolio_latest_version != env.portfolio_package_version }}
+        if: ${{ github.event_name == 'push' && (env.portfolio_latest_version != env.portfolio_package_version) == 'true' }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm publish dist/libs/git-portfolio --access public --dry-run
@@ -58,7 +58,7 @@ jobs:
           echo "wordlist_generator_latest_version=$(npm view @tehw0lf/wordlist-generator dist-tags.latest)" >> $GITHUB_ENV
           echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/wordlist-generator/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && env.wordlist_generator_latest_version != env.wordlist_generator_package_version }}
+        if: ${{ github.event_name == 'push' && (env.wordlist_generator_latest_version != env.wordlist_generator_package_version) == 'true' }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm publish dist/libs/wordlist-generator --access public --dry-run
@@ -71,7 +71,7 @@ jobs:
           echo "contact_form_latest_version=$(npm view @tehw0lf/contact-form dist-tags.latest)" >> $GITHUB_ENV
           echo "contact_form_package_version=$(jq -r ".version" dist/libs/contact-form/package.json)" >> $GITHUB_ENV
       - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && env.contact_form_latest_version != env.contact_form_package_version }}
+        if: ${{ github.event_name == 'push' && (env.contact_form_latest_version != env.contact_form_package_version) == 'true' }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm publish dist/libs/contact-form --access public --dry-run
