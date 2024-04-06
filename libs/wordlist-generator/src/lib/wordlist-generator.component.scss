@@ -6,19 +6,22 @@
 
     .charset-container {
       .drag-indicator {
+        height: 20px;
+        width: 20px;
         margin-right: 10px;
       }
 
       .clone-charset {
         margin: 0 10px;
       }
+
       .remove-charset {
         margin-right: 10px;
       }
     }
 
     .charset {
-      width: 18.875em;
+      width: 19.15em;
     }
 
     .charset-container:not(:last-child) {
@@ -30,26 +33,34 @@
     .choose-format {
       margin: 0 34px 10px 34px;
       width: 150px;
+      line-height: 36px;
+      letter-spacing: normal;
     }
 
     .generate-wordlist {
       margin: 0 0 10px 0;
       width: 150px;
+      line-height: 36px;
+      letter-spacing: normal;
     }
 
     .download-wordlist {
       margin: 0 0 10px 0;
       width: 150px;
+      line-height: 36px;
+      letter-spacing: normal;
     }
   }
 
   .wordlist-container {
     max-height: 80vh;
+
     .wordlist-header {
       margin-top: 0px;
     }
 
     .wordlist {
+      font-size: 12px;
       margin-left: 1em;
       overflow-wrap: normal;
       width: 1%;
@@ -57,39 +68,48 @@
   }
 }
 
+.row-button-icon {
+  font-size: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+
+  margin: 0 !important;
+}
+
 .mat-mdc-menu-panel {
   width: 150px;
 }
 
-.mat-form-field-appearance-outline {
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-infix {
-    border: 0;
-    padding: 1em 0 0.5em 0;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-wrapper {
-    padding-bottom: 0.25em;
-  }
+.mat-mdc-menu-item-text {
+  line-height: 48px !important;
+  letter-spacing: normal !important;
+  font-size: 14px !important;
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-.mat-form-field-label {
+.mat-mdc-form-field {
+  height: 50px !important;
+}
+
+.mat-mdc-form-field-infix {
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  border: 0 !important;
+  padding: 0.5em 0 0.5em 0 !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  height: 42px !important;
+  padding-left: 12px !important;
+  padding-bottom: 0 !important;
+}
+
+.mat-mdc-floating-label:not(.mdc-floating-label--float-above) {
+  top: 19px !important;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-floating-label {
   transition: none !important;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-.mat-form-field-should-float {
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-label-wrapper {
-    top: -0.1em;
-    padding-top: 0.1em;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  .mat-form-field-label {
-    transition: none !important;
-  }
 }
 
 .fixed-width {
@@ -111,4 +131,8 @@
 
 .flex-fxflex {
   flex: 1 1 0%;
+}
+
+.bottom-10 {
+  margin-bottom: 10px;
 }

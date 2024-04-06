@@ -1,6 +1,6 @@
 <div class="meta-container flex-row-wrap">
   <div class="form-container flex-column flex-fxflex">
-    <div class="flex-row-wrap">
+    <div class="flex-row-wrap bottom-10">
       <button
         class="generate-wordlist"
         [ngStyle]="buttonStyle"
@@ -46,7 +46,7 @@
     </div>
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
-        <mat-form-field class="fixed-width" appearance="outline">
+        <mat-form-field class="fixed-width bottom-10" appearance="outline">
           <mat-label [ngStyle]="textStyle">prefix (optional)</mat-label>
           <input
             [ngStyle]="textStyle"
@@ -58,7 +58,6 @@
           />
         </mat-form-field>
         <div formArrayName="charsets">
-          <div class="charset"></div>
           <div cdkDropList (cdkDropListDropped)="drop($event)">
             @for (
               charset of charsets?.controls;
@@ -69,7 +68,7 @@
                 <mat-icon class="drag-indicator" [ngStyle]="dragStyle"
                   >drag_indicator</mat-icon
                 >
-                <mat-form-field class="charset" appearance="outline">
+                <mat-form-field class="charset bottom-10" appearance="outline">
                   <mat-label [ngStyle]="textStyle">
                     character set for string position {{ i }}
                   </mat-label>
@@ -89,7 +88,7 @@
                   [ngStyle]="buttonStyle"
                   (click)="cloneCharset(i)"
                 >
-                  <mat-icon>content_copy</mat-icon>
+                  <mat-icon class="row-button-icon">content_copy</mat-icon>
                 </button>
                 <button
                   mat-raised-button
@@ -98,14 +97,14 @@
                   (click)="removeCharset(i)"
                   [disabled]="this.charsets?.value.length === 1"
                 >
-                  <mat-icon>remove</mat-icon>
+                  <mat-icon class="row-button-icon">remove</mat-icon>
                 </button>
                 <button
                   mat-raised-button
                   [ngStyle]="buttonStyle"
                   (click)="addCharset()"
                 >
-                  <mat-icon>add</mat-icon>
+                  <mat-icon class="row-button-icon">add</mat-icon>
                 </button>
               </div>
             }
