@@ -27,8 +27,6 @@ jobs:
           main-branch-name: master
       - name: Install packages
         run: npm ci
-      - name: Lint workspace
-        run: npx nx workspace-lint
       - name: Check format
         run: npm run format
       - name: Lint
