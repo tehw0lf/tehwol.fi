@@ -80,13 +80,13 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Add avatars to package
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
         run: mv -fv avatar* dist/apps/tehwolfde/browser/
       - name: Login to GitHub Container Registry
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
         run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
       - name: Build docker image and push to ghcr.io
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
         run: |
           docker build -t ghcr.io/tehw0lf/tehwolf.de .
           docker tag $(docker image ls | grep tehwolf.de | awk '{print $3}') ghcr.io/tehw0lf/tehwolf.de:latest
