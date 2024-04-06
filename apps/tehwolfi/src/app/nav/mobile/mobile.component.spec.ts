@@ -24,9 +24,9 @@ describe('MobileComponent', () => {
         BrowserAnimationsModule,
         MatIconModule,
         MatListModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MobileComponent
       ],
-      declarations: [MobileComponent],
       providers: [{ provide: SidenavService, useValue: mockSidenavService }]
     }).compileComponents();
   }));
