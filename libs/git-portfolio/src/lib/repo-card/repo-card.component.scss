@@ -79,24 +79,6 @@
   margin-top: 2px;
 }
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-}
-
-.flex-gap-12 {
-  margin-right: 12px;
-}
-
-.flex-gap-5 {
-  margin-right: 5px;
-}
-
-.flex-fxflex {
-  flex: 1 1 0%;
-}
-
 .info-item {
   font-weight: 400;
   letter-spacing: normal;
@@ -105,3 +87,5 @@
 p {
   margin: 0;
 }
+
+@import '@tehw0lf/mvc';
