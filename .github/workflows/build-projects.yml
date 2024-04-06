@@ -81,7 +81,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Add avatars to package
         if: ${{ github.event_name == 'push' }}
-        run: mv -fv avatar* dist/static/
+        run: mv -fv avatar* dist/
       - name: Build docker image and push to ghcr.io
         if: ${{ github.event_name == 'push' }}
         run: |
