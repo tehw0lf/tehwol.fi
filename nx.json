@@ -7,7 +7,7 @@
       }
     }
   },
-  "defaultProject": "tehwolfi",
+  "defaultProject": "tehwolfde",
   "generators": {
     "@nx/angular:application": {
       "style": "scss",

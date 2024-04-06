@@ -1,12 +1,12 @@
 /* eslint-disable */
 export default {
-  displayName: 'tehwolfi',
+  displayName: 'tehwolfde',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
-  coverageDirectory: '../../coverage/apps/tehwolfi',
+  coverageDirectory: '../../coverage/apps/tehwolfde',
   transform: {
     '^.+.(ts|mjs|js|html)$': [
       'jest-preset-angular',
