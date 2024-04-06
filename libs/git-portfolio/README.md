@@ -17,6 +17,7 @@ The following dependencies are needed:
     @angular/core
     @angular/material
     @primer/octicons
+    @tehw0lf/mvc
     github-language-colors
 ```
 

@@ -15,6 +15,7 @@ The following dependencies are needed:
     @angular/core
     @angular/forms
     @angular/material
+    @tehw0lf/mvc
 ```
 
 ### Module
