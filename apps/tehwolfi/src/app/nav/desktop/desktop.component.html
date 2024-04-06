@@ -1,29 +1,16 @@
-<mat-toolbar
-  [ngClass]="{
-    'light-theme': (isLight | async) === true,
-    'dark-theme': (isLight | async) === false
-  }"
->
+<mat-toolbar [ngClass]="themeService.theme()">
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
       type="button"
       (click)="toggleSidenav()"
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.gt-sm
+      [style]="burgerStyle"
       mat-icon-button
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <div
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.lt-md="true"
-      fxLayout="row"
-      fxFlex
-    >
-      <div class="nav-item">
+    <div [style]="buttonStyle" class="flex-row flex-fxflex">
+      <div class="nav-item flex-gap-20">
         <a
           mat-button
           [ngClass]="{ 'link-active': isActive() }"
@@ -31,17 +18,17 @@
           routerLinkActive="link-active"
         >
           <span class="mat-button-wrapper">
-            <img alt="tehwol.fi" class="nav-logo" src="../../favicon.svg" />
+            <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
             <span>Home</span>
           </span>
         </a>
       </div>
-      <div class="nav-item">
+      <div class="nav-item flex-gap-20">
         <a mat-button routerLink="/portfolio" routerLinkActive="link-active">
           <span class="mat-button-wrapper"> <span>Portfolio</span> </span>
         </a>
       </div>
-      <div class="nav-item">
+      <div class="nav-item flex-gap-20">
         <a
           mat-button
           routerLink="/wordlist-generator"
@@ -53,42 +40,39 @@
         </a>
       </div>
     </div>
-    <button
-      *ngIf="(isLight | async) === false"
-      id="light"
-      class="light-theme-button"
-      type="button"
-      (click)="switchToLight()"
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.lt-md="true"
-      mat-icon-button
-    >
-      <mat-icon>light_mode</mat-icon>
-    </button>
-    <button
-      *ngIf="(isLight | async) === true"
-      id="dark"
-      class="dark-theme-button"
-      type="button"
-      (click)="switchToDark()"
-      fxLayoutGap="20px"
-      fxShow="true"
-      fxHide.lt-md="true"
-      mat-icon-button
-    >
-      <mat-icon>dark_mode</mat-icon>
-    </button>
-    <div fxLayoutGap="20px" fxShow="true" fxHide.lt-md="true">
+    @if (themeService.theme() === 'dark') {
+      <button
+        id="light"
+        class="light-theme-button flex-gap-20"
+        type="button"
+        (click)="switchToLight()"
+        [style]="buttonStyle"
+        mat-icon-button
+      >
+        <mat-icon>light_mode</mat-icon>
+      </button>
+    } @else {
+      <button
+        id="dark"
+        class="dark-theme-button flex-gap-20"
+        type="button"
+        (click)="switchToDark()"
+        [style]="buttonStyle"
+        mat-icon-button
+      >
+        <mat-icon>dark_mode</mat-icon>
+      </button>
+    }
+    <div [style]="buttonStyle">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">
           <span class="mat-button-wrapper">
             <img
-              alt="tehwol.fi"
-              class="nav-logo"
+              alt="tehwolf.de"
+              class="nav-logo github"
               src="assets/icons/github.png"
             />
-            <span>GitHub</span>
+            <span class="github">GitHub</span>
           </span>
         </a>
       </div>

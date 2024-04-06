@@ -15,7 +15,6 @@ The following dependencies are needed:
     @angular/cdk
     @angular/common
     @angular/core
-    @angular/flex-layout
     @angular/material
     @primer/octicons
     github-language-colors

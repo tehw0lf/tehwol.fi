@@ -1,67 +1,23 @@
 <form
   [ngStyle]="formStyle"
-  class="contact-form"
-  [formGroup]="formGroup"
-  (ngSubmit)="submitFormData(formGroup)"
-  fxLayout="column"
-  fxFlex
+  class="contact-form flex-column flex-fxflex"
+  [formGroup]="form"
+  (ngSubmit)="submitFormData(model)"
 >
-  <mat-form-field class="form-field" appearance="outline" fxFlex>
-    <mat-label [ngStyle]="textStyle" for="name">{{ nameLabel }}</mat-label>
-    <input
-      [ngStyle]="textStyle"
-      matInput
-      class="form-control"
-      type="text"
-      name="name"
-      formControlName="name"
-    />
-  </mat-form-field>
-  <mat-form-field class="form-field" appearance="outline" fxFlex>
-    <mat-label [ngStyle]="textStyle" for="email">{{
-      emailAddressLabel
-    }}</mat-label>
-    <input
-      [ngStyle]="textStyle"
-      matInput
-      class="form-control"
-      type="email"
-      name="email"
-      formControlName="email"
-    />
-  </mat-form-field>
-  <mat-form-field class="form-field" appearance="outline" fxFlex>
-    <mat-label [ngStyle]="textStyle" for="message">
-      {{ messageLabel }}
-    </mat-label>
-    <textarea
-      [ngStyle]="inputStyle"
-      matInput
-      formControlName="message"
-      name="message"
-    >
-    </textarea>
-  </mat-form-field>
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
   <button
     [ngStyle]="buttonStyle"
     class="form-button"
     type="submit"
-    [disabled]="!formGroup.valid"
+    [disabled]="!form.valid"
   >
     {{ sendText }}
   </button>
-  <div
-    [ngStyle]="textStyle"
-    class="form-status"
-    *ngIf="(emailSent$ | async) === true"
-  >
-    {{ sendSuccessfulText }}
-  </div>
-  <div
-    [ngStyle]="textStyle"
-    class="form-status"
-    *ngIf="(emailSent$ | async) === false"
-  >
-    {{ sendErrorText }}
+  <div [ngStyle]="textStyle" class="form-status">
+    @if ((emailSent$ | async) === true) {
+      {{ sendSuccessfulText }}
+    } @else if ((emailSent$ | async) === false) {
+      {{ sendErrorText }}
+    }
   </div>
 </form>

@@ -22,9 +22,11 @@ describe('NavComponent', () => {
         MatIconModule,
         MatListModule,
         MatSidenavModule,
-        MatToolbarModule
-      ],
-      declarations: [NavComponent, DesktopComponent, MobileComponent]
+        MatToolbarModule,
+        NavComponent,
+        DesktopComponent,
+        MobileComponent
+      ]
     }).compileComponents();
   }));
 

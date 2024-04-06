@@ -1,14 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Component, effect } from '@angular/core';
+import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
+import { of } from 'rxjs';
 
 import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'tehw0lf-contact-form',
   templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss']
+  styleUrls: ['./contact-form.component.scss'],
+  standalone: true,
+  imports: [ContactFormComponent_1]
 })
-export class ContactFormComponent implements OnInit, OnDestroy {
+export class ContactFormComponent {
   buttonStyle = {
     'background-color': '#333333',
     border: 'none',
@@ -22,28 +25,23 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   };
 
-  inputStyle = {
-    color: '#282b2e'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiCallback = (formValue: any) => {
+    // run logic and send to api, return true on success and false on failure
+    // update sendErrorText input with error text for more verbose error message
+    if (formValue.name) {
+      return of(true);
+    } else {
+      return of(false);
+    }
   };
 
-  private unsubscribe$: Subject<void> = new Subject();
-
-  constructor(private themeService: ThemeService) {}
-
-  ngOnInit(): void {
-    this.themeService.isLight
-      .pipe(
-        tap((isLight: boolean) => {
-          isLight ? this.switchToLight() : this.switchToDark();
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  constructor(private themeService: ThemeService) {
+    effect(() =>
+      this.themeService.theme() === 'dark'
+        ? this.switchToDark()
+        : this.switchToLight()
+    );
   }
 
   switchToLight(): void {
@@ -59,10 +57,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       'backdrop-filter': 'blur(50px)',
       'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
     };
-
-    this.inputStyle = {
-      color: '#282b2e'
-    };
   }
 
   switchToDark(): void {
@@ -77,10 +71,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       'background-color': 'rgba(34, 34, 34, 0.75)',
       'backdrop-filter': 'blur(50px)',
       'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-    };
-
-    this.inputStyle = {
-      color: '#282b2e'
     };
   }
 }

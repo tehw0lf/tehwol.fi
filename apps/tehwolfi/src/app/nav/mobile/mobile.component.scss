@@ -4,8 +4,7 @@
   border-bottom: 2px solid $linkcolor;
 }
 
-.mat-button {
-  color: $linkcolor !important;
+.mat-mdc-list-item {
   vertical-align: middle;
   line-height: 36px;
   font-size: 18px;
@@ -14,11 +13,15 @@
   text-decoration: none;
 }
 
-.mat-nav-list.light-theme {
-  background-color: #d4d4d4;
+.mdc-list-item:hover .mdc-list-item__primary-text {
+  color: $linkcolor !important;
 }
 
-.mat-icon-button {
+.mdc-list-item__primary-text {
+  color: $linkcolor !important;
+}
+
+.mat-mdc-icon-button {
   color: $linkcolor;
 }
 
@@ -28,7 +31,7 @@
   margin: 0 4px 0 0;
 }
 
-.mat-drawer-container.dark-theme {
+.mat-drawer-container.dark {
   background-color: #1a1a1a;
 
   .mat-drawer {
@@ -36,11 +39,11 @@
   }
 }
 
-.mat-drawer-container.light-theme {
-  background-color: white;
+.mat-drawer-container.light {
+  background-color: #d4d4d4;
 
   .mat-drawer {
-    background-color: white;
+    background-color: #d4d4d4;
   }
 }
 
@@ -49,16 +52,41 @@
   padding: 32px 0 0 32px;
 }
 
+.mat-mdc-icon-button {
+  color: $linkcolor !important;
+}
+
 .dark-theme-button {
-  color: black;
+  color: black !important;
   height: 48px;
   width: 48px;
   margin: 4px 4px 4px 4px;
 }
 
 .light-theme-button {
-  color: yellow;
+  color: yellow !important;
   height: 48px;
   width: 48px;
   margin: 4px 4px 4px 4px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.flex-gap-20 {
+  margin-right: 20px;
+}
+
+.flex-fxflex {
+  flex: 1 1 0%;
+}
+
+.flex-fxflexfill {
+  height: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  width: 100%;
 }

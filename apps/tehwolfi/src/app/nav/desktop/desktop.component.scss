@@ -4,8 +4,7 @@
   border-bottom: 2px solid $linkcolor;
 }
 
-.mat-button {
-  color: $linkcolor;
+.mat-mdc-button {
   vertical-align: middle;
   line-height: 36px;
   font-size: $fontsize-button-md;
@@ -14,7 +13,7 @@
   text-decoration: none;
 }
 
-.mat-icon-button {
+.mat-button-wrapper {
   color: $linkcolor;
 }
 
@@ -48,10 +47,28 @@
   backdrop-filter: blur(15px);
 }
 
-.mat-toolbar-multiple-rows.dark-theme {
+.mat-toolbar-multiple-rows.dark {
   background-color: #222222;
 }
 
-.mat-toolbar-multiple-rows.light-theme {
+.mat-toolbar-multiple-rows.light {
   background-color: rgb(212, 212, 212);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.flex-gap-20 {
+  margin-right: 20px;
+}
+
+.flex-fxflex {
+  flex: 1 1 0%;
+}
+
+.github {
+  vertical-align: middle;
 }

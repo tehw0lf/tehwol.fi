@@ -21,8 +21,8 @@
         {{ gitRepo.name }}
       </a>
     </mat-card-title>
-    <mat-card-subtitle fxLayout="row" fxLayoutGap="12px">
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
+    <mat-card-subtitle class="flex-row">
+      <div class="info-item flex-row flex-gap-12">
         <div
           [ngStyle]="{
             'background-color':
@@ -30,38 +30,39 @@
                 ? githubLanguageColors[gitRepo.language]
                 : 'transparent'
           }"
-          class="language-icon"
+          class="language-icon flex-gap-5"
         ></div>
         <div [ngStyle]="textStyle">{{ gitRepo.language }}</div>
       </div>
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div octicon="star" [color]="starColor"></div>
+      <div class="info-item flex-row flex-gap-12">
+        <div octicon="star" [color]="starColor" class="flex-gap-5"></div>
         <div [ngStyle]="textStyle">
           {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
         </div>
       </div>
-      <div class="info-item" fxLayout="row" fxLayoutGap="5px">
-        <div octicon="repo-forked" [color]="forkColor"></div>
+      <div class="info-item flex-row flex-gap-12">
+        <div octicon="repo-forked" [color]="forkColor" class="flex-gap-5"></div>
         <div [ngStyle]="textStyle">{{ gitRepo.forks_count }}</div>
       </div>
-      <div
-        *ngIf="gitRepo.open_issues_count"
-        class="info-item"
-        fxLayout="row"
-        fxLayoutGap="5px"
-      >
-        <div octicon="issue-opened" [color]="issueColor"></div>
-        <div [ngStyle]="textStyle">
-          {{ gitRepo.open_issues_count }}
+      @if (gitRepo.open_issues_count) {
+        <div class="info-item flex-row flex-gap-12">
+          <div
+            octicon="issue-opened"
+            [color]="issueColor"
+            class="flex-gap-5"
+          ></div>
+          <div [ngStyle]="textStyle">
+            {{ gitRepo.open_issues_count }}
+          </div>
         </div>
-      </div>
+      }
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <p>{{ gitRepo.description }}</p>
   </mat-card-content>
-  <mat-card-footer fxLayout="row" fxLayoutGap="12px">
-    <span class="mat-footer-cell" fxFlex>
+  <mat-card-footer class="flex-row">
+    <span class="mat-footer-cell flex-fxflex flex-gap-12">
       <span class="footer-span" [ngStyle]="textStyle"
         >Created: {{ gitRepo.created_at | date }}</span
       >
@@ -80,14 +81,21 @@
         (cdkCopyToClipboardCopied)="copiedToClipboard()"
         class="clipboard-button"
       >
-        <span class="mat-button-wrapper" fxLayout="row" fxLayoutGap="5px">
+        <span class="mat-button-wrapper flex-row">
+          @if (isCopied) {
+            <div
+              octicon="check"
+              [color]="checkColor"
+              width="24"
+              class="flex-gap-5"
+            ></div>
+          }
           <div
-            *ngIf="isCopied"
-            octicon="check"
-            [color]="checkColor"
-            width="24"
+            octicon="paste"
+            [color]="pasteColor"
+            width="24px"
+            class="flex-gap-5"
           ></div>
-          <div octicon="paste" [color]="pasteColor" width="24px"></div>
           <span>Copy URL</span>
         </span>
       </button>

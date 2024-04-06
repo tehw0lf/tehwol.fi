@@ -1,0 +1,36 @@
+{
+  "name": "wordlist-generator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/wordlist-generator/src",
+  "prefix": "tehw0lf",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/libs/wordlist-generator"],
+      "options": {
+        "project": "libs/wordlist-generator/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/wordlist-generator/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/wordlist-generator/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/wordlist-generator"],
+      "options": {
+        "jestConfig": "libs/wordlist-generator/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": []
+}

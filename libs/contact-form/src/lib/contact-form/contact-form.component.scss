@@ -1,59 +1,30 @@
 .contact-form {
   max-width: 500px;
   margin: auto;
-  padding: 40px;
+  padding: 40px 40px 30px 40px;
   box-sizing: border-box;
 }
 
 .form-button {
-  margin-top: 3rem;
+  margin-top: 0.33rem;
   display: block;
   border-radius: 0.25rem;
-  width: 98%;
+  height: 36px;
+  width: 100%;
   padding: 0.375rem 0.75rem;
 }
 
 .form-status {
-  margin-top: 2rem;
-}
-
-textarea {
-  color: inherit !important;
-  background: none !important;
-  overflow: auto;
-  resize: vertical;
-}
-
-.mat-form-field-appearance-outline {
-  .mat-form-field-infix {
-    border: 0;
-    padding: 1em 0 0.5em 0;
-  }
-
-  .mat-form-field-wrapper {
-    padding-bottom: 0.25em;
-  }
-}
-
-.mat-form-field-label {
-  transition: none !important;
-}
-
-.mat-form-field-should-float {
-  .mat-form-field-label-wrapper {
-    top: -0.1em;
-    padding-top: 0.1em;
-  }
-  .mat-form-field-label {
-    transition: none !important;
-  }
-}
-
-.form-field {
-  align-self: center;
-  width: 98%;
-}
-
-.form-field:last-of-type {
+  height: 19px;
   margin-top: 1rem;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.flex-fxflex {
+  flex: 1 1 0%;
 }

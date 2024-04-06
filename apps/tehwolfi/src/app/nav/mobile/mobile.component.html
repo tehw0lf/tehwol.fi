@@ -1,57 +1,46 @@
 <mat-sidenav-container
-  [ngClass]="{
-    'light-theme': (isLight | async) === true,
-    'dark-theme': (isLight | async) === false
-  }"
+  class="flex-fxflexfill"
+  [ngClass]="themeService.theme()"
   hasBackdrop="false"
-  fxFlexFill
 >
   <mat-sidenav #sidenav mode="over" fixedInViewport="true">
     <mat-nav-list
-      [ngClass]="{
-        'light-theme': (isLight | async) === true,
-        'dark-theme': (isLight | async) === false
-      }"
-      fxLayoutGap="20px"
-      fxLayout="column"
-      fxFlex
+      [ngClass]="themeService.theme()"
+      class="flex-column flex-gap-20 flex-fxflex"
     >
       <a
-        class="mat-button"
         [ngClass]="{ 'link-active': isActive() }"
         routerLink="/home"
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
-          <img alt="tehwol.fi" class="nav-logo" src="../../favicon.svg" />
+        <span>
+          <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
+      ><a routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
+        <span>Portfolio</span> </a
       ><a
-        class="mat-button"
-        routerLink="/portfolio"
-        routerLinkActive="link-active"
-        mat-list-item
-      >
-        <span class="mat-button-wrapper"> <span>Portfolio</span> </span> </a
-      ><a
-        class="mat-button"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
+        <span>
           <span>Wordlist Generator</span>
         </span>
       </a>
       <a
-        class="mat-button"
+        class="mat-mdc-list-item"
         target="_blank"
         href="https://github.com/tehw0lf"
         mat-list-item
       >
-        <span class="mat-button-wrapper">
-          <img alt="tehwol.fi" class="nav-logo" src="assets/icons/github.png" />
+        <span>
+          <img
+            alt="tehwolf.de"
+            class="nav-logo"
+            src="assets/icons/github.png"
+          />
           <span>GitHub</span>
         </span>
       </a>
@@ -64,38 +53,35 @@
         >
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <button
-          *ngIf="(isLight | async) === false"
-          id="light"
-          class="light-theme-button"
-          type="button"
-          (click)="switchToLight()"
-          fxLayoutGap="20px"
-          mat-icon-button
-        >
-          <mat-icon>light_mode</mat-icon>
-        </button>
-        <button
-          *ngIf="(isLight | async) === true"
-          id="dark"
-          class="dark-theme-button"
-          type="button"
-          (click)="switchToDark()"
-          fxLayoutGap="20px"
-          mat-icon-button
-        >
-          <mat-icon>dark_mode</mat-icon>
-        </button>
+        @if (themeService.theme() === 'dark') {
+          <button
+            id="light"
+            class="light-theme-button flex-gap-20"
+            type="button"
+            (click)="switchToLight()"
+            mat-icon-button
+          >
+            <mat-icon>light_mode</mat-icon>
+          </button>
+        }
+        @if (themeService.theme() === 'light') {
+          <button
+            id="dark"
+            class="dark-theme-button flex-gap-20"
+            type="button"
+            (click)="switchToDark()"
+            mat-icon-button
+          >
+            <mat-icon>dark_mode</mat-icon>
+          </button>
+        }
       </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content
-    [ngClass]="{
-      'light-theme': (isLight | async) === true,
-      'dark-theme': (isLight | async) === false
-    }"
-    class="main-content"
-    fxFlexFill
+    [ngClass]="themeService.theme()"
+    class="main-content flex-fxflexfill"
+    (click)="closeSidenav()"
   >
     <router-outlet></router-outlet>
   </mat-sidenav-content>
