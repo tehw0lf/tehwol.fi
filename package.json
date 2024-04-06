@@ -42,6 +42,7 @@
     "@ngx-formly/material": "^6.3.0",
     "@nx/angular": "18.2.3",
     "@primer/octicons": "^19.9.0",
+    "@tehw0lf/mvc": "^0.0.1",
     "cartesian-product-generator": "^1.1.1",
     "github-language-colors": "^1.0.0",
     "rxjs": "7.8.1",
