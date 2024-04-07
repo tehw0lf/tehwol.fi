@@ -82,7 +82,7 @@
         [cdkCopyToClipboard]="
           gitRepo().clone_url || gitRepo().http_url_to_repo || ''
         "
-        (cdkCopyToClipboardCopied)="copiedToClipboard()"
+        (cdkCopyToClipboardCopied)="(copiedToClipboardEvent)"
         class="clipboard-button"
       >
         <span class="mat-button-wrapper flex-row">
