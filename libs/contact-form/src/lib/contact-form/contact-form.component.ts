@@ -110,7 +110,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         props: {
           label: entry.field.toLocaleUpperCase(),
           placeholder: 'Enter ' + entry.field,
-          required: true,
+          required: entry.required,
           attributes: { style: this.flattenStyle(this.textStyle()) }
         },
         templateOptions:
