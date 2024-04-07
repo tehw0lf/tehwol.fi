@@ -1,23 +1,23 @@
 <form
-  [ngStyle]="formStyle"
+  [ngStyle]="formStyle()()"
   class="contact-form flex-column flex-fxflex"
   [formGroup]="form"
   (ngSubmit)="submitFormData(model)"
 >
   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
   <button
-    [ngStyle]="buttonStyle"
+    [ngStyle]="buttonStyle()()"
     class="form-button"
     type="submit"
     [disabled]="!form.valid"
   >
-    {{ sendText }}
+    {{ sendText()() }}
   </button>
-  <div [ngStyle]="textStyle" class="form-status">
+  <div [ngStyle]="textStyle()()" class="form-status">
     @if ((emailSent$ | async) === true) {
-      {{ sendSuccessfulText }}
+      {{ sendSuccessfulText()() }}
     } @else if ((emailSent$ | async) === false) {
-      {{ sendErrorText }}
+      {{ sendErrorText()() }}
     }
   </div>
 </form>
