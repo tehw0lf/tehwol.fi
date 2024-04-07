@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import * as githubLanguageColors from 'github-language-colors/colors.json';
@@ -42,13 +42,7 @@ export class RepoCardComponent {
 
   public isCopied = input(false);
 
-  @Output()
-  public copiedToClipboardEvent: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
+  public copiedToClipboardEvent = output<boolean>();
 
   public githubLanguageColors = githubLanguageColors as Dictionary;
-
-  copiedToClipboard(): void {
-    this.copiedToClipboardEvent.emit();
-  }
 }
