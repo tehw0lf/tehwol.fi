@@ -40,9 +40,9 @@ export class RepoCardComponent {
 
   gitRepo = input.required<GitRepository>();
 
-  public isCopied = input(false);
+  isCopied = input(false);
 
-  public copiedToClipboardEvent = output<boolean>();
+  copiedToClipboard = output<boolean>();
 
-  public githubLanguageColors = githubLanguageColors as Dictionary;
+  githubLanguageColors = githubLanguageColors as Dictionary;
 }

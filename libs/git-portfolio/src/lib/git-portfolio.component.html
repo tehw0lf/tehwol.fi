@@ -36,7 +36,7 @@
                   [starColor]="starColor()"
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  (copiedToClipboard)="copyToClipboard(gitRepo)"
                   class="repository-card flex-align-stretch"
                   [ngClass]="{
                     'flex-fxflex': viewport === 'medium',
@@ -90,7 +90,7 @@
                   [starColor]="starColor()"
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  (copiedToClipboard)="copyToClipboard(gitRepo)"
                   class="repository-card flex-align-stretch"
                   [ngClass]="{
                     'flex-fxflex': viewport === 'medium',
