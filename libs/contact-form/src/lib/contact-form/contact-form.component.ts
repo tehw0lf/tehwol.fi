@@ -10,8 +10,7 @@ import {
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
 interface FormConfigEntry {
   field: string;
@@ -66,7 +65,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  apiCallback = input<(formValue: any) => Observable<boolean>>();
+  apiCallback = input.required<(formValue: any) => Observable<boolean>>();
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];
