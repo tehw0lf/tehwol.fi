@@ -1,11 +1,11 @@
-<mat-card [ngStyle]="cardStyle">
+<mat-card [ngStyle]="cardStyle()">
   <mat-card-header>
     <div
       mat-card-avatar
       [ngStyle]="{
         'background-image':
           'url(' +
-          (gitRepo.owner?.avatar_url || gitRepo.namespace?.avatar_url) +
+          (gitRepo().owner?.avatar_url || gitRepo().namespace?.avatar_url) +
           ')',
         'background-size': 'cover',
         'border-radius': 0
@@ -14,11 +14,11 @@
     <mat-card-title
       ><a
         mat-button
-        [ngStyle]="buttonStyle"
+        [ngStyle]="buttonStyle()"
         target="_blank"
-        href="{{ gitRepo.html_url || gitRepo.web_url }}"
+        href="{{ gitRepo().html_url || gitRepo().web_url }}"
       >
-        {{ gitRepo.name }}
+        {{ gitRepo().name }}
       </a>
     </mat-card-title>
     <mat-card-subtitle class="flex-row">
@@ -26,73 +26,77 @@
         <div
           [ngStyle]="{
             'background-color':
-              gitRepo.language !== undefined
-                ? githubLanguageColors[gitRepo.language]
+              gitRepo().language !== undefined
+                ? githubLanguageColors[gitRepo().language!]
                 : 'transparent'
           }"
           class="language-icon flex-gap-5"
         ></div>
-        <div [ngStyle]="textStyle">{{ gitRepo.language }}</div>
+        <div [ngStyle]="textStyle()">{{ gitRepo().language }}</div>
       </div>
       <div class="info-item flex-row flex-gap-12">
-        <div octicon="star" [color]="starColor" class="flex-gap-5"></div>
-        <div [ngStyle]="textStyle">
-          {{ gitRepo.stargazers_count || gitRepo.star_count || 0 }}
+        <div octicon="star" [color]="starColor()" class="flex-gap-5"></div>
+        <div [ngStyle]="textStyle()">
+          {{ gitRepo().stargazers_count || gitRepo().star_count || 0 }}
         </div>
       </div>
       <div class="info-item flex-row flex-gap-12">
-        <div octicon="repo-forked" [color]="forkColor" class="flex-gap-5"></div>
-        <div [ngStyle]="textStyle">{{ gitRepo.forks_count }}</div>
+        <div
+          octicon="repo-forked"
+          [color]="forkColor()"
+          class="flex-gap-5"
+        ></div>
+        <div [ngStyle]="textStyle()">{{ gitRepo().forks_count }}</div>
       </div>
-      @if (gitRepo.open_issues_count) {
+      @if (gitRepo().open_issues_count) {
         <div class="info-item flex-row flex-gap-12">
           <div
             octicon="issue-opened"
-            [color]="issueColor"
+            [color]="issueColor()"
             class="flex-gap-5"
           ></div>
-          <div [ngStyle]="textStyle">
-            {{ gitRepo.open_issues_count }}
+          <div [ngStyle]="textStyle()">
+            {{ gitRepo().open_issues_count }}
           </div>
         </div>
       }
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>{{ gitRepo.description }}</p>
+    <p>{{ gitRepo().description }}</p>
   </mat-card-content>
   <mat-card-footer class="flex-row">
     <span class="mat-footer-cell flex-fxflex flex-gap-12">
-      <span class="footer-span" [ngStyle]="textStyle"
-        >Created: {{ gitRepo.created_at | date }}</span
+      <span class="footer-span" [ngStyle]="textStyle()"
+        >Created: {{ gitRepo().created_at | date }}</span
       >
-      <span class="footer-span" [ngStyle]="textStyle"
+      <span class="footer-span" [ngStyle]="textStyle()"
         >Updated:
-        {{ gitRepo.pushed_at || gitRepo.last_activity_at | date }}</span
+        {{ gitRepo().pushed_at || gitRepo().last_activity_at | date }}</span
       >
     </span>
     <span class="mat-footer-cell">
       <button
-        [ngStyle]="buttonStyle"
+        [ngStyle]="buttonStyle()"
         mat-button
         [cdkCopyToClipboard]="
-          gitRepo.clone_url || gitRepo.http_url_to_repo || ''
+          gitRepo().clone_url || gitRepo().http_url_to_repo || ''
         "
         (cdkCopyToClipboardCopied)="copiedToClipboard()"
         class="clipboard-button"
       >
         <span class="mat-button-wrapper flex-row">
-          @if (isCopied) {
+          @if (isCopied()) {
             <div
               octicon="check"
-              [color]="checkColor"
+              [color]="checkColor()"
               width="24"
               class="flex-gap-5"
             ></div>
           }
           <div
             octicon="paste"
-            [color]="pasteColor"
+            [color]="pasteColor()"
             width="24px"
             class="flex-gap-5"
           ></div>

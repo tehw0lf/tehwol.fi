@@ -2,7 +2,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import {
   Component,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   ViewEncapsulation
@@ -38,35 +38,35 @@ interface FormConfigEntry {
   ]
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
-  @Input() buttonStyle = {
+  buttonStyle = input({
     'background-color': '#333333',
     border: 'none',
     color: '#cc7832'
-  };
+  });
 
-  @Input() formStyle = {
+  formStyle = input({
     color: '#437da8',
     'background-color': 'rgba(34, 34, 34, 0.75)',
     'backdrop-filter': 'blur(50px)',
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-  };
+  });
 
-  @Input() textStyle = { color: '#cc7832' };
+  textStyle = input({ color: '#cc7832' });
 
-  @Input() sendText = 'Send';
+  sendText = input('Send');
 
-  @Input() sendSuccessfulText = 'E-Mail successfully sent';
+  sendSuccessfulText = input('E-Mail successfully sent');
 
-  @Input() sendErrorText = 'Send error';
+  sendErrorText = input('Send error');
 
-  @Input() formConfig: FormConfigEntry[] = [
+  formConfig = input<FormConfigEntry[]>([
     { field: 'name', required: true },
     { field: 'email', required: true },
     { field: 'message', required: true, type: 'textarea' }
-  ];
+  ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Input() apiCallback!: (formValue: any) => Observable<boolean>;
+  apiCallback = input<(formValue: any) => Observable<boolean>>();
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];
@@ -91,7 +91,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   submitFormData(formData: { [key: string]: string }) {
-    this.apiCallback(formData)
+    this.apiCallback()(formData)
       .pipe(
         tap((success: boolean) => this.emailSent.next(success)),
         takeUntil(this.unsubscribe$)
@@ -100,7 +100,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   private buildConfig(): void {
-    this.formConfig.forEach((entry: FormConfigEntry) => {
+    this.formConfig().forEach((entry: FormConfigEntry) => {
       if (entry.value) {
         this.model[entry.field] = entry.value;
       }
@@ -112,7 +112,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
           label: entry.field.toLocaleUpperCase(),
           placeholder: 'Enter ' + entry.field,
           required: true,
-          attributes: { style: this.flattenStyle(this.textStyle) }
+          attributes: { style: this.flattenStyle(this.textStyle()) }
         },
         templateOptions:
           entry.type === 'textarea'

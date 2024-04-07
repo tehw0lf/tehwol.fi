@@ -3,7 +3,7 @@
     <div class="flex-row-wrap bottom-10">
       <button
         class="generate-wordlist"
-        [ngStyle]="buttonStyle"
+        [ngStyle]="buttonStyle()"
         mat-raised-button
         (click)="generateWordlist()"
       >
@@ -12,7 +12,7 @@
       @if (wordlist$) {
         <button
           class="choose-format"
-          [ngStyle]="buttonStyle"
+          [ngStyle]="buttonStyle()"
           mat-raised-button
           [matMenuTriggerFor]="menu"
         >
@@ -22,7 +22,7 @@
       <mat-menu #menu="matMenu">
         @for (type of fileTypes; track type) {
           <button
-            [ngStyle]="buttonStyle"
+            [ngStyle]="buttonStyle()"
             mat-menu-item
             (click)="fileType = type"
           >
@@ -33,7 +33,7 @@
       @if (wordlist$) {
         <button
           class="download-wordlist"
-          [ngStyle]="buttonStyle"
+          [ngStyle]="buttonStyle()"
           mat-raised-button
           (click)="downloadWordlist()"
         >
@@ -47,9 +47,9 @@
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
         <mat-form-field class="fixed-width bottom-10" appearance="outline">
-          <mat-label [ngStyle]="textStyle">prefix (optional)</mat-label>
+          <mat-label [ngStyle]="textStyle()">prefix (optional)</mat-label>
           <input
-            [ngStyle]="textStyle"
+            [ngStyle]="textStyle()"
             matInput
             type="text"
             id="prefix"
@@ -65,15 +65,15 @@
               let i = $index
             ) {
               <div class="charset-container" cdkDrag>
-                <mat-icon class="drag-indicator" [ngStyle]="dragStyle"
+                <mat-icon class="drag-indicator" [ngStyle]="dragStyle()"
                   >drag_indicator</mat-icon
                 >
                 <mat-form-field class="charset bottom-10" appearance="outline">
-                  <mat-label [ngStyle]="textStyle">
+                  <mat-label [ngStyle]="textStyle()">
                     character set for string position {{ i }}
                   </mat-label>
                   <input
-                    [ngStyle]="textStyle"
+                    [ngStyle]="textStyle()"
                     matInput
                     type="text"
                     id="position-{{ i }}"
@@ -85,7 +85,7 @@
                 <button
                   mat-raised-button
                   class="clone-charset"
-                  [ngStyle]="buttonStyle"
+                  [ngStyle]="buttonStyle()"
                   (click)="cloneCharset(i)"
                 >
                   <mat-icon class="row-button-icon">content_copy</mat-icon>
@@ -93,7 +93,7 @@
                 <button
                   mat-raised-button
                   class="remove-charset"
-                  [ngStyle]="buttonStyle"
+                  [ngStyle]="buttonStyle()"
                   (click)="removeCharset(i)"
                   [disabled]="this.charsets?.value.length === 1"
                 >
@@ -101,7 +101,7 @@
                 </button>
                 <button
                   mat-raised-button
-                  [ngStyle]="buttonStyle"
+                  [ngStyle]="buttonStyle()"
                   (click)="addCharset()"
                 >
                   <mat-icon class="row-button-icon">add</mat-icon>
@@ -111,9 +111,9 @@
           </div>
         </div>
         <mat-form-field class="fixed-width" appearance="outline">
-          <mat-label [ngStyle]="textStyle">suffix (optional)</mat-label>
+          <mat-label [ngStyle]="textStyle()">suffix (optional)</mat-label>
           <input
-            [ngStyle]="textStyle"
+            [ngStyle]="textStyle()"
             matInput
             type="text"
             id="suffix"
