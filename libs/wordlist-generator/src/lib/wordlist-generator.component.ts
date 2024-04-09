@@ -7,7 +7,7 @@ import {
 import { AsyncPipe, NgStyle } from '@angular/common';
 import {
   Component,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   ViewEncapsulation
@@ -52,13 +52,13 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
   ]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
-  @Input() buttonStyle = {
+  buttonStyle = input({
     'background-color': '#333333',
     color: '#cc7832'
-  };
+  });
 
-  @Input() dragStyle = { color: '#cc7832' };
-  @Input() textStyle = { color: '#cc7832' };
+  dragStyle = input({ color: '#cc7832' });
+  textStyle = input({ color: '#cc7832' });
 
   charsetForm: UntypedFormGroup | undefined;
   wordsGenerated: number | undefined;

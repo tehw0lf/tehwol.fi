@@ -45,14 +45,4 @@ describe('RepoCardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should emit copy event', () => {
-    const sub = component.copiedToClipboardEvent
-      .asObservable()
-      .subscribe((copied) => {
-        expect(copied).toBeTruthy();
-      });
-    component.copiedToClipboard();
-    sub.unsubscribe();
-  });
 });

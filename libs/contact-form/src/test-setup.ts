@@ -1,4 +1,5 @@
 import 'jest-preset-angular/setup-jest';
+import 'reflect-metadata';
 
 import { getTestBed } from '@angular/core/testing';
 import {

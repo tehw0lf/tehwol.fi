@@ -9,7 +9,7 @@ import {
   KeyValuePipe,
   NgStyle
 } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnDestroy, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -38,43 +38,34 @@ import { GitRepository } from './types/git-repository-type';
   ]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
-  @Input() buttonStyle = { 'background-color': '#424242', color: '#cc7832' };
+  buttonStyle = input({ 'background-color': '#424242', color: '#cc7832' });
 
-  @Input() cardStyle = {
+  cardStyle = input({
     color: '#437da8',
     'background-color': 'rgba(34, 34, 34, 0.75)',
     'backdrop-filter': 'blur(50px)'
-  };
+  });
 
-  @Input()
-  textStyle = { color: '#437da8' };
+  textStyle = input({ color: '#437da8' });
 
-  @Input()
-  checkColor = '#38e038';
+  checkColor = input('#38e038');
 
-  @Input()
-  forkColor = '#437da8';
+  forkColor = input('#437da8');
 
-  @Input()
-  issueColor = 'rgb(56, 224, 56)';
+  issueColor = input('rgb(56, 224, 56)');
 
-  @Input()
-  pasteColor = '#cc7832';
+  pasteColor = input('#cc7832');
 
-  @Input()
-  starColor = 'gold';
+  starColor = input('gold');
 
-  @Input()
-  gitProviderConfig: GitProviderConfig = {
+  gitProviderConfig = input<GitProviderConfig>({
     github: 'tehw0lf',
     gitlab: 'tehw0lf'
-  };
+  });
 
-  @Input()
-  showForked = true;
+  showForked = input(true);
 
-  @Input()
-  showOwn = true;
+  showOwn = input(true);
 
   loading: Observable<boolean>;
   gitProviders = GitProviders;
@@ -133,7 +124,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
 
   getRepositories(): void {
     this.gitRepositories$ = this.gitProviderService
-      .getRepositories(this.gitProviderConfig)
+      .getRepositories(this.gitProviderConfig())
       .pipe(takeUntil(this.unsubscribe$));
   }
 

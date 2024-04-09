@@ -1,3 +1,5 @@
+import { swcAngularJestTransformer } from '@jscutlery/swc-angular-preset';
+
 /* eslint-disable */
 export default {
   displayName: 'tehwolfde',
@@ -8,7 +10,8 @@ export default {
   coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/apps/tehwolfde',
   transform: {
-    '^.+.(ts|mjs|js|html)$': [
+    '^.+\\.(ts|mjs|js)$': swcAngularJestTransformer(),
+    '^.+\\.(html)$': [
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -16,7 +19,7 @@ export default {
       }
     ]
   },
-  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

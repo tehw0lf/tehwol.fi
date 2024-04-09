@@ -2,10 +2,10 @@
   <div>
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
       <div>
-        <h1 [ngStyle]="textStyle">{{ gitProvider.value }}</h1>
-        @if (showOwn) {
+        <h1 [ngStyle]="textStyle()">{{ gitProvider.value }}</h1>
+        @if (showOwn()) {
           <div>
-            <h2 [ngStyle]="textStyle" class="mat-headline">Own Repos</h2>
+            <h2 [ngStyle]="textStyle()" class="mat-headline">Own Repos</h2>
             <div
               class="flex-align-start"
               [ngClass]="{
@@ -26,17 +26,17 @@
                 track gitRepo
               ) {
                 <repo-card
-                  [buttonStyle]="buttonStyle"
-                  [cardStyle]="cardStyle"
-                  [textStyle]="textStyle"
-                  [checkColor]="checkColor"
-                  [forkColor]="forkColor"
-                  [issueColor]="issueColor"
-                  [pasteColor]="pasteColor"
-                  [starColor]="starColor"
+                  [buttonStyle]="buttonStyle()"
+                  [cardStyle]="cardStyle()"
+                  [textStyle]="textStyle()"
+                  [checkColor]="checkColor()"
+                  [forkColor]="forkColor()"
+                  [issueColor]="issueColor()"
+                  [pasteColor]="pasteColor()"
+                  [starColor]="starColor()"
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  (copiedToClipboard)="copyToClipboard(gitRepo)"
                   class="repository-card flex-align-stretch"
                   [ngClass]="{
                     'flex-fxflex': viewport === 'medium',
@@ -50,16 +50,16 @@
                 (loading | async) === false &&
                 !hasRepositories(gitRepositories, gitProvider.key, 'own')
               ) {
-                <div [ngStyle]="textStyle">
+                <div [ngStyle]="textStyle()">
                   This user has not created any repositories yet
                 </div>
               }
             </div>
           </div>
         }
-        @if (showForked) {
+        @if (showForked()) {
           <div>
-            <h2 [ngStyle]="textStyle" class="mat-headline">Forked Repos</h2>
+            <h2 [ngStyle]="textStyle()" class="mat-headline">Forked Repos</h2>
             <div
               class="flex-align-start"
               [ngClass]="{
@@ -80,17 +80,17 @@
                 track gitRepo
               ) {
                 <repo-card
-                  [buttonStyle]="buttonStyle"
-                  [cardStyle]="cardStyle"
-                  [textStyle]="textStyle"
-                  [checkColor]="checkColor"
-                  [forkColor]="forkColor"
-                  [issueColor]="issueColor"
-                  [pasteColor]="pasteColor"
-                  [starColor]="starColor"
+                  [buttonStyle]="buttonStyle()"
+                  [cardStyle]="cardStyle()"
+                  [textStyle]="textStyle()"
+                  [checkColor]="checkColor()"
+                  [forkColor]="forkColor()"
+                  [issueColor]="issueColor()"
+                  [pasteColor]="pasteColor()"
+                  [starColor]="starColor()"
                   [gitRepo]="gitRepo"
                   [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboardEvent)="copyToClipboard(gitRepo)"
+                  (copiedToClipboard)="copyToClipboard(gitRepo)"
                   class="repository-card flex-align-stretch"
                   [ngClass]="{
                     'flex-fxflex': viewport === 'medium',
@@ -103,7 +103,7 @@
                 (loading | async) === false &&
                 !hasRepositories(gitRepositories, gitProvider.key, 'forked')
               ) {
-                <div [ngStyle]="textStyle">
+                <div [ngStyle]="textStyle()">
                   This user has not forked any repositories yet
                 </div>
               }
