@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
 import { Component, input, output } from '@angular/core';
@@ -9,6 +8,7 @@ import * as githubLanguageColors from 'github-language-colors/colors.json';
 import { OcticonDirective } from '../octicon.directive';
 import { GitRepository } from '../types/git-repository-type';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Dictionary {
   [id: string]: string;
 }
