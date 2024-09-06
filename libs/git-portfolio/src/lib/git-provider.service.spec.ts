@@ -1,13 +1,11 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { GitProviderService } from './git-provider.service';
 import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const GIT_REPO_ARRAY = [new GitRepository()];
 const GIT_REPOSITORIES: GitRepositories = {
@@ -25,9 +23,9 @@ describe('GitProviderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [GitProviderService]
-    });
+    imports: [],
+    providers: [GitProviderService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(GitProviderService);
     httpMock = TestBed.inject(HttpTestingController);
   });
