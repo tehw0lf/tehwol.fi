@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/git-portfolio",
-  "version": "0.17.6",
+  "version": "0.18.0",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
@@ -8,12 +8,12 @@
     "url": "https://github.com/tehw0lf/tehwolf.de.git"
   },
   "peerDependencies": {
-    "@angular/animations": "17.3.3",
-    "@angular/cdk": "17.3.3",
-    "@angular/common": "17.3.3",
-    "@angular/core": "17.3.3",
-    "@angular/material": "17.3.3",
-    "@primer/octicons": "^19.9.0",
+    "@angular/animations": "18.2.3",
+    "@angular/cdk": "18.2.3",
+    "@angular/common": "18.2.3",
+    "@angular/core": "18.2.3",
+    "@angular/material": "18.2.3",
+    "@primer/octicons": "^19.11.0",
     "@tehw0lf/mvc": "^0.0.2",
     "github-language-colors": "^1.0.0"
   },
@@ -22,6 +22,6 @@
   },
   "devDependencies": {
     "@types/node": "20.11.1",
-    "typescript": "5.2.2"
+    "typescript": "5.5.4"
   }
 }

@@ -38,21 +38,19 @@ describe('RepoCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RepoCardComponent);
     component = fixture.componentInstance;
-    component.gitRepo = GITHUB_REPO;
+    fixture.componentRef.setInput('buttonStyle', { color: 'black' });
+    fixture.componentRef.setInput('cardStyle', { color: 'blue' });
+    fixture.componentRef.setInput('textStyle', { color: 'white' });
+    fixture.componentRef.setInput('checkColor', { color: 'green' });
+    fixture.componentRef.setInput('forkColor', { color: 'purple' });
+    fixture.componentRef.setInput('issueColor', { color: 'green' });
+    fixture.componentRef.setInput('pasteColor', { color: 'grey' });
+    fixture.componentRef.setInput('starColor', { color: 'yellow' });
+    fixture.componentRef.setInput('gitRepo', GITHUB_REPO);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should emit copy event', () => {
-    const sub = component.copiedToClipboardEvent
-      .asObservable()
-      .subscribe((copied) => {
-        expect(copied).toBeTruthy();
-      });
-    component.copiedToClipboard();
-    sub.unsubscribe();
   });
 });

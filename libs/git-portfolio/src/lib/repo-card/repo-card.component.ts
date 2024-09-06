@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import * as githubLanguageColors from 'github-language-colors/colors.json';
@@ -9,6 +8,7 @@ import * as githubLanguageColors from 'github-language-colors/colors.json';
 import { OcticonDirective } from '../octicon.directive';
 import { GitRepository } from '../types/git-repository-type';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Dictionary {
   [id: string]: string;
 }
@@ -29,28 +29,20 @@ interface Dictionary {
   ]
 })
 export class RepoCardComponent {
-  @Input({ required: true }) buttonStyle!: any;
-  @Input({ required: true }) cardStyle!: any;
-  @Input({ required: true }) textStyle!: any;
-  @Input({ required: true }) checkColor!: string;
-  @Input({ required: true }) forkColor!: string;
-  @Input({ required: true }) issueColor!: string;
-  @Input({ required: true }) pasteColor!: string;
-  @Input({ required: true }) starColor!: string;
+  buttonStyle = input.required<any>();
+  cardStyle = input.required<any>();
+  textStyle = input.required<any>();
+  checkColor = input.required<string>();
+  forkColor = input.required<string>();
+  issueColor = input.required<string>();
+  pasteColor = input.required<string>();
+  starColor = input.required<string>();
 
-  @Input({ required: true })
-  gitRepo!: GitRepository;
+  gitRepo = input.required<GitRepository>();
 
-  @Input()
-  public isCopied = false;
+  isCopied = input(false);
 
-  @Output()
-  public copiedToClipboardEvent: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
+  copiedToClipboard = output<boolean>();
 
-  public githubLanguageColors = githubLanguageColors as Dictionary;
-
-  copiedToClipboard(): void {
-    this.copiedToClipboardEvent.emit();
-  }
+  githubLanguageColors = githubLanguageColors as Dictionary;
 }
