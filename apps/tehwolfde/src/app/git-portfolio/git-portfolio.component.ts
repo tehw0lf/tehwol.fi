@@ -36,7 +36,6 @@ export class GitPortfolioComponent {
     );
   }
   switchToLight(): void {
-    console.log('switching to light');
     this.buttonStyle = {
       'background-color': 'rgba(255, 255, 255, 0.75)',
       color: '#cc7832'
@@ -50,7 +49,6 @@ export class GitPortfolioComponent {
   }
 
   switchToDark(): void {
-    console.log('switching to dark');
     this.buttonStyle = {
       'background-color': 'rgba(34, 34, 34, 0.75)',
       color: '#cc7832'
