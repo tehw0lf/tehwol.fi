@@ -6,7 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ContactFormComponent } from './contact-form.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -14,13 +17,18 @@ describe('ContactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule,
+      imports: [
+        BrowserAnimationsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
-        ContactFormComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        ContactFormComponent
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
