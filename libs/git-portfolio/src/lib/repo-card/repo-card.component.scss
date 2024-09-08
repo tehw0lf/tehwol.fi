@@ -17,6 +17,10 @@
   padding: 0 16px;
   text-align: center;
   text-decoration: none;
+
+  @media screen and (max-width: 400px) {
+    font-size: 20px;
+  }
 }
 
 .mat-mdc-card {
@@ -30,6 +34,14 @@
 
   @media screen and (max-width: 430px) {
     width: 380px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 350px;
+  }
+
+  @media screen and (max-width: 390px) {
+    width: 310px;
   }
 }
 
