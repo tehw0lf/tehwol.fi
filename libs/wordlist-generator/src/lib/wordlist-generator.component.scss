@@ -18,6 +18,10 @@
       .remove-charset {
         margin-right: 10px;
       }
+
+      @media screen and (max-width: 430px) {
+        margin-bottom: 15px;
+      }
     }
 
     .charset {
