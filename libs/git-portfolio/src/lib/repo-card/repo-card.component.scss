@@ -24,6 +24,10 @@
   flex-direction: column;
   width: 450px;
 
+  @media screen and (max-width: 519px) {
+    width: 415px;
+  }
+
   @media screen and (max-width: 430px) {
     width: 380px;
   }
