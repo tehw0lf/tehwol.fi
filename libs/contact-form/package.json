@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/contact-form",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
@@ -12,8 +12,8 @@
     "@angular/common": "18.2.3",
     "@angular/core": "18.2.3",
     "@angular/forms": "18.2.3",
-    "@ngx-formly/core": "^6.3.6",
-    "@ngx-formly/material": "^6.3.6",
+    "@ngx-formly/core": "^6.3.7",
+    "@ngx-formly/material": "^6.3.7",
     "@tehw0lf/mvc": "^0.0.2"
   },
   "dependencies": {
