@@ -59,8 +59,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   starColor = input('gold');
 
   gitProviderConfig = input<GitProviderConfig>({
-    github: 'tehw0lf',
-    gitlab: 'tehw0lf'
+    github: 'tehw0lf'
   });
 
   showForked = input(true);
