@@ -3,8 +3,10 @@
     "default": {
       "options": {
         "canTrackAnalytics": false,
-        "showUsageWarnings": true
-      }
+        "showUsageWarnings": true,
+        "nxCloudId": "60e9725ae94b881e24a3917b"
+      },
+      "runner": "nx-cloud"
     }
   },
   "defaultProject": "tehwolfde",
@@ -75,7 +77,6 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
   },
-  "nxCloudAccessToken": "OWE3NDA2ZDQtMjI2OS00MmVlLWJjMGMtOTljN2QzMGZmOWFjfHJlYWQtd3JpdGU=",
   "parallel": 3,
   "useInferencePlugins": false,
   "defaultBase": "main"
