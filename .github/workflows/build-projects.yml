@@ -1,4 +1,4 @@
-name: tehw0lf frontend and portfolio library pipeline
+name: tehw0lf showcase and library pipeline
 
 on:
   push:
