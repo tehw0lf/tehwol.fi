@@ -25,6 +25,8 @@ jobs:
           main-branch-name: main
       - name: Install packages
         run: npm ci
+      - name: Start nx cloud ci run
+        run: npx nx-cloud start-ci-run
       - name: Check format
         run: npm run format
       - name: Lint
