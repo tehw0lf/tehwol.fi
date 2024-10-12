@@ -3,7 +3,7 @@ name: tehw0lf frontend and portfolio library pipeline
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
       - name: Enable Nx SHAs
         uses: nrwl/nx-set-shas@v4
         with:
-          main-branch-name: master
+          main-branch-name: main
       - name: Install packages
         run: npm ci
       - name: Check format
@@ -34,7 +34,7 @@ jobs:
       - name: Build on branch
         if: ${{ github.event_name != 'push' }}
         run: npm run affected:build
-      - name: Build on master
+      - name: Build on main
         if: ${{ github.event_name == 'push' }}
         run: npm run affected:build --skip-nx-cache
       # - name: Run end to end tests
