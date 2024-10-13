@@ -1,7 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { GitPortfolioComponent as GitPortfolioComponent_1 } from '@tehw0lf/git-portfolio';
 
-import { environment } from '../../environments/environment.prod';
 import { ThemeService } from '../theme.service';
 
 @Component({
@@ -21,10 +20,6 @@ export class GitPortfolioComponent {
     color: '#437da8',
     'background-color': 'rgba(34, 34, 34, 0.75)',
     'backdrop-filter': 'blur(50px)'
-  };
-
-  gitProviderConfig: { github?: string; gitlab?: string } = {
-    github: environment.githubUser
   };
 
   constructor(private themeService: ThemeService) {
