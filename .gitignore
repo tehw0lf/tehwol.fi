@@ -3,8 +3,11 @@
 # MVC
 /mvc
 
+# Angular
+.angular
+
 # Nx
-/.nx
+.nx
 migrations.json
 
 # compiled output
