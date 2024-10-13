@@ -67,7 +67,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   showOwn = input(true);
 
   loading: Observable<boolean>;
-  gitProviders = GitProviders;
+  gitProviders: GitProviders[] = [];
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
   viewport = '';
@@ -102,6 +102,10 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.gitProviderConfig().github)
+      this.gitProviders.push(GitProviders.github);
+    if (this.gitProviderConfig().gitlab)
+      this.gitProviders.push(GitProviders.gitlab);
     this.getRepositories();
   }
 
