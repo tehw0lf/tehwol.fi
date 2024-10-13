@@ -84,7 +84,7 @@ export class GitProviderService {
         `https://api.github.com/users/${githubUser}/repos`
       );
     }
-    return of([new GitRepository()]);
+    return of([]);
   }
   private fetchGitlabRepositories(
     gitlabUser: string
@@ -94,6 +94,6 @@ export class GitProviderService {
         `https://gitlab.com/api/v4/users/${gitlabUser}/projects`
       );
     }
-    return of([new GitRepository()]);
+    return of([]);
   }
 }

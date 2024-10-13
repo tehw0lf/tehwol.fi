@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
 
-  githubUser: 'tehw0lf',
-  gitlabUser: 'tehw0lf'
+  githubUser: 'tehw0lf'
 };
 
 /*
