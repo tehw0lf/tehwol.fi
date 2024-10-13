@@ -31,8 +31,12 @@ jobs:
         run: npm run affected:lint
       - name: Test
         run: npm run affected:test --ci --code-coverage
-      - name: Build
+      - name: Build on branch
+        if: ${{ github.event_name != 'push' }}
         run: npm run affected:build
+      - name: Build on main
+        if: ${{ github.event_name == 'push' }}
+        run: npm run affected:build --skip-nx-cache
       # - name: Run end to end tests
       #   run: npm run e2e
       - name: Check if published git portfolio library version is outdated
