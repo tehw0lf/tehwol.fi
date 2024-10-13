@@ -58,16 +58,14 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
 
   starColor = input('gold');
 
-  gitProviderConfig = input<GitProviderConfig>({
-    github: 'tehw0lf'
-  });
+  gitProviderConfig = input<GitProviderConfig>({});
 
   showForked = input(true);
 
   showOwn = input(true);
 
   loading: Observable<boolean>;
-  gitProviders: GitProviders[] = [];
+  gitProviders = GitProviders;
   currentRepo: GitRepository | undefined;
   gitRepositories$: Observable<GitRepositories> | undefined;
   viewport = '';
@@ -80,7 +78,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   ) {
     this.loading = this.gitProviderService.loading;
 
-    breakpointObserver
+    this.breakpointObserver
       .observe([
         '(max-width: 599.98px)',
         '(max-width: 959.98px)',
@@ -102,10 +100,6 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.gitProviderConfig().github)
-      this.gitProviders.push(GitProviders.github);
-    if (this.gitProviderConfig().gitlab)
-      this.gitProviders.push(GitProviders.gitlab);
     this.getRepositories();
   }
 
@@ -114,15 +108,15 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  copyToClipboard(githubRepo: GitRepository): void {
-    this.currentRepo = githubRepo;
+  copyToClipboard(gitRepo: GitRepository): void {
+    this.currentRepo = gitRepo;
   }
 
-  isCopiedToClipboard(githubRepo: GitRepository): boolean {
+  isCopiedToClipboard(gitRepo: GitRepository): boolean {
     if (!this.currentRepo) {
       return false;
     }
-    return this.currentRepo.id === githubRepo.id ? true : false;
+    return this.currentRepo.id === gitRepo.id ? true : false;
   }
 
   getRepositories(): void {
@@ -131,82 +125,35 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$));
   }
 
-  getOwnGitRepositories(
+  getGitRepositoriesOfType(
     gitRepositories: GitRepositories,
-    gitProvider: string
+    gitProvider: string,
+    type: 'own' | 'forked'
   ): GitRepository[] {
-    if (gitRepositories) {
-      switch (gitProvider) {
-        case 'github':
-          if (gitRepositories.github) {
-            return gitRepositories.github.own;
-          } else {
-            return [];
-          }
-
-        case 'gitlab':
-          if (gitRepositories.gitlab) {
-            return gitRepositories.gitlab.own;
-          } else {
-            return [];
-          }
-
-        default:
-          return [];
-      }
-    } else {
-      return [];
-    }
+    return gitRepositories[gitProvider]?.[type] ?? [];
   }
 
-  getForkedGitRepositories(
+  hasAnyRepositories(
     gitRepositories: GitRepositories,
     gitProvider: string
-  ): GitRepository[] {
-    if (gitRepositories) {
-      switch (gitProvider) {
-        case 'github':
-          if (gitRepositories.github) {
-            return gitRepositories.github.forked;
-          } else {
-            return [];
-          }
-
-        case 'gitlab':
-          if (gitRepositories.gitlab) {
-            return gitRepositories.gitlab.forked;
-          } else {
-            return [];
-          }
-
-        default:
-          return [];
-      }
-    } else {
-      return [];
-    }
+  ): boolean {
+    return (
+      (gitRepositories[gitProvider] &&
+        gitRepositories[gitProvider].own?.length > 0 &&
+        gitRepositories[gitProvider].forked?.length > 0) ??
+      false
+    );
   }
 
-  hasRepositories(
+  hasRepositoriesOfType(
     gitRepositories: GitRepositories,
     gitProvider: string,
     type: 'own' | 'forked'
   ): boolean {
-    if (gitRepositories) {
-      switch (gitProvider) {
-        case 'github':
-          if (gitRepositories.github) {
-            return gitRepositories.github[type].length > 0;
-          }
-          break;
-
-        case 'gitlab':
-          if (gitRepositories.gitlab) {
-            return gitRepositories.gitlab[type].length > 0;
-          }
-          break;
-      }
-    }
-    return false;
+    return (
+      (gitRepositories[gitProvider] &&
+        gitRepositories[gitProvider]?.[type]?.length > 0) ??
+      false
+    );
   }
 }
