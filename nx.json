@@ -1,12 +1,5 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "options": {
-        "canTrackAnalytics": false,
-        "showUsageWarnings": true
-      }
-    }
-  },
+  "neverConnectToCloud": true,
   "defaultProject": "tehwolfde",
   "generators": {
     "@nx/angular:application": {
@@ -75,8 +68,7 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
   },
-  "nxCloudAccessToken": "OWE3NDA2ZDQtMjI2OS00MmVlLWJjMGMtOTljN2QzMGZmOWFjfHJlYWQtd3JpdGU=",
   "parallel": 3,
   "useInferencePlugins": false,
-  "defaultBase": "master"
+  "defaultBase": "main"
 }
