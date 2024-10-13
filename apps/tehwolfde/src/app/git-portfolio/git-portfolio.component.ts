@@ -23,9 +23,8 @@ export class GitPortfolioComponent {
     'backdrop-filter': 'blur(50px)'
   };
 
-  gitProviderConfig: { github: string; gitlab: string } = {
-    github: environment.githubUser,
-    gitlab: environment.gitlabUser
+  gitProviderConfig: { github?: string; gitlab?: string } = {
+    github: environment.githubUser
   };
 
   constructor(private themeService: ThemeService) {
@@ -35,6 +34,7 @@ export class GitPortfolioComponent {
         : this.switchToLight()
     );
   }
+
   switchToLight(): void {
     this.buttonStyle = {
       'background-color': 'rgba(255, 255, 255, 0.75)',
