@@ -46,10 +46,10 @@ export class GitProviderService {
       this.fetchGithubRepositories(gitProviderUserNames?.github ?? ''),
       this.fetchGitlabRepositories(gitProviderUserNames?.gitlab ?? '')
     ).pipe(
-      map((gitRepositoryArray: [GitRepository[], GitRepository[]]) => {
+      map((gitRepositoryMap: GitRepository[][]) => {
         const repositories: GitRepositories = {
-          github: this.filterAndSortGitRepositories(gitRepositoryArray[0]),
-          gitlab: this.filterAndSortGitRepositories(gitRepositoryArray[1])
+          github: this.filterAndSortGitRepositories(gitRepositoryMap[0]),
+          gitlab: this.filterAndSortGitRepositories(gitRepositoryMap[1])
         };
         return repositories;
       })
@@ -86,6 +86,7 @@ export class GitProviderService {
     }
     return of([]);
   }
+
   private fetchGitlabRepositories(
     gitlabUser: string
   ): Observable<GitRepository[]> {

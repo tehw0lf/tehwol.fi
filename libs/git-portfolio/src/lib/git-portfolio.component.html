@@ -1,116 +1,130 @@
 @if (gitRepositories$ | async; as gitRepositories) {
   <div>
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
-      <div>
-        <h1 [ngStyle]="textStyle()">{{ gitProvider.value }}</h1>
-        @if (showOwn()) {
-          <div>
-            <h2 [ngStyle]="textStyle()" class="mat-headline">Own Repos</h2>
-            <div
-              class="flex-align-start"
-              [ngClass]="{
-                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
-                'flex-column': viewport === 'xsmall'
-              }"
-            >
-              @if ((loading | async) === true) {
-                <div>
-                  <mat-spinner></mat-spinner>
-                </div>
-              }
-              @for (
-                gitRepo of getOwnGitRepositories(
-                  gitRepositories,
-                  gitProvider.key
-                );
-                track gitRepo
-              ) {
-                <repo-card
-                  [buttonStyle]="buttonStyle()"
-                  [cardStyle]="cardStyle()"
-                  [textStyle]="textStyle()"
-                  [checkColor]="checkColor()"
-                  [forkColor]="forkColor()"
-                  [issueColor]="issueColor()"
-                  [pasteColor]="pasteColor()"
-                  [starColor]="starColor()"
-                  [gitRepo]="gitRepo"
-                  [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboard)="copyToClipboard(gitRepo)"
-                  class="repository-card flex-align-stretch"
-                  [ngClass]="{
-                    'flex-fxflex': viewport === 'medium',
-                    'flex-fxflex-lt-md': viewport === 'small',
-                    'flex-fxflex-lt-sm': viewport === 'xsmall'
-                  }"
-                >
-                </repo-card>
-              }
-              @if (
-                (loading | async) === false &&
-                !hasRepositories(gitRepositories, gitProvider.key, 'own')
-              ) {
-                <div [ngStyle]="textStyle()">
-                  This user has not created any repositories yet
-                </div>
-              }
+      @if (hasAnyRepositories(gitRepositories, gitProvider.key)) {
+        <div>
+          <h1 [ngStyle]="textStyle()">{{ gitProvider.value }}</h1>
+          @if (showOwn()) {
+            <div>
+              <h2 [ngStyle]="textStyle()" class="mat-headline">Own Repos</h2>
+              <div
+                class="flex-align-start"
+                [ngClass]="{
+                  'flex-row-wrap':
+                    viewport === 'medium' || viewport === 'small',
+                  'flex-column': viewport === 'xsmall'
+                }"
+              >
+                @if ((loading | async) === true) {
+                  <div>
+                    <mat-spinner></mat-spinner>
+                  </div>
+                }
+                @for (
+                  gitRepo of getGitRepositoriesOfType(
+                    gitRepositories,
+                    gitProvider.key,
+                    'own'
+                  );
+                  track gitRepo
+                ) {
+                  <repo-card
+                    [buttonStyle]="buttonStyle()"
+                    [cardStyle]="cardStyle()"
+                    [textStyle]="textStyle()"
+                    [checkColor]="checkColor()"
+                    [forkColor]="forkColor()"
+                    [issueColor]="issueColor()"
+                    [pasteColor]="pasteColor()"
+                    [starColor]="starColor()"
+                    [gitRepo]="gitRepo"
+                    [isCopied]="isCopiedToClipboard(gitRepo)"
+                    (copiedToClipboard)="copyToClipboard(gitRepo)"
+                    class="repository-card flex-align-stretch"
+                    [ngClass]="{
+                      'flex-fxflex': viewport === 'medium',
+                      'flex-fxflex-lt-md': viewport === 'small',
+                      'flex-fxflex-lt-sm': viewport === 'xsmall'
+                    }"
+                  >
+                  </repo-card>
+                }
+                @if (
+                  (loading | async) === false &&
+                  !hasRepositoriesOfType(
+                    gitRepositories,
+                    gitProvider.key,
+                    'own'
+                  )
+                ) {
+                  <div [ngStyle]="textStyle()">
+                    This user has not created any repositories yet
+                  </div>
+                }
+              </div>
             </div>
-          </div>
-        }
-        @if (showForked()) {
-          <div>
-            <h2 [ngStyle]="textStyle()" class="mat-headline">Forked Repos</h2>
-            <div
-              class="flex-align-start"
-              [ngClass]="{
-                'flex-row-wrap': viewport === 'medium' || viewport === 'small',
-                'flex-column': viewport === 'xsmall'
-              }"
-            >
-              @if ((loading | async) === true) {
-                <div>
-                  <mat-spinner></mat-spinner>
-                </div>
-              }
-              @for (
-                gitRepo of getForkedGitRepositories(
-                  gitRepositories,
-                  gitProvider.key
-                );
-                track gitRepo
-              ) {
-                <repo-card
-                  [buttonStyle]="buttonStyle()"
-                  [cardStyle]="cardStyle()"
-                  [textStyle]="textStyle()"
-                  [checkColor]="checkColor()"
-                  [forkColor]="forkColor()"
-                  [issueColor]="issueColor()"
-                  [pasteColor]="pasteColor()"
-                  [starColor]="starColor()"
-                  [gitRepo]="gitRepo"
-                  [isCopied]="isCopiedToClipboard(gitRepo)"
-                  (copiedToClipboard)="copyToClipboard(gitRepo)"
-                  class="repository-card flex-align-stretch"
-                  [ngClass]="{
-                    'flex-fxflex': viewport === 'medium',
-                    'flex-fxflex-lt-md': viewport === 'small',
-                    'flex-fxflex-lt-sm': viewport === 'xsmall'
-                  }"
-                ></repo-card>
-              }
-              @if (
-                (loading | async) === false &&
-                !hasRepositories(gitRepositories, gitProvider.key, 'forked')
-              ) {
-                <div [ngStyle]="textStyle()">
-                  This user has not forked any repositories yet
-                </div>
-              }
+          }
+          @if (showForked()) {
+            <div>
+              <h2 [ngStyle]="textStyle()" class="mat-headline">Forked Repos</h2>
+              <div
+                class="flex-align-start"
+                [ngClass]="{
+                  'flex-row-wrap':
+                    viewport === 'medium' || viewport === 'small',
+                  'flex-column': viewport === 'xsmall'
+                }"
+              >
+                @if ((loading | async) === true) {
+                  <div>
+                    <mat-spinner></mat-spinner>
+                  </div>
+                }
+                @for (
+                  gitRepo of getGitRepositoriesOfType(
+                    gitRepositories,
+                    gitProvider.key,
+                    'forked'
+                  );
+                  track gitRepo
+                ) {
+                  <repo-card
+                    [buttonStyle]="buttonStyle()"
+                    [cardStyle]="cardStyle()"
+                    [textStyle]="textStyle()"
+                    [checkColor]="checkColor()"
+                    [forkColor]="forkColor()"
+                    [issueColor]="issueColor()"
+                    [pasteColor]="pasteColor()"
+                    [starColor]="starColor()"
+                    [gitRepo]="gitRepo"
+                    [isCopied]="isCopiedToClipboard(gitRepo)"
+                    (copiedToClipboard)="copyToClipboard(gitRepo)"
+                    class="repository-card flex-align-stretch"
+                    [ngClass]="{
+                      'flex-fxflex': viewport === 'medium',
+                      'flex-fxflex-lt-md': viewport === 'small',
+                      'flex-fxflex-lt-sm': viewport === 'xsmall'
+                    }"
+                  ></repo-card>
+                }
+                @if (
+                  (loading | async) === false &&
+                  !hasRepositoriesOfType(
+                    gitRepositories,
+                    gitProvider.key,
+                    'forked'
+                  )
+                ) {
+                  <div [ngStyle]="textStyle()">
+                    This user has not forked any repositories yet
+                  </div>
+                }
+              </div>
             </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
     }
   </div>
 }
