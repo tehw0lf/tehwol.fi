@@ -1,14 +1,5 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "options": {
-        "canTrackAnalytics": false,
-        "showUsageWarnings": true,
-        "nxCloudId": "60e9725ae94b881e24a3917b"
-      },
-      "runner": "nx-cloud"
-    }
-  },
+  "neverConnectToCloud": true,
   "defaultProject": "tehwolfde",
   "generators": {
     "@nx/angular:application": {
