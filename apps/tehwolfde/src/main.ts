@@ -4,7 +4,7 @@ import {
   provideHttpClient,
   withInterceptorsFromDi
 } from '@angular/common/http';
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,11 +21,6 @@ import { provideRouter } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { SidenavService } from './app/nav/sidenav.service';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
 
 bootstrapApplication(AppComponent, {
   providers: [
