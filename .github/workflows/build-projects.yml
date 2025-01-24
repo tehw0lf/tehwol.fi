@@ -9,18 +9,19 @@ on:
 jobs:
   build:
     name: build using external workflow
-    runs-on: ubuntu-latest
-    steps:
-      - name: run external workflow
-        uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
-        with:
-          tool: 'npm'
-          format: 'run format'
-          lint: 'run affected:lint'
-          test: 'run affected:test --ci --code-coverage'
-          build_branch: 'run affected:build'
-          build_main: 'run affected:build --skip-nx-cache'
-          event_name: ${{ github.event_name }}
-          docker_pre: 'mv -fv avatar* dist/apps/tehwolfde/browser/'
-          libraries: 'contact-form,git-portfolio,wordlist-generator'
-          library_path: 'dist/libs'
+    uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
+    permissions:
+      actions: write
+      contents: read
+      packages: write
+    with:
+      tool: 'npm'
+      format: 'run format'
+      lint: 'run affected:lint'
+      test: 'run affected:test --ci --code-coverage'
+      build_branch: 'run affected:build'
+      build_main: 'run affected:build --skip-nx-cache'
+      event_name: ${{ github.event_name }}
+      docker_pre: 'mv -fv avatar* dist/apps/tehwolfde/browser/'
+      libraries: 'contact-form,git-portfolio,wordlist-generator'
+      library_path: 'dist/libs'
