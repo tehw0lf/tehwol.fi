@@ -8,86 +8,19 @@ on:
 
 jobs:
   build:
+    name: build using external workflow
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: run external workflow
+        uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
         with:
-          fetch-depth: 0
-      - name: Install node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.11.0
-          registry-url: 'https://registry.npmjs.org'
-      - name: Enable Nx SHAs
-        uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: main
-      - name: Install packages
-        run: npm ci
-      - name: Check format
-        run: npm run format
-      - name: Lint
-        run: npm run affected:lint
-      - name: Test
-        run: npm run affected:test --ci --code-coverage
-      - name: Build on branch
-        if: ${{ github.event_name != 'push' }}
-        run: npm run affected:build
-      - name: Build on main
-        if: ${{ github.event_name == 'push' }}
-        run: npm run affected:build --skip-nx-cache
-      # - name: Run end to end tests
-      #   run: npm run e2e
-      - name: Check if published git portfolio library version is outdated
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "portfolio_latest_version=$(npm view @tehw0lf/git-portfolio dist-tags.latest)" >> $GITHUB_ENV
-          echo "portfolio_package_version=$(jq -r ".version" dist/libs/git-portfolio/package.json)" >> $GITHUB_ENV
-      - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && (env.portfolio_latest_version != env.portfolio_package_version) == true }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-          npm publish dist/libs/git-portfolio --access public --dry-run
-          npm publish dist/libs/git-portfolio --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Check if published wordlist generator library version is outdated
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "wordlist_generator_latest_version=$(npm view @tehw0lf/wordlist-generator dist-tags.latest)" >> $GITHUB_ENV
-          echo "wordlist_generator_package_version=$(jq -r ".version" dist/libs/wordlist-generator/package.json)" >> $GITHUB_ENV
-      - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && (env.wordlist_generator_latest_version != env.wordlist_generator_package_version) == true }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-          npm publish dist/libs/wordlist-generator --access public --dry-run
-          npm publish dist/libs/wordlist-generator --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Check if published contact-form library version is outdated
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "contact_form_latest_version=$(npm view @tehw0lf/contact-form dist-tags.latest)" >> $GITHUB_ENV
-          echo "contact_form_package_version=$(jq -r ".version" dist/libs/contact-form/package.json)" >> $GITHUB_ENV
-      - name: Publish library to npm registry if local package is newer
-        if: ${{ github.event_name == 'push' && (env.contact_form_latest_version != env.contact_form_package_version) == true }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-          npm publish dist/libs/contact-form --access public --dry-run
-          npm publish dist/libs/contact-form --access public
-          rm .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Add avatars to package
-        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
-        run: mv -fv avatar* dist/apps/tehwolfde/browser/
-      - name: Login to GitHub Container Registry
-        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
-        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-      - name: Build docker image and push to ghcr.io
-        if: ${{ github.event_name == 'push' && hashFiles('dist/apps/tehwolfde/browser') != '' }}
-        run: |
-          docker build -t ghcr.io/tehw0lf/tehwolf.de .
-          docker tag $(docker image ls | grep tehwolf.de | awk '{print $3}') ghcr.io/tehw0lf/tehwolf.de:latest
-          docker push ghcr.io/tehw0lf/tehwolf.de:latest
+          tool: 'npm'
+          format: 'run format'
+          lint: 'run affected:lint'
+          test: 'run affected:test --ci --code-coverage'
+          build_branch: 'run affected:build'
+          build_main: 'run affected:build --skip-nx-cache'
+          event_name: ${{ github.event_name }}
+          docker_pre: 'mv -fv avatar* dist/apps/tehwolfde/browser/'
+          libraries: 'contact-form,git-portfolio,wordlist-generator'
+          library_path: 'dist/libs'
