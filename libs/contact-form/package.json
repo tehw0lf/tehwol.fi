@@ -5,7 +5,7 @@
   "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tehw0lf/tehwolf.de.git"
+    "url": "git+https://github.com/tehw0lf/tehwolf.de.git"
   },
   "peerDependencies": {
     "@angular/animations": "19.1.6",
