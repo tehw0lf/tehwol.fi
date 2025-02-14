@@ -25,7 +25,10 @@
           "./node_modules/@tehw0lf/mvc/index.css",
           "apps/tehwolfde/src/styles.scss"
         ],
-        "scripts": []
+        "allowedCommonJsDependencies": [
+          "cartesian-product-generator",
+          "@primer/octicons"
+        ]
       },
       "configurations": {
         "production": {
@@ -33,12 +36,12 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "2mb"
+              "maximumError": "5mb"
             },
             {
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumError": "6kb"
             }
           ],
           "outputHashing": "all"

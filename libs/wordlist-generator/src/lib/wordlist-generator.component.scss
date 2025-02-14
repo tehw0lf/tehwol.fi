@@ -1,3 +1,5 @@
+@use '@tehw0lf/mvc';
+
 .meta-container {
   max-width: 100vw;
 
@@ -123,5 +125,3 @@
 .bottom-10 {
   margin-bottom: 10px;
 }
-
-@import '@tehw0lf/mvc';

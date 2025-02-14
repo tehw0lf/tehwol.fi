@@ -3,11 +3,10 @@ import { MobileComponent } from './mobile/mobile.component';
 import { DesktopComponent } from './desktop/desktop.component';
 
 @Component({
-  selector: 'tehw0lf-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss'],
-  standalone: true,
-  imports: [DesktopComponent, MobileComponent]
+    selector: 'tehw0lf-nav',
+    templateUrl: './nav.component.html',
+    styleUrls: ['./nav.component.scss'],
+    imports: [DesktopComponent, MobileComponent]
 })
 export class NavComponent {
   constructor() {

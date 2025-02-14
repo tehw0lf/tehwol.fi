@@ -1,7 +1,8 @@
-@import '../../../assets/styles/global.scss';
+@use '../../../assets/styles/global';
+@use '@tehw0lf/mvc';
 
 .link-active {
-  border-bottom: 2px solid $linkcolor;
+  border-bottom: 2px solid global.$linkcolor;
 }
 
 .mat-mdc-list-item {
@@ -14,15 +15,15 @@
 }
 
 .mdc-list-item:hover .mdc-list-item__primary-text {
-  color: $linkcolor !important;
+  color: global.$linkcolor !important;
 }
 
 .mdc-list-item__primary-text {
-  color: $linkcolor !important;
+  color: global.$linkcolor !important;
 }
 
 .mat-mdc-icon-button {
-  color: $linkcolor;
+  color: global.$linkcolor;
 }
 
 .nav-logo {
@@ -48,12 +49,12 @@
 }
 
 .main-content {
-  color: $fontcolor;
+  color: global.$fontcolor;
   padding: 32px 0 0 32px;
 }
 
 .mat-mdc-icon-button {
-  color: $linkcolor !important;
+  color: global.$linkcolor !important;
 }
 
 .dark-theme-button {
@@ -69,5 +70,3 @@
   width: 48px;
   margin: 4px 4px 4px 4px;
 }
-
-@import '@tehw0lf/mvc';
