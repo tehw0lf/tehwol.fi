@@ -1,20 +1,21 @@
-@import '../../../assets/styles/global.scss';
+@use '../../../assets/styles/global';
+@use '@tehw0lf/mvc';
 
 .link-active {
-  border-bottom: 2px solid $linkcolor;
+  border-bottom: 2px solid global.$linkcolor;
 }
 
 .mat-mdc-button {
   vertical-align: middle;
   line-height: 36px;
-  font-size: $fontsize-button-md;
+  font-size: global.$fontsize-button-md;
   margin: 0 10px 0 0;
   text-align: center;
   text-decoration: none;
 }
 
 .mat-button-wrapper {
-  color: $linkcolor;
+  color: global.$linkcolor;
 }
 
 .dark-theme-button {
@@ -58,5 +59,3 @@
 .github {
   vertical-align: middle;
 }
-
-@import '@tehw0lf/mvc';
