@@ -1,10 +1,6 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import {
-  BreakpointObserver,
-  BreakpointState,
-  LayoutModule
-} from '@angular/cdk/layout';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { BreakpointObserver, BreakpointState, LayoutModule } from '@angular/cdk/layout';
+import { NgClass } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,19 +12,18 @@ import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({
-    selector: 'tehw0lf-desktop',
-    templateUrl: './desktop.component.html',
-    styleUrls: ['./desktop.component.scss'],
-    imports: [
-        LayoutModule,
-        MatToolbarModule,
-        NgClass,
-        MatButtonModule,
-        MatIconModule,
-        RouterLink,
-        RouterLinkActive,
-        AsyncPipe
-    ]
+  selector: 'tehw0lf-desktop',
+  templateUrl: './desktop.component.html',
+  styleUrls: ['./desktop.component.scss'],
+  imports: [
+    LayoutModule,
+    MatToolbarModule,
+    NgClass,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+    RouterLinkActive
+  ]
 })
 export class DesktopComponent implements AfterViewInit, OnDestroy {
   burgerStyle = '';
