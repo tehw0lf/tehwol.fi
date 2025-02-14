@@ -14,19 +14,18 @@ interface Dictionary {
 }
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'repo-card',
-  templateUrl: './repo-card.component.html',
-  styleUrls: ['./repo-card.component.scss'],
-  standalone: true,
-  imports: [
-    MatCardModule,
-    NgStyle,
-    MatButtonModule,
-    OcticonDirective,
-    ClipboardModule,
-    DatePipe
-  ]
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'repo-card',
+    templateUrl: './repo-card.component.html',
+    styleUrls: ['./repo-card.component.scss'],
+    imports: [
+        MatCardModule,
+        NgStyle,
+        MatButtonModule,
+        OcticonDirective,
+        ClipboardModule,
+        DatePipe
+    ]
 })
 export class RepoCardComponent {
   buttonStyle = input.required<any>();

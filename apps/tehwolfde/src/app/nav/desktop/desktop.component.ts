@@ -1,10 +1,6 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import {
-  BreakpointObserver,
-  BreakpointState,
-  LayoutModule
-} from '@angular/cdk/layout';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { BreakpointObserver, BreakpointState, LayoutModule } from '@angular/cdk/layout';
+import { NgClass } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +15,6 @@ import { SidenavService } from '../sidenav.service';
   selector: 'tehw0lf-desktop',
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.scss'],
-  standalone: true,
   imports: [
     LayoutModule,
     MatToolbarModule,
@@ -27,8 +22,7 @@ import { SidenavService } from '../sidenav.service';
     MatButtonModule,
     MatIconModule,
     RouterLink,
-    RouterLinkActive,
-    AsyncPipe
+    RouterLinkActive
   ]
 })
 export class DesktopComponent implements AfterViewInit, OnDestroy {

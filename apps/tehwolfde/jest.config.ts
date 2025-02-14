@@ -1,13 +1,13 @@
-import { swcAngularJestTransformer } from '@jscutlery/swc-angular-preset';
+import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
 
-/* eslint-disable */
 export default {
   displayName: 'tehwolfde',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/setup-jest.ts',
+    '<rootDir>/src/test-setup.ts'
+  ],
   globals: {},
-  collectCoverage: true,
-  coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/apps/tehwolfde',
   transform: {
     '^.+\\.(ts|mjs|js)$': swcAngularJestTransformer(),

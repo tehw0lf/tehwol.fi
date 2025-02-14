@@ -1,22 +1,11 @@
 import { LayoutModule } from '@angular/cdk/layout';
-import { AsyncPipe, NgClass } from '@angular/common';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -28,7 +17,6 @@ import { SidenavService } from '../sidenav.service';
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile.component.html',
   styleUrls: ['./mobile.component.scss'],
-  standalone: true,
   imports: [
     LayoutModule,
     MatSidenavModule,
@@ -38,8 +26,7 @@ import { SidenavService } from '../sidenav.service';
     RouterLinkActive,
     MatButtonModule,
     MatIconModule,
-    RouterOutlet,
-    AsyncPipe
+    RouterOutlet
   ]
 })
 export class MobileComponent implements OnInit, OnDestroy {

@@ -1,3 +1,5 @@
+@use '@tehw0lf/mvc';
+
 .contact-form {
   max-width: 500px;
   margin: auto;
@@ -18,5 +20,3 @@
   height: 19px;
   margin-top: 1rem;
 }
-
-@import '@tehw0lf/mvc';

@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/wordlist-generator",
-  "version": "0.18.5",
+  "version": "0.19.0",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
@@ -8,18 +8,18 @@
     "url": "https://github.com/tehw0lf/tehwolf.de.git"
   },
   "peerDependencies": {
-    "@angular/animations": "18.2.3",
-    "@angular/cdk": "18.2.3",
-    "@angular/common": "18.2.3",
-    "@angular/core": "18.2.3",
-    "@angular/forms": "18.2.3",
-    "@angular/material": "18.2.3",
+    "@angular/animations": "19.1.6",
+    "@angular/cdk": "19.1.4",
+    "@angular/common": "19.1.6",
+    "@angular/core": "19.1.6",
+    "@angular/forms": "19.1.6",
+    "@angular/material": "19.1.4",
     "@tehw0lf/mvc": "^0.0.2"
   },
   "dependencies": {
     "tslib": "^2.2.0"
   },
   "devDependencies": {
-    "typescript": "5.5.4"
+    "typescript": "5.7.3"
   }
 }
