@@ -16,20 +16,19 @@ import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({
-  selector: 'tehw0lf-desktop',
-  templateUrl: './desktop.component.html',
-  styleUrls: ['./desktop.component.scss'],
-  standalone: true,
-  imports: [
-    LayoutModule,
-    MatToolbarModule,
-    NgClass,
-    MatButtonModule,
-    MatIconModule,
-    RouterLink,
-    RouterLinkActive,
-    AsyncPipe
-  ]
+    selector: 'tehw0lf-desktop',
+    templateUrl: './desktop.component.html',
+    styleUrls: ['./desktop.component.scss'],
+    imports: [
+        LayoutModule,
+        MatToolbarModule,
+        NgClass,
+        MatButtonModule,
+        MatIconModule,
+        RouterLink,
+        RouterLinkActive,
+        AsyncPipe
+    ]
 })
 export class DesktopComponent implements AfterViewInit, OnDestroy {
   burgerStyle = '';

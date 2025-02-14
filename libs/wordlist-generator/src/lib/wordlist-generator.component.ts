@@ -33,23 +33,22 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
-  selector: 'wordlist-generator',
-  templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    NgStyle,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    CdkDropList,
-    CdkDrag,
-    MatIconModule,
-    AsyncPipe
-  ]
+    selector: 'wordlist-generator',
+    templateUrl: './wordlist-generator.component.html',
+    styleUrls: ['./wordlist-generator.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [
+        MatButtonModule,
+        NgStyle,
+        MatMenuModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        CdkDropList,
+        CdkDrag,
+        MatIconModule,
+        AsyncPipe
+    ]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   buttonStyle = input({

@@ -21,20 +21,19 @@ interface FormConfigEntry {
 }
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'contact-form',
-  templateUrl: './contact-form.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./contact-form.component.scss'],
-  standalone: true,
-  imports: [
-    LayoutModule,
-    ReactiveFormsModule,
-    FormlyModule,
-    FormlyMaterialModule,
-    NgStyle,
-    AsyncPipe
-  ]
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'contact-form',
+    templateUrl: './contact-form.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./contact-form.component.scss'],
+    imports: [
+        LayoutModule,
+        ReactiveFormsModule,
+        FormlyModule,
+        FormlyMaterialModule,
+        NgStyle,
+        AsyncPipe
+    ]
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   buttonStyle = input({
