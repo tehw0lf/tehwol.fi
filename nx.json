@@ -75,6 +75,5 @@
   },
   "parallel": 3,
   "useInferencePlugins": false,
-  "defaultBase": "main",
-  "useLegacyCache": true
+  "defaultBase": "main"
 }
