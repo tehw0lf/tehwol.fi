@@ -7,11 +7,10 @@ import {
 import { ThemeService } from '../theme.service';
 
 @Component({
-  selector: 'tehw0lf-git-portfolio',
-  templateUrl: './git-portfolio.component.html',
-  styleUrls: ['./git-portfolio.component.scss'],
-  standalone: true,
-  imports: [GitPortfolioComponent_1]
+    selector: 'tehw0lf-git-portfolio',
+    templateUrl: './git-portfolio.component.html',
+    styleUrls: ['./git-portfolio.component.scss'],
+    imports: [GitPortfolioComponent_1]
 })
 export class GitPortfolioComponent {
   buttonStyle = {

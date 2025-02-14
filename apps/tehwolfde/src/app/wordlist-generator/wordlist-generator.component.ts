@@ -4,11 +4,10 @@ import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@teh
 import { ThemeService } from '../theme.service';
 
 @Component({
-  selector: 'tehw0lf-wordlist-generator',
-  templateUrl: './wordlist-generator.component.html',
-  styleUrls: ['./wordlist-generator.component.scss'],
-  standalone: true,
-  imports: [WordlistGeneratorComponent_1]
+    selector: 'tehw0lf-wordlist-generator',
+    templateUrl: './wordlist-generator.component.html',
+    styleUrls: ['./wordlist-generator.component.scss'],
+    imports: [WordlistGeneratorComponent_1]
 })
 export class WordlistGeneratorComponent {
   buttonStyle = {

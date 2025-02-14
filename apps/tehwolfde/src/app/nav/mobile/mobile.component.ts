@@ -24,23 +24,22 @@ import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({
-  selector: 'tehw0lf-mobile',
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: './mobile.component.html',
-  styleUrls: ['./mobile.component.scss'],
-  standalone: true,
-  imports: [
-    LayoutModule,
-    MatSidenavModule,
-    NgClass,
-    MatListModule,
-    RouterLink,
-    RouterLinkActive,
-    MatButtonModule,
-    MatIconModule,
-    RouterOutlet,
-    AsyncPipe
-  ]
+    selector: 'tehw0lf-mobile',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: './mobile.component.html',
+    styleUrls: ['./mobile.component.scss'],
+    imports: [
+        LayoutModule,
+        MatSidenavModule,
+        NgClass,
+        MatListModule,
+        RouterLink,
+        RouterLinkActive,
+        MatButtonModule,
+        MatIconModule,
+        RouterOutlet,
+        AsyncPipe
+    ]
 })
 export class MobileComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) public sidenav:
