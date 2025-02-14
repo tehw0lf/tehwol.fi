@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'assets/styles/custom-theme.scss';
-@import 'assets/styles/global.scss';
+@use 'assets/styles/custom-theme';
+@use 'assets/styles/global';
 
 * {
-  font-family: $font;
+  font-family: global.$font;
 }
 
 body.dark {

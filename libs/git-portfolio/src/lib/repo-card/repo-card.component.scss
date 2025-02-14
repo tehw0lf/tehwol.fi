@@ -1,3 +1,5 @@
+@use '@tehw0lf/mvc';
+
 .clipboard-button {
   height: 29px;
   line-height: 24px !important;
@@ -107,5 +109,3 @@
 p {
   margin: 0;
 }
-
-@import '@tehw0lf/mvc';
