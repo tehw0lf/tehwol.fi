@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: build using external workflow
+    name: external workflow
     uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
     permissions:
       actions: write
