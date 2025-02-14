@@ -1,4 +1,4 @@
-name: tehw0lf showcase and library pipeline
+name: showcase and library pipeline
 
 on:
   push:
