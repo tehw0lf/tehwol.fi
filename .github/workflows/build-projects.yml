@@ -25,4 +25,5 @@ jobs:
       docker_pre: 'mv -fv avatar* dist/apps/tehwolfde/browser/'
       libraries: 'contact-form,git-portfolio,wordlist-generator'
       library_path: 'dist/libs'
-      secrets: inherit
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
