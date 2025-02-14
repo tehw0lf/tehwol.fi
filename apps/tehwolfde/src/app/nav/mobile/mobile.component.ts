@@ -1,22 +1,11 @@
 import { LayoutModule } from '@angular/cdk/layout';
-import { AsyncPipe, NgClass } from '@angular/common';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -24,22 +13,21 @@ import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({
-    selector: 'tehw0lf-mobile',
-    encapsulation: ViewEncapsulation.None,
-    templateUrl: './mobile.component.html',
-    styleUrls: ['./mobile.component.scss'],
-    imports: [
-        LayoutModule,
-        MatSidenavModule,
-        NgClass,
-        MatListModule,
-        RouterLink,
-        RouterLinkActive,
-        MatButtonModule,
-        MatIconModule,
-        RouterOutlet,
-        AsyncPipe
-    ]
+  selector: 'tehw0lf-mobile',
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: './mobile.component.html',
+  styleUrls: ['./mobile.component.scss'],
+  imports: [
+    LayoutModule,
+    MatSidenavModule,
+    NgClass,
+    MatListModule,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatIconModule,
+    RouterOutlet
+  ]
 })
 export class MobileComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) public sidenav:
