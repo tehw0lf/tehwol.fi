@@ -22,5 +22,6 @@ More info: [README](libs/wordlist-generator/README.md)
 
 ## contact-form
 
-A simple contact form that takes a model json and an API callback to provide maximum flexibility (uses ngx-formly)
+A simple contact form that takes a model json and an API callback to provide maximum flexibility (uses ngx-formly).
+The demo does not perform any HTTP calls.
 More info: [README](libs/contact-form/README.md)
