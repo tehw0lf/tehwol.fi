@@ -22,7 +22,7 @@ jobs:
       build_branch: 'run affected:build'
       build_main: 'run affected:build --skip-nx-cache'
       event_name: ${{ github.event_name }}
-      docker_pre: 'mv -fv avatar* dist/apps/tehwolfde/browser/'
+      docker_pre: '[ -d ./dist/apps ] && mv -fv avatar* dist/apps/tehwolfde/browser/'
       libraries: 'contact-form,git-portfolio,wordlist-generator'
       library_path: 'dist/libs'
       image_name: 'tehwolf.de'
