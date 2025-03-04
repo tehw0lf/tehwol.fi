@@ -26,5 +26,6 @@ jobs:
       docker_meta: '[{"name":"tehwolf.de","file":"Dockerfile"}]'
       libraries: 'contact-form,git-portfolio,wordlist-generator'
       library_path: 'dist/libs'
+      artifact_path: 'dist'
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
