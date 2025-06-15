@@ -1,8 +1,10 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import js from '@eslint/js';
+
 import baseConfig from '../../eslint.config.mjs';
+
 const compat = new FlatCompat({
   baseDirectory: dirname(fileURLToPath(import.meta.url)),
   recommendedConfig: js.configs.recommended
@@ -58,6 +60,13 @@ export default [
     files: ['**/*.ts'],
     rules: {
       '@angular-eslint/prefer-standalone': 'off'
+    }
+  },
+  {
+    files: ['{package,project}.json'],
+    parser: 'jsonc-eslint-parser',
+    rules: {
+      '@nx/dependency-checks': 'error'
     }
   }
 ];

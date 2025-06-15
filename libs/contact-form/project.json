@@ -30,7 +30,15 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/contact-form/**/*.ts",
+          "libs/contact-form/**/*.html",
+          "libs/contact-form/package.json",
+          "libs/contact-form/project.json"
+        ]
+      }
     }
   }
 }
