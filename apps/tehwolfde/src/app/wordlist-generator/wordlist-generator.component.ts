@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@tehw0lf/wordlist-generator';
 
 import { ThemeService } from '../theme.service';
@@ -10,12 +10,14 @@ import { ThemeService } from '../theme.service';
     imports: [WordlistGeneratorComponent_1]
 })
 export class WordlistGeneratorComponent {
+  themeService = inject(ThemeService);
+
   buttonStyle = {
     'background-color': '#333333',
     color: '#cc7832'
   };
 
-  constructor(public themeService: ThemeService) {
+  constructor() {
     effect(() =>
       this.themeService.theme() === 'dark'
         ? this.switchToDark()

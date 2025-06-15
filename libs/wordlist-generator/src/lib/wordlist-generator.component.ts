@@ -5,13 +5,7 @@ import {
   moveItemInArray
 } from '@angular/cdk/drag-drop';
 import { AsyncPipe, NgStyle } from '@angular/common';
-import {
-  Component,
-  input,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, input, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormArray,
@@ -51,6 +45,9 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
     ]
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
+  private formBuilder = inject(UntypedFormBuilder);
+  private wordlistGenerator = inject(WordlistGeneratorService);
+
   buttonStyle = input({
     'background-color': '#333333',
     color: '#cc7832'
@@ -71,11 +68,6 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   suffix = '';
 
   private unsubscribe$ = new Subject<void>();
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private wordlistGenerator: WordlistGeneratorService
-  ) {}
 
   ngOnInit(): void {
     this.generateForm();

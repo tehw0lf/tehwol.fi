@@ -9,7 +9,7 @@ import {
   KeyValuePipe,
   NgStyle
 } from '@angular/common';
-import { Component, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -22,21 +22,24 @@ import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'git-portfolio',
-    templateUrl: './git-portfolio.component.html',
-    styleUrls: ['./git-portfolio.component.scss'],
-    imports: [
-        CommonModule,
-        LayoutModule,
-        NgStyle,
-        MatProgressSpinnerModule,
-        RepoCardComponent,
-        AsyncPipe,
-        KeyValuePipe
-    ]
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'git-portfolio',
+  templateUrl: './git-portfolio.component.html',
+  styleUrls: ['./git-portfolio.component.scss'],
+  imports: [
+    CommonModule,
+    LayoutModule,
+    NgStyle,
+    MatProgressSpinnerModule,
+    RepoCardComponent,
+    AsyncPipe,
+    KeyValuePipe
+  ]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
+  private gitProviderService = inject(GitProviderService);
+  private breakpointObserver = inject(BreakpointObserver);
+
   buttonStyle = input({ 'background-color': '#424242', color: '#cc7832' });
 
   cardStyle = input({
@@ -71,10 +74,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(
-    private gitProviderService: GitProviderService,
-    private breakpointObserver: BreakpointObserver
-  ) {
+  constructor() {
     this.loading = this.gitProviderService.loading;
 
     this.breakpointObserver
