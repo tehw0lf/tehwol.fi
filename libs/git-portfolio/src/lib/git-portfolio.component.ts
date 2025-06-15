@@ -22,19 +22,19 @@ import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'git-portfolio',
-    templateUrl: './git-portfolio.component.html',
-    styleUrls: ['./git-portfolio.component.scss'],
-    imports: [
-        CommonModule,
-        LayoutModule,
-        NgStyle,
-        MatProgressSpinnerModule,
-        RepoCardComponent,
-        AsyncPipe,
-        KeyValuePipe
-    ]
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'git-portfolio',
+  templateUrl: './git-portfolio.component.html',
+  styleUrls: ['./git-portfolio.component.scss'],
+  imports: [
+    CommonModule,
+    LayoutModule,
+    NgStyle,
+    MatProgressSpinnerModule,
+    RepoCardComponent,
+    AsyncPipe,
+    KeyValuePipe
+  ]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   buttonStyle = input({ 'background-color': '#424242', color: '#cc7832' });
