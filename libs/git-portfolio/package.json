@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/git-portfolio",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
   "repository": {
@@ -21,7 +21,7 @@
     "tslib": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node": "20.11.1",
+    "@types/node": "18.19.99",
     "typescript": "5.8.3"
   }
 }
