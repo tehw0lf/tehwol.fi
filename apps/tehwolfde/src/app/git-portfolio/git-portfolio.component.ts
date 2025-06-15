@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import {
   GitPortfolioComponent as GitPortfolioComponent_1,
   GitProviderConfig
@@ -13,6 +13,8 @@ import { ThemeService } from '../theme.service';
     imports: [GitPortfolioComponent_1]
 })
 export class GitPortfolioComponent {
+  private themeService = inject(ThemeService);
+
   buttonStyle = {
     'background-color': 'rgba(34, 34, 34, 0.75)',
     color: '#cc7832'
@@ -28,7 +30,7 @@ export class GitPortfolioComponent {
     github: 'tehw0lf'
   };
 
-  constructor(private themeService: ThemeService) {
+  constructor() {
     effect(() =>
       this.themeService.theme() === 'dark'
         ? this.switchToDark()

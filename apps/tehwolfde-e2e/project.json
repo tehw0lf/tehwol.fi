@@ -10,7 +10,6 @@
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/tehwolfde-e2e/cypress.json",
-        "tsConfig": "apps/tehwolfde-e2e/tsconfig.e2e.json",
         "devServerTarget": "tehwolfde:serve:development"
       },
       "configurations": {

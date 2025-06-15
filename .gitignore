@@ -8,7 +8,6 @@
 
 # Nx
 .nx
-migrations.json
 
 # compiled output
 /dist
@@ -50,3 +49,5 @@ testem.log
 .DS_Store
 Thumbs.db
 .swc
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
