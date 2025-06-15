@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
 import { of } from 'rxjs';
 
@@ -11,6 +11,8 @@ import { ThemeService } from '../theme.service';
     imports: [ContactFormComponent_1]
 })
 export class ContactFormComponent {
+  private themeService = inject(ThemeService);
+
   buttonStyle = {
     'background-color': '#333333',
     border: 'none',
@@ -35,7 +37,7 @@ export class ContactFormComponent {
     }
   };
 
-  constructor(private themeService: ThemeService) {
+  constructor() {
     effect(() =>
       this.themeService.theme() === 'dark'
         ? this.switchToDark()

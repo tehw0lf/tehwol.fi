@@ -1,7 +1,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { BreakpointObserver, BreakpointState, LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,18 +26,20 @@ import { SidenavService } from '../sidenav.service';
   ]
 })
 export class DesktopComponent implements AfterViewInit, OnDestroy {
+  themeService = inject(ThemeService);
+  private focusMonitor = inject(FocusMonitor);
+  private router = inject(Router);
+  private sidenavService = inject(SidenavService);
+  private breakpointObserver = inject(BreakpointObserver);
+
   burgerStyle = '';
   buttonStyle = '';
 
   private unsubscribe$: Subject<void> = new Subject();
 
-  constructor(
-    public themeService: ThemeService,
-    private focusMonitor: FocusMonitor,
-    private router: Router,
-    private sidenavService: SidenavService,
-    private breakpointObserver: BreakpointObserver
-  ) {
+  constructor() {
+    const breakpointObserver = this.breakpointObserver;
+
     breakpointObserver
       .observe(['(min-width: 960px)'])
       .pipe(

@@ -1,6 +1,6 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -30,16 +30,15 @@ import { SidenavService } from '../sidenav.service';
   ]
 })
 export class MobileComponent implements OnInit, OnDestroy {
+  router = inject(Router);
+  themeService = inject(ThemeService);
+  private sidenavService = inject(SidenavService);
+
   @ViewChild('sidenav', { static: true }) public sidenav:
     | MatSidenav
     | undefined;
 
   private unsubscribe$ = new Subject<void>();
-  constructor(
-    public router: Router,
-    public themeService: ThemeService,
-    private sidenavService: SidenavService
-  ) {}
 
   ngOnInit(): void {
     if (this.sidenav) {

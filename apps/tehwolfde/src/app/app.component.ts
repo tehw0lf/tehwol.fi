@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { NavComponent } from './nav/nav.component';
 import { ThemeService } from './theme.service';
@@ -11,5 +11,5 @@ import { ThemeService } from './theme.service';
     imports: [NavComponent, NgClass]
 })
 export class AppComponent {
-  constructor(public themeService: ThemeService) {}
+  themeService = inject(ThemeService);
 }

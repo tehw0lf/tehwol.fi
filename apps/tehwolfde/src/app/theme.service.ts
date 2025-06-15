@@ -1,19 +1,17 @@
-import {
-  Injectable,
-  Renderer2,
-  RendererFactory2,
-  signal,
-  WritableSignal
-} from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, signal, WritableSignal, inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
+  private rendererFactory = inject(RendererFactory2);
+
   private renderer: Renderer2;
   theme: WritableSignal<string> = signal('dark');
 
-  constructor(private rendererFactory: RendererFactory2) {
+  constructor() {
+    const rendererFactory = this.rendererFactory;
+
     this.renderer = rendererFactory.createRenderer(null, null);
     this.renderer.addClass(document.body, 'dark');
   }
