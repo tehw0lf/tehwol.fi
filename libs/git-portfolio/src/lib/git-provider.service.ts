@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, zip } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -11,10 +11,10 @@ import { GitRepository } from './types/git-repository-type';
   providedIn: 'root'
 })
 export class GitProviderService {
+  private http = inject(HttpClient);
+
   private loadingStateSubject = new BehaviorSubject<boolean>(true);
   private repositorySubject = new BehaviorSubject<GitRepositories>({});
-
-  constructor(private http: HttpClient) {}
 
   get loading(): Observable<boolean> {
     return this.loadingStateSubject.asObservable();

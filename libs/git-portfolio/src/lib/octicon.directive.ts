@@ -1,4 +1,4 @@
-import { Directive, ElementRef, input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, input, OnInit, Renderer2, inject } from '@angular/core';
 import octicons, { IconName } from '@primer/octicons';
 
 @Directive({
@@ -7,14 +7,12 @@ import octicons, { IconName } from '@primer/octicons';
   standalone: true
 })
 export class OcticonDirective implements OnInit {
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
+
   octicon = input.required<string>();
   color = input.required<string>();
   width = input<string>();
-
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2
-  ) {}
 
   ngOnInit(): void {
     const el: HTMLElement = this.elementRef.nativeElement;

@@ -9,7 +9,7 @@ import {
   KeyValuePipe,
   NgStyle
 } from '@angular/common';
-import { Component, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -37,6 +37,9 @@ import { GitRepository } from './types/git-repository-type';
   ]
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
+  private gitProviderService = inject(GitProviderService);
+  private breakpointObserver = inject(BreakpointObserver);
+
   buttonStyle = input({ 'background-color': '#424242', color: '#cc7832' });
 
   cardStyle = input({
@@ -71,10 +74,7 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(
-    private gitProviderService: GitProviderService,
-    private breakpointObserver: BreakpointObserver
-  ) {
+  constructor() {
     this.loading = this.gitProviderService.loading;
 
     this.breakpointObserver
