@@ -4,10 +4,7 @@ export default {
   displayName: 'wordlist-generator',
   preset: '../../jest.preset.js',
 
-  setupFilesAfterEnv: [
-    '<rootDir>/setup-jest.ts',
-    '<rootDir>/src/test-setup.ts'
-  ],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   coverageDirectory: '../../coverage/libs/wordlist-generator',
   transform: {

@@ -1,11 +1,23 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -62,7 +74,18 @@ export class MobileComponent implements OnInit, OnDestroy {
 
   isActive(): boolean {
     return (
-      this.router.isActive('/', true) || this.router.isActive('/home', true)
+      this.router.isActive('/', {
+        paths: 'exact',
+        queryParams: 'exact',
+        fragment: 'ignored',
+        matrixParams: 'ignored'
+      }) ||
+      this.router.isActive('/home', {
+        paths: 'exact',
+        queryParams: 'exact',
+        fragment: 'ignored',
+        matrixParams: 'ignored'
+      })
     );
   }
   closeSidenav(): void {
