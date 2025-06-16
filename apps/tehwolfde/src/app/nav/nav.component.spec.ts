@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 
 import { DesktopComponent } from './desktop/desktop.component';
 import { MobileComponent } from './mobile/mobile.component';
@@ -17,7 +17,6 @@ describe('NavComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         BrowserAnimationsModule,
         MatIconModule,
         MatListModule,
@@ -26,7 +25,8 @@ describe('NavComponent', () => {
         NavComponent,
         DesktopComponent,
         MobileComponent
-      ]
+      ],
+      providers: [provideRouter([])]
     }).compileComponents();
   }));
 

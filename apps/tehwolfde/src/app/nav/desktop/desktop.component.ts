@@ -1,7 +1,11 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { BreakpointObserver, BreakpointState, LayoutModule } from '@angular/cdk/layout';
+import {
+  BreakpointObserver,
+  BreakpointState,
+  LayoutModule
+} from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -71,7 +75,18 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
 
   isActive(): boolean {
     return (
-      this.router.isActive('/', true) || this.router.isActive('/home', true)
+      this.router.isActive('/', {
+        paths: 'exact',
+        queryParams: 'exact',
+        fragment: 'ignored',
+        matrixParams: 'ignored'
+      }) ||
+      this.router.isActive('/home', {
+        paths: 'exact',
+        queryParams: 'exact',
+        fragment: 'ignored',
+        matrixParams: 'ignored'
+      })
     );
   }
 

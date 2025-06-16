@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 
 import { SidenavService } from '../sidenav.service';
 import { MobileComponent } from './mobile.component';
@@ -20,14 +20,16 @@ describe('MobileComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         BrowserAnimationsModule,
         MatIconModule,
         MatListModule,
         MatSidenavModule,
         MobileComponent
       ],
-      providers: [{ provide: SidenavService, useValue: mockSidenavService }]
+      providers: [
+        provideRouter([]),
+        { provide: SidenavService, useValue: mockSidenavService }
+      ]
     }).compileComponents();
   }));
 
