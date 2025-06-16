@@ -3,10 +3,7 @@ import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
 export default {
   displayName: 'contact-form',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: [
-    '<rootDir>/setup-jest.ts',
-    '<rootDir>/src/test-setup.ts'
-  ],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   coverageDirectory: '../../coverage/libs/contact-form',
   transform: {
