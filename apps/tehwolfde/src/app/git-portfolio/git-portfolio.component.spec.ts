@@ -1,3 +1,4 @@
+import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
@@ -10,7 +11,7 @@ describe('GitPortfolioComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [GitPortfolioComponent],
-      providers: [provideHttpClientTesting()]
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     }).compileComponents();
   }));
 
