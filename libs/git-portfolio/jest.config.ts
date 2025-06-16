@@ -4,10 +4,7 @@ export default {
   displayName: 'git-portfolio',
   preset: '../../jest.preset.js',
 
-  setupFilesAfterEnv: [
-    '<rootDir>/setup-jest.ts',
-    '<rootDir>/src/test-setup.ts'
-  ],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   coverageDirectory: '../../coverage/libs/git-portfolio',
   transform: {

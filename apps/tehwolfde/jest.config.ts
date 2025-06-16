@@ -3,10 +3,7 @@ import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
 export default {
   displayName: 'tehwolfde',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: [
-    '<rootDir>/setup-jest.ts',
-    '<rootDir>/src/test-setup.ts'
-  ],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
   coverageDirectory: '../../coverage/apps/tehwolfde',
   transform: {
