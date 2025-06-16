@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 
 import { SidenavService } from '../sidenav.service';
 import { DesktopComponent } from './desktop.component';
@@ -16,13 +16,11 @@ describe('DesktopComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MatIconModule,
-        MatToolbarModule,
-        DesktopComponent
-      ],
-      providers: [{ provide: SidenavService, useValue: mockSidenavService }]
+      imports: [MatIconModule, MatToolbarModule, DesktopComponent],
+      providers: [
+        provideRouter([]),
+        { provide: SidenavService, useValue: mockSidenavService }
+      ]
     }).compileComponents();
   }));
 

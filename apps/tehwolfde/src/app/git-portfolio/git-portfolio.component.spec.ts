@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
@@ -9,7 +9,8 @@ describe('GitPortfolioComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [GitPortfolioComponent, HttpClientTestingModule]
+      imports: [GitPortfolioComponent],
+      providers: [provideHttpClientTesting()]
     }).compileComponents();
   }));
 
