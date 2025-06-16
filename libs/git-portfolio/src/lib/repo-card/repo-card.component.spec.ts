@@ -1,5 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { Directive } from '@angular/core';
+import { Directive, input } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +12,11 @@ const GITHUB_REPO: GitRepository = new GitRepository();
 
 // eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({ standalone: true, selector: '[octicon]' })
-class MockOcticonDirectiveDirective {}
+class MockOcticonDirective {
+  octicon = input.required<string>();
+  color = input.required<string>();
+  width = input<string>();
+}
 
 describe('RepoCardComponent', () => {
   let component: RepoCardComponent;
@@ -30,7 +34,7 @@ describe('RepoCardComponent', () => {
     })
       .overrideComponent(RepoCardComponent, {
         remove: { imports: [OcticonDirective] },
-        add: { imports: [MockOcticonDirectiveDirective] }
+        add: { imports: [MockOcticonDirective] }
       })
       .compileComponents();
   }));
