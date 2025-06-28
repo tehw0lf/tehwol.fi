@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, zip } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, shareReplay } from 'rxjs/operators';
 
 import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitRepositories } from './types/git-repositories-type';
@@ -15,6 +15,7 @@ export class GitProviderService {
 
   private loadingStateSubject = new BehaviorSubject<boolean>(true);
   private repositorySubject = new BehaviorSubject<GitRepositories>({});
+  private repositoryCache = new Map<string, Observable<GitRepositories>>();
 
   get loading(): Observable<boolean> {
     return this.loadingStateSubject.asObservable();
@@ -23,20 +24,21 @@ export class GitProviderService {
   getRepositories(
     gitProviderUserNames?: GitProviderConfig
   ): Observable<GitRepositories> {
-    if (
-      this.repositorySubject.value.github === undefined &&
-      this.repositorySubject.value.gitlab === undefined
-    ) {
-      this.fetchRepositories(gitProviderUserNames)
-        .pipe(
-          tap((repositories: GitRepositories) => {
-            this.repositorySubject.next(repositories);
-            this.loadingStateSubject.next(false);
-          })
-        )
-        .subscribe();
+    const cacheKey = JSON.stringify(gitProviderUserNames);
+    
+    if (!this.repositoryCache.has(cacheKey)) {
+      const repositories$ = this.fetchRepositories(gitProviderUserNames).pipe(
+        tap((repositories: GitRepositories) => {
+          this.repositorySubject.next(repositories);
+          this.loadingStateSubject.next(false);
+        }),
+        shareReplay(1)
+      );
+      
+      this.repositoryCache.set(cacheKey, repositories$);
     }
-    return this.repositorySubject.asObservable();
+    
+    return this.repositoryCache.get(cacheKey) || this.repositorySubject.asObservable();
   }
 
   fetchRepositories(
@@ -82,7 +84,7 @@ export class GitProviderService {
     if (githubUser !== '') {
       return this.http.get<GitRepository[]>(
         `https://api.github.com/users/${githubUser}/repos`
-      );
+      ).pipe(shareReplay(1));
     }
     return of([]);
   }
@@ -93,8 +95,14 @@ export class GitProviderService {
     if (gitlabUser !== '') {
       return this.http.get<GitRepository[]>(
         `https://gitlab.com/api/v4/users/${gitlabUser}/projects`
-      );
+      ).pipe(shareReplay(1));
     }
     return of([]);
+  }
+
+  clearCache(): void {
+    this.repositoryCache.clear();
+    this.loadingStateSubject.next(true);
+    this.repositorySubject.next({});
   }
 }
