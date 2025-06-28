@@ -7,76 +7,30 @@
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nx/angular:component": {
-      "style": "scss",
-      "type": "component"
-    },
+    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" },
+    "@nx/angular:component": { "style": "scss", "type": "component" },
     "@nx/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      },
-      "directive": {
-        "type": "directive"
-      },
-      "service": {
-        "type": "service"
-      },
-      "scam": {
-        "type": "component"
-      },
-      "scam-directive": {
-        "type": "directive"
-      },
-      "guard": {
-        "typeSeparator": "."
-      },
-      "interceptor": {
-        "typeSeparator": "."
-      },
-      "module": {
-        "typeSeparator": "."
-      },
-      "pipe": {
-        "typeSeparator": "."
-      },
-      "resolver": {
-        "typeSeparator": "."
-      }
+      "application": { "linter": "eslint" },
+      "library": { "linter": "eslint" },
+      "storybook-configuration": { "linter": "eslint" },
+      "directive": { "type": "directive" },
+      "service": { "type": "service" },
+      "scam": { "type": "component" },
+      "scam-directive": { "type": "directive" },
+      "guard": { "typeSeparator": "." },
+      "interceptor": { "typeSeparator": "." },
+      "module": { "typeSeparator": "." },
+      "pipe": { "typeSeparator": "." },
+      "resolver": { "typeSeparator": "." }
     },
-    "@schematics/angular:component": {
-      "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
-    },
-    "@schematics/angular:guard": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:interceptor": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:module": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:pipe": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:resolver": {
-      "typeSeparator": "."
-    }
+    "@schematics/angular:component": { "type": "component" },
+    "@schematics/angular:directive": { "type": "directive" },
+    "@schematics/angular:service": { "type": "service" },
+    "@schematics/angular:guard": { "typeSeparator": "." },
+    "@schematics/angular:interceptor": { "typeSeparator": "." },
+    "@schematics/angular:module": { "typeSeparator": "." },
+    "@schematics/angular:pipe": { "typeSeparator": "." },
+    "@schematics/angular:resolver": { "typeSeparator": "." }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
@@ -85,22 +39,12 @@
       "inputs": ["production", "^production"],
       "cache": true
     },
-    "e2e": {
-      "cache": true,
-      "inputs": ["default", "^production"]
-    },
+    "e2e": { "cache": true, "inputs": ["default", "^production"] },
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "options": { "passWithNoTests": true },
+      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     },
     "@nx/eslint:lint": {
       "cache": true,
@@ -126,5 +70,6 @@
   },
   "parallel": 3,
   "useInferencePlugins": false,
-  "defaultBase": "main"
+  "defaultBase": "main",
+  "nxCloudId": "68601eec7715b9977d708964"
 }
