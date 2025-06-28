@@ -20,7 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Observable, Subject } from 'rxjs';
-import { reduce, takeUntil, tap } from 'rxjs/operators';
+import { reduce, takeUntil, finalize } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toCSV, toPlaintext, toXML } from './parsers';
@@ -198,7 +198,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
             `${wordlist}${this.prefix}${word}${this.suffix}\n`,
           ''
         ),
-        tap(() => {
+        finalize(() => {
           this.isGenerating = false;
         }),
         takeUntil(this.unsubscribe$)
