@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MobileComponent } from './mobile/mobile.component';
 import { DesktopComponent } from './desktop/desktop.component';
 
@@ -6,10 +6,7 @@ import { DesktopComponent } from './desktop/desktop.component';
     selector: 'tehw0lf-nav',
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss'],
-    imports: [DesktopComponent, MobileComponent]
+    imports: [DesktopComponent, MobileComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavComponent {
-  constructor() {
-    //
-  }
-}
+export class NavComponent {}

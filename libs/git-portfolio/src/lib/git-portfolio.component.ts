@@ -9,7 +9,7 @@ import {
   KeyValuePipe,
   NgStyle
 } from '@angular/common';
-import { Component, input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -34,7 +34,8 @@ import { GitRepository } from './types/git-repository-type';
     RepoCardComponent,
     AsyncPipe,
     KeyValuePipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GitPortfolioComponent implements OnInit, OnDestroy {
   private gitProviderService = inject(GitProviderService);
