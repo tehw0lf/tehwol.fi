@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@tehw0lf/wordlist-generator';
 
 import { ThemeService } from '../theme.service';
@@ -7,7 +7,8 @@ import { ThemeService } from '../theme.service';
     selector: 'tehw0lf-wordlist-generator',
     templateUrl: './wordlist-generator.component.html',
     styleUrls: ['./wordlist-generator.component.scss'],
-    imports: [WordlistGeneratorComponent_1]
+    imports: [WordlistGeneratorComponent_1],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordlistGeneratorComponent {
   themeService = inject(ThemeService);

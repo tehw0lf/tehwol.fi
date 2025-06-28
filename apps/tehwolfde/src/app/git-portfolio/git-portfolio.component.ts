@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import {
   GitPortfolioComponent as GitPortfolioComponent_1,
   GitProviderConfig
@@ -10,7 +10,8 @@ import { ThemeService } from '../theme.service';
     selector: 'tehw0lf-git-portfolio',
     templateUrl: './git-portfolio.component.html',
     styleUrls: ['./git-portfolio.component.scss'],
-    imports: [GitPortfolioComponent_1]
+    imports: [GitPortfolioComponent_1],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GitPortfolioComponent {
   private themeService = inject(ThemeService);

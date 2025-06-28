@@ -1,7 +1,10 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  inject,
   input,
   OnDestroy,
   OnInit,
@@ -33,9 +36,11 @@ interface FormConfigEntry {
         FormlyMaterialModule,
         NgStyle,
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
+  private cdr = inject(ChangeDetectorRef);
   buttonStyle = input({
     'background-color': '#333333',
     border: 'none',
@@ -91,7 +96,10 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   submitFormData(formData: { [key: string]: string }) {
     this.apiCallback()(formData)
       .pipe(
-        tap((success: boolean) => this.emailSent.next(success)),
+        tap((success: boolean) => {
+          this.emailSent.next(success);
+          this.cdr.markForCheck();
+        }),
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
