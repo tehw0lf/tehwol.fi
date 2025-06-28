@@ -62,7 +62,12 @@ nx dep-graph           # View dependency graph
 
 ## Angular Guidelines
 
-Follow the Angular documentation at https://angular.dev for best practices. Key conventions:
+Follow the Angular documentation at https://angular.dev for best practices. For the most current Angular guidance, always reference:
+- [Official Guidelines](https://angular.dev/assets/context/guidelines.md) - Core development practices
+- [Documentation Index](https://angular.dev/llms.txt) - Comprehensive reference links
+- [Full Reference](https://angular.dev/llms-full.txt) - Complete Angular concepts and patterns
+
+Project-specific conventions:
 - Component prefix: `tehw0lf`
 - Styling: SCSS with Angular Material (purple-green theme)
 - Testing: Jest for unit tests, Cypress for E2E
@@ -77,3 +82,10 @@ Each library in `libs/` is independently publishable with its own:
 - Jest configuration for testing
 
 When working on libraries, test integration with the main app by importing via the path mapping.
+
+## Keeping Current
+
+Angular documentation evolves frequently. When working on this project:
+1. Always check the live Angular documentation links above for the latest practices
+2. If Angular guidelines conflict with this file, prefer the official Angular documentation
+3. Consider updating this CLAUDE.md file if you notice outdated practices or new important patterns from the official sources
