@@ -29,3 +29,4 @@ jobs:
       artifact_path: 'dist'
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
