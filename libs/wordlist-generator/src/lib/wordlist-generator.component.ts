@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Observable, Subject } from 'rxjs';
 import { reduce, takeUntil, tap } from 'rxjs/operators';
 
@@ -41,6 +42,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
         CdkDropList,
         CdkDrag,
         MatIconModule,
+        MatProgressBarModule,
         AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -67,6 +69,8 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   filteredCharset: string[] = [];
   prefix = '';
   suffix = '';
+  isGenerating = false;
+  isLargeDataset = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -176,7 +180,11 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
           (previousLength: number, currentLength: number) =>
             previousLength * currentLength
         );
+      
+      this.isLargeDataset = this.wordsGenerated > 50000;
       this.displayWordlist = this.wordsGenerated <= 100;
+      this.isGenerating = true;
+      
       this.wordlist$ = this.getWordlist();
     }
   }
@@ -190,6 +198,9 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
             `${wordlist}${this.prefix}${word}${this.suffix}\n`,
           ''
         ),
+        tap(() => {
+          this.isGenerating = false;
+        }),
         takeUntil(this.unsubscribe$)
       );
   }
