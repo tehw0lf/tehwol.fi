@@ -1,5 +1,4 @@
 {
-  "neverConnectToCloud": true,
   "defaultProject": "tehwolfde",
   "generators": {
     "@nx/angular:application": {
