@@ -111,7 +111,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         this.model[entry.field] = entry.value;
       }
 
-      this.fields.push({
+      const fieldConfig: any = {
         key: entry.field,
         type: entry.type ? entry.type : 'input',
         props: {
@@ -128,7 +128,31 @@ export class ContactFormComponent implements OnInit, OnDestroy {
                 maxRows: 10
               }
             : {}
-      });
+      };
+
+      // Add email validation for email fields
+      if (entry.field.toLowerCase() === 'email') {
+        fieldConfig.props.type = 'email';
+        fieldConfig.validators = {
+          email: {
+            expression: (control: any) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
+            message: 'Please enter a valid email address'
+          }
+        };
+      }
+
+      // Add required validation message
+      if (entry.required) {
+        fieldConfig.validators = {
+          ...fieldConfig.validators,
+          required: {
+            expression: (control: any) => !!control.value,
+            message: `${entry.field} is required`
+          }
+        };
+      }
+
+      this.fields.push(fieldConfig);
     });
   }
 

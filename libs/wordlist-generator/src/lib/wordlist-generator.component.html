@@ -6,8 +6,13 @@
         [ngStyle]="buttonStyle()"
         mat-raised-button
         (click)="generateWordlist()"
+        [disabled]="isGenerating"
       >
-        Generate wordlist
+        @if (isGenerating) {
+          Generating...
+        } @else {
+          Generate wordlist
+        }
       </button>
       @if (wordlist$) {
         <button
@@ -44,6 +49,14 @@
         </button>
       }
     </div>
+    
+    @if (isGenerating && isLargeDataset) {
+      <div class="progress-container">
+        <mat-progress-bar mode="indeterminate" role="progressbar" aria-label="Generating wordlist"></mat-progress-bar>
+        <p [ngStyle]="textStyle()">Processing large dataset using Web Worker...</p>
+      </div>
+    }
+    
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
         <mat-form-field class="fixed-width bottom-10" appearance="outline">

@@ -1,4 +1,4 @@
-<mat-toolbar [ngClass]="themeService.theme()">
+<mat-toolbar [ngClass]="themeService.theme()" role="navigation" aria-label="Main navigation">
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
@@ -6,6 +6,7 @@
       (click)="toggleSidenav()"
       [style]="burgerStyle"
       mat-icon-button
+      aria-label="Open navigation menu"
     >
       <mat-icon>menu</mat-icon>
     </button>
@@ -55,6 +56,7 @@
         (click)="switchToLight()"
         [style]="buttonStyle"
         mat-icon-button
+        aria-label="Switch to light theme"
       >
         <mat-icon>light_mode</mat-icon>
       </button>
@@ -66,6 +68,7 @@
         (click)="switchToDark()"
         [style]="buttonStyle"
         mat-icon-button
+        aria-label="Switch to dark theme"
       >
         <mat-icon>dark_mode</mat-icon>
       </button>
