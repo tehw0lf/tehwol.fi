@@ -7,9 +7,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class WordlistGeneratorService {
-  constructor() {
-    //
-  }
 
   generateWordlist(...charsets: string[]): Observable<string> {
     return from(product(...charsets)).pipe(
