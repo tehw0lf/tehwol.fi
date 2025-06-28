@@ -5,7 +5,7 @@ import {
   moveItemInArray
 } from '@angular/cdk/drag-drop';
 import { AsyncPipe, NgStyle } from '@angular/common';
-import { Component, input, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormArray,
@@ -42,7 +42,8 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
         CdkDrag,
         MatIconModule,
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);

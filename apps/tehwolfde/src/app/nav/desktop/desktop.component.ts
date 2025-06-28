@@ -5,7 +5,7 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,7 +27,8 @@ import { SidenavService } from '../sidenav.service';
     MatIconModule,
     RouterLink,
     RouterLinkActive
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DesktopComponent implements AfterViewInit, OnDestroy {
   themeService = inject(ThemeService);
@@ -35,6 +36,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);
+  private cdr = inject(ChangeDetectorRef);
 
   burgerStyle = '';
   buttonStyle = '';
@@ -55,6 +57,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
             this.burgerStyle = '';
             this.buttonStyle = 'display: none;';
           }
+          this.cdr.markForCheck();
         }),
         takeUntil(this.unsubscribe$)
       )
