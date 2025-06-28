@@ -1,0 +1,3 @@
+[submodule ".claude-templates"]
+	path = .claude-templates
+	url = https://github.com/tehw0lf/claude-templates.git
