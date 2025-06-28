@@ -30,7 +30,7 @@ This is an Nx monorepo containing an Angular portfolio website and reusable Angu
 
 ### Monorepo Structure
 - `apps/tehwolfde/`: Main Angular application (portfolio website)
-- `apps/tehwolfde-e2e/`: E2E tests using Cypress
+- `apps/tehwolfde-e2e/`: E2E tests using Playwright
 - `libs/*/`: Publishable Angular libraries with independent versioning
 - Path mapping in `tsconfig.base.json` allows importing libs as `@tehw0lf/library-name`
 
@@ -81,7 +81,7 @@ nx dep-graph           # View dependency graph
 ## Project-specific conventions
 - Component prefix: `tehw0lf`
 - Styling: SCSS with Angular Material (purple-green theme)
-- Testing: Jest for unit tests, Cypress for E2E
+- Testing: Jest for unit tests, Playwright for E2E
 - Libraries use ng-packagr for building and publishing
 
 ## Library Development
