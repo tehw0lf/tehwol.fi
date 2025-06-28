@@ -68,7 +68,7 @@
       "!{projectRoot}/eslint.config.mjs"
     ]
   },
-  "parallel": 3,
+  "parallel": 4,
   "useInferencePlugins": false,
   "defaultBase": "main",
   "nxCloudId": "68601eec7715b9977d708964"
