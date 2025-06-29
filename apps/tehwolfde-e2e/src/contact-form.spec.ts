@@ -10,59 +10,55 @@ test.describe('Contact Form Page', () => {
   });
 
   test('should have form fields', async ({ page }) => {
-    // Check for typical contact form fields
-    await expect(page.locator('form')).toBeVisible();
+    // Check for contact form component and its form
+    await expect(page.locator('contact-form form')).toBeVisible();
     
-    // Look for common form fields (name, email, message)
-    const inputs = page.locator('input, textarea');
-    await expect(inputs.first()).toBeVisible();
+    // Look for formly form fields
+    const formlyFields = page.locator('formly-form');
+    await expect(formlyFields).toBeVisible();
   });
 
   test('should validate required fields', async ({ page }) => {
     // Try to submit empty form
-    const submitButton = page.locator('button[type="submit"], button').filter({ hasText: /submit|send/i });
+    const submitButton = page.locator('contact-form button[type="submit"]');
     
     if (await submitButton.count() > 0) {
-      await submitButton.click();
-      
-      // Check for validation errors
-      const errorMessages = page.locator('.mat-error, .error, [role="alert"]');
-      if (await errorMessages.count() > 0) {
-        await expect(errorMessages.first()).toBeVisible();
-      }
+      // Button should be disabled when form is invalid
+      await expect(submitButton).toBeDisabled();
     }
   });
 
   test('should handle form input', async ({ page }) => {
-    // Fill out form fields
-    const nameInput = page.locator('input[type="text"]').first();
-    if (await nameInput.count() > 0) {
-      await nameInput.fill('Test User');
+    // Wait for form to be ready
+    await page.waitForSelector('formly-form');
+    
+    // Fill out form fields by labels (more reliable for formly forms)
+    const nameField = page.getByLabel(/name/i);
+    if (await nameField.count() > 0) {
+      await nameField.fill('Test User');
+      await expect(nameField).toHaveValue('Test User');
     }
 
-    const emailInput = page.locator('input[type="email"], input').filter({ hasText: /email/i });
-    if (await emailInput.count() > 0) {
-      await emailInput.fill('test@example.com');
+    const emailField = page.getByLabel(/email/i);
+    if (await emailField.count() > 0) {
+      await emailField.fill('test@example.com');
+      await expect(emailField).toHaveValue('test@example.com');
     }
 
-    const messageField = page.locator('textarea');
+    const messageField = page.getByLabel(/message/i);
     if (await messageField.count() > 0) {
       await messageField.fill('This is a test message');
+      await expect(messageField).toHaveValue('This is a test message');
     }
-
-    // Verify inputs are filled
-    await expect(nameInput).toHaveValue('Test User');
   });
 
   test('should be accessible', async ({ page }) => {
-    // Check for proper form labels and accessibility
-    const labels = page.locator('label, .mat-form-field-label');
-    if (await labels.count() > 0) {
-      await expect(labels.first()).toBeVisible();
-    }
-
     // Check for proper form structure
-    await expect(page.locator('form')).toBeVisible();
+    await expect(page.locator('contact-form form')).toBeVisible();
+    
+    // Check for formly accessibility
+    const formlyForm = page.locator('formly-form');
+    await expect(formlyForm).toBeVisible();
   });
 
   test('should handle responsive layout', async ({ page }) => {

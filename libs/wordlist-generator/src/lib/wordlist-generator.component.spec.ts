@@ -174,13 +174,13 @@ describe('WordlistGeneratorComponent', () => {
   describe('Large dataset handling', () => {
     it('should detect large datasets correctly', () => {
       // Set up a large dataset scenario
-      component.charsets?.at(0).setValue('a'.repeat(300)); // 300 characters
+      component.charsets?.at(0).setValue('a'.repeat(300)); // 300 characters //TODO: No Claude, this results in a charset of "a". Please read the component code completely, as the charset is mapped to a Set() to remove duplicate characters
       component.addCharset();
-      component.charsets?.at(1).setValue('b'.repeat(300)); // 300 characters
-      
+      component.charsets?.at(1).setValue('b'.repeat(300)); // 300 characters //TODO: No Claude, this results in a charset of "b". Please read the component code completely, as the charset is mapped to a Set() to remove duplicate characters
+
       component.generateWordlist();
-      
-      expect(component.isLargeDataset).toBe(true);
+
+      expect(component.isLargeDataset()).toBe(true);
       expect(component.wordsGenerated).toBe(90000); // 300 * 300
     });
 
@@ -188,20 +188,20 @@ describe('WordlistGeneratorComponent', () => {
       component.charsets?.at(0).setValue('abc'); // 3 characters
       component.addCharset();
       component.charsets?.at(1).setValue('123'); // 3 characters
-      
+
       component.generateWordlist();
-      
-      expect(component.isLargeDataset).toBe(false);
+
+      expect(component.isLargeDataset()).toBe(false);
       expect(component.wordsGenerated).toBe(9); // 3 * 3
     });
 
     it('should set generation state correctly', () => {
       component.charsets?.at(0).setValue('abc');
-      
+
       expect(component.isGenerating).toBe(false);
-      
+
       component.generateWordlist();
-      
+
       expect(component.isGenerating).toBe(true);
     });
 
@@ -210,18 +210,18 @@ describe('WordlistGeneratorComponent', () => {
       component.charsets?.at(0).setValue('ab');
       component.addCharset();
       component.charsets?.at(1).setValue('12');
-      
+
       component.generateWordlist();
-      
+
       expect(component.displayWordlist).toBe(true);
       expect(component.wordsGenerated).toBe(4);
 
       // Large dataset - should not display
       component.charsets?.at(0).setValue('a'.repeat(20));
       component.charsets?.at(1).setValue('b'.repeat(20));
-      
+
       component.generateWordlist();
-      
+
       expect(component.displayWordlist).toBe(false);
       expect(component.wordsGenerated).toBe(400);
     });
@@ -231,9 +231,9 @@ describe('WordlistGeneratorComponent', () => {
     it('should reset generation state when wordlist generation completes', (done) => {
       component.charsets?.at(0).setValue('abc');
       component.generateWordlist();
-      
+
       expect(component.isGenerating).toBe(true);
-      
+
       component.getWordlist().subscribe({
         complete: () => {
           expect(component.isGenerating).toBe(false);
@@ -247,27 +247,27 @@ describe('WordlistGeneratorComponent', () => {
     it('should only regenerate wordlist when charsets change', () => {
       component.charsets?.at(0).setValue('abc');
       component.generateWordlist();
-      
+
       // Mock that the filtered charset hasn't changed
       const originalFiltered = component.filteredCharset;
-      
+
       // Call downloadWordlist which should not regenerate
       jest.spyOn(component, 'generateWordlist');
       component.downloadWordlist();
-      
+
       expect(component.generateWordlist).not.toHaveBeenCalled();
     });
 
     it('should regenerate wordlist when charsets actually change', () => {
       component.charsets?.at(0).setValue('abc');
       component.generateWordlist();
-      
+
       // Change the charset
       component.charsets?.at(0).setValue('def');
-      
+
       jest.spyOn(component, 'generateWordlist');
       component.downloadWordlist();
-      
+
       expect(component.generateWordlist).toHaveBeenCalled();
     });
   });

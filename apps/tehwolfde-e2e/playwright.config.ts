@@ -40,10 +40,11 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
+    // Only run WebKit in CI - has symbol conflicts on Arch Linux locally
+    ...(process.env.CI ? [{
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    },
+    }] : []),
 
     // Uncomment for mobile browsers support
     /* {

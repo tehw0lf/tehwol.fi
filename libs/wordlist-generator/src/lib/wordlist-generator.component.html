@@ -6,15 +6,15 @@
         [ngStyle]="buttonStyle()"
         mat-raised-button
         (click)="generateWordlist()"
-        [disabled]="isGenerating"
+        [disabled]="isGenerating()"
       >
-        @if (isGenerating) {
+        @if (isGenerating()) {
           Generating...
         } @else {
           Generate wordlist
         }
       </button>
-      @if (wordlist$) {
+      @if (wordlist$ && !isGenerating()) {
         <button
           class="choose-format"
           [ngStyle]="buttonStyle()"
@@ -35,7 +35,7 @@
           </button>
         }
       </mat-menu>
-      @if (wordlist$) {
+      @if (wordlist$ && !isGenerating()) {
         <button
           class="download-wordlist"
           [ngStyle]="buttonStyle()"
@@ -50,7 +50,7 @@
       }
     </div>
     
-    @if (isGenerating && isLargeDataset) {
+    @if (isGenerating() && isLargeDataset()) {
       <div class="progress-container">
         <mat-progress-bar mode="indeterminate" role="progressbar" aria-label="Generating wordlist"></mat-progress-bar>
         <p [ngStyle]="textStyle()">Processing large dataset using Web Worker...</p>
@@ -147,6 +147,8 @@
       } @else {
         The generated wordlist is too large to be displayed. You can still
         download it.
+        <!-- Hidden subscription to trigger the observable for large datasets -->
+        <span style="display: none;">{{ wordlist$ | async }}</span>
       }
     </div>
   }
