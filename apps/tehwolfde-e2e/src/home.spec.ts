@@ -16,17 +16,19 @@ test.describe('tehwolfde Home', () => {
   });
 
   test('should show navigation links', async ({ page }) => {
-    // Check for navigation links
-    await expect(page.locator('a[routerLink="/home"]')).toBeVisible();
-    await expect(page.locator('a[routerLink="/portfolio"]')).toBeVisible();
-    await expect(page.locator('a[routerLink="/wordlist-generator"]')).toBeVisible();
-    await expect(page.locator('a[routerLink="/contact-form"]')).toBeVisible();
+    // Check for navigation links in main navigation
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(mainNav.locator('a[routerLink="/home"]')).toBeVisible();
+    await expect(mainNav.locator('a[routerLink="/portfolio"]')).toBeVisible();
+    await expect(mainNav.locator('a[routerLink="/wordlist-generator"]')).toBeVisible();
+    await expect(mainNav.locator('a[routerLink="/contact-form"]')).toBeVisible();
   });
 
   test('should have theme switcher', async ({ page }) => {
-    // Check for theme toggle buttons (either light or dark should be visible)
-    const lightButton = page.locator('button#light');
-    const darkButton = page.locator('button#dark');
+    // Check for theme toggle buttons in main navigation
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    const lightButton = mainNav.locator('button#light');
+    const darkButton = mainNav.locator('button#dark');
     
     // One of them should be visible
     await expect(lightButton.or(darkButton)).toBeVisible();
@@ -43,12 +45,18 @@ test.describe('tehwolfde Home', () => {
   });
 
   test('should have GitHub link', async ({ page }) => {
-    await expect(page.locator('a[href="https://github.com/tehw0lf"]')).toBeVisible();
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(mainNav.locator('a[href="https://github.com/tehw0lf"]')).toBeVisible();
   });
 
   test('should have accessible navigation', async ({ page }) => {
-    // Check for proper ARIA labels and roles
-    const nav = page.locator('nav, [role="navigation"]');
-    await expect(nav).toBeVisible();
+    // Check for proper ARIA labels and roles on main navigation
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(mainNav).toBeVisible();
+    
+    // Check if mobile navigation exists when switching to mobile view
+    await page.setViewportSize({ width: 375, height: 667 });
+    const mobileComponent = page.locator('tehw0lf-mobile');
+    await expect(mobileComponent).toBeVisible();
   });
 });
