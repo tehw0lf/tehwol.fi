@@ -15,12 +15,15 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
+interface FormValue {
+  [key: string]: string;
+}
+
 interface FormConfigEntry {
   field: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value?: any;
+  value?: string;
   required?: boolean;
-  type?: string;
+  type?: 'input' | 'textarea' | 'email' | 'number';
 }
 
 @Component({
@@ -68,8 +71,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     { field: 'message', required: true, type: 'textarea' }
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  apiCallback = input.required<(formValue: any) => Observable<boolean>>();
+  apiCallback = input.required<(formValue: FormValue) => Observable<boolean>>();
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];
@@ -111,7 +113,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         this.model[entry.field] = entry.value;
       }
 
-      const fieldConfig: any = {
+      const fieldConfig: FormlyFieldConfig = {
         key: entry.field,
         type: entry.type ? entry.type : 'input',
         props: {
@@ -132,7 +134,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
       // Add email validation for email fields
       if (entry.field.toLowerCase() === 'email') {
-        fieldConfig.props.type = 'email';
+        fieldConfig.props!.type = 'email';
         fieldConfig.validators = {
           email: {
             expression: (control: any) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
