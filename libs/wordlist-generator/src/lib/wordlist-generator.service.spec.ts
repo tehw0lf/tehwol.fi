@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { take, toArray } from 'rxjs/operators';
+import { toArray } from 'rxjs/operators';
 
 import { WordlistGeneratorService } from './wordlist-generator.service';
 
@@ -188,7 +188,9 @@ describe('WordlistGeneratorService', () => {
           }, 0);
         }
         
-        terminate(): void {}
+        terminate(): void {
+          // Mock terminate function - no implementation needed for tests
+        }
       } as any;
     });
 
