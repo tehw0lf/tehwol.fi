@@ -205,13 +205,12 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     return this.wordlistGenerator
       .generateWordlist(...this.filteredCharset)
       .pipe(
-        shareReplay({ bufferSize: 1, refCount: false }),
+        shareReplay({ bufferSize: 1, refCount: true }),
         reduce(
           (wordlist: string, word: string) =>
             `${wordlist}${this.prefix}${word}${this.suffix}\n`,
           ''
         ),
-        tap((text: string) => console.log(text)),
         finalize(() => {
           this.isGenerating.set(false);
         }),
