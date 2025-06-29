@@ -1,6 +1,6 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import * as githubLanguageColors from 'github-language-colors/colors.json';
@@ -25,7 +25,8 @@ interface Dictionary {
         OcticonDirective,
         ClipboardModule,
         DatePipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RepoCardComponent {
   buttonStyle = input.required<any>();

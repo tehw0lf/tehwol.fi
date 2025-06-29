@@ -28,7 +28,8 @@
         "allowedCommonJsDependencies": [
           "cartesian-product-generator",
           "@primer/octicons"
-        ]
+        ],
+        "webWorkerTsConfig": "apps/tehwolfde/tsconfig.worker.json"
       },
       "configurations": {
         "production": {

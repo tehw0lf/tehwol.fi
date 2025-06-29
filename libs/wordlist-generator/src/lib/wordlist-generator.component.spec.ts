@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
@@ -37,6 +38,7 @@ describe('WordlistGeneratorComponent', () => {
         MatIconModule,
         MatInputModule,
         MatMenuModule,
+        MatProgressBarModule,
         WordlistGeneratorComponent
       ],
       providers: [
@@ -105,14 +107,11 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should provide a downloadable file for IE', () => {
-    const nav: any = Object.defineProperty(
-      global.window.navigator,
-      'msSaveOrOpenBlob',
-      {
+    const nav: Navigator & { msSaveOrOpenBlob?: jest.Mock } =
+      Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
         value: jest.fn(),
         configurable: true
-      }
-    );
+      });
     component.downloadWordlist();
     expect(nav.msSaveOrOpenBlob).toHaveBeenCalledTimes(1);
     Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
@@ -167,5 +166,120 @@ describe('WordlistGeneratorComponent', () => {
   it('should do nothing if the charset is not valid', () => {
     component.generateWordlist();
     expect(component.wordlist$).toBeUndefined();
+  });
+
+  describe('Large dataset handling', () => {
+    it('should detect large datasets correctly', () => {
+      // Set up a large dataset scenario - create unique characters using Unicode range
+      const largeCharset1 = Array.from({ length: 300 }, (_, i) =>
+        String.fromCharCode(33 + i)
+      ).join(''); // 300 unique chars starting from '!'
+      const largeCharset2 = Array.from({ length: 300 }, (_, i) =>
+        String.fromCharCode(333 + i)
+      ).join(''); // 300 unique chars starting from Unicode 333
+
+      component.charsets?.at(0).setValue(largeCharset1);
+      component.addCharset();
+      component.charsets?.at(1).setValue(largeCharset2);
+
+      component.generateWordlist();
+
+      expect(component.isLargeDataset()).toBe(true);
+      expect(component.wordsGenerated).toBe(90000); // 300 * 300
+    });
+
+    it('should detect small datasets correctly', () => {
+      component.charsets?.at(0).setValue('abc'); // 3 characters
+      component.addCharset();
+      component.charsets?.at(1).setValue('123'); // 3 characters
+
+      component.generateWordlist();
+
+      expect(component.isLargeDataset()).toBe(false);
+      expect(component.wordsGenerated).toBe(9); // 3 * 3
+    });
+
+    it('should set generation state correctly', () => {
+      component.charsets?.at(0).setValue('abc');
+
+      expect(component.isGenerating()).toBe(false);
+
+      component.generateWordlist();
+
+      expect(component.isGenerating()).toBe(true);
+    });
+
+    it('should control wordlist display based on size', () => {
+      // Small dataset - should display
+      component.charsets?.at(0).setValue('ab');
+      component.addCharset();
+      component.charsets?.at(1).setValue('12');
+
+      component.generateWordlist();
+
+      expect(component.displayWordlist).toBe(true);
+      expect(component.wordsGenerated).toBe(4);
+
+      // Large dataset - should not display (need > 100 words)
+      const charset1 = Array.from({ length: 15 }, (_, i) =>
+        String.fromCharCode(65 + i)
+      ).join(''); // 15 unique chars A-O
+      const charset2 = Array.from({ length: 10 }, (_, i) =>
+        String.fromCharCode(48 + i)
+      ).join(''); // 10 unique chars 0-9
+
+      component.charsets?.at(0).setValue(charset1);
+      component.charsets?.at(1).setValue(charset2);
+
+      component.generateWordlist();
+
+      expect(component.displayWordlist).toBe(false);
+      expect(component.wordsGenerated).toBe(150); // 15 * 10
+    });
+  });
+
+  describe('Progress tracking', () => {
+    it('should reset generation state when wordlist generation completes', (done) => {
+      component.charsets?.at(0).setValue('abc');
+      component.generateWordlist();
+
+      expect(component.isGenerating()).toBe(true);
+
+      component.getWordlist().subscribe({
+        complete: () => {
+          expect(component.isGenerating()).toBe(false);
+          done();
+        }
+      });
+    });
+  });
+
+  describe('Performance optimization', () => {
+    it('should only regenerate wordlist when charsets change', () => {
+      component.charsets?.at(0).setValue('abc');
+      component.generateWordlist();
+
+      // Mock that the filtered charset hasn't changed
+      expect(component.filteredCharset).toBeDefined();
+
+      // Call downloadWordlist which should not regenerate
+      jest.spyOn(component, 'generateWordlist');
+      component.downloadWordlist();
+
+      expect(component.generateWordlist).not.toHaveBeenCalled();
+    });
+
+    it('should regenerate wordlist when charsets actually change', () => {
+      component.charsets?.at(0).setValue('abc');
+      component.generateWordlist();
+
+      // Change the charset
+      component.charsets?.at(0).setValue('def');
+
+      jest.spyOn(component, 'generateWordlist');
+      component.downloadWordlist();
+
+      expect(component.generateWordlist).toHaveBeenCalled();
+    });
   });
 });

@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
 import { of } from 'rxjs';
 
@@ -8,7 +8,8 @@ import { ThemeService } from '../theme.service';
     selector: 'tehw0lf-contact-form',
     templateUrl: './contact-form.component.html',
     styleUrls: ['./contact-form.component.scss'],
-    imports: [ContactFormComponent_1]
+    imports: [ContactFormComponent_1],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
   private themeService = inject(ThemeService);

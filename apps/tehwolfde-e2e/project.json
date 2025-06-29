@@ -7,14 +7,21 @@
   "implicitDependencies": ["tehwolfde"],
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
+      "executor": "@nx/playwright:playwright",
       "options": {
-        "cypressConfig": "apps/tehwolfde-e2e/cypress.json",
-        "devServerTarget": "tehwolfde:serve:development"
+        "config": "apps/tehwolfde-e2e/playwright.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/dist/.playwright"]
+    },
+    "e2e-ci": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "apps/tehwolfde-e2e/playwright.config.ts"
       },
       "configurations": {
-        "production": {
-          "devServerTarget": "tehwolfde:serve:production"
+        "ci": {
+          "headed": false,
+          "workers": 1
         }
       }
     },

@@ -1,23 +1,29 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  inject,
   input,
   OnDestroy,
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
+interface FormValue {
+  [key: string]: string;
+}
+
 interface FormConfigEntry {
   field: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value?: any;
+  value?: string;
   required?: boolean;
-  type?: string;
+  type?: 'input' | 'textarea' | 'email' | 'number';
 }
 
 @Component({
@@ -33,9 +39,11 @@ interface FormConfigEntry {
         FormlyMaterialModule,
         NgStyle,
         AsyncPipe
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
+  private cdr = inject(ChangeDetectorRef);
   buttonStyle = input({
     'background-color': '#333333',
     border: 'none',
@@ -63,8 +71,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     { field: 'message', required: true, type: 'textarea' }
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  apiCallback = input.required<(formValue: any) => Observable<boolean>>();
+  apiCallback = input.required<(formValue: FormValue) => Observable<boolean>>();
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];
@@ -91,7 +98,10 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   submitFormData(formData: { [key: string]: string }) {
     this.apiCallback()(formData)
       .pipe(
-        tap((success: boolean) => this.emailSent.next(success)),
+        tap((success: boolean) => {
+          this.emailSent.next(success);
+          this.cdr.markForCheck();
+        }),
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
@@ -103,7 +113,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         this.model[entry.field] = entry.value;
       }
 
-      this.fields.push({
+      const fieldConfig: FormlyFieldConfig = {
         key: entry.field,
         type: entry.type ? entry.type : 'input',
         props: {
@@ -120,7 +130,33 @@ export class ContactFormComponent implements OnInit, OnDestroy {
                 maxRows: 10
               }
             : {}
-      });
+      };
+
+      // Add email validation for email fields
+      if (entry.field.toLowerCase() === 'email') {
+        if (fieldConfig.props) {
+          fieldConfig.props.type = 'email';
+        }
+        fieldConfig.validators = {
+          email: {
+            expression: (control: AbstractControl) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
+            message: 'Please enter a valid email address'
+          }
+        };
+      }
+
+      // Add required validation message
+      if (entry.required) {
+        fieldConfig.validators = {
+          ...fieldConfig.validators,
+          required: {
+            expression: (control: AbstractControl) => !!control.value,
+            message: `${entry.field} is required`
+          }
+        };
+      }
+
+      this.fields.push(fieldConfig);
     });
   }
 

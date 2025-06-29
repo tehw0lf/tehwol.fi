@@ -139,8 +139,8 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   ): boolean {
     return (
       (gitRepositories[gitProvider] &&
-        gitRepositories[gitProvider].own?.length > 0 &&
-        gitRepositories[gitProvider].forked?.length > 0) ??
+        (gitRepositories[gitProvider].own?.length > 0 ||
+         gitRepositories[gitProvider].forked?.length > 0)) ??
       false
     );
   }

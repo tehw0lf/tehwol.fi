@@ -3,7 +3,7 @@
   [ngClass]="themeService.theme()"
   hasBackdrop="false"
 >
-  <mat-sidenav #sidenav mode="over" fixedInViewport="true">
+  <mat-sidenav #sidenav mode="over" fixedInViewport="true" role="navigation" aria-label="Mobile navigation menu">
     <mat-nav-list
       [ngClass]="themeService.theme()"
       class="flex-column flex-gap-20 flex-fxflex"
@@ -59,8 +59,9 @@
           type="button"
           (click)="toggleSidenav()"
           mat-icon-button
+          aria-label="Close navigation menu"
         >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          <mat-icon>menu</mat-icon>
         </button>
         @if (themeService.theme() === 'dark') {
           <button
@@ -69,6 +70,7 @@
             type="button"
             (click)="switchToLight()"
             mat-icon-button
+            aria-label="Switch to light theme"
           >
             <mat-icon>light_mode</mat-icon>
           </button>
@@ -80,6 +82,7 @@
             type="button"
             (click)="switchToDark()"
             mat-icon-button
+            aria-label="Switch to dark theme"
           >
             <mat-icon>dark_mode</mat-icon>
           </button>

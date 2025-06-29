@@ -18,7 +18,8 @@ jobs:
       tool: 'npm'
       format: 'run format'
       lint: 'run affected:lint'
-      test: 'run affected:test --ci --code-coverage'
+      test: 'run test:ci'
+      e2e: 'run e2e'
       build_branch: 'run affected:build'
       build_main: 'run affected:build --skip-nx-cache'
       event_name: ${{ github.event_name }}

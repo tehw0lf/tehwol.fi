@@ -1,6 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   OnDestroy,
@@ -39,7 +40,8 @@ import { SidenavService } from '../sidenav.service';
     MatButtonModule,
     MatIconModule,
     RouterOutlet
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileComponent implements OnInit, OnDestroy {
   router = inject(Router);

@@ -14,17 +14,16 @@ export default [
     ignores: ['**/dist']
   },
   ...baseConfig,
-  ...compat.extends('plugin:cypress/recommended'),
+  // Playwright doesn't require specific eslint plugins
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here
     rules: {}
   },
   {
-    files: ['src/plugins/index.js'],
+    files: ['src/**/*.spec.ts', 'src/**/*.test.ts'],
     rules: {
-      '@typescript-eslint/no-var-requires': 'off',
-      'no-undef': 'off'
+      '@typescript-eslint/no-unused-expressions': 'off'
     }
   }
 ];
