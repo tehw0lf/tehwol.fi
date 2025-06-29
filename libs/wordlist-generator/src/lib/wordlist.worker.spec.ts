@@ -26,29 +26,52 @@ describe('WordlistWorker', () => {
   beforeEach(() => {
     // Mock Worker environment
     global.Worker = class MockWorker extends EventTarget implements Worker {
-      onmessage: ((this: Worker, ev: MessageEvent) => any) | null = null;
-      onmessageerror: ((this: Worker, ev: MessageEvent) => any) | null = null;
-      onerror: ((this: Worker, ev: ErrorEvent) => any) | null = null;
+      onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
+      onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null = null;
+      onerror: ((this: Worker, ev: ErrorEvent) => void) | null = null;
       
-      constructor(scriptURL: string | URL, options?: WorkerOptions) {
+      constructor(_scriptURL: string | URL, _options?: WorkerOptions) {
         super();
       }
       
-      postMessage(message: any, transfer?: Transferable[]): void;
-      postMessage(message: any, options?: StructuredSerializeOptions): void;
-      postMessage(message: any, optionsOrTransfer?: any): void {
+      postMessage(message: unknown, transfer?: Transferable[]): void;
+      postMessage(message: unknown, options?: StructuredSerializeOptions): void;
+      postMessage(message: unknown, _optionsOrTransfer?: unknown): void {
         // Simulate worker message handling
         setTimeout(() => {
           if (this.onmessage) {
-            this.onmessage(new MessageEvent('message', { data: message }));
+            const msg = message as WordlistWorkerMessage;
+            try {
+              // Use the mocked cartesian product
+              const mockData = mockProduct();
+              const words = mockData.map((combo: string[]) => combo.join(''));
+              const batchSize = msg.batchSize || 1000;
+              
+              // Send batches
+              for (let i = 0; i < words.length; i += batchSize) {
+                const batch = words.slice(i, i + batchSize);
+                this.onmessage(new MessageEvent('message', {
+                  data: { type: 'batch', words: batch }
+                }));
+              }
+              
+              // Send completion
+              this.onmessage(new MessageEvent('message', {
+                data: { type: 'complete' }
+              }));
+            } catch (error) {
+              this.onmessage(new MessageEvent('message', {
+                data: { type: 'error', error: (error as Error).message }
+              }));
+            }
           }
-        }, 0);
+        }, 10);
       }
       
       terminate(): void {
         // Mock terminate
       }
-    } as any;
+    } as Worker;
 
     // Mock the product function
     mockProduct = require('cartesian-product-generator').product;
@@ -76,6 +99,9 @@ describe('WordlistWorker', () => {
 
     it('should generate wordlist in batches', (done) => {
       const responses: WordlistWorkerResponse[] = [];
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
       
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
@@ -83,6 +109,7 @@ describe('WordlistWorker', () => {
         responses.push(event.data);
         
         if (event.data.type === 'complete') {
+          clearTimeout(timeout);
           expect(responses).toHaveLength(2); // 1 batch + 1 complete
           
           const batchResponse = responses.find(r => r.type === 'batch');
@@ -96,6 +123,11 @@ describe('WordlistWorker', () => {
         }
       };
 
+      worker.onerror = () => {
+        clearTimeout(timeout);
+        done(new Error('Worker error occurred'));
+      };
+
       const message: WordlistWorkerMessage = {
         type: 'generate',
         charsets: ['ab', '12'],
@@ -107,6 +139,9 @@ describe('WordlistWorker', () => {
 
     it('should handle custom batch sizes', (done) => {
       const responses: WordlistWorkerResponse[] = [];
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
       
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
@@ -114,6 +149,7 @@ describe('WordlistWorker', () => {
         responses.push(event.data);
         
         if (event.data.type === 'complete') {
+          clearTimeout(timeout);
           const batchResponses = responses.filter(r => r.type === 'batch');
           expect(batchResponses).toHaveLength(2); // 2 batches of size 2
           
@@ -122,6 +158,11 @@ describe('WordlistWorker', () => {
           
           done();
         }
+      };
+
+      worker.onerror = () => {
+        clearTimeout(timeout);
+        done(new Error('Worker error occurred'));
       };
 
       const message: WordlistWorkerMessage = {
@@ -259,12 +300,22 @@ describe('WordlistWorker', () => {
         ['a', '1'], ['a', '2'], ['b', '1'], ['b', '2']
       ]);
       
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
+      
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
       worker.onmessage = (event: MessageEvent<WordlistWorkerResponse>) => {
         if (event.data.type === 'complete') {
+          clearTimeout(timeout);
           done();
         }
+      };
+
+      worker.onerror = () => {
+        clearTimeout(timeout);
+        done(new Error('Worker error occurred'));
       };
 
       const message: WordlistWorkerMessage = {

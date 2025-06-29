@@ -82,15 +82,15 @@ describe('WordlistGeneratorService', () => {
     beforeEach(() => {
       // Mock Worker for testing
       global.Worker = class MockWorker extends EventTarget implements Worker {
-        onmessage: ((this: Worker, ev: MessageEvent) => any) | null = null;
-        onmessageerror: ((this: Worker, ev: MessageEvent) => any) | null = null;
-        onerror: ((this: Worker, ev: ErrorEvent) => any) | null = null;
+        onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
+        onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null = null;
+        onerror: ((this: Worker, ev: ErrorEvent) => void) | null = null;
         
-        constructor(scriptURL: string | URL, options?: WorkerOptions) {
+        constructor(_scriptURL: string | URL, _options?: WorkerOptions) {
           super();
         }
         
-        postMessage(message: any): void {
+        postMessage(_message: unknown): void {
           // Simulate worker processing for large datasets
           setTimeout(() => {
             if (this.onmessage) {
@@ -110,7 +110,7 @@ describe('WordlistGeneratorService', () => {
         terminate(): void {
           // Mock terminate
         }
-      } as any;
+      } as Worker;
     });
 
     it('should use Web Worker for large datasets', (done) => {
@@ -133,7 +133,7 @@ describe('WordlistGeneratorService', () => {
     it('should fallback to synchronous generation when Worker is not available', (done) => {
       // Temporarily disable Worker
       const originalWorker = global.Worker;
-      (global as any).Worker = undefined;
+      (global as { Worker?: typeof Worker }).Worker = undefined;
       
       const charset1 = '01';
       const charset2 = '23';
@@ -152,14 +152,14 @@ describe('WordlistGeneratorService', () => {
   describe('Dataset size estimation', () => {
     it('should correctly estimate small dataset sizes', () => {
       // Access private method for testing
-      const estimateSize = (service as any).estimateWordlistSize.bind(service);
+      const estimateSize = (service as { estimateWordlistSize: (charsets: string[]) => number }).estimateWordlistSize.bind(service);
       
       expect(estimateSize(['abc', '123'])).toBe(9); // 3 * 3
       expect(estimateSize(['ab', 'cd', 'ef'])).toBe(8); // 2 * 2 * 2
     });
 
     it('should correctly estimate large dataset sizes', () => {
-      const estimateSize = (service as any).estimateWordlistSize.bind(service);
+      const estimateSize = (service as { estimateWordlistSize: (charsets: string[]) => number }).estimateWordlistSize.bind(service);
       const largeCharset = 'a'.repeat(100);
       
       expect(estimateSize([largeCharset, largeCharset])).toBe(10000); // 100 * 100
@@ -170,9 +170,9 @@ describe('WordlistGeneratorService', () => {
     beforeEach(() => {
       // Mock Worker that throws an error
       global.Worker = class MockWorker extends EventTarget implements Worker {
-        onmessage: ((this: Worker, ev: MessageEvent) => any) | null = null;
-        onmessageerror: ((this: Worker, ev: MessageEvent) => any) | null = null;
-        onerror: ((this: Worker, ev: ErrorEvent) => any) | null = null;
+        onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
+        onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null = null;
+        onerror: ((this: Worker, ev: ErrorEvent) => void) | null = null;
         
         constructor() {
           super();
@@ -191,7 +191,7 @@ describe('WordlistGeneratorService', () => {
         terminate(): void {
           // Mock terminate function - no implementation needed for tests
         }
-      } as any;
+      } as Worker;
     });
 
     it('should handle Worker errors gracefully', (done) => {

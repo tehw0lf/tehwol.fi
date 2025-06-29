@@ -10,8 +10,8 @@ import {
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormlyFieldConfig, FormlyModule, AbstractControl } from '@ngx-formly/core';
+import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
