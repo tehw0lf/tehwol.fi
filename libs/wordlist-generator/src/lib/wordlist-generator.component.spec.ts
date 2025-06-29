@@ -107,14 +107,11 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should provide a downloadable file for IE', () => {
-    const nav: any = Object.defineProperty(
-      global.window.navigator,
-      'msSaveOrOpenBlob',
-      {
+    const nav: Navigator & { msSaveOrOpenBlob?: jest.Mock } =
+      Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
         value: jest.fn(),
         configurable: true
-      }
-    );
+      });
     component.downloadWordlist();
     expect(nav.msSaveOrOpenBlob).toHaveBeenCalledTimes(1);
     Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
@@ -173,10 +170,17 @@ describe('WordlistGeneratorComponent', () => {
 
   describe('Large dataset handling', () => {
     it('should detect large datasets correctly', () => {
-      // Set up a large dataset scenario
-      component.charsets?.at(0).setValue('a'.repeat(300)); // 300 characters //TODO: No Claude, this results in a charset of "a". Please read the component code completely, as the charset is mapped to a Set() to remove duplicate characters
+      // Set up a large dataset scenario - create unique characters using Unicode range
+      const largeCharset1 = Array.from({ length: 300 }, (_, i) =>
+        String.fromCharCode(33 + i)
+      ).join(''); // 300 unique chars starting from '!'
+      const largeCharset2 = Array.from({ length: 300 }, (_, i) =>
+        String.fromCharCode(333 + i)
+      ).join(''); // 300 unique chars starting from Unicode 333
+
+      component.charsets?.at(0).setValue(largeCharset1);
       component.addCharset();
-      component.charsets?.at(1).setValue('b'.repeat(300)); // 300 characters //TODO: No Claude, this results in a charset of "b". Please read the component code completely, as the charset is mapped to a Set() to remove duplicate characters
+      component.charsets?.at(1).setValue(largeCharset2);
 
       component.generateWordlist();
 
@@ -198,11 +202,11 @@ describe('WordlistGeneratorComponent', () => {
     it('should set generation state correctly', () => {
       component.charsets?.at(0).setValue('abc');
 
-      expect(component.isGenerating).toBe(false);
+      expect(component.isGenerating()).toBe(false);
 
       component.generateWordlist();
 
-      expect(component.isGenerating).toBe(true);
+      expect(component.isGenerating()).toBe(true);
     });
 
     it('should control wordlist display based on size', () => {
@@ -216,14 +220,21 @@ describe('WordlistGeneratorComponent', () => {
       expect(component.displayWordlist).toBe(true);
       expect(component.wordsGenerated).toBe(4);
 
-      // Large dataset - should not display
-      component.charsets?.at(0).setValue('a'.repeat(20));
-      component.charsets?.at(1).setValue('b'.repeat(20));
+      // Large dataset - should not display (need > 100 words)
+      const charset1 = Array.from({ length: 15 }, (_, i) =>
+        String.fromCharCode(65 + i)
+      ).join(''); // 15 unique chars A-O
+      const charset2 = Array.from({ length: 10 }, (_, i) =>
+        String.fromCharCode(48 + i)
+      ).join(''); // 10 unique chars 0-9
+
+      component.charsets?.at(0).setValue(charset1);
+      component.charsets?.at(1).setValue(charset2);
 
       component.generateWordlist();
 
       expect(component.displayWordlist).toBe(false);
-      expect(component.wordsGenerated).toBe(400);
+      expect(component.wordsGenerated).toBe(150); // 15 * 10
     });
   });
 
@@ -232,11 +243,11 @@ describe('WordlistGeneratorComponent', () => {
       component.charsets?.at(0).setValue('abc');
       component.generateWordlist();
 
-      expect(component.isGenerating).toBe(true);
+      expect(component.isGenerating()).toBe(true);
 
       component.getWordlist().subscribe({
         complete: () => {
-          expect(component.isGenerating).toBe(false);
+          expect(component.isGenerating()).toBe(false);
           done();
         }
       });
@@ -249,7 +260,7 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       // Mock that the filtered charset hasn't changed
-      component.filteredCharset; // Access the property to verify it exists
+      expect(component.filteredCharset).toBeDefined();
 
       // Call downloadWordlist which should not regenerate
       jest.spyOn(component, 'generateWordlist');

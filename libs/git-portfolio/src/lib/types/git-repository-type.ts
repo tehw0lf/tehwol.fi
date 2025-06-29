@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 export class GitRepository {
   id: number | undefined;
   clone_url?: string;
