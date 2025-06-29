@@ -5,7 +5,7 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,28 +36,24 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);
-  private cdr = inject(ChangeDetectorRef);
-
-  burgerStyle = '';
-  buttonStyle = '';
+  private isLargeScreen = signal(false);
+  
+  burgerStyle = computed(() => 
+    this.isLargeScreen() ? 'display: none;' : ''
+  );
+  
+  buttonStyle = computed(() => 
+    this.isLargeScreen() ? '' : 'display: none;'
+  );
 
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor() {
-    const breakpointObserver = this.breakpointObserver;
-
-    breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 960px)'])
       .pipe(
         tap((breakpointState: BreakpointState) => {
-          if (breakpointState.matches) {
-            this.burgerStyle = 'display: none;';
-            this.buttonStyle = '';
-          } else {
-            this.burgerStyle = '';
-            this.buttonStyle = 'display: none;';
-          }
-          this.cdr.markForCheck();
+          this.isLargeScreen.set(breakpointState.matches);
         }),
         takeUntil(this.unsubscribe$)
       )
