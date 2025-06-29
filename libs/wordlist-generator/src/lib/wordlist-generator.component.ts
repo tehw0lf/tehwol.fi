@@ -5,7 +5,16 @@ import {
   moveItemInArray
 } from '@angular/cdk/drag-drop';
 import { AsyncPipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormArray,
@@ -20,7 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Observable, Subject } from 'rxjs';
-import { reduce, takeUntil, finalize } from 'rxjs/operators';
+import { finalize, reduce, shareReplay, takeUntil, tap } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toCSV, toPlaintext, toXML } from './parsers';
@@ -28,24 +37,24 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
-    selector: 'wordlist-generator',
-    templateUrl: './wordlist-generator.component.html',
-    styleUrls: ['./wordlist-generator.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [
-        MatButtonModule,
-        NgStyle,
-        MatMenuModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        CdkDropList,
-        CdkDrag,
-        MatIconModule,
-        MatProgressBarModule,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'wordlist-generator',
+  templateUrl: './wordlist-generator.component.html',
+  styleUrls: ['./wordlist-generator.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  imports: [
+    MatButtonModule,
+    NgStyle,
+    MatMenuModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CdkDropList,
+    CdkDrag,
+    MatIconModule,
+    MatProgressBarModule,
+    AsyncPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);
@@ -69,8 +78,8 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   filteredCharset: string[] = [];
   prefix = '';
   suffix = '';
-  isGenerating = false;
-  isLargeDataset = false;
+  isGenerating = signal(false);
+  isLargeDataset = signal(false);
 
   private unsubscribe$ = new Subject<void>();
 
@@ -108,12 +117,15 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   downloadWordlist(): void {
     if (this.charsets) {
-      if (this.filteredCharset !== this.filterCharset(this.charsets.value)) {
+      const currentCharset = this.filterCharset(this.charsets.value);
+      if (
+        JSON.stringify(this.filteredCharset) !== JSON.stringify(currentCharset)
+      ) {
         this.generateWordlist();
       }
       const filename = `wordlist_${this.wordsGenerated}_words_${this.charsets.length}_positions.${this.fileType}`;
-      this.getWordlist()
-        .pipe(
+      this.wordlist$
+        ?.pipe(
           tap((wordlist: string) => {
             if (wordlist.length > 0) {
               const parsed = this.parseWordlist(wordlist);
@@ -180,11 +192,11 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
           (previousLength: number, currentLength: number) =>
             previousLength * currentLength
         );
-      
-      this.isLargeDataset = this.wordsGenerated > 50000;
+
+      this.isLargeDataset.set(this.wordsGenerated > 50000);
       this.displayWordlist = this.wordsGenerated <= 100;
-      this.isGenerating = true;
-      
+      this.isGenerating.set(true);
+
       this.wordlist$ = this.getWordlist();
     }
   }
@@ -193,13 +205,15 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     return this.wordlistGenerator
       .generateWordlist(...this.filteredCharset)
       .pipe(
+        shareReplay({ bufferSize: 1, refCount: false }),
         reduce(
           (wordlist: string, word: string) =>
             `${wordlist}${this.prefix}${word}${this.suffix}\n`,
           ''
         ),
+        tap((text: string) => console.log(text)),
         finalize(() => {
-          this.isGenerating = false;
+          this.isGenerating.set(false);
         }),
         takeUntil(this.unsubscribe$)
       );
