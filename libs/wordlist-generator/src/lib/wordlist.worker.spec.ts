@@ -146,6 +146,9 @@ describe('WordlistWorker', () => {
 
     it('should handle large datasets in multiple batches', (done) => {
       const responses: WordlistWorkerResponse[] = [];
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
       
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
@@ -153,6 +156,7 @@ describe('WordlistWorker', () => {
         responses.push(event.data);
         
         if (event.data.type === 'complete') {
+          clearTimeout(timeout);
           const batchResponses = responses.filter(r => r.type === 'batch');
           expect(batchResponses.length).toBeGreaterThan(1);
           
@@ -164,6 +168,11 @@ describe('WordlistWorker', () => {
           done();
         }
       };
+      
+      worker.onerror = (error) => {
+        clearTimeout(timeout);
+        done(new Error(`Worker error: ${error.message}`));
+      };
 
       const message: WordlistWorkerMessage = {
         type: 'generate',
@@ -172,7 +181,7 @@ describe('WordlistWorker', () => {
       };
       
       worker.postMessage(message);
-    });
+    }, 15000);
   });
 
   describe('Error handling', () => {
@@ -184,13 +193,23 @@ describe('WordlistWorker', () => {
     });
 
     it('should handle errors gracefully', (done) => {
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
+      
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
       worker.onmessage = (event: MessageEvent<WordlistWorkerResponse>) => {
         if (event.data.type === 'error') {
+          clearTimeout(timeout);
           expect(event.data.error).toBe('Test error');
           done();
         }
+      };
+      
+      worker.onerror = (error) => {
+        clearTimeout(timeout);
+        done(new Error(`Worker error: ${error.message}`));
       };
 
       const message: WordlistWorkerMessage = {
@@ -205,25 +224,26 @@ describe('WordlistWorker', () => {
   describe('Edge cases', () => {
     it('should handle empty charsets', (done) => {
       mockProduct.mockReturnValue([]);
+      const responses: WordlistWorkerResponse[] = [];
+      const timeout = setTimeout(() => {
+        done(new Error('Test timed out'));
+      }, 8000);
       
       worker = new Worker(new URL('./wordlist.worker', import.meta.url));
       
       worker.onmessage = (event: MessageEvent<WordlistWorkerResponse>) => {
+        responses.push(event.data);
         if (event.data.type === 'complete') {
+          clearTimeout(timeout);
           const batchResponses = responses.filter(r => r.type === 'batch');
           expect(batchResponses).toHaveLength(0);
           done();
         }
       };
-
-      const responses: WordlistWorkerResponse[] = [];
-      worker.onmessage = (event: MessageEvent<WordlistWorkerResponse>) => {
-        responses.push(event.data);
-        if (event.data.type === 'complete') {
-          const batchResponses = responses.filter(r => r.type === 'batch');
-          expect(batchResponses).toHaveLength(0);
-          done();
-        }
+      
+      worker.onerror = (error) => {
+        clearTimeout(timeout);
+        done(new Error(`Worker error: ${error.message}`));
       };
 
       const message: WordlistWorkerMessage = {

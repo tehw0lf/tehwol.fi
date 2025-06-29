@@ -11,7 +11,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule, AbstractControl } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
@@ -134,10 +134,12 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
       // Add email validation for email fields
       if (entry.field.toLowerCase() === 'email') {
-        fieldConfig.props!.type = 'email';
+        if (fieldConfig.props) {
+          fieldConfig.props.type = 'email';
+        }
         fieldConfig.validators = {
           email: {
-            expression: (control: any) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
+            expression: (control: AbstractControl) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
             message: 'Please enter a valid email address'
           }
         };
@@ -148,7 +150,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         fieldConfig.validators = {
           ...fieldConfig.validators,
           required: {
-            expression: (control: any) => !!control.value,
+            expression: (control: AbstractControl) => !!control.value,
             message: `${entry.field} is required`
           }
         };

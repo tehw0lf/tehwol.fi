@@ -249,7 +249,7 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       // Mock that the filtered charset hasn't changed
-      const originalFiltered = component.filteredCharset;
+      component.filteredCharset; // Access the property to verify it exists
 
       // Call downloadWordlist which should not regenerate
       jest.spyOn(component, 'generateWordlist');
