@@ -225,9 +225,9 @@ describe('RepoCardComponent', () => {
   describe('edge cases', () => {
     it('should handle repository with null values', () => {
       const repoWithNulls = createMockRepository({
-        description: null as any,
-        language: null as any,
-        license: null as any
+        description: null as string | null,
+        language: null as string | null,
+        license: null as string | null
       });
       
       fixture.componentRef.setInput('gitRepo', repoWithNulls);

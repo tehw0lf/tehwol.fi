@@ -30,13 +30,18 @@ describe('WordlistWorker', () => {
       onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null = null;
       onerror: ((this: Worker, ev: ErrorEvent) => void) | null = null;
       
-      constructor(_scriptURL: string | URL, _options?: WorkerOptions) {
+      constructor(scriptURL: string | URL, options?: WorkerOptions) {
         super();
+        // Store constructor parameters to avoid unused parameter warnings
+        void scriptURL;
+        void options;
       }
       
       postMessage(message: unknown, transfer?: Transferable[]): void;
       postMessage(message: unknown, options?: StructuredSerializeOptions): void;
-      postMessage(message: unknown, _optionsOrTransfer?: unknown): void {
+      postMessage(message: unknown, optionsOrTransfer?: unknown): void {
+        // Store parameters to avoid unused parameter warnings
+        void optionsOrTransfer;
         // Simulate worker message handling
         setTimeout(() => {
           if (this.onmessage) {
