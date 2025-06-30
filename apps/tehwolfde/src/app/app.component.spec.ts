@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -13,8 +13,8 @@ import { MobileComponent } from './nav/mobile/mobile.component';
 import { NavComponent } from './nav/nav.component';
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         MatIconModule,
@@ -29,7 +29,7 @@ describe('AppComponent', () => {
       ],
       providers: [provideRouter([])]
     }).compileComponents();
-  }));
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
