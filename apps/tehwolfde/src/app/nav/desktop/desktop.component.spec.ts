@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { provideRouter } from '@angular/router';
@@ -14,15 +14,15 @@ describe('DesktopComponent', () => {
   let component: DesktopComponent;
   let fixture: ComponentFixture<DesktopComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [MatIconModule, MatToolbarModule, DesktopComponent],
       providers: [
         provideRouter([]),
         { provide: SidenavService, useValue: mockSidenavService }
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DesktopComponent);

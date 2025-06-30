@@ -1,6 +1,6 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BehaviorSubject, of } from 'rxjs';
@@ -52,7 +52,7 @@ describe('GitPortfolioComponent', () => {
   let breakpointObserver: jest.Mocked<Pick<BreakpointObserver, 'observe'>>;
   let breakpointSubject: BehaviorSubject<BreakpointState>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const gitProviderSpy = {
       getRepositories: jest.fn(),
       loading: of(false)
@@ -71,7 +71,7 @@ describe('GitPortfolioComponent', () => {
       observe: jest.fn().mockReturnValue(breakpointSubject.asObservable())
     };
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         MatProgressSpinnerModule,
         MatCardModule,
@@ -87,7 +87,7 @@ describe('GitPortfolioComponent', () => {
 
     gitProviderService = TestBed.inject(GitProviderService) as any;
     breakpointObserver = TestBed.inject(BreakpointObserver) as any;
-  }));
+  });
 
   beforeEach(() => {
     gitProviderService.getRepositories.mockReturnValue(of(MOCK_REPOSITORIES));
