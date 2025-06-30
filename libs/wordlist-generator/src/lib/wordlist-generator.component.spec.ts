@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { finalize, of } from 'rxjs';
 
 import { FileType } from './filetypes';
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
@@ -101,12 +101,17 @@ describe('WordlistGeneratorComponent', () => {
 
   it('should provide a downloadable file for non IE browsers', () => {
     const before = document.body.innerHTML;
+    component.charsets?.at(0).setValue('123');
+    component.generateWordlist();
     component.downloadWordlist();
     const after = document.body.innerHTML;
     expect(before).not.toEqual(after);
+    expect(after).toContain('download="wordlist_3_words_1_positions.txt');
   });
 
   it('should provide a downloadable file for IE', () => {
+    component.charsets?.at(0).setValue('123');
+    component.generateWordlist();
     const nav: Navigator & { msSaveOrOpenBlob?: jest.Mock } =
       Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
         value: jest.fn(),
@@ -245,12 +250,15 @@ describe('WordlistGeneratorComponent', () => {
 
       expect(component.isGenerating()).toBe(true);
 
-      component.getWordlist().subscribe({
-        complete: () => {
-          expect(component.isGenerating()).toBe(false);
-          done();
-        }
-      });
+      component
+        .getWordlist()
+        .pipe(
+          finalize(() => {
+            expect(component.isGenerating()).toBe(false);
+            done();
+          })
+        )
+        .subscribe();
     });
   });
 

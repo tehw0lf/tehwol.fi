@@ -75,7 +75,11 @@ export class WordlistGeneratorService {
       worker.postMessage(message);
     } else {
       // Fallback for environments without Worker support
-      this.generateSynchronously(charsets).subscribe(subject);
+      this.generateSynchronously(charsets).subscribe({
+        next: (word) => subject.next(word),
+        error: (err) => subject.error(err),
+        complete: () => subject.complete()
+      });
     }
     
     return subject.asObservable();
