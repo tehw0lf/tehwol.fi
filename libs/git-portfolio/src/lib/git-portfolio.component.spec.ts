@@ -48,9 +48,14 @@ const MOCK_REPOSITORIES: GitRepositories = {
 describe('GitPortfolioComponent', () => {
   let component: GitPortfolioComponent;
   let fixture: ComponentFixture<GitPortfolioComponent>;
-  let gitProviderService: jest.Mocked<Pick<GitProviderService, 'getRepositories'>> & { loading: any };
+  let gitProviderService: jest.Mocked<Pick<GitProviderService, 'getRepositories'>> & { loading: Observable<boolean> };
   let breakpointObserver: jest.Mocked<Pick<BreakpointObserver, 'observe'>>;
   let breakpointSubject: BehaviorSubject<BreakpointState>;
+
+  // Helper functions to safely access mock data
+  const getGithubOwnRepo = (index: number) => MOCK_REPOSITORIES.github?.own?.[index]!;
+  const getGithubOwnRepos = () => MOCK_REPOSITORIES.github?.own || [];
+  const getGithubForkedRepos = () => MOCK_REPOSITORIES.github?.forked || [];
 
   beforeEach(async () => {
     const gitProviderSpy = {
@@ -85,8 +90,10 @@ describe('GitPortfolioComponent', () => {
       ]
     }).compileComponents();
 
-    gitProviderService = TestBed.inject(GitProviderService) as any;
-    breakpointObserver = TestBed.inject(BreakpointObserver) as any;
+    gitProviderService = TestBed.inject(GitProviderService) as jest.Mocked<Pick<GitProviderService, 'getRepositories'>> & { loading: Observable<boolean> };
+    breakpointObserver = TestBed.inject(BreakpointObserver) as jest.Mocked<Pick<BreakpointObserver, 'observe'>>;
+    // Mark as used to avoid lint warnings - used in responsive tests
+    void breakpointObserver;
   });
 
   beforeEach(() => {
@@ -103,7 +110,7 @@ describe('GitPortfolioComponent', () => {
 
   describe('clipboard functionality', () => {
     it('should copy to clipboard and track current repo', () => {
-      const testRepo = MOCK_REPOSITORIES.github!.own[0];
+      const testRepo = getGithubOwnRepo(0);
       
       component.copyToClipboard(testRepo);
       
@@ -112,15 +119,15 @@ describe('GitPortfolioComponent', () => {
     });
 
     it('should return false for copied status when no current repo', () => {
-      const testRepo = MOCK_REPOSITORIES.github!.own[0];
+      const testRepo = getGithubOwnRepo(0);
       component.currentRepo = undefined;
       
       expect(component.isCopiedToClipboard(testRepo)).toBeFalsy();
     });
 
     it('should return false for copied status when different repo', () => {
-      const repo1 = MOCK_REPOSITORIES.github!.own[0];
-      const repo2 = MOCK_REPOSITORIES.github!.own[1];
+      const repo1 = getGithubOwnRepo(0);
+      const repo2 = getGithubOwnRepo(1);
       
       component.copyToClipboard(repo1);
       
@@ -133,8 +140,8 @@ describe('GitPortfolioComponent', () => {
       const ownRepos = component.getGitRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'own');
       const forkedRepos = component.getGitRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'forked');
       
-      expect(ownRepos).toEqual(MOCK_REPOSITORIES.github!.own);
-      expect(forkedRepos).toEqual(MOCK_REPOSITORIES.github!.forked);
+      expect(ownRepos).toEqual(getGithubOwnRepos());
+      expect(forkedRepos).toEqual(getGithubForkedRepos());
     });
 
     it('should return empty array for non-existent provider', () => {

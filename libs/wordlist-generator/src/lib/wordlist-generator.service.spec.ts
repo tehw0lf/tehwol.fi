@@ -88,13 +88,18 @@ describe('WordlistGeneratorService', () => {
         onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
         onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null =
           null;
-        onerror: ((this: AbstractWorker, ev: ErrorEvent) => any) | null = null;
+        onerror: ((this: AbstractWorker, ev: ErrorEvent) => unknown) | null = null;
 
-        constructor(_scriptURL: string | URL, _options?: WorkerOptions) {
+        constructor(scriptURL: string | URL, options?: WorkerOptions) {
           super();
+          // Store constructor parameters to avoid unused parameter warnings
+          void scriptURL;
+          void options;
         }
 
-        postMessage(_message: unknown): void {
+        postMessage(message: unknown): void {
+          // Store message parameter to avoid unused parameter warnings
+          void message;
           // Simulate worker processing for large datasets
           setTimeout(() => {
             if (this.onmessage) {
@@ -192,7 +197,7 @@ describe('WordlistGeneratorService', () => {
         onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
         onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null =
           null;
-        onerror: ((this: AbstractWorker, ev: ErrorEvent) => any) | null =
+        onerror: ((this: AbstractWorker, ev: ErrorEvent) => unknown) | null =
           null;
 
         constructor() {

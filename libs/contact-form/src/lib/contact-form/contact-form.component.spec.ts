@@ -363,7 +363,7 @@ describe('ContactFormComponent', () => {
 
   describe('component lifecycle', () => {
     it('should build configuration on init', () => {
-      jest.spyOn(component, 'buildConfig' as any);
+      jest.spyOn(component as never, 'buildConfig');
       
       fixture.detectChanges(); // This calls ngOnInit
       

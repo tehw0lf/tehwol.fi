@@ -7,7 +7,6 @@ import { firstValueFrom } from 'rxjs';
 
 import { GitProviderService } from './git-provider.service';
 import { GitProviderConfig } from './types/git-provider-config-type';
-import { GitRepositories } from './types/git-repositories-type';
 import { GitRepository } from './types/git-repository-type';
 import {
   provideHttpClient,
