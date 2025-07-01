@@ -1,16 +1,20 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
-import {
-  BreakpointObserver,
-  BreakpointState,
-  LayoutModule
-} from '@angular/cdk/layout';
+import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -36,29 +40,22 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);
-  private isLargeScreen = signal(false);
-  
-  burgerStyle = computed(() => 
-    this.isLargeScreen() ? 'display: none;' : ''
-  );
-  
-  buttonStyle = computed(() => 
-    this.isLargeScreen() ? '' : 'display: none;'
-  );
-
   private unsubscribe$: Subject<void> = new Subject();
 
-  constructor() {
+  private isLargeScreen = toSignal(
     this.breakpointObserver
       .observe(['(min-width: 960px)'])
-      .pipe(
-        tap((breakpointState: BreakpointState) => {
-          this.isLargeScreen.set(breakpointState.matches);
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
-  }
+      .pipe(takeUntil(this.unsubscribe$)),
+    { initialValue: { matches: false, breakpoints: {} } }
+  );
+
+  burgerStyle = computed(() =>
+    this.isLargeScreen().matches ? 'display: none;' : ''
+  );
+
+  buttonStyle = computed(() =>
+    this.isLargeScreen().matches ? '' : 'display: none;'
+  );
 
   ngAfterViewInit(): void {
     const menu = document.getElementById('menu');

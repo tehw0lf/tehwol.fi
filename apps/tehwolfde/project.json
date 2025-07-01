@@ -13,7 +13,6 @@
         "outputPath": "dist/apps/tehwolfde",
         "index": "apps/tehwolfde/src/index.html",
         "browser": "apps/tehwolfde/src/main.ts",
-        "polyfills": ["zone.js"],
         "tsConfig": "apps/tehwolfde/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

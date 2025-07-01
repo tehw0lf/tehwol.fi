@@ -1,14 +1,16 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   inject,
   OnDestroy,
-  OnInit,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  effect
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -20,7 +22,7 @@ import {
   RouterOutlet
 } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -43,7 +45,7 @@ import { SidenavService } from '../sidenav.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MobileComponent implements OnInit, OnDestroy {
+export class MobileComponent implements AfterViewInit, OnDestroy {
   router = inject(Router);
   themeService = inject(ThemeService);
   private sidenavService = inject(SidenavService);
@@ -53,20 +55,29 @@ export class MobileComponent implements OnInit, OnDestroy {
     | undefined;
 
   private unsubscribe$ = new Subject<void>();
+  
+  // Convert router events to a signal
+  private routerEvents = toSignal(
+    this.router.events.pipe(takeUntil(this.unsubscribe$)),
+    { initialValue: null }
+  );
 
-  ngOnInit(): void {
+  constructor() {
+    // Use effect to close sidenav on router events
+    effect(() => {
+      // Create dependency on router events signal
+      this.routerEvents();
+      // Close sidenav on any router event (except initial null)
+      if (this.routerEvents() !== null) {
+        this.sidenavService.close();
+      }
+    });
+  }
+  
+  ngAfterViewInit(): void {
     if (this.sidenav) {
       this.sidenavService.setSidenav(this.sidenav);
     }
-
-    this.router.events
-      .pipe(
-        tap(() => {
-          this.sidenavService.close();
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
   }
 
   ngOnDestroy(): void {

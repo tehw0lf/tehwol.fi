@@ -1,14 +1,13 @@
 import { LayoutModule } from '@angular/cdk/layout';
-import { AsyncPipe, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  inject,
   input,
   OnDestroy,
-  OnInit,
-  ViewEncapsulation
+  signal,
+  ViewEncapsulation,
+  effect
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
@@ -37,13 +36,11 @@ interface FormConfigEntry {
         ReactiveFormsModule,
         FormlyModule,
         FormlyMaterialModule,
-        NgStyle,
-        AsyncPipe
+        NgStyle
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactFormComponent implements OnInit, OnDestroy {
-  private cdr = inject(ChangeDetectorRef);
+export class ContactFormComponent implements OnDestroy {
   buttonStyle = input({
     'background-color': '#333333',
     border: 'none',
@@ -77,17 +74,17 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   fields: FormlyFieldConfig[] = [];
   model: { [key: string]: string } = {};
 
-  emailSent: Subject<boolean | null> = new Subject();
-  emailSent$ = this.emailSent.asObservable();
+  emailSent = signal<boolean | null>(null);
 
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor() {
-    this.emailSent.next(null);
-  }
-
-  ngOnInit(): void {
-    this.buildConfig();
+    // Use an effect to rebuild config when formConfig changes
+    effect(() => {
+      // Read the formConfig signal to establish dependency
+      this.formConfig();
+      this.buildConfig();
+    });
   }
 
   ngOnDestroy(): void {
@@ -99,8 +96,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.apiCallback()(formData)
       .pipe(
         tap((success: boolean) => {
-          this.emailSent.next(success);
-          this.cdr.markForCheck();
+          this.emailSent.set(success);
         }),
         takeUntil(this.unsubscribe$)
       )
@@ -108,6 +104,10 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   private buildConfig(): void {
+    // Clear existing fields and model
+    this.fields = [];
+    this.model = {};
+    
     this.formConfig().forEach((entry: FormConfigEntry) => {
       if (entry.value) {
         this.model[entry.field] = entry.value;

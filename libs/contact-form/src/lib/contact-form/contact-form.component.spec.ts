@@ -111,10 +111,10 @@ describe('ContactFormComponent', () => {
       expect(component.sendErrorText()).toBe('Error!');
     });
 
-    it('should initialize emailSent subject', () => {
-      // The component should have emailSent subject defined
+    it('should initialize emailSent signal', () => {
+      // The component should have emailSent signal defined
       expect(component.emailSent).toBeDefined();
-      expect(component.emailSent$).toBeDefined();
+      expect(component.emailSent()).toBe(null);
     });
   });
 
@@ -316,32 +316,30 @@ describe('ContactFormComponent', () => {
       expect(mockApiCallback).toHaveBeenCalledWith(formData);
     });
 
-    it('should update emailSent subject on successful submission', (done) => {
+    it('should update emailSent signal on successful submission', (done) => {
       mockApiCallback.mockReturnValue(of(true));
       const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
       
-      component.emailSent$.subscribe(success => {
-        if (success !== null) {
-          expect(success).toBe(true);
-          done();
-        }
-      });
-      
       component.submitFormData(formData);
+      
+      // Check the signal value after async operation
+      setTimeout(() => {
+        expect(component.emailSent()).toBe(true);
+        done();
+      }, 100);
     });
 
-    it('should update emailSent subject on failed submission', (done) => {
+    it('should update emailSent signal on failed submission', (done) => {
       mockApiCallback.mockReturnValue(of(false));
       const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
       
-      component.emailSent$.subscribe(success => {
-        if (success !== null) {
-          expect(success).toBe(false);
-          done();
-        }
-      });
-      
       component.submitFormData(formData);
+      
+      // Check the signal value after async operation
+      setTimeout(() => {
+        expect(component.emailSent()).toBe(false);
+        done();
+      }, 100);
     });
 
     it('should handle API errors gracefully', () => {
@@ -351,14 +349,6 @@ describe('ContactFormComponent', () => {
       expect(() => component.submitFormData(formData)).not.toThrow();
     });
 
-    it('should trigger change detection after submission', () => {
-      jest.spyOn(component['cdr'], 'markForCheck');
-      const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
-      
-      component.submitFormData(formData);
-      
-      expect(component['cdr'].markForCheck).toHaveBeenCalled();
-    });
   });
 
   describe('component lifecycle', () => {
