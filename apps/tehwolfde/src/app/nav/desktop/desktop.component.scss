@@ -1,9 +1,6 @@
 @use '../../../assets/styles/global';
 @use '@tehw0lf/mvc';
-
-.link-active {
-  border-bottom: 2px solid global.$linkcolor;
-}
+@use '../shared-nav';
 
 .mat-mdc-button {
   vertical-align: middle;
@@ -16,20 +13,6 @@
 
 .mat-button-wrapper {
   color: global.$linkcolor;
-}
-
-.dark-theme-button {
-  color: black;
-  height: 48px;
-  width: 48px;
-  margin: 4px 4px 4px 4px;
-}
-
-.light-theme-button {
-  color: yellow;
-  height: 48px;
-  width: 48px;
-  margin: 4px 4px 4px 4px;
 }
 
 .nav-logo {

@@ -1,0 +1,21 @@
+@use '../../assets/styles/global';
+
+// Shared styles for both desktop and mobile nav components
+
+.link-active {
+  border-bottom: 2px solid global.$linkcolor;
+}
+
+.dark-theme-button {
+  color: black;
+  height: 48px;
+  width: 48px;
+  margin: 4px 4px 4px 4px;
+}
+
+.light-theme-button {
+  color: yellow;
+  height: 48px;
+  width: 48px;
+  margin: 4px 4px 4px 4px;
+}
