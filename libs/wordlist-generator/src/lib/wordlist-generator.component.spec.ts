@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { finalize, of } from 'rxjs';
+import { delay, of } from 'rxjs';
 
 import { FileType } from './filetypes';
 import { WordlistGeneratorComponent } from './wordlist-generator.component';
@@ -14,7 +14,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
 
 const wordlistGeneratorServiceMock = {
   generateWordlist: jest.fn(() => {
-    return of('123');
+    return of('123').pipe(delay(10));
   })
 };
 
@@ -99,17 +99,23 @@ describe('WordlistGeneratorComponent', () => {
     );
   });
 
-  it('should provide a downloadable file for non IE browsers', () => {
+  it('should provide a downloadable file for non IE browsers', (done) => {
     const before = document.body.innerHTML;
     component.charsets?.at(0).setValue('123');
     component.generateWordlist();
-    component.downloadWordlist();
-    const after = document.body.innerHTML;
-    expect(before).not.toEqual(after);
-    expect(after).toContain('download="wordlist_3_words_1_positions.txt');
+
+    setTimeout(() => {
+      component.downloadWordlist();
+      setTimeout(() => {
+        const after = document.body.innerHTML;
+        expect(before).not.toEqual(after);
+        expect(after).toContain('download="wordlist_3_words_1_positions.txt');
+        done();
+      }, 10);
+    }, 20);
   });
 
-  it('should provide a downloadable file for IE', () => {
+  it('should provide a downloadable file for IE', (done) => {
     component.charsets?.at(0).setValue('123');
     component.generateWordlist();
     const nav: Navigator & { msSaveOrOpenBlob?: jest.Mock } =
@@ -117,11 +123,17 @@ describe('WordlistGeneratorComponent', () => {
         value: jest.fn(),
         configurable: true
       });
-    component.downloadWordlist();
-    expect(nav.msSaveOrOpenBlob).toHaveBeenCalledTimes(1);
-    Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
-      value: undefined
-    });
+
+    setTimeout(() => {
+      component.downloadWordlist();
+      setTimeout(() => {
+        expect(nav.msSaveOrOpenBlob).toHaveBeenCalledTimes(1);
+        Object.defineProperty(global.window.navigator, 'msSaveOrOpenBlob', {
+          value: undefined
+        });
+        done();
+      }, 10);
+    }, 20);
   });
 
   it('should prepend the prefix', (done) => {
@@ -129,7 +141,7 @@ describe('WordlistGeneratorComponent', () => {
     component.charsets?.at(0).setValue('123');
     component.generateWordlist();
 
-    component.getWordlist().subscribe({
+    component['getWordlist']().subscribe({
       next: (wordlist: string) => {
         expect(wordlist).toEqual('abc123\n');
       },
@@ -142,7 +154,7 @@ describe('WordlistGeneratorComponent', () => {
     component.charsets?.at(0).setValue('123');
     component.generateWordlist();
 
-    component.getWordlist().subscribe({
+    component['getWordlist']().subscribe({
       next: (wordlist: string) => {
         expect(wordlist).toEqual('123xyz\n');
       },
@@ -151,7 +163,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to plain text', () => {
-    component.fileType = FileType.plaintext;
+    component.fileType.set(FileType.plaintext);
     const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(JSON.stringify(result.wordlist)).toEqual(
@@ -161,7 +173,7 @@ describe('WordlistGeneratorComponent', () => {
   });
 
   it('should parse a wordlist to XML', () => {
-    component.fileType = FileType.xml;
+    component.fileType.set(FileType.xml);
     const result = component.parseWordlist('13\n23\n14\n24');
 
     expect(result.wordlist).toEqual(xmlSample);
@@ -170,7 +182,7 @@ describe('WordlistGeneratorComponent', () => {
 
   it('should do nothing if the charset is not valid', () => {
     component.generateWordlist();
-    expect(component.wordlist$).toBeUndefined();
+    expect(component.wordlist()).toEqual('');
   });
 
   describe('Large dataset handling', () => {
@@ -190,7 +202,7 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       expect(component.isLargeDataset()).toBe(true);
-      expect(component.wordsGenerated).toBe(90000); // 300 * 300
+      expect(component.wordsGenerated()).toBe(90000); // 300 * 300
     });
 
     it('should detect small datasets correctly', () => {
@@ -201,10 +213,10 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       expect(component.isLargeDataset()).toBe(false);
-      expect(component.wordsGenerated).toBe(9); // 3 * 3
+      expect(component.wordsGenerated()).toBe(9); // 3 * 3
     });
 
-    it('should set generation state correctly', () => {
+    it('should set generation state correctly', (done) => {
       component.charsets?.at(0).setValue('abc');
 
       expect(component.isGenerating()).toBe(false);
@@ -212,6 +224,12 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       expect(component.isGenerating()).toBe(true);
+
+      // Wait for observable to complete
+      setTimeout(() => {
+        expect(component.isGenerating()).toBe(false);
+        done();
+      }, 20);
     });
 
     it('should control wordlist display based on size', () => {
@@ -222,8 +240,8 @@ describe('WordlistGeneratorComponent', () => {
 
       component.generateWordlist();
 
-      expect(component.displayWordlist).toBe(true);
-      expect(component.wordsGenerated).toBe(4);
+      expect(component.displayWordlist()).toBe(true);
+      expect(component.wordsGenerated()).toBe(4);
 
       // Large dataset - should not display (need > 100 words)
       const charset1 = Array.from({ length: 15 }, (_, i) =>
@@ -238,8 +256,8 @@ describe('WordlistGeneratorComponent', () => {
 
       component.generateWordlist();
 
-      expect(component.displayWordlist).toBe(false);
-      expect(component.wordsGenerated).toBe(150); // 15 * 10
+      expect(component.displayWordlist()).toBe(false);
+      expect(component.wordsGenerated()).toBe(150); // 15 * 10
     });
   });
 
@@ -250,15 +268,11 @@ describe('WordlistGeneratorComponent', () => {
 
       expect(component.isGenerating()).toBe(true);
 
-      component
-        .getWordlist()
-        .pipe(
-          finalize(() => {
-            expect(component.isGenerating()).toBe(false);
-            done();
-          })
-        )
-        .subscribe();
+      // Wait for the observable to complete
+      setTimeout(() => {
+        expect(component.isGenerating()).toBe(false);
+        done();
+      }, 20);
     });
   });
 
@@ -268,7 +282,7 @@ describe('WordlistGeneratorComponent', () => {
       component.generateWordlist();
 
       // Mock that the filtered charset hasn't changed
-      expect(component.filteredCharset).toBeDefined();
+      expect(component.filteredCharset()).toBeDefined();
 
       // Call downloadWordlist which should not regenerate
       jest.spyOn(component, 'generateWordlist');

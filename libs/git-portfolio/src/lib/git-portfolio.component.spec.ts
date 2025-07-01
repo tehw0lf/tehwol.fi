@@ -53,7 +53,7 @@ describe('GitPortfolioComponent', () => {
   let breakpointSubject: BehaviorSubject<BreakpointState>;
 
   // Helper functions to safely access mock data
-  const getGithubOwnRepo = (index: number) => MOCK_REPOSITORIES.github?.own?.[index]!;
+  const getGithubOwnRepo = (index: number) => MOCK_REPOSITORIES.github?.own?.[index] as GitRepository;
   const getGithubOwnRepos = () => MOCK_REPOSITORIES.github?.own || [];
   const getGithubForkedRepos = () => MOCK_REPOSITORIES.github?.forked || [];
 
@@ -114,13 +114,13 @@ describe('GitPortfolioComponent', () => {
       
       component.copyToClipboard(testRepo);
       
-      expect(component.currentRepo).toBe(testRepo);
+      expect(component.currentRepo()).toBe(testRepo);
       expect(component.isCopiedToClipboard(testRepo)).toBeTruthy();
     });
 
     it('should return false for copied status when no current repo', () => {
       const testRepo = getGithubOwnRepo(0);
-      component.currentRepo = undefined;
+      component.currentRepo.set(undefined);
       
       expect(component.isCopiedToClipboard(testRepo)).toBeFalsy();
     });
@@ -202,7 +202,7 @@ describe('GitPortfolioComponent', () => {
         }
       });
 
-      expect(component.viewport).toBe('xsmall');
+      expect(component.viewport()).toBe('xsmall');
     });
 
     it('should set viewport to small for tablet breakpoint', () => {
@@ -215,7 +215,7 @@ describe('GitPortfolioComponent', () => {
         }
       });
 
-      expect(component.viewport).toBe('small');
+      expect(component.viewport()).toBe('small');
     });
 
     it('should set viewport to medium for desktop breakpoint', () => {
@@ -228,23 +228,20 @@ describe('GitPortfolioComponent', () => {
         }
       });
 
-      expect(component.viewport).toBe('medium');
+      expect(component.viewport()).toBe('medium');
     });
   });
 
   describe('component lifecycle', () => {
-    it('should call getRepositories on init', () => {
-      jest.spyOn(component, 'getRepositories');
-      
-      component.ngOnInit();
-      
-      expect(component.getRepositories).toHaveBeenCalled();
+    it('should call getRepositories automatically via effect', () => {
+      // The effect in the constructor calls getRepositories, so we verify the service was called
+      expect(gitProviderService.getRepositories).toHaveBeenCalled();
     });
 
-    it('should setup repositories observable', () => {
+    it('should setup repositories signal', () => {
       component.getRepositories();
       
-      expect(component.gitRepositories$).toBeDefined();
+      expect(component.gitRepositories).toBeDefined();
       expect(gitProviderService.getRepositories).toHaveBeenCalledWith(component.gitProviderConfig());
     });
 
@@ -294,12 +291,9 @@ describe('GitPortfolioComponent', () => {
   });
 
   describe('loading state', () => {
-    it('should expose loading observable from service', () => {
+    it('should expose loading signal from service', () => {
       expect(component.loading).toBeDefined();
-      
-      component.loading.subscribe(isLoading => {
-        expect(typeof isLoading).toBe('boolean');
-      });
+      expect(typeof component.loading()).toBe('boolean');
     });
   });
 });

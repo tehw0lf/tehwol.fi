@@ -4,16 +4,16 @@ import {
   CdkDropList,
   moveItemInArray
 } from '@angular/cdk/drag-drop';
-import { AsyncPipe, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   input,
   OnDestroy,
-  OnInit,
   signal,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -29,7 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Observable, Subject } from 'rxjs';
-import { finalize, reduce, shareReplay, takeUntil, tap } from 'rxjs/operators';
+import { finalize, reduce, shareReplay, takeUntil } from 'rxjs/operators';
 
 import { FileType } from './filetypes';
 import { toCSV, toPlaintext, toXML } from './parsers';
@@ -52,11 +52,10 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
     CdkDrag,
     MatIconModule,
     MatProgressBarModule,
-    AsyncPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WordlistGeneratorComponent implements OnInit, OnDestroy {
+export class WordlistGeneratorComponent implements OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);
   private wordlistGenerator = inject(WordlistGeneratorService);
 
@@ -69,28 +68,36 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   textStyle = input({ color: '#cc7832' });
 
   charsetForm: UntypedFormGroup | undefined;
-  wordsGenerated: number | undefined;
-  wordlist$: Observable<string> | undefined;
+  wordlist = signal<string>('');
 
-  displayWordlist = false;
-  fileType = FileType.plaintext;
+  displayWordlist = signal(false);
+  fileType = signal(FileType.plaintext);
   fileTypes = Object.values(FileType);
-  filteredCharset: string[] = [];
-  prefix = '';
-  suffix = '';
+  filteredCharset = signal<string[]>([]);
+  prefix = signal('');
+  suffix = signal('');
   isGenerating = signal(false);
   isLargeDataset = signal(false);
-
+  wordsGenerated = signal<number | undefined>(undefined);
+  
+  // Computed values
+  canGenerate = computed(() => 
+    this.charsetForm?.valid && this.filteredCharset().length > 0
+  );
+  
+  hasWordlist = computed(() => this.wordlist().length > 0);
+  
   private unsubscribe$ = new Subject<void>();
 
-  ngOnInit(): void {
+  constructor() {
     this.generateForm();
   }
-
+  
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
 
   get charsets(): UntypedFormArray | undefined {
     if (this.charsetForm) {
@@ -119,39 +126,39 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
     if (this.charsets) {
       const currentCharset = this.filterCharset(this.charsets.value);
       if (
-        JSON.stringify(this.filteredCharset) !== JSON.stringify(currentCharset)
+        JSON.stringify(this.filteredCharset()) !== JSON.stringify(currentCharset)
       ) {
         this.generateWordlist();
       }
-      const filename = `wordlist_${this.wordsGenerated}_words_${this.charsets.length}_positions.${this.fileType}`;
-      this.wordlist$
-        ?.pipe(
-          tap((wordlist: string) => {
-            if (wordlist.length > 0) {
-              const parsed = this.parseWordlist(wordlist);
-              const file = new Blob([parsed.wordlist], {
-                type: parsed.contentType
-              });
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              if ((window.navigator as any).msSaveOrOpenBlob) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (window.navigator as any).msSaveOrOpenBlob(file, filename);
-              } else {
-                const a = document.createElement('a');
-                const url = URL.createObjectURL(file);
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                  document.body.removeChild(a);
-                  window.URL.revokeObjectURL(url);
-                }, 0);
-              }
-            }
-          })
-        )
-        .subscribe();
+      const filename = `wordlist_${this.wordsGenerated()}_words_${this.charsets.length}_positions.${this.fileType()}`;
+      const wordlistContent = this.wordlist();
+      
+      if (wordlistContent && wordlistContent.length > 0) {
+        this.performDownload(wordlistContent, filename);
+      }
+    }
+  }
+  
+  private performDownload(wordlistContent: string, filename: string): void {
+    const parsed = this.parseWordlist(wordlistContent);
+    const file = new Blob([parsed.wordlist], {
+      type: parsed.contentType
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((window.navigator as any).msSaveOrOpenBlob) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window.navigator as any).msSaveOrOpenBlob(file, filename);
+    } else {
+      const a = document.createElement('a');
+      const url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
     }
   }
 
@@ -178,37 +185,43 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
 
   generateWordlist(): void {
     if (this.charsetForm && this.charsets && this.charsets.valid) {
-      this.filteredCharset = this.filterCharset(this.charsets.value);
-      this.prefix = this.charsetForm.get('prefix')?.value
-        ? this.charsetForm.get('prefix')?.value
-        : '';
-      this.suffix = this.charsetForm.get('suffix')?.value
-        ? this.charsetForm.get('suffix')?.value
-        : '';
+      this.filteredCharset.set(this.filterCharset(this.charsets.value));
+      this.prefix.set(this.charsetForm.get('prefix')?.value || '');
+      this.suffix.set(this.charsetForm.get('suffix')?.value || '');
 
-      this.wordsGenerated = this.filteredCharset
+      const wordsCount = this.filteredCharset()
         .map((charset: string) => charset.length)
         .reduce(
           (previousLength: number, currentLength: number) =>
             previousLength * currentLength
         );
 
-      this.isLargeDataset.set(this.wordsGenerated > 50000);
-      this.displayWordlist = this.wordsGenerated <= 100;
+      this.wordsGenerated.set(wordsCount);
+      this.isLargeDataset.set(wordsCount > 50000);
+      this.displayWordlist.set(wordsCount <= 100);
       this.isGenerating.set(true);
 
-      this.wordlist$ = this.getWordlist();
+      // Generate wordlist and update signal
+      this.getWordlist()
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe({
+          next: (wordlist) => this.wordlist.set(wordlist),
+          error: (error) => {
+            console.error('Error generating wordlist:', error);
+            this.isGenerating.set(false);
+          }
+        });
     }
   }
 
-  getWordlist(): Observable<string> {
+  private getWordlist(): Observable<string> {
     return this.wordlistGenerator
-      .generateWordlist(...this.filteredCharset)
+      .generateWordlist(...this.filteredCharset())
       .pipe(
         shareReplay({ bufferSize: 1, refCount: true }),
         reduce(
           (wordlist: string, word: string) =>
-            `${wordlist}${this.prefix}${word}${this.suffix}\n`,
+            `${wordlist}${this.prefix()}${word}${this.suffix()}\n`,
           ''
         ),
         finalize(() => {
@@ -223,7 +236,7 @@ export class WordlistGeneratorComponent implements OnInit, OnDestroy {
   }
 
   parseWordlist(wordlist: string): { wordlist: string; contentType: string } {
-    switch (this.fileType) {
+    switch (this.fileType()) {
       case FileType.plaintext:
         return toPlaintext(wordlist);
       case FileType.xml:

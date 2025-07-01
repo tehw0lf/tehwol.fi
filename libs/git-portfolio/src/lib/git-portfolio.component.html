@@ -1,4 +1,4 @@
-@if (gitRepositories$ | async; as gitRepositories) {
+@if (gitRepositories(); as gitRepositories) {
   <div>
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
       @if (hasAnyRepositories(gitRepositories, gitProvider.key)) {
@@ -11,11 +11,11 @@
                 class="flex-align-start"
                 [ngClass]="{
                   'flex-row-wrap':
-                    viewport === 'medium' || viewport === 'small',
-                  'flex-column': viewport === 'xsmall'
+                    viewport() === 'medium' || viewport() === 'small',
+                  'flex-column': viewport() === 'xsmall'
                 }"
               >
-                @if ((loading | async) === true) {
+                @if (loading() === true) {
                   <div>
                     <mat-spinner></mat-spinner>
                   </div>
@@ -42,15 +42,15 @@
                     (copiedToClipboard)="copyToClipboard(gitRepo)"
                     class="repository-card flex-align-stretch"
                     [ngClass]="{
-                      'flex-fxflex': viewport === 'medium',
-                      'flex-fxflex-lt-md': viewport === 'small',
-                      'flex-fxflex-lt-sm': viewport === 'xsmall'
+                      'flex-fxflex': viewport() === 'medium',
+                      'flex-fxflex-lt-md': viewport() === 'small',
+                      'flex-fxflex-lt-sm': viewport() === 'xsmall'
                     }"
                   >
                   </repo-card>
                 }
                 @if (
-                  (loading | async) === false &&
+                  loading() === false &&
                   !hasRepositoriesOfType(
                     gitRepositories,
                     gitProvider.key,
@@ -71,11 +71,11 @@
                 class="flex-align-start"
                 [ngClass]="{
                   'flex-row-wrap':
-                    viewport === 'medium' || viewport === 'small',
-                  'flex-column': viewport === 'xsmall'
+                    viewport() === 'medium' || viewport() === 'small',
+                  'flex-column': viewport() === 'xsmall'
                 }"
               >
-                @if ((loading | async) === true) {
+                @if (loading() === true) {
                   <div>
                     <mat-spinner></mat-spinner>
                   </div>
@@ -102,14 +102,14 @@
                     (copiedToClipboard)="copyToClipboard(gitRepo)"
                     class="repository-card flex-align-stretch"
                     [ngClass]="{
-                      'flex-fxflex': viewport === 'medium',
-                      'flex-fxflex-lt-md': viewport === 'small',
-                      'flex-fxflex-lt-sm': viewport === 'xsmall'
+                      'flex-fxflex': viewport() === 'medium',
+                      'flex-fxflex-lt-md': viewport() === 'small',
+                      'flex-fxflex-lt-sm': viewport() === 'xsmall'
                     }"
                   ></repo-card>
                 }
                 @if (
-                  (loading | async) === false &&
+                  loading() === false &&
                   !hasRepositoriesOfType(
                     gitRepositories,
                     gitProvider.key,
