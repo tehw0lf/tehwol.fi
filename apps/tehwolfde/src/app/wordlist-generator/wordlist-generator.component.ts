@@ -6,7 +6,6 @@ import { ThemeService } from '../theme.service';
 @Component({
     selector: 'tehw0lf-wordlist-generator',
     templateUrl: './wordlist-generator.component.html',
-    styleUrls: ['./wordlist-generator.component.scss'],
     imports: [WordlistGeneratorComponent_1],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
