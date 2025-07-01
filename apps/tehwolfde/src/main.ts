@@ -1,7 +1,4 @@
-import {
-  provideHttpClient,
-  withInterceptorsFromDi
-} from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -16,7 +13,7 @@ bootstrapApplication(AppComponent, {
     provideZonelessChangeDetection(),
     SidenavService,
     provideAnimations(),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(),
     provideRouter(routes)
   ]
 }).catch((err) => console.error(err));
