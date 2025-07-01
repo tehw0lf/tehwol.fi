@@ -7,8 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent {
-  constructor() {
-    //
-  }
-}
+export class HomeComponent {}

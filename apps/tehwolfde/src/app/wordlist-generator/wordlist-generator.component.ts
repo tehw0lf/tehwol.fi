@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@tehw0lf/wordlist-generator';
 
 import { ThemeService } from '../theme.service';
@@ -13,30 +13,10 @@ import { ThemeService } from '../theme.service';
 export class WordlistGeneratorComponent {
   themeService = inject(ThemeService);
 
-  buttonStyle = {
-    'background-color': '#333333',
+  buttonStyle = computed(() => ({
+    'background-color': this.themeService.theme() === 'dark' 
+      ? '#333333' 
+      : 'rgba(255, 255, 255, 0.75)',
     color: '#cc7832'
-  };
-
-  constructor() {
-    effect(() =>
-      this.themeService.theme() === 'dark'
-        ? this.switchToDark()
-        : this.switchToLight()
-    );
-  }
-
-  switchToLight(): void {
-    this.buttonStyle = {
-      'background-color': 'rgba(255, 255, 255, 0.75)',
-      color: '#cc7832'
-    };
-  }
-
-  switchToDark(): void {
-    this.buttonStyle = {
-      'background-color': '#333333',
-      color: '#cc7832'
-    };
-  }
+  }));
 }
