@@ -13,7 +13,7 @@ import {
   input,
   OnDestroy,
   signal,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -51,7 +51,7 @@ import { WordlistGeneratorService } from './wordlist-generator.service';
     CdkDropList,
     CdkDrag,
     MatIconModule,
-    MatProgressBarModule,
+    MatProgressBarModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -79,25 +79,23 @@ export class WordlistGeneratorComponent implements OnDestroy {
   isGenerating = signal(false);
   isLargeDataset = signal(false);
   wordsGenerated = signal<number | undefined>(undefined);
-  
-  // Computed values
-  canGenerate = computed(() => 
-    this.charsetForm?.valid && this.filteredCharset().length > 0
+
+  canGenerate = computed(
+    () => this.charsetForm?.valid && this.filteredCharset().length > 0
   );
-  
+
   hasWordlist = computed(() => this.wordlist().length > 0);
-  
+
   private unsubscribe$ = new Subject<void>();
 
   constructor() {
     this.generateForm();
   }
-  
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 
   get charsets(): UntypedFormArray | undefined {
     if (this.charsetForm) {
@@ -126,19 +124,20 @@ export class WordlistGeneratorComponent implements OnDestroy {
     if (this.charsets) {
       const currentCharset = this.filterCharset(this.charsets.value);
       if (
-        JSON.stringify(this.filteredCharset()) !== JSON.stringify(currentCharset)
+        JSON.stringify(this.filteredCharset()) !==
+        JSON.stringify(currentCharset)
       ) {
         this.generateWordlist();
       }
       const filename = `wordlist_${this.wordsGenerated()}_words_${this.charsets.length}_positions.${this.fileType()}`;
       const wordlistContent = this.wordlist();
-      
+
       if (wordlistContent && wordlistContent.length > 0) {
         this.performDownload(wordlistContent, filename);
       }
     }
   }
-  
+
   private performDownload(wordlistContent: string, filename: string): void {
     const parsed = this.parseWordlist(wordlistContent);
     const file = new Blob([parsed.wordlist], {

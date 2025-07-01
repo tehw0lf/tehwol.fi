@@ -106,13 +106,11 @@ describe('WordlistGeneratorComponent', () => {
 
     setTimeout(() => {
       component.downloadWordlist();
-      setTimeout(() => {
-        const after = document.body.innerHTML;
-        expect(before).not.toEqual(after);
-        expect(after).toContain('download="wordlist_3_words_1_positions.txt');
-        done();
-      }, 10);
-    }, 20);
+      const after = document.body.innerHTML;
+      expect(before).not.toEqual(after);
+      expect(after).toContain('download="wordlist_3_words_1_positions.txt"');
+      done();
+    }, 10);
   });
 
   it('should provide a downloadable file for IE', (done) => {
