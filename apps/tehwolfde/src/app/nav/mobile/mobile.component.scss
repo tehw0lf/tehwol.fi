@@ -53,12 +53,3 @@
 .mat-mdc-icon-button {
   color: global.$linkcolor !important;
 }
-
-// Override shared theme button styles with !important for mobile specificity
-.dark-theme-button {
-  color: black !important;
-}
-
-.light-theme-button {
-  color: yellow !important;
-}
