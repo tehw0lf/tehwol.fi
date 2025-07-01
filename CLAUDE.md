@@ -8,6 +8,18 @@ Read and understand .claude-templates/CLAUDE.angular.md for further reference.
 ## Use Nx MCP Server
 Read and understand .github/instructions/nx.instructions.md to familiarize yourself with the Nx MCP server that you have access to. If you do not have access to the MCP server yet, prompt the user to run the following command to add it after enabling it in Nx Console: `claude mcp add -t http nx-mcp http://localhost:9332/mcp`.
 
+## Pre-commit Validation
+**IMPORTANT**: Before committing any changes, always run the comprehensive validation commands:
+```bash
+npx nx run-many -t lint,test,build
+```
+This command runs linting, testing, and building across all projects to ensure code quality and prevent breaking changes.
+
+For e2e tests, run:
+```bash
+npm run e2e
+```
+
 ## Architecture Overview
 
 This is an Nx monorepo containing an Angular portfolio website and reusable Angular libraries. The main application `tehwolfde` showcases three custom libraries published under the `@tehw0lf` namespace:
@@ -65,19 +77,6 @@ nx affected:test        # Test only affected projects
 nx affected:lint        # Lint only affected projects
 nx dep-graph           # View dependency graph
 ```
-
-### Pre-commit Validation
-**IMPORTANT**: Before committing any changes, always run the comprehensive validation commands:
-```bash
-npx nx run-many -t lint,test,build
-```
-This command runs linting, testing, and building across all projects to ensure code quality and prevent breaking changes.
-
-For e2e tests, run:
-```bash
-npm run e2e
-```
-
 
 ## Project-specific conventions
 - Component prefix: `tehw0lf`
