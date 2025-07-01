@@ -7,7 +7,6 @@ import { ThemeService } from './theme.service';
 @Component({
     selector: 'tehw0lf-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
     imports: [NavComponent, NgClass],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

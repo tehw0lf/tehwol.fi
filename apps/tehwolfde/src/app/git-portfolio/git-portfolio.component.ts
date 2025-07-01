@@ -9,7 +9,6 @@ import { ThemeService } from '../theme.service';
 @Component({
     selector: 'tehw0lf-git-portfolio',
     templateUrl: './git-portfolio.component.html',
-    styleUrls: ['./git-portfolio.component.scss'],
     imports: [GitPortfolioComponent_1],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
