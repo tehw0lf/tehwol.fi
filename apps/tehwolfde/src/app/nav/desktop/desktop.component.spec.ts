@@ -45,4 +45,16 @@ describe('DesktopComponent', () => {
     expect(mockSidenavService.toggle).toHaveBeenCalled();
     expect((mockEvent.target as HTMLElement).blur).toHaveBeenCalled();
   });
+
+  it('should call themeService.light when switchToLight is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'light');
+    component.switchToLight();
+    expect(themeServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should call themeService.dark when switchToDark is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'dark');
+    component.switchToDark();
+    expect(themeServiceSpy).toHaveBeenCalled();
+  });
 });
