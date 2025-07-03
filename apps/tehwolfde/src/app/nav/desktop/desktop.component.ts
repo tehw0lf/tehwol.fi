@@ -1,8 +1,6 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
 import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -34,9 +32,8 @@ import { SidenavService } from '../sidenav.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DesktopComponent implements AfterViewInit, OnDestroy {
+export class DesktopComponent implements OnDestroy {
   themeService = inject(ThemeService);
-  private focusMonitor = inject(FocusMonitor);
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);
@@ -56,14 +53,6 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
   buttonStyle = computed(() =>
     this.isLargeScreen().matches ? '' : 'display: none;'
   );
-
-  ngAfterViewInit(): void {
-    const menu = document.getElementById('menu');
-    if (menu) {
-      this.focusMonitor.stopMonitoring(menu);
-    }
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

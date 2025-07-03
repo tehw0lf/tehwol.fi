@@ -7,10 +7,8 @@ import {
   inject,
   OnDestroy,
   ViewChild,
-  ViewEncapsulation,
-  effect
+  ViewEncapsulation
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -22,7 +20,6 @@ import {
   RouterOutlet
 } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -55,25 +52,7 @@ export class MobileComponent implements AfterViewInit, OnDestroy {
     | undefined;
 
   private unsubscribe$ = new Subject<void>();
-  
-  // Convert router events to a signal
-  private routerEvents = toSignal(
-    this.router.events.pipe(takeUntil(this.unsubscribe$)),
-    { initialValue: null }
-  );
 
-  constructor() {
-    // Use effect to close sidenav on router events
-    effect(() => {
-      // Create dependency on router events signal
-      this.routerEvents();
-      // Close sidenav on any router event (except initial null)
-      if (this.routerEvents() !== null) {
-        this.sidenavService.close();
-      }
-    });
-  }
-  
   ngAfterViewInit(): void {
     if (this.sidenav) {
       this.sidenavService.setSidenav(this.sidenav);
@@ -101,6 +80,7 @@ export class MobileComponent implements AfterViewInit, OnDestroy {
       })
     );
   }
+
   closeSidenav(): void {
     this.sidenavService.close();
   }
