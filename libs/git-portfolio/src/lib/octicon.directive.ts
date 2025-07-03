@@ -17,8 +17,9 @@ export class OcticonDirective implements OnInit {
   ngOnInit(): void {
     const el: HTMLElement = this.elementRef.nativeElement;
     if (this.octicon()) {
-      if (octicons[this.octicon()! as IconName] !== undefined) {
-        el.innerHTML = octicons[this.octicon()! as IconName].toSVG();
+      const iconName = this.octicon() as IconName;
+      if (octicons[iconName] !== undefined) {
+        el.innerHTML = octicons[iconName].toSVG();
 
         const icon: Node | null = el.firstChild;
 
@@ -31,7 +32,9 @@ export class OcticonDirective implements OnInit {
         }
       } else {
         el.innerHTML = octicons['alert'].toSVG();
-        this.renderer.setStyle(el.firstChild, 'fill', 'red');
+        if (el.firstChild) {
+          this.renderer.setStyle(el.firstChild, 'fill', 'red');
+        }
       }
     }
   }

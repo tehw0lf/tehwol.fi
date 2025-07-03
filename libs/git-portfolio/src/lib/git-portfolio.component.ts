@@ -4,15 +4,15 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import {
-  AsyncPipe,
   CommonModule,
   KeyValuePipe,
   NgStyle
 } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, inject, signal, effect, OnDestroy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Observable, Subject } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { GitProviderService } from './git-provider.service';
 import { RepoCardComponent } from './repo-card/repo-card.component';
@@ -32,12 +32,11 @@ import { GitRepository } from './types/git-repository-type';
     NgStyle,
     MatProgressSpinnerModule,
     RepoCardComponent,
-    AsyncPipe,
     KeyValuePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GitPortfolioComponent implements OnInit, OnDestroy {
+export class GitPortfolioComponent implements OnDestroy {
   private gitProviderService = inject(GitProviderService);
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -67,16 +66,18 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
 
   showOwn = input(true);
 
-  loading: Observable<boolean>;
+  loading = toSignal(this.gitProviderService.loading, { initialValue: true });
   gitProviders = GitProviders;
-  currentRepo: GitRepository | undefined;
-  gitRepositories$: Observable<GitRepositories> | undefined;
-  viewport = '';
+  currentRepo = signal<GitRepository | undefined>(undefined);
+  gitRepositories = signal<GitRepositories | undefined>(undefined);
+  viewport = signal('');
 
   private unsubscribe$ = new Subject<void>();
 
   constructor() {
-    this.loading = this.gitProviderService.loading;
+    effect(() => {
+      this.getRepositories();
+    });
 
     this.breakpointObserver
       .observe([
@@ -87,20 +88,16 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
       .pipe(
         tap((breakpointState: BreakpointState) => {
           if (breakpointState.breakpoints['(max-width: 599.98px)']) {
-            this.viewport = 'xsmall';
+            this.viewport.set('xsmall');
           } else if (breakpointState.breakpoints['(max-width: 959.98px)']) {
-            this.viewport = 'small';
+            this.viewport.set('small');
           } else {
-            this.viewport = 'medium';
+            this.viewport.set('medium');
           }
         }),
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
-  }
-
-  ngOnInit(): void {
-    this.getRepositories();
   }
 
   ngOnDestroy(): void {
@@ -109,49 +106,52 @@ export class GitPortfolioComponent implements OnInit, OnDestroy {
   }
 
   copyToClipboard(gitRepo: GitRepository): void {
-    this.currentRepo = gitRepo;
+    this.currentRepo.set(gitRepo);
   }
 
   isCopiedToClipboard(gitRepo: GitRepository): boolean {
-    if (!this.currentRepo) {
+    if (!this.currentRepo()) {
       return false;
     }
-    return this.currentRepo.id === gitRepo.id ? true : false;
+    return this.currentRepo()?.id === gitRepo.id ? true : false;
   }
 
   getRepositories(): void {
-    this.gitRepositories$ = this.gitProviderService
+    this.gitProviderService
       .getRepositories(this.gitProviderConfig())
-      .pipe(takeUntil(this.unsubscribe$));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(repositories => {
+        this.gitRepositories.set(repositories);
+      });
   }
 
   getGitRepositoriesOfType(
-    gitRepositories: GitRepositories,
+    gitRepositories: GitRepositories | undefined,
     gitProvider: string,
     type: 'own' | 'forked'
   ): GitRepository[] {
-    return gitRepositories[gitProvider]?.[type] ?? [];
+    return gitRepositories?.[gitProvider]?.[type] ?? [];
   }
 
   hasAnyRepositories(
-    gitRepositories: GitRepositories,
+    gitRepositories: GitRepositories | undefined,
     gitProvider: string
   ): boolean {
     return (
-      (gitRepositories[gitProvider] &&
-        gitRepositories[gitProvider].own?.length > 0 &&
-        gitRepositories[gitProvider].forked?.length > 0) ??
+      (gitRepositories?.[gitProvider] &&
+        (gitRepositories[gitProvider].own?.length > 0 ||
+         gitRepositories[gitProvider].forked?.length > 0)) ??
       false
     );
   }
 
   hasRepositoriesOfType(
-    gitRepositories: GitRepositories,
+    gitRepositories: GitRepositories | undefined,
     gitProvider: string,
     type: 'own' | 'forked'
   ): boolean {
     return (
-      (gitRepositories[gitProvider] &&
+      (gitRepositories?.[gitProvider] &&
         gitRepositories[gitProvider]?.[type]?.length > 0) ??
       false
     );

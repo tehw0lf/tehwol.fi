@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -10,15 +10,16 @@ import { MobileComponent } from './mobile.component';
 
 const mockSidenavService = {
   setSidenav: jest.fn(),
-  toggle: jest.fn()
+  toggle: jest.fn(),
+  close: jest.fn()
 };
 
 describe('MobileComponent', () => {
   let component: MobileComponent;
   let fixture: ComponentFixture<MobileComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         MatIconModule,
@@ -31,7 +32,7 @@ describe('MobileComponent', () => {
         { provide: SidenavService, useValue: mockSidenavService }
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MobileComponent);
@@ -46,5 +47,22 @@ describe('MobileComponent', () => {
   it('should toggle the sidenav', () => {
     component.toggleSidenav();
     expect(mockSidenavService.toggle).toHaveBeenCalled();
+  });
+
+  it('should call sidenavService.close when closeSidenav is called', () => {
+    component.closeSidenav();
+    expect(mockSidenavService.close).toHaveBeenCalled();
+  });
+
+  it('should call themeService.light when switchToLight is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'light');
+    component.switchToLight();
+    expect(themeServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should call themeService.dark when switchToDark is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'dark');
+    component.switchToDark();
+    expect(themeServiceSpy).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
 import { of } from 'rxjs';
 
@@ -8,23 +8,28 @@ import { ThemeService } from '../theme.service';
     selector: 'tehw0lf-contact-form',
     templateUrl: './contact-form.component.html',
     styleUrls: ['./contact-form.component.scss'],
-    imports: [ContactFormComponent_1]
+    imports: [ContactFormComponent_1],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
   private themeService = inject(ThemeService);
 
-  buttonStyle = {
-    'background-color': '#333333',
+  buttonStyle = computed(() => ({
+    'background-color': this.themeService.theme() === 'dark' 
+      ? '#333333' 
+      : 'rgba(255, 255, 255, 0.75)',
     border: 'none',
     color: '#cc7832'
-  };
+  }));
 
-  formStyle = {
+  formStyle = computed(() => ({
     color: '#437da8',
-    'background-color': 'rgba(34, 34, 34, 0.75)',
+    'background-color': this.themeService.theme() === 'dark' 
+      ? 'rgba(34, 34, 34, 0.75)' 
+      : 'rgba(255, 255, 255, 0.75)',
     'backdrop-filter': 'blur(50px)',
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-  };
+  }));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   apiCallback = (formValue: any) => {
@@ -36,42 +41,4 @@ export class ContactFormComponent {
       return of(false);
     }
   };
-
-  constructor() {
-    effect(() =>
-      this.themeService.theme() === 'dark'
-        ? this.switchToDark()
-        : this.switchToLight()
-    );
-  }
-
-  switchToLight(): void {
-    this.buttonStyle = {
-      'background-color': 'rgba(255, 255, 255, 0.75)',
-      border: 'none',
-      color: '#cc7832'
-    };
-
-    this.formStyle = {
-      color: '#437da8',
-      'background-color': 'rgba(255, 255, 255, 0.75)',
-      'backdrop-filter': 'blur(50px)',
-      'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-    };
-  }
-
-  switchToDark(): void {
-    this.buttonStyle = {
-      'background-color': '#333333',
-      border: 'none',
-      color: '#cc7832'
-    };
-
-    this.formStyle = {
-      color: '#437da8',
-      'background-color': 'rgba(34, 34, 34, 0.75)',
-      'backdrop-filter': 'blur(50px)',
-      'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
-    };
-  }
 }

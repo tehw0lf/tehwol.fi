@@ -14,9 +14,9 @@
     {{ sendText() }}
   </button>
   <div [ngStyle]="textStyle()" class="form-status">
-    @if ((emailSent$ | async) === true) {
+    @if (emailSent()) {
       {{ sendSuccessfulText() }}
-    } @else if ((emailSent$ | async) === false) {
+    } @else if (emailSent() === false) {
       {{ sendErrorText() }}
     }
   </div>

@@ -5,6 +5,10 @@
   font-family: global.$font;
 }
 
+body {
+  height: 100vh;
+}
+
 body.dark {
   background-color: #1a1a1a;
 }
