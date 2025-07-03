@@ -10,7 +10,8 @@ import { MobileComponent } from './mobile.component';
 
 const mockSidenavService = {
   setSidenav: jest.fn(),
-  toggle: jest.fn()
+  toggle: jest.fn(),
+  close: jest.fn()
 };
 
 describe('MobileComponent', () => {
@@ -46,5 +47,22 @@ describe('MobileComponent', () => {
   it('should toggle the sidenav', () => {
     component.toggleSidenav();
     expect(mockSidenavService.toggle).toHaveBeenCalled();
+  });
+
+  it('should call sidenavService.close when closeSidenav is called', () => {
+    component.closeSidenav();
+    expect(mockSidenavService.close).toHaveBeenCalled();
+  });
+
+  it('should call themeService.light when switchToLight is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'light');
+    component.switchToLight();
+    expect(themeServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should call themeService.dark when switchToDark is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'dark');
+    component.switchToDark();
+    expect(themeServiceSpy).toHaveBeenCalled();
   });
 });
