@@ -3,13 +3,14 @@
   [ngClass]="themeService.theme()"
   hasBackdrop="false"
 >
-  <mat-sidenav #sidenav mode="over" fixedInViewport="true">
+  <mat-sidenav #sidenav mode="over" fixedInViewport="true" role="navigation" aria-label="Mobile navigation menu">
     <mat-nav-list
       [ngClass]="themeService.theme()"
       class="flex-column flex-gap-20 flex-fxflex"
     >
       <a
         [ngClass]="{ 'link-active': isActive() }"
+        (click)="closeSidenav()"
         routerLink="/home"
         routerLinkActive="link-active"
         mat-list-item
@@ -18,9 +19,11 @@
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
-      ><a routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
+      ><a 
+        (click)="closeSidenav()" routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
         <span>Portfolio</span> </a
       ><a
+        (click)="closeSidenav()"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
@@ -30,6 +33,7 @@
         </span>
       </a>
       <a
+        (click)="closeSidenav()"
         routerLink="/contact-form"
         routerLinkActive="link-active"
         mat-list-item
@@ -39,6 +43,7 @@
         </span>
       </a>
       <a
+        (click)="closeSidenav()"
         class="mat-mdc-list-item"
         target="_blank"
         href="https://github.com/tehw0lf"
@@ -59,8 +64,9 @@
           type="button"
           (click)="toggleSidenav()"
           mat-icon-button
+          aria-label="Close navigation menu"
         >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          <mat-icon>menu</mat-icon>
         </button>
         @if (themeService.theme() === 'dark') {
           <button
@@ -69,6 +75,7 @@
             type="button"
             (click)="switchToLight()"
             mat-icon-button
+            aria-label="Switch to light theme"
           >
             <mat-icon>light_mode</mat-icon>
           </button>
@@ -80,6 +87,7 @@
             type="button"
             (click)="switchToDark()"
             mat-icon-button
+            aria-label="Switch to dark theme"
           >
             <mat-icon>dark_mode</mat-icon>
           </button>

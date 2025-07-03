@@ -1,10 +1,11 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   inject,
   OnDestroy,
-  OnInit,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -19,7 +20,6 @@ import {
   RouterOutlet
 } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -39,9 +39,10 @@ import { SidenavService } from '../sidenav.service';
     MatButtonModule,
     MatIconModule,
     RouterOutlet
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MobileComponent implements OnInit, OnDestroy {
+export class MobileComponent implements AfterViewInit, OnDestroy {
   router = inject(Router);
   themeService = inject(ThemeService);
   private sidenavService = inject(SidenavService);
@@ -52,19 +53,10 @@ export class MobileComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (this.sidenav) {
       this.sidenavService.setSidenav(this.sidenav);
     }
-
-    this.router.events
-      .pipe(
-        tap(() => {
-          this.sidenavService.close();
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -88,6 +80,7 @@ export class MobileComponent implements OnInit, OnDestroy {
       })
     );
   }
+
   closeSidenav(): void {
     this.sidenavService.close();
   }

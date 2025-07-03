@@ -15,8 +15,7 @@
 /out-tsc
 
 # dependencies
-/node_modules
-/libs/*/node_modules
+node_modules
 
 # IDEs and editors
 /.idea
@@ -51,3 +50,9 @@ Thumbs.db
 .swc
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/dist/.playwright

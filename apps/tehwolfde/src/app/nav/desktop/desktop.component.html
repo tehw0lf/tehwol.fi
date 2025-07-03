@@ -1,15 +1,16 @@
-<mat-toolbar [ngClass]="themeService.theme()">
+<mat-toolbar [ngClass]="themeService.theme()" role="navigation" aria-label="Main navigation">
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
       type="button"
-      (click)="toggleSidenav()"
-      [style]="burgerStyle"
+      (click)="toggleSidenav($event)"
+      [style]="burgerStyle()"
       mat-icon-button
+      aria-label="Open navigation menu"
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <div [style]="buttonStyle" class="flex-row flex-fxflex">
+    <div [style]="buttonStyle()" class="flex-row flex-fxflex">
       <div class="nav-item flex-gap-20">
         <a
           mat-button
@@ -53,8 +54,9 @@
         class="light-theme-button flex-gap-20"
         type="button"
         (click)="switchToLight()"
-        [style]="buttonStyle"
+        [style]="buttonStyle()"
         mat-icon-button
+        aria-label="Switch to light theme"
       >
         <mat-icon>light_mode</mat-icon>
       </button>
@@ -64,13 +66,14 @@
         class="dark-theme-button flex-gap-20"
         type="button"
         (click)="switchToDark()"
-        [style]="buttonStyle"
+        [style]="buttonStyle()"
         mat-icon-button
+        aria-label="Switch to dark theme"
       >
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
-    <div [style]="buttonStyle">
+    <div [style]="buttonStyle()">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">
           <span class="mat-button-wrapper">

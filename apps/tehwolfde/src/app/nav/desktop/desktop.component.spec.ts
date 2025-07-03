@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { provideRouter } from '@angular/router';
@@ -14,15 +14,15 @@ describe('DesktopComponent', () => {
   let component: DesktopComponent;
   let fixture: ComponentFixture<DesktopComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [MatIconModule, MatToolbarModule, DesktopComponent],
       providers: [
         provideRouter([]),
         { provide: SidenavService, useValue: mockSidenavService }
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DesktopComponent);
@@ -35,7 +35,26 @@ describe('DesktopComponent', () => {
   });
 
   it('should toggle sidenav', () => {
-    component.toggleSidenav();
+    const mockEvent = {
+      target: {
+        blur: jest.fn()
+      }
+    } as unknown as Event;
+    
+    component.toggleSidenav(mockEvent);
     expect(mockSidenavService.toggle).toHaveBeenCalled();
+    expect((mockEvent.target as HTMLElement).blur).toHaveBeenCalled();
+  });
+
+  it('should call themeService.light when switchToLight is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'light');
+    component.switchToLight();
+    expect(themeServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should call themeService.dark when switchToDark is called', () => {
+    const themeServiceSpy = jest.spyOn(component.themeService, 'dark');
+    component.switchToDark();
+    expect(themeServiceSpy).toHaveBeenCalled();
   });
 });

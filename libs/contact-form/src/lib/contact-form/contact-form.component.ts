@@ -1,23 +1,28 @@
 import { LayoutModule } from '@angular/cdk/layout';
-import { AsyncPipe, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   input,
   OnDestroy,
-  OnInit,
-  ViewEncapsulation
+  signal,
+  ViewEncapsulation,
+  effect
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 
+interface FormValue {
+  [key: string]: string;
+}
+
 interface FormConfigEntry {
   field: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value?: any;
+  value?: string;
   required?: boolean;
-  type?: string;
+  type?: 'input' | 'textarea' | 'email' | 'number';
 }
 
 @Component({
@@ -31,11 +36,11 @@ interface FormConfigEntry {
         ReactiveFormsModule,
         FormlyModule,
         FormlyMaterialModule,
-        NgStyle,
-        AsyncPipe
-    ]
+        NgStyle
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactFormComponent implements OnInit, OnDestroy {
+export class ContactFormComponent implements OnDestroy {
   buttonStyle = input({
     'background-color': '#333333',
     border: 'none',
@@ -63,24 +68,23 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     { field: 'message', required: true, type: 'textarea' }
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  apiCallback = input.required<(formValue: any) => Observable<boolean>>();
+  apiCallback = input.required<(formValue: FormValue) => Observable<boolean>>();
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];
   model: { [key: string]: string } = {};
 
-  emailSent: Subject<boolean | null> = new Subject();
-  emailSent$ = this.emailSent.asObservable();
+  emailSent = signal<boolean | null>(null);
 
   private unsubscribe$: Subject<void> = new Subject();
 
   constructor() {
-    this.emailSent.next(null);
-  }
-
-  ngOnInit(): void {
-    this.buildConfig();
+    // Use an effect to rebuild config when formConfig changes
+    effect(() => {
+      // Read the formConfig signal to establish dependency
+      this.formConfig();
+      this.buildConfig();
+    });
   }
 
   ngOnDestroy(): void {
@@ -91,19 +95,25 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   submitFormData(formData: { [key: string]: string }) {
     this.apiCallback()(formData)
       .pipe(
-        tap((success: boolean) => this.emailSent.next(success)),
+        tap((success: boolean) => {
+          this.emailSent.set(success);
+        }),
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
   }
 
   private buildConfig(): void {
+    // Clear existing fields and model
+    this.fields = [];
+    this.model = {};
+    
     this.formConfig().forEach((entry: FormConfigEntry) => {
       if (entry.value) {
         this.model[entry.field] = entry.value;
       }
 
-      this.fields.push({
+      const fieldConfig: FormlyFieldConfig = {
         key: entry.field,
         type: entry.type ? entry.type : 'input',
         props: {
@@ -120,7 +130,33 @@ export class ContactFormComponent implements OnInit, OnDestroy {
                 maxRows: 10
               }
             : {}
-      });
+      };
+
+      // Add email validation for email fields
+      if (entry.field.toLowerCase() === 'email') {
+        if (fieldConfig.props) {
+          fieldConfig.props.type = 'email';
+        }
+        fieldConfig.validators = {
+          email: {
+            expression: (control: AbstractControl) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
+            message: 'Please enter a valid email address'
+          }
+        };
+      }
+
+      // Add required validation message
+      if (entry.required) {
+        fieldConfig.validators = {
+          ...fieldConfig.validators,
+          required: {
+            expression: (control: AbstractControl) => !!control.value,
+            message: `${entry.field} is required`
+          }
+        };
+      }
+
+      this.fields.push(fieldConfig);
     });
   }
 

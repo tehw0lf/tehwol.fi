@@ -6,10 +6,15 @@
         [ngStyle]="buttonStyle()"
         mat-raised-button
         (click)="generateWordlist()"
+        [disabled]="isGenerating()"
       >
-        Generate wordlist
+        @if (isGenerating()) {
+          Generating...
+        } @else {
+          Generate wordlist
+        }
       </button>
-      @if (wordlist$) {
+      @if (hasWordlist() && !isGenerating()) {
         <button
           class="choose-format"
           [ngStyle]="buttonStyle()"
@@ -24,13 +29,13 @@
           <button
             [ngStyle]="buttonStyle()"
             mat-menu-item
-            (click)="fileType = type"
+            (click)="fileType.set(type)"
           >
             {{ type }}
           </button>
         }
       </mat-menu>
-      @if (wordlist$) {
+      @if (hasWordlist() && !isGenerating()) {
         <button
           class="download-wordlist"
           [ngStyle]="buttonStyle()"
@@ -38,12 +43,20 @@
           (click)="downloadWordlist()"
         >
           Download as
-          @if (this.fileType) {
-            {{ this.fileType }}
+          @if (this.fileType()) {
+            {{ this.fileType() }}
           }
         </button>
       }
     </div>
+    
+    @if (isGenerating() && isLargeDataset()) {
+      <div class="progress-container">
+        <mat-progress-bar mode="indeterminate" role="progressbar" aria-label="Generating wordlist"></mat-progress-bar>
+        <p [ngStyle]="textStyle()">Processing large dataset using Web Worker...</p>
+      </div>
+    }
+    
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
         <mat-form-field class="fixed-width bottom-10" appearance="outline">
@@ -124,16 +137,17 @@
       </form>
     }
   </div>
-  @if (wordlist$) {
+  @if (hasWordlist()) {
     <div class="wordlist-container flex-column flex-fxflex">
-      @if (displayWordlist) {
+      @if (displayWordlist()) {
         <h3 class="wordlist-header">Generated wordlist:</h3>
         <code class="wordlist">
-          {{ wordlist$ | async }}
+          {{ wordlist() }}
         </code>
       } @else {
         The generated wordlist is too large to be displayed. You can still
         download it.
+        <!-- Wordlist is already loaded in the signal for large datasets -->
       }
     </div>
   }

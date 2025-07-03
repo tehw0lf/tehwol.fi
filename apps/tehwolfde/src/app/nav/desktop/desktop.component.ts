@@ -1,16 +1,18 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
-import {
-  BreakpointObserver,
-  BreakpointState,
-  LayoutModule
-} from '@angular/cdk/layout';
+import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';
 import { SidenavService } from '../sidenav.service';
@@ -27,47 +29,30 @@ import { SidenavService } from '../sidenav.service';
     MatIconModule,
     RouterLink,
     RouterLinkActive
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DesktopComponent implements AfterViewInit, OnDestroy {
+export class DesktopComponent implements OnDestroy {
   themeService = inject(ThemeService);
-  private focusMonitor = inject(FocusMonitor);
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);
-
-  burgerStyle = '';
-  buttonStyle = '';
-
   private unsubscribe$: Subject<void> = new Subject();
 
-  constructor() {
-    const breakpointObserver = this.breakpointObserver;
-
-    breakpointObserver
+  private isLargeScreen = toSignal(
+    this.breakpointObserver
       .observe(['(min-width: 960px)'])
-      .pipe(
-        tap((breakpointState: BreakpointState) => {
-          if (breakpointState.matches) {
-            this.burgerStyle = 'display: none;';
-            this.buttonStyle = '';
-          } else {
-            this.burgerStyle = '';
-            this.buttonStyle = 'display: none;';
-          }
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
-  }
+      .pipe(takeUntil(this.unsubscribe$)),
+    { initialValue: { matches: false, breakpoints: {} } }
+  );
 
-  ngAfterViewInit(): void {
-    const menu = document.getElementById('menu');
-    if (menu) {
-      this.focusMonitor.stopMonitoring(menu);
-    }
-  }
+  burgerStyle = computed(() =>
+    this.isLargeScreen().matches ? 'display: none;' : ''
+  );
 
+  buttonStyle = computed(() =>
+    this.isLargeScreen().matches ? '' : 'display: none;'
+  );
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -90,8 +75,9 @@ export class DesktopComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  toggleSidenav(): void {
+  toggleSidenav(event: Event): void {
     this.sidenavService.toggle();
+    (event.target as HTMLElement).blur();
   }
 
   switchToLight(): void {
