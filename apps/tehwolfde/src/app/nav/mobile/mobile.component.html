@@ -10,6 +10,7 @@
     >
       <a
         [ngClass]="{ 'link-active': isActive() }"
+        (click)="closeSidenav()"
         routerLink="/home"
         routerLinkActive="link-active"
         mat-list-item
@@ -18,9 +19,11 @@
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
-      ><a routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
+      ><a 
+        (click)="closeSidenav()" routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
         <span>Portfolio</span> </a
       ><a
+        (click)="closeSidenav()"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
         mat-list-item
@@ -30,6 +33,7 @@
         </span>
       </a>
       <a
+        (click)="closeSidenav()"
         routerLink="/contact-form"
         routerLinkActive="link-active"
         mat-list-item
@@ -39,6 +43,7 @@
         </span>
       </a>
       <a
+        (click)="closeSidenav()"
         class="mat-mdc-list-item"
         target="_blank"
         href="https://github.com/tehw0lf"

@@ -19,7 +19,7 @@
   color: global.$linkcolor !important;
 }
 
-.mat-mdc-icon-button {
+#menu.mat-mdc-icon-button {
   color: global.$linkcolor;
 }
 
@@ -48,8 +48,4 @@
 .main-content {
   color: global.$fontcolor;
   padding: 32px 0 0 32px;
-}
-
-.mat-mdc-icon-button {
-  color: global.$linkcolor !important;
 }
