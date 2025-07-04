@@ -49,3 +49,7 @@
   color: global.$fontcolor;
   padding: 32px 0 0 32px;
 }
+
+span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
+  background: transparent;
+}

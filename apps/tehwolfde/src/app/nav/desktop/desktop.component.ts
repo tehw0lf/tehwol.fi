@@ -75,9 +75,8 @@ export class DesktopComponent implements OnDestroy {
     );
   }
 
-  toggleSidenav(event: Event): void {
+  toggleSidenav(): void {
     this.sidenavService.toggle();
-    (event.target as HTMLElement).blur();
   }
 
   switchToLight(): void {
