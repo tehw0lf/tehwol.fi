@@ -42,3 +42,7 @@
 .github {
   vertical-align: middle;
 }
+
+span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
+  background: transparent;
+}
