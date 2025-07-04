@@ -35,15 +35,8 @@ describe('DesktopComponent', () => {
   });
 
   it('should toggle sidenav', () => {
-    const mockEvent = {
-      target: {
-        blur: jest.fn()
-      }
-    } as unknown as Event;
-    
-    component.toggleSidenav(mockEvent);
+    component.toggleSidenav();
     expect(mockSidenavService.toggle).toHaveBeenCalled();
-    expect((mockEvent.target as HTMLElement).blur).toHaveBeenCalled();
   });
 
   it('should call themeService.light when switchToLight is called', () => {
