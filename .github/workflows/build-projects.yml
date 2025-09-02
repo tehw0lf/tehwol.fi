@@ -28,6 +28,7 @@ jobs:
       libraries: 'contact-form,git-portfolio,wordlist-generator'
       library_path: 'dist/libs'
       artifact_path: 'dist'
+      platforms: 'linux/arm64'
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
