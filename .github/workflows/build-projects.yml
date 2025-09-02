@@ -21,7 +21,7 @@ jobs:
       test: 'run test:ci'
       e2e: 'run e2e'
       build_branch: 'run affected:build'
-      build_main: 'run affected:build --skip-nx-cache'
+      build_main: 'run build --skip-nx-cache'
       event_name: ${{ github.event_name }}
       docker_pre: '[ -d ./dist/apps ] && mv -fv avatar* dist/apps/tehwolfde/browser/'
       docker_meta: '[{"name":"tehwolf.de","file":"Dockerfile"}]'
