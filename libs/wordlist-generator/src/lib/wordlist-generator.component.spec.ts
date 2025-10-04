@@ -32,7 +32,7 @@ describe('WordlistGeneratorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         ReactiveFormsModule,
         MatFormFieldModule,
         MatIconModule,

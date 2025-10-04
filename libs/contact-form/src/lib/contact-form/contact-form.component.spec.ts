@@ -1,7 +1,8 @@
 import { LayoutModule } from '@angular/cdk/layout';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,10 +11,6 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { of, throwError } from 'rxjs';
 
 import { ContactFormComponent } from './contact-form.component';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi
-} from '@angular/common/http';
 
 interface FormConfigEntry {
   field: string;
@@ -38,7 +35,7 @@ describe('ContactFormComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -57,11 +54,11 @@ describe('ContactFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContactFormComponent);
     component = fixture.componentInstance;
-    
+
     // Set required inputs before component initialization
     fixture.componentRef.setInput('apiCallback', mockApiCallback);
     fixture.componentRef.setInput('formConfig', defaultFormConfig);
-    
+
     // Don't call detectChanges() here - let each test control initialization
   });
 
@@ -72,7 +69,7 @@ describe('ContactFormComponent', () => {
   describe('component initialization', () => {
     it('should initialize with default values', () => {
       fixture.detectChanges(); // Initialize component
-      
+
       expect(component.buttonStyle()).toEqual({
         'background-color': '#333333',
         border: 'none',
@@ -121,7 +118,7 @@ describe('ContactFormComponent', () => {
   describe('form configuration building', () => {
     it('should build form fields from basic configuration', () => {
       fixture.detectChanges(); // This calls ngOnInit
-      
+
       expect(component.fields).toHaveLength(3);
       expect(component.fields[0].key).toBe('name');
       expect(component.fields[1].key).toBe('email');
@@ -130,7 +127,7 @@ describe('ContactFormComponent', () => {
 
     it('should set correct field types', () => {
       fixture.detectChanges(); // This calls ngOnInit
-      
+
       expect(component.fields[0].type).toBe('input'); // default type
       expect(component.fields[1].type).toBe('input'); // email field defaults to input
       expect(component.fields[2].type).toBe('textarea'); // explicitly set
@@ -138,7 +135,7 @@ describe('ContactFormComponent', () => {
 
     it('should configure labels and placeholders correctly', () => {
       fixture.detectChanges(); // This calls ngOnInit
-      
+
       expect(component.fields[0].props?.label).toBe('NAME');
       expect(component.fields[0].props?.placeholder).toBe('Enter name');
       expect(component.fields[1].props?.label).toBe('EMAIL');
@@ -150,19 +147,21 @@ describe('ContactFormComponent', () => {
         { field: 'name', value: 'John Doe' },
         { field: 'email', value: 'john@example.com' }
       ];
-      
+
       fixture.componentRef.setInput('formConfig', configWithValues);
       fixture.detectChanges(); // This calls ngOnInit with new config
-      
+
       expect(component.model['name']).toBe('John Doe');
       expect(component.model['email']).toBe('john@example.com');
     });
 
     it('should configure textarea options correctly', () => {
       fixture.detectChanges(); // This calls ngOnInit
-      
+
       // Test that textarea fields get created and have the proper type
-      const textareaFields = component.fields.filter(field => field.type === 'textarea');
+      const textareaFields = component.fields.filter(
+        (field) => field.type === 'textarea'
+      );
       expect(textareaFields).toHaveLength(1);
       expect(textareaFields[0].key).toBe('message');
     });
@@ -172,10 +171,10 @@ describe('ContactFormComponent', () => {
         { field: 'age', type: 'input' }, // Use 'input' type for numbers
         { field: 'description', type: 'textarea' }
       ];
-      
+
       fixture.componentRef.setInput('formConfig', customConfig);
       fixture.detectChanges(); // This calls ngOnInit with new config
-      
+
       expect(component.fields[0].type).toBe('input');
       expect(component.fields[1].type).toBe('textarea');
     });
@@ -187,42 +186,59 @@ describe('ContactFormComponent', () => {
     });
 
     it('should add email validation to email fields', () => {
-      const emailField = component.fields.find(field => field.key === 'email');
+      const emailField = component.fields.find(
+        (field) => field.key === 'email'
+      );
       expect(emailField?.validators?.email).toBeDefined();
       expect(emailField?.props?.type).toBe('email');
     });
 
     it('should validate correct email addresses', () => {
-      const emailField = component.fields.find(field => field.key === 'email');
+      const emailField = component.fields.find(
+        (field) => field.key === 'email'
+      );
       const validator = emailField?.validators?.email?.expression;
-      
+
       const mockControl = { value: 'test@example.com' } as AbstractControl;
       expect(validator?.(mockControl)).toBe(true);
     });
 
     it('should reject invalid email addresses', () => {
-      const emailField = component.fields.find(field => field.key === 'email');
+      const emailField = component.fields.find(
+        (field) => field.key === 'email'
+      );
       const validator = emailField?.validators?.email?.expression;
-      
-      const invalidEmails = ['invalid-email', 'test@', '@example.com', 'test.example.com'];
-      
-      invalidEmails.forEach(email => {
+
+      const invalidEmails = [
+        'invalid-email',
+        'test@',
+        '@example.com',
+        'test.example.com'
+      ];
+
+      invalidEmails.forEach((email) => {
         const mockControl = { value: email } as AbstractControl;
         expect(validator?.(mockControl)).toBe(false);
       });
     });
 
     it('should allow empty email values (optional validation)', () => {
-      const emailField = component.fields.find(field => field.key === 'email');
+      const emailField = component.fields.find(
+        (field) => field.key === 'email'
+      );
       const validator = emailField?.validators?.email?.expression;
-      
+
       const mockControl = { value: '' } as AbstractControl;
       expect(validator?.(mockControl)).toBe(true);
     });
 
     it('should have correct email validation error message', () => {
-      const emailField = component.fields.find(field => field.key === 'email');
-      expect(emailField?.validators?.email?.message).toBe('Please enter a valid email address');
+      const emailField = component.fields.find(
+        (field) => field.key === 'email'
+      );
+      expect(emailField?.validators?.email?.message).toBe(
+        'Please enter a valid email address'
+      );
     });
   });
 
@@ -232,36 +248,42 @@ describe('ContactFormComponent', () => {
     });
 
     it('should add required validation to required fields', () => {
-      component.fields.forEach(field => {
+      component.fields.forEach((field) => {
         expect(field.validators?.required).toBeDefined();
         expect(field.props?.required).toBe(true);
       });
     });
 
     it('should validate non-empty required fields', () => {
-      const nameField = component.fields.find(field => field.key === 'name');
+      const nameField = component.fields.find((field) => field.key === 'name');
       const validator = nameField?.validators?.required?.expression;
-      
+
       const mockControl = { value: 'John Doe' } as AbstractControl;
       expect(validator?.(mockControl)).toBe(true);
     });
 
     it('should reject empty required fields', () => {
-      const nameField = component.fields.find(field => field.key === 'name');
+      const nameField = component.fields.find((field) => field.key === 'name');
       const validator = nameField?.validators?.required?.expression;
-      
+
       const emptyValues = ['', null, undefined];
-      
-      emptyValues.forEach(value => {
+
+      emptyValues.forEach((value) => {
         const mockControl = { value } as AbstractControl;
         expect(validator?.(mockControl)).toBe(false);
       });
     });
 
     it('should have correct required validation error messages', () => {
-      expect(component.fields[0].validators?.required?.message).toBe('name is required');
-      expect(component.fields[1].validators?.required?.message).toBe('email is required');
-      expect(component.fields[2].validators?.required?.message).toBe('message is required');
+      expect(component.fields[0].validators?.required?.message).toBe(
+        'name is required'
+      );
+      expect(component.fields[1].validators?.required?.message).toBe(
+        'email is required'
+      );
+      expect(component.fields[2].validators?.required?.message).toBe(
+        'message is required'
+      );
     });
 
     it('should handle optional fields without required validation', () => {
@@ -269,12 +291,12 @@ describe('ContactFormComponent', () => {
         { field: 'phone', required: false },
         { field: 'company' } // no required property
       ];
-      
+
       fixture.componentRef.setInput('formConfig', optionalConfig);
-      
+
       // Test that component doesn't crash with optional fields
       expect(() => fixture.detectChanges()).not.toThrow();
-      
+
       // Verify fields were created (may have both formly and custom fields)
       expect(component.fields.length).toBeGreaterThan(0);
     });
@@ -283,13 +305,15 @@ describe('ContactFormComponent', () => {
   describe('style management', () => {
     it('should flatten style objects correctly', () => {
       const styleObject = {
-        'color': 'red',
+        color: 'red',
         'background-color': 'blue',
         'font-size': '14px'
       };
-      
+
       const flattened = component['flattenStyle'](styleObject);
-      expect(flattened).toBe('color: red;background-color: blue;font-size: 14px;');
+      expect(flattened).toBe(
+        'color: red;background-color: blue;font-size: 14px;'
+      );
     });
 
     it('should handle empty style objects', () => {
@@ -299,8 +323,8 @@ describe('ContactFormComponent', () => {
 
     it('should apply styles to field attributes', () => {
       fixture.detectChanges(); // Initialize component
-      
-      component.fields.forEach(field => {
+
+      component.fields.forEach((field) => {
         expect(field.props?.attributes?.style).toBeDefined();
         expect(field.props?.attributes?.style).toContain('color: #cc7832;');
       });
@@ -309,19 +333,27 @@ describe('ContactFormComponent', () => {
 
   describe('form submission', () => {
     it('should call API callback with form data', () => {
-      const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
-      
+      const formData = {
+        name: 'John',
+        email: 'john@test.com',
+        message: 'Hello'
+      };
+
       component.submitFormData(formData);
-      
+
       expect(mockApiCallback).toHaveBeenCalledWith(formData);
     });
 
     it('should update emailSent signal on successful submission', (done) => {
       mockApiCallback.mockReturnValue(of(true));
-      const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
-      
+      const formData = {
+        name: 'John',
+        email: 'john@test.com',
+        message: 'Hello'
+      };
+
       component.submitFormData(formData);
-      
+
       // Check the signal value after async operation
       setTimeout(() => {
         expect(component.emailSent()).toBe(true);
@@ -331,10 +363,14 @@ describe('ContactFormComponent', () => {
 
     it('should update emailSent signal on failed submission', (done) => {
       mockApiCallback.mockReturnValue(of(false));
-      const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
-      
+      const formData = {
+        name: 'John',
+        email: 'john@test.com',
+        message: 'Hello'
+      };
+
       component.submitFormData(formData);
-      
+
       // Check the signal value after async operation
       setTimeout(() => {
         expect(component.emailSent()).toBe(false);
@@ -344,40 +380,43 @@ describe('ContactFormComponent', () => {
 
     it('should handle API errors gracefully', () => {
       mockApiCallback.mockReturnValue(throwError(() => new Error('API Error')));
-      const formData = { name: 'John', email: 'john@test.com', message: 'Hello' };
-      
+      const formData = {
+        name: 'John',
+        email: 'john@test.com',
+        message: 'Hello'
+      };
+
       expect(() => component.submitFormData(formData)).not.toThrow();
     });
-
   });
 
   describe('component lifecycle', () => {
     it('should build configuration on init', () => {
       jest.spyOn(component as never, 'buildConfig');
-      
+
       fixture.detectChanges(); // This calls ngOnInit
-      
+
       expect(component['buildConfig']).toHaveBeenCalled();
     });
 
     it('should unsubscribe on destroy', () => {
       fixture.detectChanges(); // Initialize component
-      
+
       jest.spyOn(component['unsubscribe$'], 'next');
       jest.spyOn(component['unsubscribe$'], 'complete');
-      
+
       component.ngOnDestroy();
-      
+
       expect(component['unsubscribe$'].next).toHaveBeenCalled();
       expect(component['unsubscribe$'].complete).toHaveBeenCalled();
     });
 
     it('should prevent memory leaks with takeUntil', () => {
       fixture.detectChanges(); // Initialize component
-      
+
       // Test that unsubscribe$ exists and lifecycle methods work
       expect(component['unsubscribe$']).toBeDefined();
-      
+
       // Verify ngOnDestroy can be called without errors
       expect(() => component.ngOnDestroy()).not.toThrow();
     });
@@ -386,7 +425,7 @@ describe('ContactFormComponent', () => {
   describe('edge cases and error handling', () => {
     it('should handle empty form configuration', () => {
       fixture.componentRef.setInput('formConfig', []);
-      
+
       expect(() => fixture.detectChanges()).not.toThrow();
       expect(component.fields).toHaveLength(0);
     });
@@ -396,9 +435,9 @@ describe('ContactFormComponent', () => {
         { field: '', required: true }, // empty field name
         { field: 'valid-field' }
       ] as FormConfigEntry[];
-      
+
       fixture.componentRef.setInput('formConfig', malformedConfig);
-      
+
       expect(() => fixture.detectChanges()).not.toThrow();
       expect(component.fields).toHaveLength(2);
     });
@@ -407,10 +446,10 @@ describe('ContactFormComponent', () => {
       const minimalConfig = [
         { field: 'test' } // only field name
       ] as FormConfigEntry[];
-      
+
       fixture.componentRef.setInput('formConfig', minimalConfig);
       fixture.detectChanges();
-      
+
       const field = component.fields[0];
       expect(field.key).toBe('test');
       expect(field.type).toBe('input'); // default type
@@ -423,9 +462,9 @@ describe('ContactFormComponent', () => {
         { field: 'field_with_underscores' },
         { field: 'fieldWithCamelCase' }
       ] as FormConfigEntry[];
-      
+
       fixture.componentRef.setInput('formConfig', specialConfig);
-      
+
       expect(() => fixture.detectChanges()).not.toThrow();
       expect(component.fields).toHaveLength(3);
     });
@@ -441,15 +480,17 @@ describe('ContactFormComponent', () => {
         { field: 'comments', required: false, type: 'textarea' },
         { field: 'company', value: 'Default Company' }
       ];
-      
+
       fixture.componentRef.setInput('formConfig', complexConfig);
       fixture.detectChanges();
-      
+
       expect(component.fields).toHaveLength(6);
       expect(component.model['company']).toBe('Default Company');
-      
+
       // Check required fields
-      const requiredFields = component.fields.filter(field => field.props?.required);
+      const requiredFields = component.fields.filter(
+        (field) => field.props?.required
+      );
       expect(requiredFields).toHaveLength(2);
     });
 
@@ -459,10 +500,10 @@ describe('ContactFormComponent', () => {
         { field: 'first' },
         { field: 'second' }
       ];
-      
+
       fixture.componentRef.setInput('formConfig', orderedConfig);
       fixture.detectChanges();
-      
+
       expect(component.fields[0].key).toBe('third');
       expect(component.fields[1].key).toBe('first');
       expect(component.fields[2].key).toBe('second');
