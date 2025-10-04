@@ -9,7 +9,7 @@ describe('ContactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFormComponent, NoopAnimationsModule]
+      imports: [ContactFormComponent, NoopAnimationsModule] // eslint-disable-line @typescript-eslint/no-deprecated
     }).compileComponents();
   });
 

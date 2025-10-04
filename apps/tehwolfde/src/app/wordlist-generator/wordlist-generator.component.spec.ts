@@ -9,7 +9,7 @@ describe('WordlistGeneratorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WordlistGeneratorComponent, NoopAnimationsModule]
+      imports: [WordlistGeneratorComponent, NoopAnimationsModule] // eslint-disable-line @typescript-eslint/no-deprecated
     }).compileComponents();
   });
 

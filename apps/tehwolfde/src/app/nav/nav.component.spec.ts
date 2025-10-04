@@ -17,7 +17,7 @@ describe('NavComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         MatIconModule,
         MatListModule,
         MatSidenavModule,
