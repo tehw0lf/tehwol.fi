@@ -12,6 +12,9 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZonelessChangeDetection(),
     SidenavService,
+    // TODO: Migrate to native CSS animations when Angular Material supports it (v23+)
+    // See: https://angular.dev/guide/animations/migration
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     provideAnimations(),
     provideHttpClient(),
     provideRouter(routes)

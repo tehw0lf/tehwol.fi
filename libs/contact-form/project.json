@@ -10,15 +10,14 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/libs/contact-form"],
       "options": {
-        "project": "libs/contact-form/ng-package.json"
+        "project": "libs/contact-form/ng-package.json",
+        "tsConfig": "libs/contact-form/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
           "tsConfig": "libs/contact-form/tsconfig.lib.prod.json"
         },
-        "development": {
-          "tsConfig": "libs/contact-form/tsconfig.lib.json"
-        }
+        "development": {}
       },
       "defaultConfiguration": "production"
     },
@@ -26,7 +25,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/contact-form"],
       "options": {
-        "jestConfig": "libs/contact-form/jest.config.ts"
+        "jestConfig": "libs/contact-form/jest.config.ts",
+        "tsConfig": "libs/contact-form/tsconfig.spec.json"
       }
     },
     "lint": {
