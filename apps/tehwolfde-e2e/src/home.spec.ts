@@ -10,9 +10,9 @@ test.describe('tehwolfde Home', () => {
   });
 
   test('should have proper navigation component', async ({ page }) => {
-    // Check that navigation elements are present
-    await expect(page.locator('tehw0lf-nav')).toBeVisible();
+    // Wait for navigation to be fully rendered and visible
     await expect(page.locator('mat-toolbar')).toBeVisible();
+    await expect(page.locator('tehw0lf-nav')).toBeAttached();
   });
 
   test('should show navigation links', async ({ page }) => {

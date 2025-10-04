@@ -55,12 +55,14 @@ test.describe('Application Navigation', () => {
   });
 
   test('should have working navigation menu', async ({ page }) => {
-    // Check if navigation component exists
-    const nav = page.locator('tehw0lf-nav');
-    await expect(nav).toBeVisible();
+    // Wait for navigation to be fully rendered
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(mainNav).toBeVisible();
+
+    // Check if navigation component is attached
+    await expect(page.locator('tehw0lf-nav')).toBeAttached();
 
     // Test specific navigation links in main navigation
-    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
     const homeLink = mainNav.locator('a[routerLink="/home"]');
     if (await homeLink.count() > 0) {
       await homeLink.click();
@@ -111,17 +113,19 @@ test.describe('Application Navigation', () => {
   test('should maintain state during navigation', async ({ page }) => {
     // Start at home
     await page.goto('/');
-    
+
     // Navigate to different routes and verify each loads properly
     const routes = ['/portfolio', '/wordlist-generator', '/contact-form', '/home'];
-    
+
     for (const route of routes) {
       await page.goto(route);
       await page.waitForLoadState('networkidle');
-      
-      // Verify the page loaded successfully
+
+      // Verify the page loaded successfully by checking for actual visible content
       await expect(page.locator('body')).toBeVisible();
-      await expect(page.locator('tehw0lf-nav')).toBeVisible();
+      await expect(page.locator('tehw0lf-nav')).toBeAttached();
+      // Verify navigation is rendered by checking for mat-toolbar (always present in desktop nav)
+      await expect(page.locator('mat-toolbar').first()).toBeVisible();
     }
   });
 
