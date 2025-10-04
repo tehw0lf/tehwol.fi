@@ -86,7 +86,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/tehwolfde"],
       "options": {
-        "jestConfig": "apps/tehwolfde/jest.config.ts"
+        "jestConfig": "apps/tehwolfde/jest.config.ts",
+        "tsConfig": "apps/tehwolfde/tsconfig.spec.json"
       }
     }
   }

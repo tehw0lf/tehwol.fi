@@ -8,12 +8,12 @@
     "url": "git+https://github.com/tehw0lf/tehwolf.de.git"
   },
   "peerDependencies": {
-    "@angular/animations": "20.1.6",
-    "@angular/cdk": "20.1.5",
-    "@angular/common": "20.1.6",
-    "@angular/core": "20.1.6",
-    "@angular/material": "20.1.6",
-    "@primer/octicons": "19.15.5",
+    "@angular/animations": "20.3.3",
+    "@angular/cdk": "20.2.7",
+    "@angular/common": "20.3.3",
+    "@angular/core": "20.3.3",
+    "@angular/material": "20.2.7",
+    "@primer/octicons": "19.18.0",
     "@tehw0lf/mvc": "0.0.7",
     "github-language-colors": "1.0.0"
   },
@@ -22,6 +22,6 @@
   },
   "devDependencies": {
     "@types/node": "22.13.14",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   }
 }

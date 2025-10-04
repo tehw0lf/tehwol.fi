@@ -10,15 +10,14 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/libs/git-portfolio"],
       "options": {
-        "project": "libs/git-portfolio/ng-package.json"
+        "project": "libs/git-portfolio/ng-package.json",
+        "tsConfig": "libs/git-portfolio/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
           "tsConfig": "libs/git-portfolio/tsconfig.lib.prod.json"
         },
-        "development": {
-          "tsConfig": "libs/git-portfolio/tsconfig.lib.json"
-        }
+        "development": {}
       },
       "defaultConfiguration": "production"
     },
@@ -26,7 +25,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/git-portfolio"],
       "options": {
-        "jestConfig": "libs/git-portfolio/jest.config.ts"
+        "jestConfig": "libs/git-portfolio/jest.config.ts",
+        "tsConfig": "libs/git-portfolio/tsconfig.spec.json"
       }
     },
     "lint": {
