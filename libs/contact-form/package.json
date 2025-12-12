@@ -2,10 +2,10 @@
   "name": "@tehw0lf/contact-form",
   "version": "0.20.8",
   "license": "MIT",
-  "homepage": "https://github.com/tehw0lf/tehwolf.de.git",
+  "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tehw0lf/tehwolf.de.git"
+    "url": "git+https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
     "@angular/animations": "20.3.3",
