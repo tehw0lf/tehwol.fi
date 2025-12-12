@@ -14,21 +14,21 @@ jobs:
       actions: write
       contents: write
       packages: write
+      id-token: write
     with:
-      tool: 'npm'
-      format: 'run format'
-      lint: 'run affected:lint'
-      test: 'run test:ci'
-      e2e: 'run e2e'
-      build_branch: 'run affected:build'
-      build_main: 'run build --skip-nx-cache'
+      tool: "npm"
+      format: "run format"
+      lint: "run affected:lint"
+      test: "run test:ci"
+      e2e: "run e2e"
+      build_branch: "run affected:build"
+      build_main: "run build --skip-nx-cache"
       event_name: ${{ github.event_name }}
-      docker_pre: '[ -d ./dist/apps ] && mv -fv avatar* dist/apps/tehwolfde/browser/'
+      docker_pre: "[ -d ./dist/apps ] && mv -fv avatar* dist/apps/tehwolfde/browser/"
       docker_meta: '[{"name":"tehwolf.de","file":"Dockerfile"}]'
-      libraries: 'contact-form,git-portfolio,wordlist-generator'
-      library_path: 'dist/libs'
-      artifact_path: 'dist'
-      platforms: 'linux/arm64'
+      libraries: "contact-form,git-portfolio,wordlist-generator"
+      library_path: "dist/libs"
+      artifact_path: "dist"
+      platforms: "linux/arm64"
     secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
