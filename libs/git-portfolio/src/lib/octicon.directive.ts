@@ -19,7 +19,7 @@ export class OcticonDirective implements OnInit {
     if (this.octicon()) {
       const iconName = this.octicon() as IconName;
       if (octicons[iconName] !== undefined) {
-        el.innerHTML = octicons[iconName].toSVG();
+        this.insertSvgSafely(el, octicons[iconName].toSVG());
 
         const icon: Node | null = el.firstChild;
 
@@ -31,11 +31,26 @@ export class OcticonDirective implements OnInit {
           this.renderer.setStyle(icon, 'height', this.width());
         }
       } else {
-        el.innerHTML = octicons['alert'].toSVG();
+        this.insertSvgSafely(el, octicons['alert'].toSVG());
         if (el.firstChild) {
           this.renderer.setStyle(el.firstChild, 'fill', 'red');
         }
       }
     }
+  }
+
+  private insertSvgSafely(element: HTMLElement, svgString: string): void {
+    // Parse SVG string using DOMParser to avoid innerHTML XSS risk
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+    const svgElement = svgDoc.documentElement;
+
+    // Clear existing content
+    while (element.firstChild) {
+      this.renderer.removeChild(element, element.firstChild);
+    }
+
+    // Append the safely parsed SVG element
+    this.renderer.appendChild(element, svgElement);
   }
 }
