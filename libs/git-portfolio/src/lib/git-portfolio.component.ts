@@ -3,11 +3,7 @@ import {
   BreakpointState,
   LayoutModule
 } from '@angular/cdk/layout';
-import {
-  CommonModule,
-  KeyValuePipe,
-  NgStyle
-} from '@angular/common';
+import { CommonModule, KeyValuePipe, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, inject, signal, effect, OnDestroy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { toSignal } from '@angular/core/rxjs-interop';
