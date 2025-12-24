@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "lib": ["dom", "es2018"],
+    "lib": ["dom", "es2022"],
     "useDefineForClassFields": false
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts", "jest.config.ts"],
