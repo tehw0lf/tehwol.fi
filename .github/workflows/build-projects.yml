@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: external workflow
-    uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
+    uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@feat/add-sbom-package-lock-only-flag
     permissions:
       actions: write
       contents: write
@@ -31,5 +31,6 @@ jobs:
       library_path: "dist/libs"
       artifact_path: "dist"
       platforms: "linux/arm64"
+      sbom_package_lock_only: true
     secrets:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
