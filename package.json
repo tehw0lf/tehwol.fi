@@ -97,13 +97,13 @@
   },
   "overrides": {
     "@angular-devkit/build-angular": {
-      "jest": "$jest",
-      "jest-environment-jsdom": "$jest-environment-jsdom",
-      "@types/jest": "$@types/jest",
-      "ts-jest": "$ts-jest"
+      "jest": "30.2.0",
+      "jest-environment-jsdom": "30.2.0",
+      "@types/jest": "30.0.0",
+      "ts-jest": "29.4.6"
     },
     "@jscutlery/swc-angular": {
-      "@swc/core": "$@swc/core"
+      "@swc/core": "1.13.0"
     }
   }
 }
