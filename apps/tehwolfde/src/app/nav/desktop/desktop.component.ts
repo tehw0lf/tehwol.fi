@@ -12,7 +12,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { isActive, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  isActive,
+  Router,
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';

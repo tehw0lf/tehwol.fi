@@ -22,7 +22,9 @@ import { ThemeService } from '../theme.service';
 export class EmbedComponent {
   url = input.required<string>();
 
-  @ViewChild('iframe') private iframeRef: ElementRef<HTMLIFrameElement> | undefined;
+  @ViewChild('iframe') private iframeRef:
+    | ElementRef<HTMLIFrameElement>
+    | undefined;
 
   private sanitizer = inject(DomSanitizer);
   private themeService = inject(ThemeService);

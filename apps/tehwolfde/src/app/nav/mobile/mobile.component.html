@@ -3,7 +3,13 @@
   [ngClass]="themeService.theme()"
   hasBackdrop="false"
 >
-  <mat-sidenav #sidenav mode="over" fixedInViewport="true" role="navigation" aria-label="Mobile navigation menu">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    fixedInViewport="true"
+    role="navigation"
+    aria-label="Mobile navigation menu"
+  >
     <mat-nav-list
       [ngClass]="themeService.theme()"
       class="flex-column flex-gap-20 flex-fxflex"
@@ -19,8 +25,12 @@
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>Home </span>
         </span> </a
-      ><a 
-        (click)="closeSidenav()" routerLink="/portfolio" routerLinkActive="link-active" mat-list-item>
+      ><a
+        (click)="closeSidenav()"
+        routerLink="/portfolio"
+        routerLinkActive="link-active"
+        mat-list-item
+      >
         <span>Portfolio</span> </a
       ><a
         (click)="closeSidenav()"
