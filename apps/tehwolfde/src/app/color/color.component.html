@@ -10,7 +10,7 @@
   </mat-form-field>
   <input
     type="color"
-    [value]="'#' + color()"
+    [value]="hexColor()"
     (input)="inputValue.set($any($event.target).value); apply()"
     class="color-picker"
   />
