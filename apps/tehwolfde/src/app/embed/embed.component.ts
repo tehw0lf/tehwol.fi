@@ -40,4 +40,11 @@ export class EmbedComponent {
       );
     });
   }
+
+  onIframeLoad(): void {
+    this.iframeRef?.nativeElement.contentWindow?.postMessage(
+      { type: 'theme', theme: this.themeService.theme() },
+      '*'
+    );
+  }
 }
