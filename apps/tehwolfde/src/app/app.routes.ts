@@ -36,5 +36,10 @@ export const routes: Routes = [
     path: 'beep',
     loadComponent: () =>
       import('./beep/beep.component').then((m) => m.BeepSimulatorComponent)
+  },
+  {
+    path: 'mutuals',
+    loadComponent: () =>
+      import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)
   }
 ];
