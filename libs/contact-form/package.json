@@ -12,8 +12,8 @@
     "@angular/common": "21.2.1",
     "@angular/core": "21.2.1",
     "@angular/forms": "21.2.1",
-    "@ngx-formly/core": "7.0.1",
-    "@ngx-formly/material": "7.0.1",
+    "@ngx-formly/core": "7.1.0",
+    "@ngx-formly/material": "7.1.0",
     "@tehw0lf/mvc": "0.0.8"
   },
   "dependencies": {
