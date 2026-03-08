@@ -47,9 +47,10 @@ describe('DesktopComponent', () => {
       of({ matches: false, breakpoints: {} })
     );
 
+    router = TestBed.inject(Router);
+    router.initialNavigation();
     fixture = TestBed.createComponent(DesktopComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 

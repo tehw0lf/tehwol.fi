@@ -5,13 +5,19 @@ import {
   Component,
   computed,
   inject,
-  OnDestroy
+  OnDestroy,
+  Signal
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  isActive,
+  Router,
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ThemeService } from '../../theme.service';
@@ -58,22 +64,21 @@ export class DesktopComponent implements OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  isActive(): boolean {
-    return (
-      this.router.isActive('/', {
-        paths: 'exact',
-        queryParams: 'exact',
-        fragment: 'ignored',
-        matrixParams: 'ignored'
-      }) ||
-      this.router.isActive('/home', {
-        paths: 'exact',
-        queryParams: 'exact',
-        fragment: 'ignored',
-        matrixParams: 'ignored'
-      })
-    );
-  }
+  private isRootActive = isActive('/', this.router, {
+    paths: 'exact',
+    queryParams: 'exact',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  });
+  private isHomeActive = isActive('/home', this.router, {
+    paths: 'exact',
+    queryParams: 'exact',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  });
+  isActive: Signal<boolean> = computed(
+    () => this.isRootActive() || this.isHomeActive()
+  );
 
   toggleSidenav(): void {
     this.sidenavService.toggle();

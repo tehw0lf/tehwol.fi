@@ -40,9 +40,10 @@ describe('MobileComponent', () => {
   });
 
   beforeEach(() => {
+    router = TestBed.inject(Router);
+    router.initialNavigation();
     fixture = TestBed.createComponent(MobileComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 

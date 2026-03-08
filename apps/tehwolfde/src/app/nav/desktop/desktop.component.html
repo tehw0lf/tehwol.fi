@@ -1,4 +1,8 @@
-<mat-toolbar [ngClass]="themeService.theme()" role="navigation" aria-label="Main navigation">
+<mat-toolbar
+  [ngClass]="themeService.theme()"
+  role="navigation"
+  aria-label="Main navigation"
+>
   <mat-toolbar-row class="nav-row">
     <button
       id="menu"
@@ -44,6 +48,34 @@
         <a mat-button routerLink="/contact-form" routerLinkActive="link-active">
           <span class="mat-button-wrapper">
             <span>Contact Form</span>
+          </span>
+        </a>
+      </div>
+      <div class="nav-item flex-gap-20">
+        <a mat-button routerLink="/beep" routerLinkActive="link-active">
+          <span class="mat-button-wrapper">
+            <span>Beep</span>
+          </span>
+        </a>
+      </div>
+      <div class="nav-item flex-gap-20">
+        <a mat-button routerLink="/mutuals" routerLinkActive="link-active">
+          <span class="mat-button-wrapper">
+            <span>Mutuals</span>
+          </span>
+        </a>
+      </div>
+      <div class="nav-item flex-gap-20">
+        <a mat-button routerLink="/btrain" routerLinkActive="link-active">
+          <span class="mat-button-wrapper">
+            <span>BTrain</span>
+          </span>
+        </a>
+      </div>
+      <div class="nav-item flex-gap-20">
+        <a mat-button routerLink="/color" routerLinkActive="link-active">
+          <span class="mat-button-wrapper">
+            <span>Color</span>
           </span>
         </a>
       </div>

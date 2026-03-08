@@ -1,25 +1,60 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { 
-    path: '', 
-    redirectTo: 'home', 
-    pathMatch: 'full' 
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
-  { 
-    path: 'home', 
-    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent)
   },
-  { 
-    path: 'portfolio', 
-    loadComponent: () => import('./git-portfolio/git-portfolio.component').then(m => m.GitPortfolioComponent)
+  {
+    path: 'portfolio',
+    loadComponent: () =>
+      import('./git-portfolio/git-portfolio.component').then(
+        (m) => m.GitPortfolioComponent
+      )
   },
-  { 
-    path: 'wordlist-generator', 
-    loadComponent: () => import('./wordlist-generator/wordlist-generator.component').then(m => m.WordlistGeneratorComponent)
+  {
+    path: 'wordlist-generator',
+    loadComponent: () =>
+      import('./wordlist-generator/wordlist-generator.component').then(
+        (m) => m.WordlistGeneratorComponent
+      )
   },
-  { 
-    path: 'contact-form', 
-    loadComponent: () => import('./contact-form/contact-form.component').then(m => m.ContactFormComponent)
+  {
+    path: 'contact-form',
+    loadComponent: () =>
+      import('./contact-form/contact-form.component').then(
+        (m) => m.ContactFormComponent
+      )
+  },
+  {
+    path: 'beep',
+    loadComponent: () =>
+      import('./beep/beep.component').then((m) => m.BeepSimulatorComponent)
+  },
+  {
+    path: 'mutuals',
+    loadComponent: () =>
+      import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)
+  },
+  {
+    path: 'btrain',
+    loadComponent: () =>
+      import('./btrain/btrain.component').then((m) => m.BtrainComponent)
+  },
+  {
+    path: 'color/:color',
+    loadComponent: () =>
+      import('./color/color.component').then((m) => m.ColorComponent)
+  },
+  {
+    path: 'color',
+    loadComponent: () =>
+      import('./color/color.component').then((m) => m.ColorComponent)
   }
 ];

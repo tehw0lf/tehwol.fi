@@ -25,6 +25,13 @@ export default [
     .map((config) => ({
       ...config,
       files: ['**/*.ts'],
+      languageOptions: {
+        ...config.languageOptions,
+        parserOptions: {
+          ...config.languageOptions?.parserOptions,
+          project: undefined
+        }
+      },
       rules: {
         ...config.rules,
         '@angular-eslint/directive-selector': [

@@ -4,8 +4,10 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
+  Signal,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -14,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import {
+  isActive,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -43,8 +46,8 @@ import { SidenavService } from '../sidenav.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileComponent implements AfterViewInit, OnDestroy {
-  router = inject(Router);
   themeService = inject(ThemeService);
+  private router = inject(Router);
   private sidenavService = inject(SidenavService);
 
   @ViewChild('sidenav', { static: true }) public sidenav:
@@ -64,22 +67,21 @@ export class MobileComponent implements AfterViewInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  isActive(): boolean {
-    return (
-      this.router.isActive('/', {
-        paths: 'exact',
-        queryParams: 'exact',
-        fragment: 'ignored',
-        matrixParams: 'ignored'
-      }) ||
-      this.router.isActive('/home', {
-        paths: 'exact',
-        queryParams: 'exact',
-        fragment: 'ignored',
-        matrixParams: 'ignored'
-      })
-    );
-  }
+  private isRootActive = isActive('/', this.router, {
+    paths: 'exact',
+    queryParams: 'exact',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  });
+  private isHomeActive = isActive('/home', this.router, {
+    paths: 'exact',
+    queryParams: 'exact',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  });
+  isActive: Signal<boolean> = computed(
+    () => this.isRootActive() || this.isHomeActive()
+  );
 
   closeSidenav(): void {
     this.sidenavService.close();

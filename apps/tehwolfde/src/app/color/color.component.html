@@ -1,0 +1,18 @@
+<div class="color-controls">
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      [ngModel]="inputValue()"
+      (ngModelChange)="inputValue.set($event)"
+      (keydown.enter)="apply()"
+      placeholder="red, #ff6600, cmyk(0,100,100,0)"
+    />
+  </mat-form-field>
+  <input
+    type="color"
+    [value]="hexColor()"
+    (input)="inputValue.set($any($event.target).value); apply()"
+    class="color-picker"
+  />
+</div>
+<tehw0lf-embed [url]="iframeUrl()" />
