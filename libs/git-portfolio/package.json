@@ -8,11 +8,11 @@
     "url": "git+https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
-    "@angular/animations": "21.1.1",
-    "@angular/cdk": "21.1.1",
-    "@angular/common": "21.1.1",
-    "@angular/core": "21.1.1",
-    "@angular/material": "21.1.1",
+    "@angular/animations": "21.2.1",
+    "@angular/cdk": "21.2.1",
+    "@angular/common": "21.2.1",
+    "@angular/core": "21.2.1",
+    "@angular/material": "21.2.1",
     "@primer/octicons": "19.21.2",
     "@tehw0lf/mvc": "0.0.8",
     "github-language-colors": "1.0.0"
