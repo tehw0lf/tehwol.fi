@@ -31,12 +31,14 @@ export class EmbedComponent {
     this.sanitizer.bypassSecurityTrustResourceUrl(this.url())
   );
 
+  private targetOrigin = computed(() => new URL(this.url()).origin);
+
   constructor() {
     effect(() => {
       const theme = this.themeService.theme();
       this.iframeRef?.nativeElement.contentWindow?.postMessage(
         { type: 'theme', theme },
-        '*'
+        this.targetOrigin()
       );
     });
   }
@@ -44,11 +46,14 @@ export class EmbedComponent {
   onIframeLoad(): void {
     this.iframeRef?.nativeElement.contentWindow?.postMessage(
       { type: 'theme', theme: this.themeService.theme() },
-      '*'
+      this.targetOrigin()
     );
   }
 
   sendMessage(data: Record<string, unknown>): void {
-    this.iframeRef?.nativeElement.contentWindow?.postMessage(data, '*');
+    this.iframeRef?.nativeElement.contentWindow?.postMessage(
+      data,
+      this.targetOrigin()
+    );
   }
 }
