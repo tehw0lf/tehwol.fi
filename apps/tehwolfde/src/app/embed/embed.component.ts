@@ -47,4 +47,8 @@ export class EmbedComponent {
       '*'
     );
   }
+
+  sendMessage(data: Record<string, unknown>): void {
+    this.iframeRef?.nativeElement.contentWindow?.postMessage(data, '*');
+  }
 }

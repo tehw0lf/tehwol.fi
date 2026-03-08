@@ -46,5 +46,15 @@ export const routes: Routes = [
     path: 'btrain',
     loadComponent: () =>
       import('./btrain/btrain.component').then((m) => m.BtrainComponent)
+  },
+  {
+    path: 'color/:color',
+    loadComponent: () =>
+      import('./color/color.component').then((m) => m.ColorComponent)
+  },
+  {
+    path: 'color',
+    loadComponent: () =>
+      import('./color/color.component').then((m) => m.ColorComponent)
   }
 ];
