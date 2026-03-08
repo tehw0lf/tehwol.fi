@@ -41,5 +41,10 @@ export const routes: Routes = [
     path: 'mutuals',
     loadComponent: () =>
       import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)
+  },
+  {
+    path: 'btrain',
+    loadComponent: () =>
+      import('./btrain/btrain.component').then((m) => m.BtrainComponent)
   }
 ];
