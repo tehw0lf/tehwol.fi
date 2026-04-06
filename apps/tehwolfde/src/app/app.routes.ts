@@ -38,6 +38,11 @@ export const routes: Routes = [
       import('./beep/beep.component').then((m) => m.BeepSimulatorComponent)
   },
   {
+    path: 'flowdive',
+    loadComponent: () =>
+      import('./flowdive/flowdive.component').then((m) => m.FlowdiveComponent)
+  },
+  {
     path: 'mutuals',
     loadComponent: () =>
       import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)
