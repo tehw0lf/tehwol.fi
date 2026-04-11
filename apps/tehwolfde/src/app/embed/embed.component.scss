@@ -1,6 +1,8 @@
 .embed-wrapper {
   position: relative;
   height: 100vh;
+  margin: -32px 0 0 -32px;
+  width: calc(100% + 32px);
 }
 
 .embed-toolbar {
