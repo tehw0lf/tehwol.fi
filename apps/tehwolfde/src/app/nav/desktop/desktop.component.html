@@ -50,45 +50,22 @@
             <span>Contact Form</span>
           </span>
         </a>
-      </div><div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/flowdive" routerLinkActive="link-active">
-          <span class="mat-button-wrapper">
-            <span>Flowdive</span>
-          </span>
-        </a>
-      </div><div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/numveil" routerLinkActive="link-active">
-          <span class="mat-button-wrapper">
-            <span>Numveil</span>
-          </span>
-        </a>
-      </div><div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/beep" routerLinkActive="link-active">
-          <span class="mat-button-wrapper">
-            <span>Beep</span>
-          </span>
-        </a>
       </div>
       <div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/mutuals" routerLinkActive="link-active">
+        <button mat-button [matMenuTriggerFor]="appsMenu">
           <span class="mat-button-wrapper">
-            <span>Mutuals</span>
+            <span>Apps</span>
+            <mat-icon>arrow_drop_down</mat-icon>
           </span>
-        </a>
-      </div>
-      <div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/btrain" routerLinkActive="link-active">
-          <span class="mat-button-wrapper">
-            <span>BTrain</span>
-          </span>
-        </a>
-      </div>
-      <div class="nav-item flex-gap-20">
-        <a mat-button routerLink="/color" routerLinkActive="link-active">
-          <span class="mat-button-wrapper">
-            <span>Color</span>
-          </span>
-        </a>
+        </button>
+        <mat-menu #appsMenu="matMenu">
+          <a mat-menu-item routerLink="/flowdive" routerLinkActive="link-active">Flowdive</a>
+          <a mat-menu-item routerLink="/numveil" routerLinkActive="link-active">Numveil</a>
+          <a mat-menu-item routerLink="/beep" routerLinkActive="link-active">Beep</a>
+          <a mat-menu-item routerLink="/btrain" routerLinkActive="link-active">BTrain</a>
+          <a mat-menu-item routerLink="/mutuals" routerLinkActive="link-active">Mutuals</a>
+          <a mat-menu-item routerLink="/color" routerLinkActive="link-active">Color</a>
+        </mat-menu>
       </div>
     </div>
     @if (themeService.theme() === 'dark') {
