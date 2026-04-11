@@ -21,6 +21,6 @@ body.light {
   letter-spacing: normal !important;
 }
 
-.mat-mdc-menu-item .mdc-list-item__primary-text {
-  color: global.$linkcolor;
+.mat-mdc-menu-panel .mdc-list-item__primary-text {
+  color: global.$linkcolor !important;
 }
