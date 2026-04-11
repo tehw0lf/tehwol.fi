@@ -6,6 +6,7 @@ import { MobileComponent } from './mobile/mobile.component';
 @Component({
   selector: 'tehw0lf-nav',
   templateUrl: './nav.component.html',
+  styleUrl: './nav.component.scss',
   imports: [DesktopComponent, MobileComponent]
 })
 export class NavComponent {}
