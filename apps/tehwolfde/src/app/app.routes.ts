@@ -43,6 +43,11 @@ export const routes: Routes = [
       import('./flowdive/flowdive.component').then((m) => m.FlowdiveComponent)
   },
   {
+    path: 'numveil',
+    loadComponent: () =>
+      import('./numveil/numveil.component').then((m) => m.NumveilComponent)
+  },
+  {
     path: 'mutuals',
     loadComponent: () =>
       import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)

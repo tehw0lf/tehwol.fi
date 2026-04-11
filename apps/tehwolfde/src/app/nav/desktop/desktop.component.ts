@@ -11,6 +11,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   isActive,
@@ -33,6 +34,7 @@ import { SidenavService } from '../sidenav.service';
     NgClass,
     MatButtonModule,
     MatIconModule,
+    MatMenuModule,
     RouterLink,
     RouterLinkActive
   ],

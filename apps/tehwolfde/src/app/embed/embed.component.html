@@ -1,7 +1,20 @@
-<iframe
-  #iframe
-  [src]="safeUrl()"
-  class="embed-frame"
-  title="Embedded Tool"
-  (load)="onIframeLoad()"
-></iframe>
+<div class="embed-wrapper">
+  <div class="embed-toolbar">
+    <a
+      [href]="url()"
+      target="_blank"
+      rel="noopener noreferrer"
+      mat-icon-button
+      aria-label="Open in new tab"
+    >
+      <mat-icon>open_in_new</mat-icon>
+    </a>
+  </div>
+  <iframe
+    #iframe
+    [src]="safeUrl()"
+    class="embed-frame"
+    title="Embedded Tool"
+    (load)="onIframeLoad()"
+  ></iframe>
+</div>

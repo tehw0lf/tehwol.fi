@@ -1,6 +1,23 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.embed-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.embed-toolbar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+}
+
 .embed-frame {
   border: none;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: block;
 }

@@ -1,0 +1,10 @@
+.nav-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  tehw0lf-mobile {
+    flex: 1;
+    overflow: hidden;
+  }
+}

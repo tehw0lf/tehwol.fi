@@ -9,6 +9,8 @@ import {
   ViewChild
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 import { ThemeService } from '../theme.service';
 
@@ -17,6 +19,7 @@ import { ThemeService } from '../theme.service';
   templateUrl: './embed.component.html',
   styleUrl: './embed.component.scss',
   standalone: true,
+  imports: [MatIconButton, MatIcon],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmbedComponent {

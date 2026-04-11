@@ -48,8 +48,22 @@
 .main-content {
   color: global.$fontcolor;
   padding: 32px 0 0 32px;
+
+  &:has(tehw0lf-embed) {
+    padding: 0;
+  }
 }
 
 span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
   background: transparent;
+}
+
+.apps-subheader {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  padding: 8px 16px 4px;
+  margin: 0;
 }

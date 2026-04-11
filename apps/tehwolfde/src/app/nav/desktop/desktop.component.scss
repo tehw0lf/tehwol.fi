@@ -12,6 +12,8 @@
 }
 
 .mat-button-wrapper {
+  display: inline-flex;
+  align-items: center;
   color: global.$linkcolor;
 }
 
