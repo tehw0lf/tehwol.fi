@@ -48,6 +48,10 @@
 .main-content {
   color: global.$fontcolor;
   padding: 32px 0 0 32px;
+
+  &:has(tehw0lf-embed) {
+    padding: 0;
+  }
 }
 
 span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
