@@ -56,3 +56,6 @@ Thumbs.db
 /playwright-report/
 /playwright/.cache/
 /dist/.playwright
+
+.claude/worktrees
+.claude/settings.local.json
