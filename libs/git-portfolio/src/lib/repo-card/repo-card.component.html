@@ -16,7 +16,7 @@
         mat-button
         [ngStyle]="buttonStyle()"
         target="_blank"
-        href="{{ gitRepo().html_url || gitRepo().web_url }}"
+        href="{{ gitRepo().homepage || gitRepo().html_url || gitRepo().web_url }}"
       >
         {{ gitRepo().name }}
       </a>
@@ -100,7 +100,7 @@
             width="24px"
             class="flex-gap-5"
           ></div>
-          <span>Copy URL</span>
+          <span>Copy repo URL</span>
         </span>
       </button>
     </span>
