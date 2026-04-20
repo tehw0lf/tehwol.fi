@@ -6,6 +6,7 @@ export class GitRepository {
   description: string | undefined;
   fork?: boolean;
   forks_count: number | undefined;
+  homepage?: string;
   html_url?: string;
   web_url?: string;
   language?: string;
