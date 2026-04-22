@@ -3,7 +3,7 @@
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
       @if (hasAnyRepositories(gitRepositories, gitProvider.key)) {
         <div>
-          <h1 [ngStyle]="textStyle()">{{ gitProvider.value }}</h1>
+          <h1 [ngStyle]="textStyle()" class="mat-headline">{{ gitProvider.value }}</h1>
           @if (showOwn()) {
             <div>
               <h2 [ngStyle]="textStyle()" class="mat-headline">Own Repos</h2>
