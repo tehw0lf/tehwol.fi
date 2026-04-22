@@ -1,27 +1,15 @@
 import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
 import { NgClass } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  OnDestroy,
-  Signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {
-  isActive,
-  Router,
-  RouterLink,
-  RouterLinkActive
-} from '@angular/router';
+import { isActive, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { ThemeService } from '../../theme.service';
+import { ThemeService } from '../../../services/theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({

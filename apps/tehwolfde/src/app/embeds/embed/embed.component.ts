@@ -1,18 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  ViewChild
-} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, ViewChild } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import { ThemeService } from '../theme.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'tehw0lf-embed',

@@ -16,16 +16,10 @@ import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import {
-  isActive,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet
-} from '@angular/router';
+import { isActive, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 
-import { ThemeService } from '../../theme.service';
+import { ThemeService } from '../../../services/theme.service';
 import { SidenavService } from '../sidenav.service';
 
 @Component({
