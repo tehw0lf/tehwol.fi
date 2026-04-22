@@ -7,10 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { DesktopComponent } from './nav/desktop/desktop.component';
-import { MobileComponent } from './nav/mobile/mobile.component';
-import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './components/home/home.component';
+import { DesktopComponent } from './components/nav/desktop/desktop.component';
+import { MobileComponent } from './components/nav/mobile/mobile.component';
+import { NavComponent } from './components/nav/nav.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

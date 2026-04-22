@@ -1,4 +1,4 @@
-@use '../../../assets/styles/global';
+@use '../../../../assets/styles/global';
 @use '@tehw0lf/mvc';
 @use '../shared-nav';
 
@@ -60,6 +60,7 @@ span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
 }
 
 .apps-subheader {
+  color: global.$linkcolor !important;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.08em;

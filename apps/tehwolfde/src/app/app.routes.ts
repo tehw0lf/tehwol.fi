@@ -9,62 +9,70 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent)
+      import('./components/home/home.component').then((m) => m.HomeComponent)
   },
   {
     path: 'portfolio',
     loadComponent: () =>
-      import('./git-portfolio/git-portfolio.component').then(
+      import('./showcases/git-portfolio/git-portfolio.component').then(
         (m) => m.GitPortfolioComponent
       )
   },
   {
     path: 'wordlist-generator',
     loadComponent: () =>
-      import('./wordlist-generator/wordlist-generator.component').then(
+      import('./showcases/wordlist-generator/wordlist-generator.component').then(
         (m) => m.WordlistGeneratorComponent
       )
   },
   {
     path: 'contact-form',
     loadComponent: () =>
-      import('./contact-form/contact-form.component').then(
+      import('./showcases/contact-form/contact-form.component').then(
         (m) => m.ContactFormComponent
       )
   },
   {
     path: 'beep',
     loadComponent: () =>
-      import('./beep/beep.component').then((m) => m.BeepSimulatorComponent)
+      import('./embeds/beep/beep.component').then(
+        (m) => m.BeepSimulatorComponent
+      )
   },
   {
     path: 'flowdive',
     loadComponent: () =>
-      import('./flowdive/flowdive.component').then((m) => m.FlowdiveComponent)
+      import('./embeds/flowdive/flowdive.component').then(
+        (m) => m.FlowdiveComponent
+      )
   },
   {
     path: 'numveil',
     loadComponent: () =>
-      import('./numveil/numveil.component').then((m) => m.NumveilComponent)
+      import('./embeds/numveil/numveil.component').then(
+        (m) => m.NumveilComponent
+      )
   },
   {
     path: 'mutuals',
     loadComponent: () =>
-      import('./mutuals/mutuals.component').then((m) => m.MutualsComponent)
+      import('./embeds/mutuals/mutuals.component').then(
+        (m) => m.MutualsComponent
+      )
   },
   {
     path: 'btrain',
     loadComponent: () =>
-      import('./btrain/btrain.component').then((m) => m.BtrainComponent)
+      import('./embeds/btrain/btrain.component').then((m) => m.BtrainComponent)
   },
   {
     path: 'color/:color',
     loadComponent: () =>
-      import('./color/color.component').then((m) => m.ColorComponent)
+      import('./embeds/color/color.component').then((m) => m.ColorComponent)
   },
   {
     path: 'color',
     loadComponent: () =>
-      import('./color/color.component').then((m) => m.ColorComponent)
+      import('./embeds/color/color.component').then((m) => m.ColorComponent)
   }
 ];
