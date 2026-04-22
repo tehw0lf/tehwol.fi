@@ -47,7 +47,8 @@
 
 .main-content {
   color: global.$fontcolor;
-  padding: 32px 0 0 32px;
+  padding: 16px;
+  box-sizing: border-box;
 
   &:has(tehw0lf-embed) {
     padding: 0;
