@@ -29,7 +29,8 @@ test.describe('Wordlist Generator Page', () => {
     if ((await addButton.count()) > 0) {
       await addButton.first().click();
 
-      // Verify new input was added
+      // Wait for new input to appear, then verify count increased
+      await expect(charsetInputs.nth(initialInputs)).toBeVisible();
       const newInputs = await charsetInputs.count();
       expect(newInputs).toBeGreaterThan(initialInputs);
     }
