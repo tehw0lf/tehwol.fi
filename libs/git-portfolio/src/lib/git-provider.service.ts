@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, of, zip } from 'rxjs';
-import { map, tap, shareReplay } from 'rxjs/operators';
+import { BehaviorSubject, expand, Observable, of, reduce, zip } from 'rxjs';
+import { map, tap, shareReplay, takeWhile } from 'rxjs/operators';
 
 import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitRepositories } from './types/git-repositories-type';
@@ -127,13 +127,36 @@ export class GitProviderService {
     };
   }
 
+  private fetchAllPages<T>(firstUrl: string): Observable<T[]> {
+    return this.http.get<T[]>(firstUrl, { observe: 'response' }).pipe(
+      expand((response) => {
+        const next = this.parseLinkHeader(response.headers.get('Link'));
+        return next
+          ? this.http.get<T[]>(next, { observe: 'response' })
+          : of(null);
+      }),
+      takeWhile((response): response is HttpResponse<T[]> => response !== null),
+      reduce(
+        (acc: T[], response) => acc.concat(response.body ?? []),
+        []
+      ),
+      shareReplay(1)
+    );
+  }
+
+  private parseLinkHeader(header: string | null): string | null {
+    if (!header) return null;
+    const match = header.match(/<([^>]+)>;\s*rel="next"/);
+    return match ? match[1] : null;
+  }
+
   private fetchGithubRepositories(
     githubUser: string
   ): Observable<GitRepository[]> {
     if (githubUser !== '') {
-      return this.http.get<GitRepository[]>(
-        `https://api.github.com/users/${githubUser}/repos`
-      ).pipe(shareReplay(1));
+      return this.fetchAllPages<GitRepository>(
+        `https://api.github.com/users/${githubUser}/repos?per_page=100`
+      );
     }
     return of([]);
   }
@@ -142,9 +165,9 @@ export class GitProviderService {
     gitlabUser: string
   ): Observable<GitRepository[]> {
     if (gitlabUser !== '') {
-      return this.http.get<GitRepository[]>(
-        `https://gitlab.com/api/v4/users/${gitlabUser}/projects`
-      ).pipe(shareReplay(1));
+      return this.fetchAllPages<GitRepository>(
+        `https://gitlab.com/api/v4/users/${gitlabUser}/projects?per_page=100`
+      );
     }
     return of([]);
   }
