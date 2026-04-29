@@ -15,6 +15,7 @@ import { ThemeService } from '../../services/theme.service';
 })
 export class EmbedComponent {
   url = input.required<string>();
+  title = input('Embedded Tool');
 
   @ViewChild('iframe') private iframeRef:
     | ElementRef<HTMLIFrameElement>

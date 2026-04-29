@@ -14,7 +14,7 @@
     #iframe
     [src]="safeUrl()"
     class="embed-frame"
-    title="Embedded Tool"
+    [title]="title()"
     (load)="onIframeLoad()"
   ></iframe>
 </div>

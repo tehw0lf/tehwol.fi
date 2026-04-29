@@ -6,7 +6,7 @@ import { EmbedComponent } from '../embed/embed.component';
   selector: 'tehw0lf-mutuals',
   standalone: true,
   imports: [EmbedComponent],
-  template: `<tehw0lf-embed url="https://tehw0lf.github.io/mutuals/" />`,
+  template: `<tehw0lf-embed url="https://tehw0lf.github.io/mutuals/" title="Mutuals" />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MutualsComponent {}
