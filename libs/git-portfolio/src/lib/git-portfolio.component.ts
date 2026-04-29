@@ -4,7 +4,7 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { CommonModule, KeyValuePipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, inject, signal, effect, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, inject, signal, effect, computed, OnDestroy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -61,6 +61,22 @@ export class GitPortfolioComponent implements OnDestroy {
   showForked = input(true);
 
   showOwn = input(true);
+
+  labels = input({
+    ownRepos: 'Own Repos',
+    forkedRepos: 'Forked Repos',
+    noOwnRepos: 'This user has not created any repositories yet',
+    noForkedRepos: 'This user has not forked any repositories yet',
+    copyRepoUrl: 'Copy repo URL',
+    created: 'Created: ',
+    updated: 'Updated: '
+  });
+
+  repoCardLabels = computed(() => ({
+    copyRepoUrl: this.labels().copyRepoUrl,
+    created: this.labels().created,
+    updated: this.labels().updated
+  }));
 
   loading = toSignal(this.gitProviderService.loading, { initialValue: true });
   gitProviders = GitProviders;

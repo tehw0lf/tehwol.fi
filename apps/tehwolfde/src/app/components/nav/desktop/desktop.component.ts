@@ -9,6 +9,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { isActive, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
+import { TranslatePipe } from '../../../i18n/translate.pipe';
+import { TranslateService } from '../../../i18n/translate.service';
 import { ThemeService } from '../../../services/theme.service';
 import { SidenavService } from '../sidenav.service';
 
@@ -24,12 +26,14 @@ import { SidenavService } from '../sidenav.service';
     MatIconModule,
     MatMenuModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DesktopComponent implements OnDestroy {
   themeService = inject(ThemeService);
+  translateService = inject(TranslateService);
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
   private breakpointObserver = inject(BreakpointObserver);

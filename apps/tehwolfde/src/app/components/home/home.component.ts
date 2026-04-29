@@ -5,11 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
+import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TranslateService } from '../../i18n/translate.service';
 import { ThemeService } from '../../services/theme.service';
 
 interface LibraryCard {
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   route: string;
   previewUrl: SafeResourceUrl;
 }
@@ -19,34 +21,32 @@ interface LibraryCard {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatCardModule, NgStyle],
+  imports: [RouterLink, MatButtonModule, MatCardModule, NgStyle, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
   private themeService = inject(ThemeService);
   private sanitizer = inject(DomSanitizer);
+  translateService = inject(TranslateService);
 
   libraries: LibraryCard[] = [
     {
-      title: 'git-portfolio',
-      description:
-        'Customizable Git repository portfolio supporting GitHub and GitLab. Displays repos with stats, language colors, and links.',
+      titleKey: 'git-portfolio',
+      descriptionKey: 'home.gitPortfolioDescription',
       route: '/portfolio',
       previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl('/portfolio')
     },
     {
-      title: 'wordlist-generator',
-      description:
-        'Cartesian product-based wordlist generator with drag-and-drop charset management and multiple export formats.',
+      titleKey: 'wordlist-generator',
+      descriptionKey: 'home.wordlistGeneratorDescription',
       route: '/wordlist-generator',
       previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
         '/wordlist-generator'
       )
     },
     {
-      title: 'contact-form',
-      description:
-        'Flexible contact form built with ngx-formly. Supports dynamic fields, validation, and custom API callbacks.',
+      titleKey: 'contact-form',
+      descriptionKey: 'home.contactFormDescription',
       route: '/contact-form',
       previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl('/contact-form')
     }

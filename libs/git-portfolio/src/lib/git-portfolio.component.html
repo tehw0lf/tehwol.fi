@@ -6,7 +6,7 @@
           <h1 [ngStyle]="textStyle()" class="mat-headline">{{ gitProvider.value }}</h1>
           @if (showOwn()) {
             <div>
-              <h2 [ngStyle]="textStyle()" class="mat-headline">Own Repos</h2>
+              <h2 [ngStyle]="textStyle()" class="mat-headline">{{ labels().ownRepos }}</h2>
               <div
                 class="flex-align-start"
                 [ngClass]="{
@@ -39,6 +39,7 @@
                     [starColor]="starColor()"
                     [gitRepo]="gitRepo"
                     [isCopied]="isCopiedToClipboard(gitRepo)"
+                    [labels]="repoCardLabels()"
                     (copiedToClipboard)="copyToClipboard(gitRepo)"
                     class="repository-card flex-align-stretch"
                     [ngClass]="{
@@ -57,16 +58,14 @@
                     'own'
                   )
                 ) {
-                  <div [ngStyle]="textStyle()">
-                    This user has not created any repositories yet
-                  </div>
+                  <div [ngStyle]="textStyle()">{{ labels().noOwnRepos }}</div>
                 }
               </div>
             </div>
           }
           @if (showForked()) {
             <div>
-              <h2 [ngStyle]="textStyle()" class="mat-headline">Forked Repos</h2>
+              <h2 [ngStyle]="textStyle()" class="mat-headline">{{ labels().forkedRepos }}</h2>
               <div
                 class="flex-align-start"
                 [ngClass]="{
@@ -99,6 +98,7 @@
                     [starColor]="starColor()"
                     [gitRepo]="gitRepo"
                     [isCopied]="isCopiedToClipboard(gitRepo)"
+                    [labels]="repoCardLabels()"
                     (copiedToClipboard)="copyToClipboard(gitRepo)"
                     class="repository-card flex-align-stretch"
                     [ngClass]="{
@@ -116,9 +116,7 @@
                     'forked'
                   )
                 ) {
-                  <div [ngStyle]="textStyle()">
-                    This user has not forked any repositories yet
-                  </div>
+                  <div [ngStyle]="textStyle()">{{ labels().noForkedRepos }}</div>
                 }
               </div>
             </div>

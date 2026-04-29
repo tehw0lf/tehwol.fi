@@ -19,6 +19,8 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { isActive, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 
+import { TranslatePipe } from '../../../i18n/translate.pipe';
+import { TranslateService } from '../../../i18n/translate.service';
 import { ThemeService } from '../../../services/theme.service';
 import { SidenavService } from '../sidenav.service';
 
@@ -37,12 +39,14 @@ import { SidenavService } from '../sidenav.service';
     RouterLinkActive,
     MatButtonModule,
     MatIconModule,
-    RouterOutlet
+    RouterOutlet,
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileComponent implements AfterViewInit, OnDestroy {
   themeService = inject(ThemeService);
+  translateService = inject(TranslateService);
   private router = inject(Router);
   private sidenavService = inject(SidenavService);
 

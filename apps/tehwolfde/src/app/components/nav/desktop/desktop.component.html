@@ -10,7 +10,7 @@
       (click)="toggleSidenav()"
       [style]="burgerStyle()"
       mat-icon-button
-      aria-label="Open navigation menu"
+      [attr.aria-label]="'nav.openMenu' | translate"
     >
       <mat-icon>menu</mat-icon>
     </button>
@@ -24,13 +24,13 @@
         >
           <span class="mat-button-wrapper">
             <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
-            <span>Home</span>
+            <span>{{ 'nav.home' | translate }}</span>
           </span>
         </a>
       </div>
       <div class="nav-item flex-gap-20">
         <a mat-button routerLink="/portfolio" routerLinkActive="link-active">
-          <span class="mat-button-wrapper"> <span>Portfolio</span> </span>
+          <span class="mat-button-wrapper"> <span>{{ 'nav.portfolio' | translate }}</span> </span>
         </a>
       </div>
       <div class="nav-item flex-gap-20">
@@ -40,21 +40,21 @@
           routerLinkActive="link-active"
         >
           <span class="mat-button-wrapper">
-            <span>Wordlist Generator</span>
+            <span>{{ 'nav.wordlistGenerator' | translate }}</span>
           </span>
         </a>
       </div>
       <div class="nav-item flex-gap-20">
         <a mat-button routerLink="/contact-form" routerLinkActive="link-active">
           <span class="mat-button-wrapper">
-            <span>Contact Form</span>
+            <span>{{ 'nav.contactForm' | translate }}</span>
           </span>
         </a>
       </div>
       <div class="nav-item flex-gap-20">
         <button mat-button [matMenuTriggerFor]="appsMenu">
           <span class="mat-button-wrapper">
-            <span>Apps</span>
+            <span>{{ 'nav.apps' | translate }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
           </span>
         </button>
@@ -76,7 +76,7 @@
         (click)="switchToLight()"
         [style]="buttonStyle()"
         mat-icon-button
-        aria-label="Switch to light theme"
+        [attr.aria-label]="'nav.switchToLight' | translate"
       >
         <mat-icon>light_mode</mat-icon>
       </button>
@@ -88,11 +88,19 @@
         (click)="switchToDark()"
         [style]="buttonStyle()"
         mat-icon-button
-        aria-label="Switch to dark theme"
+        [attr.aria-label]="'nav.switchToDark' | translate"
       >
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
+    <button
+      mat-icon-button
+      [style]="buttonStyle()"
+      (click)="translateService.toggle()"
+      [attr.aria-label]="'nav.switchLanguage' | translate"
+    >
+      <span>{{ translateService.locale() === 'en' ? 'DE' : 'EN' }}</span>
+    </button>
     <div [style]="buttonStyle()">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">
@@ -102,7 +110,7 @@
               class="nav-logo github"
               src="assets/icons/github.png"
             />
-            <span class="github">GitHub</span>
+            <span class="github">{{ 'nav.github' | translate }}</span>
           </span>
         </a>
       </div>

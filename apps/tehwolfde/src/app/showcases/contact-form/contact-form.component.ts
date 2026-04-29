@@ -2,17 +2,20 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
 import { of } from 'rxjs';
 
+import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TranslateService } from '../../i18n/translate.service';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'tehw0lf-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
-  imports: [ContactFormComponent_1],
+  imports: [ContactFormComponent_1, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
   private themeService = inject(ThemeService);
+  translateService = inject(TranslateService);
 
   buttonStyle = computed(() => ({
     'background-color':
