@@ -5,6 +5,10 @@
   font-family: global.$font;
 }
 
+#main-content {
+  outline: none;
+}
+
 .skip-link {
   position: absolute;
   top: -100%;
