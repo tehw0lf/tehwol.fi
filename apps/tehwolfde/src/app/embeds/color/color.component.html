@@ -1,5 +1,6 @@
 <div class="color-controls">
   <mat-form-field appearance="outline">
+    <mat-label>Color value</mat-label>
     <input
       matInput
       [ngModel]="inputValue()"
@@ -13,6 +14,7 @@
     [value]="hexColor()"
     (input)="inputValue.set($any($event.target).value); apply()"
     class="color-picker"
+    aria-label="Color picker"
   />
 </div>
-<tehw0lf-embed [url]="iframeUrl()" />
+<tehw0lf-embed [url]="iframeUrl()" title="Color" />

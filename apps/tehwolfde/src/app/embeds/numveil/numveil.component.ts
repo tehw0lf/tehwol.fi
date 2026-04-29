@@ -6,7 +6,7 @@ import { EmbedComponent } from '../embed/embed.component';
   selector: 'tehw0lf-numveil',
   standalone: true,
   imports: [EmbedComponent],
-  template: `<tehw0lf-embed url="https://numveil.tehwolf.de" />`,
+  template: `<tehw0lf-embed url="https://numveil.tehwolf.de" title="Numveil" />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumveilComponent {}

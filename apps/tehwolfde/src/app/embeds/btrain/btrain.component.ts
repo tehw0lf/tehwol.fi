@@ -6,7 +6,7 @@ import { EmbedComponent } from '../embed/embed.component';
   selector: 'tehw0lf-btrain',
   standalone: true,
   imports: [EmbedComponent],
-  template: `<tehw0lf-embed url="https://btrain.tehwolf.de" />`,
+  template: `<tehw0lf-embed url="https://btrain.tehwolf.de" title="BTrain" />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BtrainComponent {}
