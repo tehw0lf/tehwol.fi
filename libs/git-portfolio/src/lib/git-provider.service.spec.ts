@@ -45,6 +45,9 @@ const GIT_PROVIDER_USER_NAMES: GitProviderConfig = {
   gitlab: 'testuser'
 };
 
+const GITHUB_URL = `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos?per_page=100`;
+const GITLAB_URL = `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects?per_page=100`;
+
 describe('GitProviderService', () => {
   let service: GitProviderService;
   let httpMock: HttpTestingController;
@@ -74,7 +77,7 @@ describe('GitProviderService', () => {
   describe('getRepositories', () => {
     it('should fetch and organize repositories correctly', (done) => {
       const result$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-      
+
       result$.subscribe((repositories) => {
         expect(repositories.github?.own).toEqual([
           GITHUB_REPOS[2], // repo3 (15 stars)
@@ -92,12 +95,8 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const reqGithub = httpMock.expectOne(
-        `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-      );
-      const reqGitlab = httpMock.expectOne(
-        `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-      );
+      const reqGithub = httpMock.expectOne(GITHUB_URL);
+      const reqGitlab = httpMock.expectOne(GITLAB_URL);
 
       expect(reqGithub.request.method).toBe('GET');
       expect(reqGitlab.request.method).toBe('GET');
@@ -109,7 +108,7 @@ describe('GitProviderService', () => {
     it('should handle empty usernames by skipping API calls', async () => {
       const config: GitProviderConfig = { github: '', gitlab: '' };
       const result$ = service.getRepositories(config);
-      
+
       const repositories = await firstValueFrom(result$);
 
       expect(repositories.github?.own).toEqual([]);
@@ -121,7 +120,7 @@ describe('GitProviderService', () => {
     it('should handle partial configuration', (done) => {
       const config: GitProviderConfig = { github: 'testuser' };
       const result$ = service.getRepositories(config);
-      
+
       result$.subscribe((repositories) => {
         expect(repositories.github?.own).toHaveLength(2);
         expect(repositories.gitlab?.own).toEqual([]);
@@ -130,15 +129,15 @@ describe('GitProviderService', () => {
       });
 
       const reqGithub = httpMock.expectOne(
-        `https://api.github.com/users/testuser/repos`
+        `https://api.github.com/users/testuser/repos?per_page=100`
       );
-      
+
       reqGithub.flush(GITHUB_REPOS);
     });
 
     it('should handle undefined configuration', async () => {
       const result$ = service.getRepositories();
-      
+
       const repositories = await firstValueFrom(result$);
 
       expect(repositories.github?.own).toEqual([]);
@@ -151,13 +150,13 @@ describe('GitProviderService', () => {
   describe('caching', () => {
     it('should cache results and return cached data on subsequent calls', (done) => {
       let callCount = 0;
-      
+
       // First call
       const result1$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-      
+
       result1$.subscribe((repositories1) => {
         callCount++;
-        
+
         // Second call should use cache
         const result2$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
         result2$.subscribe((repositories2) => {
@@ -167,12 +166,8 @@ describe('GitProviderService', () => {
         });
       });
 
-      const reqGithub1 = httpMock.expectOne(
-        `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-      );
-      const reqGitlab1 = httpMock.expectOne(
-        `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-      );
+      const reqGithub1 = httpMock.expectOne(GITHUB_URL);
+      const reqGitlab1 = httpMock.expectOne(GITLAB_URL);
 
       reqGithub1.flush(GITHUB_REPOS);
       reqGitlab1.flush(GITLAB_REPOS);
@@ -198,46 +193,33 @@ describe('GitProviderService', () => {
       let currentTime = 1000;
       jest.spyOn(Date, 'now').mockImplementation(() => currentTime);
 
-      try {
-        // First call
-        const result1$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-        
-        result1$.subscribe(() => {
-          // Advance time beyond cache TTL (10 minutes)
-          currentTime += 11 * 60 * 1000;
+      // First call
+      const result1$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
 
-          // Second call should make new HTTP requests due to expired cache
-          const result2$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-          
-          result2$.subscribe(() => {
-            Date.now = originalDateNow;
-            done();
-          });
+      result1$.subscribe(() => {
+        // Advance time beyond cache TTL (10 minutes)
+        currentTime += 11 * 60 * 1000;
 
-          const reqGithub2 = httpMock.expectOne(
-            `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-          );
-          const reqGitlab2 = httpMock.expectOne(
-            `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-          );
+        // Second call should make new HTTP requests due to expired cache
+        const result2$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
 
-          reqGithub2.flush(GITLAB_REPOS);
-          reqGitlab2.flush(GITHUB_REPOS);
+        result2$.subscribe(() => {
+          Date.now = originalDateNow;
+          done();
         });
 
-        const reqGithub1 = httpMock.expectOne(
-          `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-        );
-        const reqGitlab1 = httpMock.expectOne(
-          `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-        );
+        const reqGithub2 = httpMock.expectOne(GITHUB_URL);
+        const reqGitlab2 = httpMock.expectOne(GITLAB_URL);
 
-        reqGithub1.flush(GITHUB_REPOS);
-        reqGitlab1.flush(GITLAB_REPOS);
-      } catch (error) {
-        Date.now = originalDateNow;
-        done.fail(error);
-      }
+        reqGithub2.flush(GITLAB_REPOS);
+        reqGitlab2.flush(GITHUB_REPOS);
+      });
+
+      const reqGithub1 = httpMock.expectOne(GITHUB_URL);
+      const reqGitlab1 = httpMock.expectOne(GITLAB_URL);
+
+      reqGithub1.flush(GITHUB_REPOS);
+      reqGitlab1.flush(GITLAB_REPOS);
     });
   });
 
@@ -251,7 +233,7 @@ describe('GitProviderService', () => {
       ];
 
       const result$ = service.getRepositories({ github: 'testuser' });
-      
+
       result$.subscribe((repositories) => {
         expect(repositories.github?.own).toHaveLength(2);
         expect(repositories.github?.forked).toHaveLength(2);
@@ -260,7 +242,7 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos');
+      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
       req.flush(mixedRepos);
     });
 
@@ -272,7 +254,7 @@ describe('GitProviderService', () => {
       ];
 
       const result$ = service.getRepositories({ github: 'testuser' });
-      
+
       result$.subscribe((repositories) => {
         expect(repositories.github?.own?.[0].stargazers_count).toBe(20);
         expect(repositories.github?.own?.[1].stargazers_count).toBe(10);
@@ -280,21 +262,21 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos');
+      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
       req.flush(unsortedRepos);
     });
 
     it('should handle repositories with undefined star counts', (done) => {
       const repoWithUndefinedStars = createGitRepository(1, 'no-stars', false, 10);
       repoWithUndefinedStars.stargazers_count = undefined; // Explicitly set to undefined after creation
-      
+
       const reposWithUndefinedStars = [
         repoWithUndefinedStars,
         createGitRepository(2, 'with-stars', false, 10)
       ];
 
       const result$ = service.getRepositories({ github: 'testuser' });
-      
+
       result$.subscribe((repositories) => {
         expect(repositories.github?.own).toHaveLength(2);
         // Repositories should be properly sorted and filtered
@@ -305,7 +287,7 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos');
+      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
       req.flush(reposWithUndefinedStars);
     });
   });
@@ -316,19 +298,15 @@ describe('GitProviderService', () => {
       service.loading.subscribe(state => loadingStates.push(state));
 
       const result$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-      
+
       result$.subscribe(() => {
         // Should end with loading false
         expect(loadingStates[loadingStates.length - 1]).toBe(false);
         done();
       });
 
-      const reqGithub = httpMock.expectOne(
-        `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-      );
-      const reqGitlab = httpMock.expectOne(
-        `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-      );
+      const reqGithub = httpMock.expectOne(GITHUB_URL);
+      const reqGitlab = httpMock.expectOne(GITLAB_URL);
 
       // Should start with loading true
       expect(loadingStates[0]).toBe(true);
@@ -341,22 +319,18 @@ describe('GitProviderService', () => {
   describe('error handling', () => {
     it('should handle HTTP errors gracefully', (done) => {
       const result$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
-      
+
       result$.subscribe({
-        next: () => done.fail('Should not emit success'),
+        next: () => done(new Error('Should not emit success')),
         error: (error) => {
           expect(error.status).toBe(404);
           done();
         }
       });
 
-      const reqGithub = httpMock.expectOne(
-        `https://api.github.com/users/${GIT_PROVIDER_USER_NAMES.github}/repos`
-      );
-      const reqGitlab = httpMock.expectOne(
-        `https://gitlab.com/api/v4/users/${GIT_PROVIDER_USER_NAMES.gitlab}/projects`
-      );
-      
+      const reqGithub = httpMock.expectOne(GITHUB_URL);
+      const reqGitlab = httpMock.expectOne(GITLAB_URL);
+
       // Error one request to trigger error handling
       reqGithub.flush('User not found', { status: 404, statusText: 'Not Found' });
       // Handle the other request normally to avoid open request error
@@ -373,7 +347,7 @@ describe('GitProviderService', () => {
       service.loading.subscribe((currentLoading) => {
         expect(currentLoading).toBe(true);
       });
-      
+
       // Just verify that clearCache method exists and can be called
       expect(service.clearCache).toBeDefined();
     });
