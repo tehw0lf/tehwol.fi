@@ -1,10 +1,10 @@
 <div>
-  <h1 class="mat-headline-5">Welcome to tehwolf.de!</h1>
+  <h1 class="mat-headline-5">{{ 'home.welcome' | translate }}</h1>
   <div class="library-grid">
     @for (lib of libraries; track lib.route) {
       <mat-card [ngStyle]="cardStyle()">
         <mat-card-header>
-          <mat-card-title>{{ lib.title }}</mat-card-title>
+          <mat-card-title>{{ lib.titleKey }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="preview-container">
@@ -15,11 +15,11 @@
               aria-hidden="true"
             ></iframe>
           </div>
-          <p class="description">{{ lib.description }}</p>
+          <p class="description">{{ lib.descriptionKey | translate }}</p>
         </mat-card-content>
         <mat-card-actions>
           <a mat-button [ngStyle]="buttonStyle()" [routerLink]="lib.route">
-            Try it
+            {{ 'home.tryIt' | translate }}
           </a>
         </mat-card-actions>
       </mat-card>

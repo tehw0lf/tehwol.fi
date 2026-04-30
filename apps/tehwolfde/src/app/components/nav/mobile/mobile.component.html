@@ -23,7 +23,7 @@
       >
         <span>
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
-          <span>Home </span>
+          <span>{{ 'nav.home' | translate }}</span>
         </span> </a
       ><a
         (click)="closeSidenav()"
@@ -31,7 +31,7 @@
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span>Portfolio</span> </a
+        <span>{{ 'nav.portfolio' | translate }}</span> </a
       ><a
         (click)="closeSidenav()"
         routerLink="/wordlist-generator"
@@ -39,7 +39,7 @@
         mat-list-item
       >
         <span>
-          <span>Wordlist Generator</span>
+          <span>{{ 'nav.wordlistGenerator' | translate }}</span>
         </span>
       </a>
       <a
@@ -49,11 +49,11 @@
         mat-list-item
       >
         <span>
-          <span>Contact Form (Demo)</span>
+          <span>{{ 'nav.contactForm' | translate }}</span>
         </span>
       </a>
       <mat-divider></mat-divider>
-      <h3 matSubheader class="apps-subheader">Apps</h3>
+      <h3 matSubheader class="apps-subheader">{{ 'nav.apps' | translate }}</h3>
       <a (click)="closeSidenav()" routerLink="/flowdive" routerLinkActive="link-active" mat-list-item>
         <span>Flowdive</span>
       </a>
@@ -85,7 +85,7 @@
             class="nav-logo"
             src="assets/icons/github.png"
           />
-          <span>GitHub</span>
+          <span>{{ 'nav.github' | translate }}</span>
         </span>
       </a>
       <div>
@@ -94,7 +94,7 @@
           type="button"
           (click)="toggleSidenav()"
           mat-icon-button
-          aria-label="Close navigation menu"
+          [attr.aria-label]="'nav.closeMenu' | translate"
         >
           <mat-icon>menu</mat-icon>
         </button>
@@ -105,7 +105,7 @@
             type="button"
             (click)="switchToLight()"
             mat-icon-button
-            aria-label="Switch to light theme"
+            [attr.aria-label]="'nav.switchToLight' | translate"
           >
             <mat-icon>light_mode</mat-icon>
           </button>
@@ -117,11 +117,18 @@
             type="button"
             (click)="switchToDark()"
             mat-icon-button
-            aria-label="Switch to dark theme"
+            [attr.aria-label]="'nav.switchToDark' | translate"
           >
             <mat-icon>dark_mode</mat-icon>
           </button>
         }
+        <button
+          mat-icon-button
+          (click)="translateService.toggle()"
+          [attr.aria-label]="'nav.switchLanguage' | translate"
+        >
+          <span>{{ translateService.locale() === 'en' ? 'DE' : 'EN' }}</span>
+        </button>
       </div>
     </mat-nav-list>
   </mat-sidenav>

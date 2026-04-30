@@ -1,9 +1,12 @@
 <h2 mat-headline>
-  This is a non-functional demo that performs no actual HTTP calls
+  {{ 'contactForm.demoNotice' | translate }}
 </h2>
 
 <contact-form
   [buttonStyle]="buttonStyle()"
   [formStyle]="formStyle()"
   [apiCallback]="apiCallback"
+  [sendText]="translateService.translate('contactForm.send')"
+  [sendSuccessfulText]="translateService.translate('contactForm.sendSuccess')"
+  [sendErrorText]="translateService.translate('contactForm.sendError')"
 ></contact-form>

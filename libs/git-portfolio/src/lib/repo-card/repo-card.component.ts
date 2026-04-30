@@ -42,6 +42,12 @@ export class RepoCardComponent {
 
   isCopied = input(false);
 
+  labels = input({
+    copyRepoUrl: 'Copy repo URL',
+    created: 'Created: ',
+    updated: 'Updated: '
+  });
+
   copiedToClipboard = output<boolean>();
 
   githubLanguageColors = githubLanguageColors as Dictionary;

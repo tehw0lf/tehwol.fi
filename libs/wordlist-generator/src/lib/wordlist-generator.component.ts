@@ -67,6 +67,19 @@ export class WordlistGeneratorComponent implements OnDestroy {
   dragStyle = input({ color: '#cc7832' });
   textStyle = input({ color: '#cc7832' });
 
+  labels = input({
+    generating: 'Generating...',
+    generate: 'Generate wordlist',
+    chooseFormat: 'Choose format',
+    downloadAs: 'Download as',
+    processingLarge: 'Processing large dataset using Web Worker...',
+    prefix: 'prefix (optional)',
+    charsetPosition: 'character set for string position ',
+    suffix: 'suffix (optional)',
+    generatedWordlist: 'Generated wordlist:',
+    tooLarge: 'The generated wordlist is too large to be displayed. You can still download it.'
+  });
+
   charsetForm: UntypedFormGroup | undefined;
   wordlist = signal<string>('');
 

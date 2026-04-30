@@ -1,0 +1,48 @@
+{
+  "nav.home": "Startseite",
+  "nav.portfolio": "Portfolio",
+  "nav.wordlistGenerator": "Wortlisten-Generator",
+  "nav.contactForm": "Kontaktformular",
+  "nav.apps": "Apps",
+  "nav.github": "GitHub",
+  "nav.openMenu": "Navigationsmenü öffnen",
+  "nav.closeMenu": "Navigationsmenü schließen",
+  "nav.switchToLight": "Helles Design aktivieren",
+  "nav.switchToDark": "Dunkles Design aktivieren",
+  "nav.switchLanguage": "Sprache wechseln",
+
+  "home.welcome": "Willkommen auf tehwolf.de!",
+  "home.tryIt": "Ausprobieren",
+  "home.gitPortfolioDescription": "Anpassbares Git-Repository-Portfolio mit Unterstützung für GitHub und GitLab. Zeigt Repos mit Statistiken, Sprachfarben und Links.",
+  "home.wordlistGeneratorDescription": "Kartesisches-Produkt-basierter Wortlisten-Generator mit Drag-and-Drop-Zeichensatz-Verwaltung und mehreren Exportformaten.",
+  "home.contactFormDescription": "Flexibles Kontaktformular auf Basis von ngx-formly. Unterstützt dynamische Felder, Validierung und benutzerdefinierte API-Callbacks.",
+
+  "contactForm.demoNotice": "Dies ist eine nicht-funktionale Demo, die keine HTTP-Anfragen sendet",
+  "contactForm.send": "Senden",
+  "contactForm.sendSuccess": "E-Mail erfolgreich gesendet",
+  "contactForm.sendError": "Sendefehler",
+
+  "color.label": "Farbwert",
+  "color.pickerLabel": "Farbwähler",
+
+  "embed.openInNewTab": "In neuem Tab öffnen",
+
+  "gitPortfolio.ownRepos": "Eigene Repos",
+  "gitPortfolio.forkedRepos": "Geforkte Repos",
+  "gitPortfolio.noOwnRepos": "Dieser Nutzer hat noch keine Repositories erstellt",
+  "gitPortfolio.noForkedRepos": "Dieser Nutzer hat noch keine Repositories geforkt",
+  "gitPortfolio.copyRepoUrl": "Repo-URL kopieren",
+  "gitPortfolio.created": "Erstellt: ",
+  "gitPortfolio.updated": "Aktualisiert: ",
+
+  "wordlistGenerator.generating": "Generiere...",
+  "wordlistGenerator.generate": "Wortliste generieren",
+  "wordlistGenerator.chooseFormat": "Format wählen",
+  "wordlistGenerator.downloadAs": "Herunterladen als",
+  "wordlistGenerator.processingLarge": "Großer Datensatz wird mit Web Worker verarbeitet...",
+  "wordlistGenerator.prefix": "Präfix (optional)",
+  "wordlistGenerator.charsetPosition": "Zeichensatz für Stringposition ",
+  "wordlistGenerator.suffix": "Suffix (optional)",
+  "wordlistGenerator.generatedWordlist": "Generierte Wortliste:",
+  "wordlistGenerator.tooLarge": "Die generierte Wortliste ist zu groß für die Anzeige. Du kannst sie trotzdem herunterladen."
+}

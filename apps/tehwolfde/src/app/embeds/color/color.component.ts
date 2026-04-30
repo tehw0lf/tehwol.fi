@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { TranslatePipe } from '../../i18n/translate.pipe';
 import { EmbedComponent } from '../embed/embed.component';
 
 function resolveToHex(colorValue: string): string {
@@ -23,7 +24,7 @@ function resolveToHex(colorValue: string): string {
   templateUrl: './color.component.html',
   styleUrl: './color.component.scss',
   standalone: true,
-  imports: [EmbedComponent, FormsModule, MatInputModule, MatButtonModule],
+  imports: [EmbedComponent, FormsModule, MatInputModule, MatButtonModule, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ColorComponent {

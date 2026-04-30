@@ -9,9 +9,9 @@
         [disabled]="isGenerating()"
       >
         @if (isGenerating()) {
-          Generating...
+          {{ labels().generating }}
         } @else {
-          Generate wordlist
+          {{ labels().generate }}
         }
       </button>
       @if (hasWordlist() && !isGenerating()) {
@@ -21,7 +21,7 @@
           mat-raised-button
           [matMenuTriggerFor]="menu"
         >
-          Choose format
+          {{ labels().chooseFormat }}
         </button>
       }
       <mat-menu #menu="matMenu">
@@ -42,25 +42,25 @@
           mat-raised-button
           (click)="downloadWordlist()"
         >
-          Download as
+          {{ labels().downloadAs }}
           @if (this.fileType()) {
             {{ this.fileType() }}
           }
         </button>
       }
     </div>
-    
+
     @if (isGenerating() && isLargeDataset()) {
       <div class="progress-container">
         <mat-progress-bar mode="indeterminate" role="progressbar" aria-label="Generating wordlist"></mat-progress-bar>
-        <p [ngStyle]="textStyle()">Processing large dataset using Web Worker...</p>
+        <p [ngStyle]="textStyle()">{{ labels().processingLarge }}</p>
       </div>
     }
-    
+
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
         <mat-form-field class="fixed-width bottom-10" appearance="outline">
-          <mat-label [ngStyle]="textStyle()">prefix (optional)</mat-label>
+          <mat-label [ngStyle]="textStyle()">{{ labels().prefix }}</mat-label>
           <input
             [ngStyle]="textStyle()"
             matInput
@@ -83,7 +83,7 @@
                 >
                 <mat-form-field class="charset bottom-10" appearance="outline">
                   <mat-label [ngStyle]="textStyle()">
-                    character set for string position {{ i }}
+                    {{ labels().charsetPosition }}{{ i }}
                   </mat-label>
                   <input
                     [ngStyle]="textStyle()"
@@ -124,7 +124,7 @@
           </div>
         </div>
         <mat-form-field class="fixed-width" appearance="outline">
-          <mat-label [ngStyle]="textStyle()">suffix (optional)</mat-label>
+          <mat-label [ngStyle]="textStyle()">{{ labels().suffix }}</mat-label>
           <input
             [ngStyle]="textStyle()"
             matInput
@@ -140,14 +140,12 @@
   @if (hasWordlist()) {
     <div class="wordlist-container flex-column flex-fxflex">
       @if (displayWordlist()) {
-        <h3 class="wordlist-header">Generated wordlist:</h3>
+        <h3 class="wordlist-header">{{ labels().generatedWordlist }}</h3>
         <code class="wordlist">
           {{ wordlist() }}
         </code>
       } @else {
-        The generated wordlist is too large to be displayed. You can still
-        download it.
-        <!-- Wordlist is already loaded in the signal for large datasets -->
+        {{ labels().tooLarge }}
       }
     </div>
   }

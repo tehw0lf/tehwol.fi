@@ -67,13 +67,8 @@
   </mat-card-content>
   <mat-card-footer class="flex-row">
     <span class="mat-footer-cell flex-fxflex flex-gap-12">
-      <span class="footer-span" [ngStyle]="textStyle()"
-        >Created: {{ gitRepo().created_at | date }}</span
-      >
-      <span class="footer-span" [ngStyle]="textStyle()"
-        >Updated:
-        {{ gitRepo().pushed_at || gitRepo().last_activity_at | date }}</span
-      >
+      <span class="footer-span" [ngStyle]="textStyle()">{{ labels().created }}{{ gitRepo().created_at | date }}</span>
+      <span class="footer-span" [ngStyle]="textStyle()">{{ labels().updated }}{{ gitRepo().pushed_at || gitRepo().last_activity_at | date }}</span>
     </span>
     <span class="mat-footer-cell">
       <button
@@ -100,7 +95,7 @@
             width="24px"
             class="flex-gap-5"
           ></div>
-          <span>Copy repo URL</span>
+          <span>{{ labels().copyRepoUrl }}</span>
         </span>
       </button>
     </span>
