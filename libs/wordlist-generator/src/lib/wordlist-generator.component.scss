@@ -37,22 +37,25 @@
     }
 
     .choose-format {
-      margin: 0 34px 10px 34px;
-      width: 150px;
+      margin: 0 10px 10px 0;
+      min-width: 150px;
       line-height: 36px;
       letter-spacing: normal;
     }
 
     .generate-wordlist {
-      margin: 0 0 10px 0;
-      width: 150px;
+      margin: 0 10px 10px 0;
+      min-width: 150px;
       line-height: 36px;
       letter-spacing: normal;
+      white-space: normal;
+      height: auto;
+      padding: 6px 16px;
     }
 
     .download-wordlist {
       margin: 0 0 10px 0;
-      width: 150px;
+      min-width: 150px;
       line-height: 36px;
       letter-spacing: normal;
     }
