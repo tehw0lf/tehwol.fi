@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "0.21.13",
+  "version": "0.21.14",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -76,7 +76,7 @@
     "@types/primer__octicons": "19.21.0",
     "@typescript-eslint/utils": "8.56.1",
     "autoprefixer": "10.4.23",
-    "@playwright/test": "1.58.0",
+    "@playwright/test": "1.60.0",
     "dotenv": "17.2.3",
     "eslint": "9.39.3",
     "eslint-config-prettier": "10.1.8",
