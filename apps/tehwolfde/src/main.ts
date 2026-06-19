@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -16,7 +16,7 @@ bootstrapApplication(AppComponent, {
     // See: https://angular.dev/guide/animations/migration
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideRouter(routes)
   ]
 }).catch((err) => console.error(err));

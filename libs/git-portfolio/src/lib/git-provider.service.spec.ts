@@ -10,7 +10,8 @@ import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitRepository } from './types/git-repository-type';
 import {
   provideHttpClient,
-  withInterceptorsFromDi
+  withInterceptorsFromDi,
+  withXhr
 } from '@angular/common/http';
 
 const createGitRepository = (
@@ -57,7 +58,7 @@ describe('GitProviderService', () => {
       imports: [],
       providers: [
         GitProviderService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
