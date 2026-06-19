@@ -23,22 +23,16 @@ export default [
       ]
     }
   },
-  ...nxEslintPlugin.configs['flat/typescript'].map((config) => ({
-    ...config,
+  ...nxEslintPlugin.configs['flat/typescript'],
+  {
     files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts'],
-    rules: {
-      ...config.rules,
-      'no-extra-semi': 'error'
-    }
-  })),
-  ...nxEslintPlugin.configs['flat/javascript'].map((config) => ({
-    ...config,
+    rules: { 'no-extra-semi': 'error' }
+  },
+  ...nxEslintPlugin.configs['flat/javascript'],
+  {
     files: ['**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
-    rules: {
-      ...config.rules,
-      'no-extra-semi': 'error'
-    }
-  })),
+    rules: { 'no-extra-semi': 'error' }
+  },
   {
     files: ['**/*.ts'],
     languageOptions: {
