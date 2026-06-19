@@ -1,77 +1,62 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
+import nxEslintPlugin from '@nx/eslint-plugin';
+import jsoncParser from 'jsonc-eslint-parser';
 import baseConfig from '../../eslint.config.mjs';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended
-});
 
 export default [
   {
     ignores: ['**/dist']
   },
   ...baseConfig,
-  ...compat
-    .config({
-      extends: [
-        'plugin:@nx/angular',
-        'plugin:@angular-eslint/template/process-inline-templates'
-      ]
-    })
-    .map((config) => ({
-      ...config,
-      files: ['**/*.ts'],
-      languageOptions: {
-        ...config.languageOptions,
-        parserOptions: {
-          ...config.languageOptions?.parserOptions,
-          project: undefined
+  ...nxEslintPlugin.configs['flat/angular'].map((config) => ({
+    ...config,
+    files: ['**/*.ts'],
+    languageOptions: {
+      ...config.languageOptions,
+      parserOptions: {
+        ...config.languageOptions?.parserOptions,
+        project: undefined
+      }
+    },
+    rules: {
+      ...config.rules,
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'tehw0lf',
+          style: 'camelCase'
         }
-      },
-      rules: {
-        ...config.rules,
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            type: 'attribute',
-            prefix: 'tehw0lf',
-            style: 'camelCase'
-          }
-        ],
-        '@angular-eslint/component-selector': [
-          'error',
-          {
-            type: 'element',
-            prefix: 'tehw0lf',
-            style: 'kebab-case'
-          }
-        ]
-      }
-    })),
-  ...compat
-    .config({
-      extends: ['plugin:@nx/angular-template']
-    })
-    .map((config) => ({
-      ...config,
-      files: ['**/*.html'],
-      rules: {
-        ...config.rules
-      }
-    })),
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'tehw0lf',
+          style: 'kebab-case'
+        }
+      ]
+    }
+  })),
+  ...nxEslintPlugin.configs['flat/angular-template'].map((config) => ({
+    ...config,
+    files: ['**/*.html'],
+    rules: {
+      ...config.rules
+    }
+  })),
   {
     files: ['**/*.ts'],
     rules: {
-      '@angular-eslint/prefer-standalone': 'off'
+      '@angular-eslint/prefer-standalone': 'off',
+      // Newly enabled by angular-eslint tsRecommended in the flat config migration; was not enforced before the upgrade.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off'
     }
   },
   {
     files: ['{package,project}.json'],
-    parser: 'jsonc-eslint-parser',
+    languageOptions: {
+      parser: jsoncParser
+    },
     rules: {
       '@nx/dependency-checks': 'error'
     }
