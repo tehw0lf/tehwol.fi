@@ -66,6 +66,13 @@ export const routes: Routes = [
       import('./embeds/btrain/btrain.component').then((m) => m.BtrainComponent)
   },
   {
+    path: 'farbduell',
+    loadComponent: () =>
+      import('./embeds/farbduell/farbduell.component').then(
+        (m) => m.FarbduellComponent
+      )
+  },
+  {
     path: 'color/:color',
     loadComponent: () =>
       import('./embeds/color/color.component').then((m) => m.ColorComponent)
