@@ -1,5 +1,6 @@
 import nxEslintPlugin from '@nx/eslint-plugin';
-import baseConfig from '../../eslint.config.mjs';
+import jsoncParser from 'jsonc-eslint-parser';
+import baseConfig from './eslint.config.mjs';
 
 export default [
   {
@@ -43,6 +44,15 @@ export default [
       '@angular-eslint/prefer-standalone': 'off',
       // Newly enabled by angular-eslint tsRecommended in the flat config migration; was not enforced before the upgrade.
       '@angular-eslint/prefer-on-push-component-change-detection': 'off'
+    }
+  },
+  {
+    files: ['{package,project}.json'],
+    languageOptions: {
+      parser: jsoncParser
+    },
+    rules: {
+      '@nx/dependency-checks': 'error'
     }
   }
 ];
