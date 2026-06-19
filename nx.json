@@ -130,5 +130,8 @@
   "useInferencePlugins": false,
   "defaultBase": "main",
   "nxCloudId": "68601eec7715b9977d708964",
-  "analytics": false
+  "analytics": false,
+  "migrate": {
+    "agentic": true
+  }
 }
