@@ -15,6 +15,7 @@
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@tehw0lf/contact-form": ["libs/contact-form/src/index.ts"],
