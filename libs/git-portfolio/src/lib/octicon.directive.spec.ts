@@ -1,4 +1,4 @@
-import { Component, DebugElement, Renderer2 } from '@angular/core';
+import { Component, DebugElement, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,6 +10,7 @@ import { OcticonDirective } from './octicon.directive';
     <div id="invalid-octicon" octicon="invalid-icon" color="blue" width="16px"></div>
     <div id="no-width-octicon" octicon="repo" color="green"></div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 class TestOcticonDirectiveComponent {}
