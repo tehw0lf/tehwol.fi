@@ -1,6 +1,6 @@
 /* latin-ext */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -9,7 +9,7 @@
 }
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -18,7 +18,7 @@
 }
 /* latin-ext */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -27,7 +27,7 @@
 }
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -36,7 +36,7 @@
 }
 /* latin-ext */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -45,7 +45,7 @@
 }
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -71,7 +71,7 @@
   text-transform: none;
   display: inline-block;
   white-space: nowrap;
-  word-wrap: normal;
+  overflow-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
