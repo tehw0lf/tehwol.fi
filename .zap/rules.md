@@ -11,3 +11,4 @@ Rules suppressed in `.zap/rules.tsv` with justification:
 | 10049 | Storable and Cacheable Content | Informational finding. Static assets are intentionally cacheable. |
 | 10096 | Timestamp Disclosure - Unix | Build timestamps embedded in JS bundles by the build tool. Not sensitive data. |
 | 10110 | Dangerous JS Functions | `setTimeout`, `setInterval`, and `Function` are used internally by Angular and Zone.js — not by application code. False positive. |
+| 10050 | Retrieved from Cache | Cloudflare CDN caching behavior. Not a vulnerability. |
