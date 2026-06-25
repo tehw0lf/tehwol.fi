@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "0.22.9",
+  "version": "0.22.10",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -26,7 +26,8 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "validate:nginx": "npm run build && docker build -t tehwolf-nginx-test . && docker run --rm tehwolf-nginx-test nginx -t; docker rmi tehwolf-nginx-test"
   },
   "private": true,
   "dependencies": {

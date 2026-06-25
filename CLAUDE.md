@@ -76,6 +76,16 @@ Each library in `libs/` is independently publishable with its own:
 
 When working on libraries, test integration with the main app by importing via the path mapping.
 
+## Version Bump Requirement
+
+**IMPORTANT**: Every PR in this repository **must** include a version bump in `package.json`. CI uses the version tag for Docker artifact naming via `nx affected`. Without a bump, the security scan step fails because it cannot find a uniquely tagged artifact.
+
+Steps required on every PR branch:
+1. Bump the `version` field in `package.json` (patch increment unless the change warrants minor/major)
+2. Run `npm install` immediately after to update `package-lock.json`
+3. Commit both `package.json` and `package-lock.json` together
+4. Never open a PR without this — CI will fail at the security scan step
+
 ## Pre-commit Validation Commands
 
 **IMPORTANT**: Before committing any changes, always run these validation commands. Never commit changes that do not pass both commands with an exit code of 0.
