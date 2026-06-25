@@ -17,6 +17,7 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/tehwolfde/src/favicon.svg",
+          "apps/tehwolfde/src/robots.txt",
           "apps/tehwolfde/src/assets"
         ],
         "styles": [
