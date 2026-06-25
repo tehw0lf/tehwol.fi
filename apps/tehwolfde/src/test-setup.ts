@@ -7,7 +7,7 @@ setupZonelessTestEnv({
 
 // jsdom does not implement IntersectionObserver (required by @defer on viewport)
 globalThis.IntersectionObserver = class {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe(): void { return; }
+  unobserve(): void { return; }
+  disconnect(): void { return; }
 } as unknown as typeof IntersectionObserver;
