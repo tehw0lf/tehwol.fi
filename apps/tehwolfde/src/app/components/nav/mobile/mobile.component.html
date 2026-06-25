@@ -140,7 +140,8 @@
     class="main-content flex-fxflex-fill"
     (click)="closeSidenav()"
   >
-    <span id="main-content" tabindex="-1"></span>
-    <router-outlet></router-outlet>
+    <main id="main-content" tabindex="-1">
+      <router-outlet></router-outlet>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>

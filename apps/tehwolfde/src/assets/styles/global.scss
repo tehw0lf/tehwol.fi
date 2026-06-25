@@ -3,6 +3,6 @@
 $font: Roboto, 'Helvetica Neue', sans-serif;
 $fontsize-button-md: 24px;
 
-/* Text color */
-$fontcolor: #437da8;
-$linkcolor: #cc7832;
+/* Text color — WCAG AA compliant (4.5:1 on dark backgrounds) */
+$fontcolor: #6699bb;
+$linkcolor: #e8903f;

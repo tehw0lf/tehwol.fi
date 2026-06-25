@@ -17,10 +17,10 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/tehwolfde/src/favicon.svg",
+          "apps/tehwolfde/src/robots.txt",
           "apps/tehwolfde/src/assets"
         ],
         "styles": [
-          "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
           "./node_modules/@tehw0lf/mvc/index.scss",
           "apps/tehwolfde/src/styles.scss"
         ],

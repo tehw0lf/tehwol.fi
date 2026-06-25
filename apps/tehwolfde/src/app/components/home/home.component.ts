@@ -58,7 +58,7 @@ export class HomeComponent {
         ? 'rgba(34, 34, 34, 0.75)'
         : 'rgba(255, 255, 255, 0.75)',
     'backdrop-filter': 'blur(50px)',
-    color: '#437da8'
+    color: '#6699bb'
   }));
 
   buttonStyle = computed(() => ({
@@ -66,6 +66,6 @@ export class HomeComponent {
       this.themeService.theme() === 'dark'
         ? '#333333'
         : 'rgba(255, 255, 255, 0.75)',
-    color: '#cc7832'
+    color: '#e8903f'
   }));
 }
