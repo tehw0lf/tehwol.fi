@@ -8,12 +8,16 @@
         </mat-card-header>
         <mat-card-content>
           <div class="preview-container">
-            <iframe
-              [src]="lib.previewUrl"
-              class="preview-iframe"
-              tabindex="-1"
-              aria-hidden="true"
-            ></iframe>
+            @defer (on viewport) {
+              <iframe
+                [src]="lib.previewUrl"
+                class="preview-iframe"
+                tabindex="-1"
+                aria-hidden="true"
+              ></iframe>
+            } @placeholder {
+              <div class="preview-iframe"></div>
+            }
           </div>
           <p class="description">{{ lib.descriptionKey | translate }}</p>
         </mat-card-content>
