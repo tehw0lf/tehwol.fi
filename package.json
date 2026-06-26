@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "0.22.19",
+  "version": "0.22.20",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -43,7 +43,6 @@
     "@angular/router": "22.0.2",
     "@ngx-formly/core": "7.1.0",
     "@ngx-formly/material": "7.1.0",
-    "@primer/octicons": "19.28.1",
     "@tehw0lf/mvc": "0.0.8",
     "cartesian-product-generator": "1.1.1",
     "github-language-colors": "1.0.0",
@@ -75,7 +74,6 @@
     "@swc/jest": "0.2.39",
     "@types/jest": "30.0.0",
     "@types/node": "24.1.0",
-    "@types/primer__octicons": "19.21.0",
     "@typescript-eslint/utils": "8.61.1",
     "angular-eslint": "22.0.0",
     "autoprefixer": "10.5.0",

@@ -58,6 +58,10 @@ describe('GitPortfolioComponent', () => {
   const getGithubForkedRepos = () => MOCK_REPOSITORIES.github?.forked || [];
 
   beforeEach(async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({ ok: true, text: () => Promise.resolve('<svg></svg>') } as Response)
+    ) as typeof fetch;
+
     const gitProviderSpy = {
       getRepositories: jest.fn(),
       loading: of(false)

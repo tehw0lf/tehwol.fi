@@ -1,5 +1,23 @@
 import { Directive, ElementRef, input, OnInit, Renderer2, inject } from '@angular/core';
-import octicons, { IconName } from '@primer/octicons';
+
+const svgCache = new Map<string, Promise<string>>();
+
+const KNOWN_ICONS = new Set([
+  'check', 'issue-opened', 'paste', 'repo-forked', 'star', 'alert'
+]);
+
+function fetchSvg(name: string): Promise<string> {
+  const icon = KNOWN_ICONS.has(name) ? name : 'alert';
+  if (!svgCache.has(icon)) {
+    const promise = fetch(`/assets/icons/octicons/${icon}.svg`).then((r) => {
+      if (!r.ok) throw new Error(`Failed to load octicon "${icon}": ${r.status}`);
+      return r.text();
+    });
+    promise.catch(() => svgCache.delete(icon));
+    svgCache.set(icon, promise);
+  }
+  return svgCache.get(icon)!;
+}
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -15,12 +33,10 @@ export class OcticonDirective implements OnInit {
   width = input<string>();
 
   ngOnInit(): void {
-    const el: HTMLElement = this.elementRef.nativeElement;
-    if (this.octicon()) {
-      const iconName = this.octicon() as IconName;
-      if (octicons[iconName] !== undefined) {
-        const icon = this.insertSvgSafely(el, octicons[iconName].toSVG());
-
+    fetchSvg(this.octicon())
+      .then((svgText) => {
+        const el: HTMLElement = this.elementRef.nativeElement;
+        const icon = this.insertSvgSafely(el, svgText);
         if (this.color() && icon) {
           this.renderer.setStyle(icon, 'fill', this.color());
         }
@@ -28,34 +44,21 @@ export class OcticonDirective implements OnInit {
           this.renderer.setStyle(icon, 'width', this.width());
           this.renderer.setStyle(icon, 'height', this.width());
         }
-      } else {
-        const alertIcon = this.insertSvgSafely(el, octicons['alert'].toSVG());
-        if (alertIcon) {
-          this.renderer.setStyle(alertIcon, 'fill', 'red');
-        }
-      }
-    }
+      })
+      .catch((err) => console.error(err));
   }
 
   private insertSvgSafely(element: HTMLElement, svgString: string): Node | null {
-    // Use document.createRange().createContextualFragment() which works better
-    // in both browser and JSDOM environments compared to DOMParser
     const range = document.createRange();
     range.selectNode(element);
     const fragment = range.createContextualFragment(svgString);
-
-    // Clear existing content
     while (element.firstChild) {
       this.renderer.removeChild(element, element.firstChild);
     }
-
-    // Append the safely parsed SVG element
     const svgElement = fragment.firstChild;
     if (svgElement) {
       this.renderer.appendChild(element, svgElement);
     }
-
-    // Return the inserted SVG element
     return svgElement;
   }
 }
