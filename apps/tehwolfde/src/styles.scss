@@ -8,6 +8,7 @@
 
 #main-content {
   outline: none;
+  height: 100%;
 }
 
 .skip-link {
@@ -29,6 +30,14 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-sidenav-container,
+mat-sidenav-content {
+  flex: 1;
+  height: 100%;
 }
 
 body.dark {
