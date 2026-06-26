@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -18,7 +19,7 @@ export class AppComponent {
   constructor() {
     const router = inject(Router);
     router.events
-      .pipe(filter((e) => e instanceof NavigationEnd))
+      .pipe(filter((e) => e instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => {
         const main = document.getElementById('main-content');
         main?.focus();

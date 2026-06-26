@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, ElementRef, inject, input, ViewChild } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -23,6 +24,7 @@ export class EmbedComponent {
 
   private sanitizer = inject(DomSanitizer);
   private themeService = inject(ThemeService);
+  private destroyRef = inject(DestroyRef);
 
   safeUrl = computed(() =>
     this.sanitizer.bypassSecurityTrustResourceUrl(this.url())
@@ -31,13 +33,14 @@ export class EmbedComponent {
   private targetOrigin = computed(() => new URL(this.url()).origin);
 
   constructor() {
-    effect(() => {
-      const theme = this.themeService.theme();
-      this.iframeRef?.nativeElement.contentWindow?.postMessage(
-        { type: 'theme', theme },
-        this.targetOrigin()
-      );
-    });
+    toObservable(this.themeService.theme)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((theme) => {
+        this.iframeRef?.nativeElement.contentWindow?.postMessage(
+          { type: 'theme', theme },
+          this.targetOrigin()
+        );
+      });
   }
 
   onIframeLoad(): void {
