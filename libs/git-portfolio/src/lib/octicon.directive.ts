@@ -9,7 +9,12 @@ const KNOWN_ICONS = new Set([
 function fetchSvg(name: string): Promise<string> {
   const icon = KNOWN_ICONS.has(name) ? name : 'alert';
   if (!svgCache.has(icon)) {
-    svgCache.set(icon, fetch(`/assets/icons/octicons/${icon}.svg`).then((r) => r.text()));
+    const promise = fetch(`/assets/icons/octicons/${icon}.svg`).then((r) => {
+      if (!r.ok) throw new Error(`Failed to load octicon "${icon}": ${r.status}`);
+      return r.text();
+    });
+    promise.catch(() => svgCache.delete(icon));
+    svgCache.set(icon, promise);
   }
   return svgCache.get(icon)!;
 }
@@ -28,17 +33,19 @@ export class OcticonDirective implements OnInit {
   width = input<string>();
 
   ngOnInit(): void {
-    fetchSvg(this.octicon()).then((svgText) => {
-      const el: HTMLElement = this.elementRef.nativeElement;
-      const icon = this.insertSvgSafely(el, svgText);
-      if (this.color() && icon) {
-        this.renderer.setStyle(icon, 'fill', this.color());
-      }
-      if (this.width() && icon) {
-        this.renderer.setStyle(icon, 'width', this.width());
-        this.renderer.setStyle(icon, 'height', this.width());
-      }
-    });
+    fetchSvg(this.octicon())
+      .then((svgText) => {
+        const el: HTMLElement = this.elementRef.nativeElement;
+        const icon = this.insertSvgSafely(el, svgText);
+        if (this.color() && icon) {
+          this.renderer.setStyle(icon, 'fill', this.color());
+        }
+        if (this.width() && icon) {
+          this.renderer.setStyle(icon, 'width', this.width());
+          this.renderer.setStyle(icon, 'height', this.width());
+        }
+      })
+      .catch((err) => console.error(err));
   }
 
   private insertSvgSafely(element: HTMLElement, svgString: string): Node | null {
