@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 
 export type Locale = 'en' | 'de';
 
@@ -14,7 +14,7 @@ export class TranslateService {
 
   constructor() {
     toObservable(this.locale)
-      .pipe(switchMap((locale) => this.http.get<Record<string, string>>(`/assets/i18n/${locale}.json`)))
+      .pipe(switchMap((locale) => this.http.get<Record<string, string>>(`/assets/i18n/${locale}.json`).pipe(catchError(() => of({})))))
       .subscribe((t) => this.translations.set(t));
   }
 
