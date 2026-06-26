@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 
 import { OcticonDirective } from './octicon.directive';
 
+const mockFetch = () =>
+  Promise.resolve({ ok: true, text: () => Promise.resolve('<svg></svg>') } as Response);
+
 @Component({
   template: `
     <div id="working-octicon" octicon="star" color="gold" width="20px"></div>
@@ -22,6 +25,8 @@ describe('OcticonDirective', () => {
   let noWidthElement: DebugElement;
 
   beforeEach(() => {
+    global.fetch = jest.fn(mockFetch) as typeof fetch;
+
     TestBed.configureTestingModule({
       imports: [OcticonDirective, TestOcticonDirectiveComponent],
       providers: [Renderer2]
