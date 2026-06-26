@@ -1,5 +1,7 @@
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { catchError, of, switchMap } from 'rxjs';
 
 export type Locale = 'en' | 'de';
 
@@ -11,12 +13,9 @@ export class TranslateService {
   private translations = signal<Record<string, string>>({});
 
   constructor() {
-    effect(() => {
-      const locale = this.locale();
-      this.http
-        .get<Record<string, string>>(`/assets/i18n/${locale}.json`)
-        .subscribe((t) => this.translations.set(t));
-    });
+    toObservable(this.locale)
+      .pipe(switchMap((locale) => this.http.get<Record<string, string>>(`/assets/i18n/${locale}.json`).pipe(catchError(() => of({})))))
+      .subscribe((t) => this.translations.set(t));
   }
 
   translate(key: string): string {
