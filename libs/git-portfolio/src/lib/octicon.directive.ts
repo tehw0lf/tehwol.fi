@@ -48,14 +48,14 @@ export class OcticonDirective implements OnInit {
       .catch((err) => console.error(err));
   }
 
-  private insertSvgSafely(element: HTMLElement, svgString: string): Node | null {
+  private insertSvgSafely(element: HTMLElement, svgString: string): Element | null {
     const range = document.createRange();
     range.selectNode(element);
     const fragment = range.createContextualFragment(svgString);
     while (element.firstChild) {
       this.renderer.removeChild(element, element.firstChild);
     }
-    const svgElement = fragment.firstChild;
+    const svgElement = fragment.querySelector('svg');
     if (svgElement) {
       this.renderer.appendChild(element, svgElement);
     }
