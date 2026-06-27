@@ -5,7 +5,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { of, throwError } from 'rxjs';
@@ -35,7 +34,6 @@ describe('ContactFormComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
