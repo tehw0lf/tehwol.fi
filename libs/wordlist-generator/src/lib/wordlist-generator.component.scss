@@ -1,5 +1,14 @@
 @use '@tehw0lf/mvc';
 
+wordlist-generator .mat-mdc-raised-button {
+  height: 50px !important;
+}
+
+wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
+  height: 50px !important;
+  width: 50px !important;
+}
+
 .meta-container {
   max-width: 100vw;
 
@@ -39,24 +48,19 @@
     .choose-format {
       margin: 0 10px 10px 0;
       min-width: 150px;
-      line-height: 36px;
       letter-spacing: normal;
     }
 
     .generate-wordlist {
       margin: 0 10px 10px 0;
       min-width: 150px;
-      line-height: 36px;
       letter-spacing: normal;
       white-space: normal;
-      height: auto;
-      padding: 6px 16px;
     }
 
     .download-wordlist {
       margin: 0 0 10px 0;
       min-width: 150px;
-      line-height: 36px;
       letter-spacing: normal;
     }
   }
@@ -98,6 +102,7 @@
 .mat-mdc-form-field {
   height: 50px !important;
 }
+
 
 .mat-mdc-form-field-infix {
   height: 42px !important;
