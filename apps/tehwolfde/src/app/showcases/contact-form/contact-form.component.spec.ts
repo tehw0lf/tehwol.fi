@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 import { ContactFormComponent } from './contact-form.component';
 
 describe('ContactFormComponent', () => {
@@ -9,7 +7,7 @@ describe('ContactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFormComponent, NoopAnimationsModule] // eslint-disable-line @typescript-eslint/no-deprecated
+      imports: [ContactFormComponent]
     }).compileComponents();
   });
 

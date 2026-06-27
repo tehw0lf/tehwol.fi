@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 
 import { SidenavService } from '../sidenav.service';
@@ -22,7 +21,6 @@ describe('MobileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         MatIconModule,
         MatListModule,
         MatSidenavModule,

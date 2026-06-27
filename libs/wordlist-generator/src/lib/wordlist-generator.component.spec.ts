@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { delay, of } from 'rxjs';
 
 import { FileType } from './filetypes';
@@ -32,7 +31,6 @@ describe('WordlistGeneratorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule, // eslint-disable-line @typescript-eslint/no-deprecated
         ReactiveFormsModule,
         MatFormFieldModule,
         MatIconModule,

@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "0.22.25",
+  "version": "0.22.27",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -31,7 +31,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "22.0.2",
     "@angular/cdk": "22.0.2",
     "@angular/common": "22.0.2",
     "@angular/compiler": "22.0.2",
