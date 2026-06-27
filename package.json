@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "0.22.22",
+  "version": "0.22.23",
   "license": "MIT",
   "scripts": {
     "ng": "nx",

@@ -26,6 +26,7 @@ $light-theme: mat.m2-define-light-theme(
 );
 
 @mixin apply-component-themes($theme) {
+  @include mat.core-theme($theme);
   @include mat.button-theme($theme);
   @include mat.card-theme($theme);
   @include mat.divider-theme($theme);
