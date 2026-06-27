@@ -16,5 +16,5 @@ jobs:
       target_url: "https://tehwolf.de"
       min_performance: 70
       min_accessibility: 100
-      min_best_practices: 95
+      min_best_practices: 100
       min_seo: 100
