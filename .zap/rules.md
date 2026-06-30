@@ -12,3 +12,4 @@ Rules suppressed in `.zap/rules.tsv` with justification:
 | 10096 | Timestamp Disclosure - Unix | Build timestamps embedded in JS bundles by the build tool. Not sensitive data. |
 | 10110 | Dangerous JS Functions | `setTimeout`, `setInterval`, and `Function` are used internally by Angular and Zone.js — not by application code. False positive. |
 | 10050 | Retrieved from Cache | Cloudflare CDN caching behavior. Not a vulnerability. |
+| 90004 | Cross-Origin-Embedder-Policy Header Missing or Invalid | COEP is intentionally set to `unsafe-none`. Switching to `require-corp` was tested (2026-06-20) and breaks the Workbox service worker's `importScripts()` loading, plus would block the GitHub avatar images and GitHub Pages embeds allowed in the CSP `frame-src`/`img-src`, since those origins don't send `Cross-Origin-Resource-Policy` headers. |
