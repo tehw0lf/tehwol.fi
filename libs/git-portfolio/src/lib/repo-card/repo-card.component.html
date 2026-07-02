@@ -16,7 +16,8 @@
         mat-button
         [ngStyle]="buttonStyle()"
         target="_blank"
-        href="{{ gitRepo().homepage || gitRepo().html_url || gitRepo().web_url }}"
+        rel="noopener noreferrer"
+        [href]="repoUrl()"
       >
         {{ gitRepo().name }}
       </a>
