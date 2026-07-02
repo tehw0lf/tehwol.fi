@@ -222,6 +222,35 @@ describe('RepoCardComponent', () => {
     });
   });
 
+  describe('repoUrl', () => {
+    it('should return the html_url when it is http(s)', () => {
+      const repo = createMockRepository({ html_url: 'https://github.com/user/test-repo' });
+      fixture.componentRef.setInput('gitRepo', repo);
+      fixture.detectChanges();
+
+      expect(component.repoUrl()).toBe('https://github.com/user/test-repo');
+    });
+
+    it('should reject javascript: URIs to prevent XSS via href', () => {
+      const repo = createMockRepository({
+        homepage: 'javascript:alert(1)',
+        html_url: undefined
+      });
+      fixture.componentRef.setInput('gitRepo', repo);
+      fixture.detectChanges();
+
+      expect(component.repoUrl()).toBeNull();
+    });
+
+    it('should return null when no url is present', () => {
+      const repo = createMockRepository({ html_url: undefined });
+      fixture.componentRef.setInput('gitRepo', repo);
+      fixture.detectChanges();
+
+      expect(component.repoUrl()).toBeNull();
+    });
+  });
+
   describe('edge cases', () => {
     it('should handle repository with null values', () => {
       const repoWithNulls = createMockRepository({

@@ -1,6 +1,6 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import * as githubLanguageColors from 'github-language-colors/colors.json';
@@ -51,4 +51,21 @@ export class RepoCardComponent {
   copiedToClipboard = output<boolean>();
 
   githubLanguageColors = githubLanguageColors as Dictionary;
+
+  repoUrl = computed(() => {
+    const url =
+      this.gitRepo().homepage ||
+      this.gitRepo().html_url ||
+      this.gitRepo().web_url ||
+      '';
+
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+        ? url
+        : null;
+    } catch {
+      return null;
+    }
+  });
 }
