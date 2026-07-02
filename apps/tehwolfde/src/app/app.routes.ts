@@ -61,6 +61,13 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'wowquote2-manager',
+    loadComponent: () =>
+      import('./embeds/wowquote2-manager/wowquote2-manager.component').then(
+        (m) => m.WoWQuote2ManagerComponent
+      )
+  },
+  {
     path: 'btrain',
     loadComponent: () =>
       import('./embeds/btrain/btrain.component').then((m) => m.BtrainComponent)
