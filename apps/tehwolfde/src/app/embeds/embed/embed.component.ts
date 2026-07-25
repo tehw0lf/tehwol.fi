@@ -30,30 +30,33 @@ export class EmbedComponent {
     this.sanitizer.bypassSecurityTrustResourceUrl(this.url())
   );
 
-  private targetOrigin = computed(() => new URL(this.url()).origin);
+  private targetOrigin = computed(() => {
+    try {
+      return new URL(this.url()).origin;
+    } catch {
+      console.warn(
+        `EmbedComponent: cannot derive an origin from "${this.url()}", theme messages are disabled`
+      );
+      return '';
+    }
+  });
 
   constructor() {
     toObservable(this.themeService.theme)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((theme) => {
-        this.iframeRef?.nativeElement.contentWindow?.postMessage(
-          { type: 'theme', theme },
-          this.targetOrigin()
-        );
-      });
+      .subscribe((theme) => this.sendMessage({ type: 'theme', theme }));
   }
 
   onIframeLoad(): void {
-    this.iframeRef?.nativeElement.contentWindow?.postMessage(
-      { type: 'theme', theme: this.themeService.theme() },
-      this.targetOrigin()
-    );
+    this.sendMessage({ type: 'theme', theme: this.themeService.theme() });
   }
 
   sendMessage(data: Record<string, unknown>): void {
-    this.iframeRef?.nativeElement.contentWindow?.postMessage(
-      data,
-      this.targetOrigin()
-    );
+    const origin = this.targetOrigin();
+    if (!origin) {
+      return;
+    }
+
+    this.iframeRef?.nativeElement.contentWindow?.postMessage(data, origin);
   }
 }

@@ -3,9 +3,17 @@ import {
   DeferBlockBehavior,
   TestBed
 } from '@angular/core/testing';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
+import { EMBEDDED_APPS } from '../../embeds/apps';
 import { AppCarouselComponent } from './app-carousel.component';
+
+/** Unwraps the string a bypassSecurityTrustResourceUrl value was built from. */
+function sanitizerValue(url: SafeResourceUrl): string {
+  return String((url as { changingThisBreaksApplicationSecurity?: string })
+    .changingThisBreaksApplicationSecurity);
+}
 
 describe('AppCarouselComponent', () => {
   let component: AppCarouselComponent;
@@ -53,34 +61,46 @@ describe('AppCarouselComponent', () => {
     expect(component.canScrollForward()).toBe(false);
   });
 
+  it('should not mount any iframe before the page is idle', () => {
+    expect(component.previewsEnabled()).toBe(false);
+    expect(component.shouldLoad(0)).toBe(false);
+  });
+
   it('should only mount iframes for the active slide and its neighbours', () => {
-    component.scrollTo(4);
+    component.previewsEnabled.set(true);
+    const active = 3;
+    component.scrollTo(active);
 
-    expect(component.shouldLoad(3)).toBe(true);
-    expect(component.shouldLoad(4)).toBe(true);
-    expect(component.shouldLoad(5)).toBe(true);
-    expect(component.shouldLoad(2)).toBe(false);
-    expect(component.shouldLoad(6)).toBe(false);
+    expect(component.shouldLoad(active - 1)).toBe(true);
+    expect(component.shouldLoad(active)).toBe(true);
+    expect(component.shouldLoad(active + 1)).toBe(true);
+    expect(component.shouldLoad(active - 2)).toBe(false);
+    expect(component.shouldLoad(active + 2)).toBe(false);
   });
 
-  it('should expose every embedded app', () => {
-    expect(component.apps.map((app) => app.route)).toEqual([
-      '/flowdive',
-      '/numveil',
-      '/beep',
-      '/btrain',
-      '/mutuals',
-      '/wowquote2-manager',
-      '/color',
-      '/farbduell'
-    ]);
-  });
+  it('should expose every embedded app including the custom routed ones', () => {
+    expect(component.apps.length).toBe(EMBEDDED_APPS.length);
 
-  it('should title-case slugs and keep brand casing', () => {
+    const routes = component.apps.map((app) => app.route);
+    expect(routes).toContain('/flowdive');
+    expect(routes).toContain('/wowquote2-manager');
+    // Color has its own route component but must still be listed.
+    expect(routes).toContain('/color');
+
     const titles = component.apps.map((app) => app.title);
-
-    expect(titles).toContain('Flowdive');
+    expect(titles).toContain('Beep Simulator');
     expect(titles).toContain('BTrain');
-    expect(titles).toContain('WoWQuote2 Manager');
+  });
+
+  it('should preview the external app url, not the local route', () => {
+    // Previewing '/slug' would re-bootstrap this very application inside each
+    // tile, so previewUrl has to be the third party origin.
+    component.apps.forEach((app, index) => {
+      const preview = sanitizerValue(app.previewUrl);
+
+      expect(preview).toBe(EMBEDDED_APPS[index].url);
+      expect(preview.startsWith('http')).toBe(true);
+      expect(preview).not.toBe(app.route);
+    });
   });
 });

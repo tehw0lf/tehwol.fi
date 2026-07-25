@@ -1,8 +1,10 @@
 import { NgStyle } from '@angular/common';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   signal,
@@ -14,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
+import { EMBEDDED_APPS } from '../../embeds/apps';
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { ThemeService } from '../../services/theme.service';
 
@@ -41,28 +44,47 @@ interface AppCard {
 export class AppCarouselComponent {
   private themeService = inject(ThemeService);
   private sanitizer = inject(DomSanitizer);
+  private destroyRef = inject(DestroyRef);
 
   private track = viewChild<ElementRef<HTMLElement>>('track');
 
-  apps: AppCard[] = [
-    'flowdive',
-    'numveil',
-    'beep',
-    'btrain',
-    'mutuals',
-    'wowquote2-manager',
-    'color',
-    'farbduell'
-  ].map((slug) => ({
-    title: this.titleFor(slug),
-    route: `/${slug}`,
-    previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`/${slug}`)
+  apps: AppCard[] = EMBEDDED_APPS.map((app) => ({
+    title: app.title,
+    route: `/${app.slug}`,
+    previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(app.url)
   }));
 
   activeIndex = signal(0);
 
+  /**
+   * Previews point at third party origins, so they must not compete with the
+   * initial page load. Mounting is deferred until the browser reports idle.
+   */
+  readonly previewsEnabled = signal(false);
+
   canScrollBack = computed(() => this.activeIndex() > 0);
   canScrollForward = computed(() => this.activeIndex() < this.apps.length - 1);
+
+  constructor() {
+    afterNextRender(() => {
+      const enable = () => this.previewsEnabled.set(true);
+
+      // Backgrounded tabs can defer idle callbacks indefinitely, so a plain
+      // timeout always runs as a fallback. Both are cancelled on destroy.
+      const idleHandle =
+        'requestIdleCallback' in window
+          ? window.requestIdleCallback(enable, { timeout: 3000 })
+          : undefined;
+      const timeoutHandle = setTimeout(enable, 3000);
+
+      this.destroyRef.onDestroy(() => {
+        if (idleHandle !== undefined) {
+          window.cancelIdleCallback(idleHandle);
+        }
+        clearTimeout(timeoutHandle);
+      });
+    });
+  }
 
   cardStyle = computed(() => ({
     'background-color':
@@ -86,7 +108,9 @@ export class AppCarouselComponent {
    * scrolling stays cheap and idle embeds are never loaded.
    */
   shouldLoad(index: number): boolean {
-    return Math.abs(index - this.activeIndex()) <= 1;
+    return (
+      this.previewsEnabled() && Math.abs(index - this.activeIndex()) <= 1
+    );
   }
 
   scrollBy(direction: -1 | 1): void {
@@ -113,18 +137,25 @@ export class AppCarouselComponent {
       return;
     }
 
-    const slideWidth = trackEl.scrollWidth / this.apps.length;
-    const index = Math.round(trackEl.scrollLeft / slideWidth);
-    this.activeIndex.set(Math.max(0, Math.min(index, this.apps.length - 1)));
-  }
+    // Measured from the real slide offsets rather than derived from
+    // scrollWidth, so the flex gap cannot skew the result.
+    const slides = Array.from(trackEl.children) as HTMLElement[];
+    if (!slides.length) {
+      return;
+    }
 
-  private titleFor(slug: string): string {
-    if (slug === 'wowquote2-manager') {
-      return 'WoWQuote2 Manager';
-    }
-    if (slug === 'btrain') {
-      return 'BTrain';
-    }
-    return slug.charAt(0).toUpperCase() + slug.slice(1);
+    const scrollLeft = trackEl.scrollLeft;
+    let closest = 0;
+    let smallestDelta = Number.POSITIVE_INFINITY;
+
+    slides.forEach((slide, index) => {
+      const delta = Math.abs(slide.offsetLeft - trackEl.offsetLeft - scrollLeft);
+      if (delta < smallestDelta) {
+        smallestDelta = delta;
+        closest = index;
+      }
+    });
+
+    this.activeIndex.set(closest);
   }
 }

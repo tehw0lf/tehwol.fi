@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { isActive, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
+import { EMBEDDED_APPS } from '../../../embeds/apps';
 import { TranslatePipe } from '../../../i18n/translate.pipe';
 import { TranslateService } from '../../../i18n/translate.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -32,6 +33,8 @@ import { SidenavService } from '../sidenav.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DesktopComponent implements OnDestroy {
+  readonly apps = EMBEDDED_APPS;
+
   themeService = inject(ThemeService);
   translateService = inject(TranslateService);
   private router = inject(Router);
