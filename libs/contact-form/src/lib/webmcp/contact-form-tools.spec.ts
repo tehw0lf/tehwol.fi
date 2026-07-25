@@ -1,15 +1,26 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import { createContactFormTools } from './contact-form-tools';
 import { ModelContextTool } from './model-context';
 
+/**
+ * Mirrors how ContactFormComponent actually builds its controls: ngx-formly
+ * applies required as a validator expression, not as Validators.required. A
+ * fixture using Validators.required would let hasValidator() based code pass
+ * here while reporting nothing on the real form.
+ */
+const requiredExpression = (control: AbstractControl) =>
+  control.value ? null : { required: true };
+
 function buildForm(): FormGroup {
   return new FormGroup({
-    name: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    message: new FormControl('', Validators.required)
+    name: new FormControl('', requiredExpression),
+    email: new FormControl('', requiredExpression),
+    message: new FormControl('', requiredExpression)
   });
 }
+
+const REQUIRED_FIELDS = ['name', 'email', 'message'] as const;
 
 function toolByName(
   tools: readonly ModelContextTool<never>[],
@@ -33,7 +44,50 @@ describe('contact form webmcp tools', () => {
 
   beforeEach(() => {
     form = buildForm();
-    tools = createContactFormTools({ form });
+    tools = createContactFormTools({
+      form,
+      requiredFields: REQUIRED_FIELDS
+    });
+  });
+
+  it('should keep reporting a field as required once it is filled', async () => {
+    form.patchValue({ name: 'Ada' });
+
+    const result = await run(toolByName(tools, 'contact_form_describe'), {});
+    const name = result.fields.find(
+      (field: { name: string }) => field.name === 'name'
+    );
+
+    // The 'required' error clears as soon as a value is present, so deriving
+    // this from the control state would wrongly report required: false.
+    expect(name.filled).toBe(true);
+    expect(name.valid).toBe(true);
+    expect(name.required).toBe(true);
+  });
+
+  it('should report fields outside the required list as optional', async () => {
+    const withOptional = createContactFormTools({
+      form: new FormGroup({
+        name: new FormControl('', requiredExpression),
+        company: new FormControl('')
+      }),
+      requiredFields: ['name']
+    });
+
+    const result = await run(
+      toolByName(withOptional, 'contact_form_describe'),
+      {}
+    );
+
+    expect(
+      result.fields.map((f: { name: string; required: boolean }) => [
+        f.name,
+        f.required
+      ])
+    ).toEqual([
+      ['name', true],
+      ['company', false]
+    ]);
   });
 
   it('should describe the available fields', async () => {

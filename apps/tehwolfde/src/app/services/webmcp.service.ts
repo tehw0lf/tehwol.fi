@@ -18,6 +18,7 @@ import { EMBEDDED_APPS } from '../embeds/apps';
 export class WebmcpService {
   private router = inject(Router);
   private unregister: (() => void) | undefined;
+  private generation = 0;
 
   /** Tools describing the site itself, independent of the current route. */
   private siteTools(): readonly ModelContextTool<never>[] {
@@ -79,19 +80,38 @@ export class WebmcpService {
    * Registers the site tools plus any additional tools contributed by the
    * currently rendered showcase. Calling it again replaces the previous
    * registration, so route specific tools do not accumulate.
+   *
+   * Callers do not await this, and registration is asynchronous, so two calls
+   * can overlap when a route change destroys one showcase and renders the
+   * next. Each call claims a generation up front; a call that is no longer the
+   * newest by the time it resolves discards its own registration instead of
+   * overwriting the newer one, which would otherwise leak the previous route's
+   * tools.
    */
   async register(
     additionalTools: readonly ModelContextTool<never>[] = []
   ): Promise<void> {
+    const generation = ++this.generation;
+
     this.unregister?.();
-    this.unregister = await registerModelContextTools([
+    this.unregister = undefined;
+
+    const unregister = await registerModelContextTools([
       ...this.siteTools(),
       ...additionalTools
     ]);
+
+    if (generation !== this.generation) {
+      unregister();
+      return;
+    }
+
+    this.unregister = unregister;
   }
 
   /** Removes every tool this service registered. */
   clear(): void {
+    this.generation++;
     this.unregister?.();
     this.unregister = undefined;
   }

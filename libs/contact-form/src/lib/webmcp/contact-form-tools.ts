@@ -11,6 +11,16 @@ import { ModelContextTool } from './model-context';
 export interface ContactFormToolTarget {
   /** The form group rendered by ContactFormComponent. */
   form: FormGroup;
+  /**
+   * The component's formConfig, which is what actually declares whether a
+   * field is required.
+   *
+   * The control state cannot answer this: ngx-formly expresses required as a
+   * validator expression rather than Validators.required, so hasValidator()
+   * misses it, and errors['required'] disappears as soon as the field is
+   * filled. Fields absent from the config are reported as not required.
+   */
+  requiredFields?: readonly string[];
 }
 
 const MAX_VALUE_LENGTH = 5000;
@@ -66,7 +76,8 @@ export function createContactFormTools(
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
     execute: async () => {
-      const { form } = target;
+      const { form, requiredFields } = target;
+      const required = new Set(requiredFields ?? []);
 
       return {
         fields: describeControls(form).map((name) => {
@@ -75,7 +86,7 @@ export function createContactFormTools(
             name,
             filled: Boolean(control?.value),
             valid: control?.valid ?? false,
-            required: control?.errors?.['required'] === undefined ? false : true
+            required: required.has(name)
           };
         }),
         formValid: form.valid

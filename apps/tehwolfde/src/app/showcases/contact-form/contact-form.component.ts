@@ -33,14 +33,24 @@ export class ContactFormComponent {
 
   constructor() {
     afterNextRender(() => {
-      const form = this.contactForm()?.form;
-      if (!form) {
+      const contactForm = this.contactForm();
+      const form = contactForm?.form;
+      if (!contactForm || !form) {
         return;
       }
 
       // Prefill only: the tools never call submitFormData, so sending stays a
       // deliberate user action.
-      void this.webmcp.register(createContactFormTools({ form }));
+      void this.webmcp.register(
+        createContactFormTools({
+          form,
+          // Taken from the rendered config so it stays in sync with the form.
+          requiredFields: contactForm
+            .formConfig()
+            .filter((entry) => entry.required)
+            .map((entry) => entry.field)
+        })
+      );
     });
 
     this.destroyRef.onDestroy(() => void this.webmcp.register());
