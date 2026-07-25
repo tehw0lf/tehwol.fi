@@ -1,10 +1,20 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  viewChild
+} from '@angular/core';
 import { ContactFormComponent as ContactFormComponent_1 } from '@tehw0lf/contact-form';
+import { createContactFormTools } from '@tehw0lf/contact-form/webmcp';
 import { of } from 'rxjs';
 
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
 import { ThemeService } from '../../services/theme.service';
+import { WebmcpService } from '../../services/webmcp.service';
 
 @Component({
   selector: 'tehw0lf-contact-form',
@@ -16,6 +26,25 @@ import { ThemeService } from '../../services/theme.service';
 export class ContactFormComponent {
   private themeService = inject(ThemeService);
   translateService = inject(TranslateService);
+  private webmcp = inject(WebmcpService);
+  private destroyRef = inject(DestroyRef);
+
+  private contactForm = viewChild(ContactFormComponent_1);
+
+  constructor() {
+    afterNextRender(() => {
+      const form = this.contactForm()?.form;
+      if (!form) {
+        return;
+      }
+
+      // Prefill only: the tools never call submitFormData, so sending stays a
+      // deliberate user action.
+      void this.webmcp.register(createContactFormTools({ form }));
+    });
+
+    this.destroyRef.onDestroy(() => void this.webmcp.register());
+  }
 
   buttonStyle = computed(() => ({
     'background-color':
