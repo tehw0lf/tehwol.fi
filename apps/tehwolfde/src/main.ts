@@ -1,7 +1,12 @@
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { NoPreloading, provideRouter, withPreloading } from '@angular/router';
+import {
+  NoPreloading,
+  provideRouter,
+  withComponentInputBinding,
+  withPreloading
+} from '@angular/router';
 
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
@@ -12,6 +17,10 @@ bootstrapApplication(AppComponent, {
     provideZonelessChangeDetection(),
     SidenavService,
     provideHttpClient(withXhr()),
-    provideRouter(routes, withPreloading(NoPreloading))
+    provideRouter(
+      routes,
+      withPreloading(NoPreloading),
+      withComponentInputBinding()
+    )
   ]
 }).catch((err) => console.error(err));

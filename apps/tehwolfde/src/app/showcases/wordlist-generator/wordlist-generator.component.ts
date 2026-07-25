@@ -1,8 +1,17 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject
+} from '@angular/core';
 import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@tehw0lf/wordlist-generator';
+import { wordlistGeneratorTools } from '@tehw0lf/wordlist-generator/webmcp';
 
 import { TranslateService } from '../../i18n/translate.service';
 import { ThemeService } from '../../services/theme.service';
+import { WebmcpService } from '../../services/webmcp.service';
 
 @Component({
   selector: 'tehw0lf-wordlist-generator',
@@ -13,6 +22,17 @@ import { ThemeService } from '../../services/theme.service';
 export class WordlistGeneratorComponent {
   themeService = inject(ThemeService);
   translateService = inject(TranslateService);
+  private webmcp = inject(WebmcpService);
+  private destroyRef = inject(DestroyRef);
+
+  constructor() {
+    afterNextRender(() => {
+      void this.webmcp.register(wordlistGeneratorTools);
+    });
+
+    // Leaving the page must take the route specific tools with it.
+    this.destroyRef.onDestroy(() => void this.webmcp.register());
+  }
 
   buttonStyle = computed(() => ({
     'background-color':

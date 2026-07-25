@@ -1,5 +1,20 @@
 import { Routes } from '@angular/router';
 
+import { EMBEDDED_APPS } from './embeds/apps';
+
+/**
+ * The simple embeds differ only in url and title, so they are generated from
+ * EMBEDDED_APPS and bound to EmbedComponent's inputs via the route.
+ */
+const embedRoutes: Routes = EMBEDDED_APPS.filter(
+  (app) => !app.hasCustomRoute
+).map((app) => ({
+  path: app.slug,
+  loadComponent: () =>
+    import('./embeds/embed/embed.component').then((m) => m.EmbedComponent),
+  data: { url: app.url, title: app.title }
+}));
+
 export const routes: Routes = [
   {
     path: '',
@@ -32,53 +47,7 @@ export const routes: Routes = [
         (m) => m.ContactFormComponent
       )
   },
-  {
-    path: 'beep',
-    loadComponent: () =>
-      import('./embeds/beep/beep.component').then(
-        (m) => m.BeepSimulatorComponent
-      )
-  },
-  {
-    path: 'flowdive',
-    loadComponent: () =>
-      import('./embeds/flowdive/flowdive.component').then(
-        (m) => m.FlowdiveComponent
-      )
-  },
-  {
-    path: 'numveil',
-    loadComponent: () =>
-      import('./embeds/numveil/numveil.component').then(
-        (m) => m.NumveilComponent
-      )
-  },
-  {
-    path: 'mutuals',
-    loadComponent: () =>
-      import('./embeds/mutuals/mutuals.component').then(
-        (m) => m.MutualsComponent
-      )
-  },
-  {
-    path: 'wowquote2-manager',
-    loadComponent: () =>
-      import('./embeds/wowquote2-manager/wowquote2-manager.component').then(
-        (m) => m.WoWQuote2ManagerComponent
-      )
-  },
-  {
-    path: 'btrain',
-    loadComponent: () =>
-      import('./embeds/btrain/btrain.component').then((m) => m.BtrainComponent)
-  },
-  {
-    path: 'farbduell',
-    loadComponent: () =>
-      import('./embeds/farbduell/farbduell.component').then(
-        (m) => m.FarbduellComponent
-      )
-  },
+  ...embedRoutes,
   {
     path: 'color/:color',
     loadComponent: () =>

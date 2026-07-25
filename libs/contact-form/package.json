@@ -1,6 +1,6 @@
 {
   "name": "@tehw0lf/contact-form",
-  "version": "22.0.0",
+  "version": "22.1.2",
   "license": "MIT",
   "homepage": "https://github.com/tehw0lf/tehwol.fi.git",
   "repository": {
@@ -8,9 +8,9 @@
     "url": "git+https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
-    "@angular/common": "22.0.2",
-    "@angular/core": "22.0.2",
-    "@angular/forms": "22.0.2",
+    "@angular/common": "22.0.8",
+    "@angular/core": "22.0.8",
+    "@angular/forms": "22.0.8",
     "@ngx-formly/core": "7.1.0",
     "@ngx-formly/material": "7.1.0",
     "@tehw0lf/mvc": "0.0.8"
