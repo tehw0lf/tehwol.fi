@@ -96,10 +96,10 @@ export async function registerModelContextTools(
       modelContext
         .registerTool(tool, { signal: controller.signal })
         .catch((error: unknown) => {
-          console.warn(
-            `WebMCP: registering tool "${tool.name}" failed`,
-            error
-          );
+          // Tool names come from the caller, so they are passed as arguments
+          // rather than interpolated: a name containing a format specifier
+          // would otherwise consume the error and forge the log line.
+          console.warn('WebMCP: registering tool failed:', tool.name, error);
         })
     )
   );
