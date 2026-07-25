@@ -63,16 +63,23 @@ test.describe('Embedded app routes', () => {
 });
 
 test.describe('Home app carousel', () => {
+  // The home page renders one carousel per section, so every locator is scoped
+  // by data-section rather than by render order or by the translated label.
+  const appsCarousel = (page: import('@playwright/test').Page) =>
+    page.locator('[data-section="apps"]');
+  const librariesCarousel = (page: import('@playwright/test').Page) =>
+    page.locator('[data-section="libraries"]');
+
   test('should preview external apps rather than the site itself', async ({
     page
   }) => {
     await page.goto('/home');
 
-    const slides = page.locator('.carousel-slide');
+    const slides = appsCarousel(page).locator('.carousel-slide');
     await expect(slides).toHaveCount(embeds.length + 1); // + color
 
     // Previews mount after the page goes idle.
-    const preview = page.locator('.carousel-slide iframe').first();
+    const preview = appsCarousel(page).locator('.carousel-slide iframe').first();
     await expect(preview).toBeAttached({ timeout: 10000 });
 
     const src = await preview.getAttribute('src');
@@ -81,13 +88,31 @@ test.describe('Home app carousel', () => {
     expect(src).not.toMatch(/^\//);
   });
 
+  test('should preview libraries from their own routes', async ({ page }) => {
+    await page.goto('/home');
+
+    const slides = librariesCarousel(page).locator('.carousel-slide');
+    await expect(slides).toHaveCount(3);
+
+    const preview = librariesCarousel(page)
+      .locator('.carousel-slide iframe')
+      .first();
+    await expect(preview).toBeAttached({ timeout: 10000 });
+
+    // Libraries are part of this application, so unlike the apps they are
+    // expected to be embedded from a local route.
+    expect(await preview.getAttribute('src')).toMatch(/^\/(portfolio|wordlist)/);
+  });
+
   test('should advance slides with the next control', async ({ page }) => {
     await page.goto('/home');
 
-    const track = page.locator('.carousel-track');
+    const track = appsCarousel(page).locator('.carousel-track');
     const before = await track.evaluate((el) => el.scrollLeft);
 
-    await page.getByRole('button', { name: 'Next app' }).click();
+    await appsCarousel(page)
+      .getByRole('button', { name: /^Next/ })
+      .click();
     await page.waitForTimeout(800);
 
     expect(await track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);

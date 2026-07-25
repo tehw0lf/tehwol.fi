@@ -1,0 +1,28 @@
+// The host is the projected carousel slide, so it carries the slide sizing.
+:host {
+  display: block;
+  height: 100%;
+}
+
+.preview-container {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  // The preview is decorative; clicks belong to the link below it.
+  pointer-events: none;
+
+  .preview-iframe {
+    width: 200%;
+    height: 200%;
+    border: none;
+    transform: scale(0.5);
+    transform-origin: top left;
+  }
+}
+
+.description {
+  margin: 0;
+}

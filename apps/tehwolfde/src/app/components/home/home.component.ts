@@ -1,79 +1,70 @@
-import { NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
+import { EMBEDDED_APPS } from '../../embeds/apps';
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
-import { ThemeService } from '../../services/theme.service';
-import { AppCarouselComponent } from '../app-carousel/app-carousel.component';
+import { CarouselComponent } from '../carousel/carousel.component';
+import {
+  PreviewCard,
+  PreviewCardComponent
+} from './preview-card.component';
 
-interface LibraryCard {
-  titleKey: string;
+/** Library entry before its description key is resolved against the locale. */
+interface LibraryEntry {
+  title: string;
   descriptionKey: string;
   route: string;
-  previewUrl: SafeResourceUrl;
 }
+
+const LIBRARIES: readonly LibraryEntry[] = [
+  {
+    title: 'git-portfolio',
+    descriptionKey: 'home.gitPortfolioDescription',
+    route: '/portfolio'
+  },
+  {
+    title: 'wordlist-generator',
+    descriptionKey: 'home.wordlistGeneratorDescription',
+    route: '/wordlist-generator'
+  },
+  {
+    title: 'contact-form',
+    descriptionKey: 'home.contactFormDescription',
+    route: '/contact-form'
+  }
+] as const;
 
 @Component({
   selector: 'tehw0lf-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatCardModule,
-    NgStyle,
-    TranslatePipe,
-    AppCarouselComponent
-  ],
+  imports: [TranslatePipe, CarouselComponent, PreviewCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-  private themeService = inject(ThemeService);
   private sanitizer = inject(DomSanitizer);
   translateService = inject(TranslateService);
 
-  libraries: LibraryCard[] = [
-    {
-      titleKey: 'git-portfolio',
-      descriptionKey: 'home.gitPortfolioDescription',
-      route: '/portfolio',
-      previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl('/portfolio')
-    },
-    {
-      titleKey: 'wordlist-generator',
-      descriptionKey: 'home.wordlistGeneratorDescription',
-      route: '/wordlist-generator',
-      previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
-        '/wordlist-generator'
-      )
-    },
-    {
-      titleKey: 'contact-form',
-      descriptionKey: 'home.contactFormDescription',
-      route: '/contact-form',
-      previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl('/contact-form')
-    }
-  ];
+  /**
+   * Library previews are local routes, so they render this application inside
+   * the iframe. Descriptions are resolved here rather than in the carousel,
+   * which keeps that component free of i18n keys.
+   */
+  libraries = computed<readonly PreviewCard[]>(() =>
+    LIBRARIES.map((library) => ({
+      title: library.title,
+      route: library.route,
+      previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(library.route),
+      description: this.translateService.translate(library.descriptionKey)
+    }))
+  );
 
-  cardStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'rgba(34, 34, 34, 0.75)'
-        : 'rgba(255, 255, 255, 0.75)',
-    'backdrop-filter': 'blur(50px)',
-    color: '#6699bb'
-  }));
-
-  buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? '#333333'
-        : 'rgba(255, 255, 255, 0.75)',
-    color: '#e8903f'
+  /** Embedded apps have no description of their own, so the field stays unset. */
+  apps: readonly PreviewCard[] = EMBEDDED_APPS.map((app) => ({
+    title: app.title,
+    route: `/${app.slug}`,
+    previewUrl: this.sanitizer.bypassSecurityTrustResourceUrl(app.url)
   }));
 }

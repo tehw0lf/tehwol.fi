@@ -16,9 +16,10 @@
   "home.gitPortfolioDescription": "Customizable Git repository portfolio supporting GitHub and GitLab. Displays repos with stats, language colors, and links.",
   "home.wordlistGeneratorDescription": "Cartesian product-based wordlist generator with drag-and-drop charset management and multiple export formats.",
   "home.contactFormDescription": "Flexible contact form built with ngx-formly. Supports dynamic fields, validation, and custom API callbacks.",
+  "home.libraries": "Libraries",
   "home.apps": "Apps",
-  "home.previousApp": "Previous app",
-  "home.nextApp": "Next app",
+  "home.previous": "Previous",
+  "home.next": "Next",
 
   "contactForm.demoNotice": "This is a non-functional demo that performs no actual HTTP calls",
   "contactForm.send": "Send",
