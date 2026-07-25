@@ -16,6 +16,9 @@
   "home.gitPortfolioDescription": "Anpassbares Git-Repository-Portfolio mit Unterstützung für GitHub und GitLab. Zeigt Repos mit Statistiken, Sprachfarben und Links.",
   "home.wordlistGeneratorDescription": "Kartesisches-Produkt-basierter Wortlisten-Generator mit Drag-and-Drop-Zeichensatz-Verwaltung und mehreren Exportformaten.",
   "home.contactFormDescription": "Flexibles Kontaktformular auf Basis von ngx-formly. Unterstützt dynamische Felder, Validierung und benutzerdefinierte API-Callbacks.",
+  "home.apps": "Apps",
+  "home.previousApp": "Vorherige App",
+  "home.nextApp": "Nächste App",
 
   "contactForm.demoNotice": "Dies ist eine nicht-funktionale Demo, die keine HTTP-Anfragen sendet",
   "contactForm.send": "Senden",

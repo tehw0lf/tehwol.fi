@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
 import { ThemeService } from '../../services/theme.service';
+import { AppCarouselComponent } from '../app-carousel/app-carousel.component';
 
 interface LibraryCard {
   titleKey: string;
@@ -21,7 +22,14 @@ interface LibraryCard {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatCardModule, NgStyle, TranslatePipe],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatCardModule,
+    NgStyle,
+    TranslatePipe,
+    AppCarouselComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
