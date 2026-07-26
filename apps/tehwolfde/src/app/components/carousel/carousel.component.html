@@ -1,0 +1,49 @@
+<section
+  class="carousel"
+  role="group"
+  aria-roledescription="carousel"
+  [attr.data-section]="section()"
+  [attr.aria-label]="label()"
+>
+  <div class="carousel-header">
+    <h2 class="mat-headline-6">{{ label() }}</h2>
+    @if (canScroll()) {
+      <div class="carousel-controls">
+        <button
+          mat-icon-button
+          type="button"
+          [ngStyle]="buttonStyle()"
+          [disabled]="!canScrollBack()"
+          (click)="scrollBy(-1)"
+          [attr.aria-label]="('home.previous' | translate) + ': ' + label()"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          type="button"
+          [ngStyle]="buttonStyle()"
+          [disabled]="!canScrollForward()"
+          (click)="scrollBy(1)"
+          [attr.aria-label]="('home.next' | translate) + ': ' + label()"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div
+    #track
+    class="carousel-track"
+    tabindex="0"
+    [attr.aria-label]="label()"
+    (scroll)="onScroll()"
+    (keydown.arrowLeft)="scrollBy(-1)"
+    (keydown.arrowRight)="scrollBy(1)"
+  >
+    <!-- Slides are projected so the container stays agnostic of their content.
+         Each one has to carry the carousel-slide class to be laid out. -->
+    <ng-content />
+  </div>
+</section>

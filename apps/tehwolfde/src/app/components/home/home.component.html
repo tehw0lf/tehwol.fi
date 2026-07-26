@@ -1,33 +1,37 @@
 <div>
   <h1 class="mat-headline-5">{{ 'home.welcome' | translate }}</h1>
-  <div class="library-grid">
-    @for (lib of libraries; track lib.route) {
-      <mat-card [ngStyle]="cardStyle()">
-        <mat-card-header>
-          <mat-card-title>{{ lib.titleKey }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="preview-container">
-            @defer (on viewport) {
-              <iframe
-                [src]="lib.previewUrl"
-                class="preview-iframe"
-                tabindex="-1"
-                aria-hidden="true"
-              ></iframe>
-            } @placeholder {
-              <div class="preview-iframe"></div>
-            }
-          </div>
-          <p class="description">{{ lib.descriptionKey | translate }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <a mat-button [ngStyle]="buttonStyle()" [routerLink]="lib.route">
-            {{ 'home.tryIt' | translate }}
-          </a>
-        </mat-card-actions>
-      </mat-card>
+
+  <tehw0lf-carousel
+    #librariesCarousel="carousel"
+    section="libraries"
+    [label]="'home.libraries' | translate"
+    [itemCount]="libraries().length"
+  >
+    @for (library of libraries(); track library.route; let i = $index) {
+      <tehw0lf-preview-card
+        class="carousel-slide"
+        [card]="library"
+        [index]="i"
+        [total]="libraries().length"
+        [loadPreview]="librariesCarousel.shouldLoad(i)"
+      />
     }
-  </div>
-  <tehw0lf-app-carousel />
+  </tehw0lf-carousel>
+
+  <tehw0lf-carousel
+    #appsCarousel="carousel"
+    section="apps"
+    [label]="'home.apps' | translate"
+    [itemCount]="apps.length"
+  >
+    @for (app of apps; track app.route; let i = $index) {
+      <tehw0lf-preview-card
+        class="carousel-slide"
+        [card]="app"
+        [index]="i"
+        [total]="apps.length"
+        [loadPreview]="appsCarousel.shouldLoad(i)"
+      />
+    }
+  </tehw0lf-carousel>
 </div>

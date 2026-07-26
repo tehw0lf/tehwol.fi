@@ -66,7 +66,8 @@ test.describe('Application Navigation', () => {
     const homeLink = mainNav.locator('a[routerLink="/home"]');
     if (await homeLink.count() > 0) {
       await homeLink.click();
-      await page.waitForLoadState('networkidle');
+      // Not networkidle: the home page embeds a preview iframe per library and
+      // per app, so third party origins keep the network busy past navigation.
       await expect(page).toHaveURL(/.*\/home/);
     }
   });
