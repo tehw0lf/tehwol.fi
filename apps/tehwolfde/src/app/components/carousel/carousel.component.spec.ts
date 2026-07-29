@@ -64,6 +64,12 @@ function layOutTrack(
       configurable: true,
       value: index * (SLIDE_WIDTH + SLIDE_GAP)
     });
+    // Visibility is measured against the slide's right edge, so the width has
+    // to be laid out too or every slide would measure as zero wide.
+    Object.defineProperty(slide, 'offsetWidth', {
+      configurable: true,
+      value: SLIDE_WIDTH
+    });
   });
 
   return track;
@@ -152,6 +158,33 @@ describe('CarouselComponent', () => {
     expect(component.activeIndex()).toBeLessThan(7);
     expect(component.canScrollForward()).toBe(false);
     expect(component.canScrollBack()).toBe(true);
+  });
+
+  it('should keep forward enabled while the last slide is only partly on screen', () => {
+    // Half a slide wider than six full ones, so slide 6 peeks in at the right
+    // edge without ever being reachable. Counting that sliver as visible left
+    // the last card clipped with the forward arrow already greyed out.
+    const track: HTMLElement =
+      fixture.nativeElement.querySelector('.carousel-track');
+    Object.defineProperty(track, 'clientWidth', {
+      configurable: true,
+      get: () => 6 * (SLIDE_WIDTH + SLIDE_GAP) - SLIDE_GAP + SLIDE_WIDTH / 2
+    });
+    Object.defineProperty(track, 'offsetLeft', { configurable: true, value: 0 });
+    Array.from(track.children).forEach((slide, index) => {
+      Object.defineProperty(slide, 'offsetLeft', {
+        configurable: true,
+        value: index * (SLIDE_WIDTH + SLIDE_GAP)
+      });
+      Object.defineProperty(slide, 'offsetWidth', {
+        configurable: true,
+        value: SLIDE_WIDTH
+      });
+    });
+
+    scrollTrackTo(track, 0);
+
+    expect(component.canScrollForward()).toBe(true);
   });
 
   it('should report every visible slide as loadable through the projected content', () => {

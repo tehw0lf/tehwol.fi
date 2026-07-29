@@ -16,10 +16,21 @@
 .carousel-controls {
   display: flex;
   gap: 8px;
+
+  // The arrow colours are applied inline via ngStyle, which outranks Material's
+  // disabled palette. Without !important a disabled arrow is indistinguishable
+  // from an active one, so the end of the track reads as scrollable.
+  button:disabled {
+    opacity: 0.38 !important;
+    cursor: default;
+  }
 }
 
 .carousel-track {
   display: flex;
+  // Slides carry content of differing length, so they are stretched to the
+  // tallest one in the row rather than each sizing to its own text.
+  align-items: stretch;
   gap: 24px;
   margin-top: 16px;
   overflow-x: auto;

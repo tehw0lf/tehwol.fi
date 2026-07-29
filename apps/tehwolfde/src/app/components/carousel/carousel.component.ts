@@ -187,7 +187,10 @@ export class CarouselComponent {
     let last = this.activeIndex();
     slides.forEach((slide, index) => {
       const start = slide.offsetLeft - trackEl.offsetLeft;
-      if (start < viewportEnd) {
+      // Fully visible, not merely peeking in: a slide clipped by the right edge
+      // still has to be scrollable to, so counting it would disable the forward
+      // button while it sits half off screen.
+      if (start + slide.offsetWidth <= viewportEnd + 1) {
         last = index;
       }
     });

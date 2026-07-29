@@ -1,7 +1,28 @@
 // The host is the projected carousel slide, so it carries the slide sizing.
+// A flex column rather than a block: the track stretches the slide to the
+// tallest in the row, and only a flex child reliably fills that height without
+// depending on a percentage resolving against an auto sized parent.
+// No percentage height: the track already stretches the slide to the tallest in
+// the row, and a height:100% resolved against the auto sized track would cap
+// this slide at its own content height instead.
 :host {
-  display: block;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+// Descriptions differ in length, so the card stretches to the tallest slide in
+// the row and the content column absorbs the slack. That keeps every preview
+// and every button on the same baseline across the carousel.
+mat-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+mat-card-content {
+  flex: 1 1 auto;
 }
 
 .preview-container {
@@ -25,4 +46,16 @@
 
 .description {
   margin: 0;
+}
+
+// The card has a single call to action, so it spans the full slide width
+// rather than sitting as a small chip in the corner.
+mat-card-actions {
+  padding: 8px 16px 16px;
+
+  a {
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+  }
 }
