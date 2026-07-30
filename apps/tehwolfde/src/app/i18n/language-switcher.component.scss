@@ -7,16 +7,22 @@
   align-items: center;
 }
 
+// 48px tall to match the icon buttons beside it: a mat-button defaults to 36px,
+// which is below the minimum touch target and left the switcher noticeably
+// smaller than the theme toggle it sits next to.
 .language-button {
-  min-width: 0;
-  padding: 0 8px;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 10px;
 }
 
 // Material wraps projected content in .mdc-button__label, so centring the
 // button itself leaves flag and code stacked inside that wrapper. The label is
-// the element that has to become the flex row.
-.language-button ::ng-deep .mdc-button__label,
-.language-button .mdc-button__label {
+// the element that has to become the flex row. ::ng-deep is required rather
+// than belt and braces: the wrapper belongs to MatButton's template, so it
+// carries MatButton's scoping attribute and an unpierced selector can never
+// match it under emulated encapsulation.
+.language-button ::ng-deep .mdc-button__label {
   display: inline-flex;
   align-items: center;
   gap: 6px;

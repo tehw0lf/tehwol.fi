@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "22.1.5",
+  "version": "22.1.6",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -42,7 +42,7 @@
     "@angular/router": "22.0.8",
     "@ngx-formly/core": "7.1.0",
     "@ngx-formly/material": "7.1.0",
-    "@tehw0lf/mvc": "0.0.8",
+    "@tehw0lf/mvc": "0.0.11",
     "cartesian-product-generator": "1.1.1",
     "github-language-colors": "1.0.0",
     "rxjs": "7.8.2",

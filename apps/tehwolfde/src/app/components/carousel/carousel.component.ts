@@ -216,10 +216,10 @@ export class CarouselComponent {
 
   scrollTo(index: number): void {
     const clamped = Math.max(0, Math.min(index, this.itemCount() - 1));
-    this.activeIndex.set(clamped);
 
     const trackEl = this.track()?.nativeElement;
     if (!trackEl) {
+      this.activeIndex.set(clamped);
       this.measureVisibleRange();
       return;
     }
@@ -228,12 +228,25 @@ export class CarouselComponent {
     // Guarded because jsdom and older engines do not implement scrollIntoView.
     slide?.scrollIntoView?.({ block: 'nearest', inline: 'start' });
 
+    // The browser stops at the end of the track, so the last slides all settle
+    // at the same offset. Recording the requested index there would leave
+    // activeIndex on a slide the track never reached, and the next step back
+    // would move by the difference rather than by a full slide.
+    const target = slide ? slide.offsetLeft - trackEl.offsetLeft : undefined;
+    const maxScroll = Math.max(0, trackEl.scrollWidth - trackEl.clientWidth);
+    const reached =
+      target === undefined ? target : Math.min(target, maxScroll);
+
+    this.activeIndex.set(
+      reached === undefined || reached === target
+        ? clamped
+        : this.indexAtOffset(trackEl, reached)
+    );
+
     // Smooth scrolling settles asynchronously, so scrollLeft still holds the old
     // value here. Measuring from where the slide is heading mounts the previews
     // it brings into view immediately rather than one scroll event later.
-    this.measureVisibleRange(
-      slide ? slide.offsetLeft - trackEl.offsetLeft : undefined
-    );
+    this.measureVisibleRange(reached);
   }
 
   /**
@@ -246,28 +259,34 @@ export class CarouselComponent {
       return;
     }
 
-    // Measured from the real slide offsets rather than derived from
-    // scrollWidth, so the flex gap cannot skew the result.
-    const slides = Array.from(trackEl.children) as HTMLElement[];
-    if (!slides.length) {
+    if (!trackEl.children.length) {
       return;
     }
 
-    const scrollLeft = trackEl.scrollLeft;
+    this.activeIndex.set(this.indexAtOffset(trackEl, trackEl.scrollLeft));
+    this.measureVisibleRange();
+  }
+
+  /**
+   * The slide sitting closest to a scroll offset.
+   *
+   * Measured from the real slide offsets rather than derived from scrollWidth,
+   * so the flex gap cannot skew the result.
+   */
+  private indexAtOffset(trackEl: HTMLElement, scrollLeft: number): number {
+    const slides = Array.from(trackEl.children) as HTMLElement[];
+
     let closest = 0;
     let smallestDelta = Number.POSITIVE_INFINITY;
 
     slides.forEach((slide, index) => {
-      const delta = Math.abs(
-        slide.offsetLeft - trackEl.offsetLeft - scrollLeft
-      );
+      const delta = Math.abs(slide.offsetLeft - trackEl.offsetLeft - scrollLeft);
       if (delta < smallestDelta) {
         smallestDelta = delta;
         closest = index;
       }
     });
 
-    this.activeIndex.set(closest);
-    this.measureVisibleRange();
+    return closest;
   }
 }
