@@ -170,8 +170,12 @@ export class CarouselComponent {
    * @param scrollLeft Position to measure against, for callers that know where
    * an in progress smooth scroll is heading. Defaults to the current offset.
    *
+   * Counts only slides that fit entirely between both viewport edges, so a
+   * clipped one never reports the range as reaching further than it does.
+   *
    * Falls back to the active slide alone when the track has not been laid out,
-   * which is the case in jsdom where every element reports a zero size.
+   * which is the case in jsdom where every element reports a zero size, and
+   * likewise when the viewport is too narrow to fit any slide in full.
    */
   private measureVisibleRange(scrollLeft?: number): void {
     const trackEl = this.track()?.nativeElement;
@@ -181,18 +185,29 @@ export class CarouselComponent {
     }
 
     const slides = Array.from(trackEl.children) as HTMLElement[];
-    const viewportEnd =
-      (scrollLeft ?? trackEl.scrollLeft) + trackEl.clientWidth;
+    const viewportStart = scrollLeft ?? trackEl.scrollLeft;
+    const viewportEnd = viewportStart + trackEl.clientWidth;
 
-    let last = this.activeIndex();
+    // Seeded below the first slide rather than from the active index: a clipped
+    // active slide would otherwise count itself as visible and disable the
+    // forward button while it still sits half off screen.
+    let last = -1;
     slides.forEach((slide, index) => {
       const start = slide.offsetLeft - trackEl.offsetLeft;
-      if (start < viewportEnd) {
+      // Fully visible, not merely peeking in, so a slide clipped by either edge
+      // stays scrollable to.
+      if (
+        start >= viewportStart - 1 &&
+        start + slide.offsetWidth <= viewportEnd + 1
+      ) {
         last = index;
       }
     });
 
-    this.lastVisibleIndex.set(last);
+    // A viewport narrower than a single slide fits none of them fully. Falling
+    // back to the active slide keeps the range non empty, so the arrows still
+    // describe a track that can be scrolled one slide at a time.
+    this.lastVisibleIndex.set(last === -1 ? this.activeIndex() : last);
   }
 
   scrollBy(direction: -1 | 1): void {
@@ -243,7 +258,9 @@ export class CarouselComponent {
     let smallestDelta = Number.POSITIVE_INFINITY;
 
     slides.forEach((slide, index) => {
-      const delta = Math.abs(slide.offsetLeft - trackEl.offsetLeft - scrollLeft);
+      const delta = Math.abs(
+        slide.offsetLeft - trackEl.offsetLeft - scrollLeft
+      );
       if (delta < smallestDelta) {
         smallestDelta = delta;
         closest = index;

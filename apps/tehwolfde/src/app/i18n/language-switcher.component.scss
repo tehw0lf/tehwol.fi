@@ -1,0 +1,42 @@
+// mat-icon-button centres a 24px glyph, which neither an svg nor a text node
+// inherits, so the old label sat off centre next to the theme and GitHub icons.
+// A mat-button with explicit centring keeps flag and code on the same baseline
+// as the rest of the toolbar.
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+.language-button {
+  min-width: 0;
+  padding: 0 8px;
+}
+
+// Material wraps projected content in .mdc-button__label, so centring the
+// button itself leaves flag and code stacked inside that wrapper. The label is
+// the element that has to become the flex row.
+.language-button ::ng-deep .mdc-button__label,
+.language-button .mdc-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.language-flag {
+  display: block;
+  width: 20px;
+  height: 14px;
+  // The artwork carries its own colours, so it must not pick up the toolbar
+  // text colour the way a mat-icon would.
+  border-radius: 2px;
+  flex: none;
+}
+
+.language-code {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}

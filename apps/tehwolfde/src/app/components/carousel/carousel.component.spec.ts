@@ -64,6 +64,12 @@ function layOutTrack(
       configurable: true,
       value: index * (SLIDE_WIDTH + SLIDE_GAP)
     });
+    // Visibility is measured against the slide's right edge, so the width has
+    // to be laid out too or every slide would measure as zero wide.
+    Object.defineProperty(slide, 'offsetWidth', {
+      configurable: true,
+      value: SLIDE_WIDTH
+    });
   });
 
   return track;
@@ -86,9 +92,9 @@ describe('CarouselComponent', () => {
 
   /** shouldLoad as seen by the projected slides, not by calling it directly. */
   function loadedFlags(): boolean[] {
-    return Array.from(
-      fixture.nativeElement.querySelectorAll('.loaded')
-    ).map((node) => (node as HTMLElement).textContent?.trim() === 'true');
+    return Array.from(fixture.nativeElement.querySelectorAll('.loaded')).map(
+      (node) => (node as HTMLElement).textContent?.trim() === 'true'
+    );
   }
 
   beforeEach(async () => {
@@ -152,6 +158,76 @@ describe('CarouselComponent', () => {
     expect(component.activeIndex()).toBeLessThan(7);
     expect(component.canScrollForward()).toBe(false);
     expect(component.canScrollBack()).toBe(true);
+  });
+
+  it('should keep forward enabled while the last slide is only partly on screen', () => {
+    // Half a slide wider than six full ones, so slide 6 peeks in at the right
+    // edge without ever being reachable. Counting that sliver as visible left
+    // the last card clipped with the forward arrow already greyed out.
+    const track: HTMLElement =
+      fixture.nativeElement.querySelector('.carousel-track');
+    Object.defineProperty(track, 'clientWidth', {
+      configurable: true,
+      get: () => 6 * (SLIDE_WIDTH + SLIDE_GAP) - SLIDE_GAP + SLIDE_WIDTH / 2
+    });
+    Object.defineProperty(track, 'offsetLeft', {
+      configurable: true,
+      value: 0
+    });
+    Array.from(track.children).forEach((slide, index) => {
+      Object.defineProperty(slide, 'offsetLeft', {
+        configurable: true,
+        value: index * (SLIDE_WIDTH + SLIDE_GAP)
+      });
+      Object.defineProperty(slide, 'offsetWidth', {
+        configurable: true,
+        value: SLIDE_WIDTH
+      });
+    });
+
+    scrollTrackTo(track, 0);
+
+    expect(component.canScrollForward()).toBe(true);
+  });
+
+  it('should not count a clipped active slide as the last visible one', () => {
+    // A viewport one and a half slides wide, scrolled so the active slide is cut
+    // off by the right edge. Seeding the measurement from the active index made
+    // that slide count itself as fully visible, which reported the visible range
+    // one slide further than it really reached.
+    const track: HTMLElement =
+      fixture.nativeElement.querySelector('.carousel-track');
+    Object.defineProperty(track, 'clientWidth', {
+      configurable: true,
+      get: () => SLIDE_WIDTH + SLIDE_WIDTH / 2
+    });
+    Object.defineProperty(track, 'offsetLeft', {
+      configurable: true,
+      value: 0
+    });
+    Array.from(track.children).forEach((slide, index) => {
+      Object.defineProperty(slide, 'offsetLeft', {
+        configurable: true,
+        value: index * (SLIDE_WIDTH + SLIDE_GAP)
+      });
+      Object.defineProperty(slide, 'offsetWidth', {
+        configurable: true,
+        value: SLIDE_WIDTH
+      });
+    });
+
+    // Just short of slide 3's own offset, so it is the nearest one and becomes
+    // active, while still extending past the viewport's right edge.
+    const clippedOffset = 3 * (SLIDE_WIDTH + SLIDE_GAP) - SLIDE_WIDTH / 4;
+    scrollTrackTo(track, clippedOffset);
+
+    expect(component.activeIndex()).toBe(3);
+    // Slide 3 is clipped, so the fully visible range ends before it and the
+    // forward control still has somewhere to go.
+    expect(component.canScrollForward()).toBe(true);
+    // The clipped slide is still mounted as the one after the visible range,
+    // but the range itself must not claim to reach it.
+    expect(loadedFlags()[4]).toBe(false);
   });
 
   it('should report every visible slide as loadable through the projected content', () => {
@@ -224,9 +300,9 @@ describe('CarouselComponent', () => {
   });
 
   it('should render the label as the heading and expose the section', () => {
-    expect(
-      fixture.nativeElement.querySelector('h2').textContent.trim()
-    ).toBe('Test');
+    expect(fixture.nativeElement.querySelector('h2').textContent.trim()).toBe(
+      'Test'
+    );
     expect(
       fixture.nativeElement.querySelector('[data-section="test"]')
     ).not.toBeNull();
