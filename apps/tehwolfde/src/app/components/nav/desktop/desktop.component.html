@@ -95,14 +95,7 @@
         <mat-icon>dark_mode</mat-icon>
       </button>
     }
-    <button
-      mat-icon-button
-      [style]="buttonStyle()"
-      (click)="translateService.toggle()"
-      [attr.aria-label]="'nav.switchLanguage' | translate"
-    >
-      <span>{{ translateService.locale() === 'en' ? 'DE' : 'EN' }}</span>
-    </button>
+    <tehw0lf-language-switcher [style]="buttonStyle()" />
     <div [style]="buttonStyle()">
       <div class="nav-item">
         <a mat-button target="_blank" href="https://github.com/tehw0lf">

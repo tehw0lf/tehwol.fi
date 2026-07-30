@@ -1,0 +1,22 @@
+<button
+  mat-button
+  class="language-button"
+  type="button"
+  (click)="translateService.toggle()"
+  [attr.aria-label]="'nav.switchLanguage' | translate"
+>
+  @if (translateService.nextLocale() === 'de') {
+    <svg class="language-flag" viewBox="0 0 5 3" aria-hidden="true">
+      <rect width="5" height="1" y="0" fill="#000000" />
+      <rect width="5" height="1" y="1" fill="#dd0000" />
+      <rect width="5" height="1" y="2" fill="#ffce00" />
+    </svg>
+  } @else {
+    <svg class="language-flag" viewBox="0 0 19 10" aria-hidden="true">
+      <rect width="19" height="10" fill="#b22234" />
+      <path d="M0 1.5h19M0 3.5h19M0 5.5h19M0 7.5h19M0 9.5h19" stroke="#ffffff" />
+      <rect width="8" height="5.5" fill="#3c3b6e" />
+    </svg>
+  }
+  <span class="language-code">{{ translateService.nextLocale() }}</span>
+</button>

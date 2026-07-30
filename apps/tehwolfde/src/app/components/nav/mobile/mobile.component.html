@@ -114,13 +114,7 @@
             <mat-icon>dark_mode</mat-icon>
           </button>
         }
-        <button
-          mat-icon-button
-          (click)="translateService.toggle()"
-          [attr.aria-label]="'nav.switchLanguage' | translate"
-        >
-          <span>{{ translateService.locale() === 'en' ? 'DE' : 'EN' }}</span>
-        </button>
+        <tehw0lf-language-switcher />
       </div>
     </mat-nav-list>
   </mat-sidenav>

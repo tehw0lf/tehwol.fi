@@ -20,6 +20,7 @@ import { isActive, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@a
 import { Subject } from 'rxjs';
 
 import { EMBEDDED_APPS } from '../../../embeds/apps';
+import { LanguageSwitcherComponent } from '../../../i18n/language-switcher.component';
 import { TranslatePipe } from '../../../i18n/translate.pipe';
 import { TranslateService } from '../../../i18n/translate.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -41,7 +42,8 @@ import { SidenavService } from '../sidenav.service';
     MatButtonModule,
     MatIconModule,
     RouterOutlet,
-    TranslatePipe
+    TranslatePipe,
+    LanguageSwitcherComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
