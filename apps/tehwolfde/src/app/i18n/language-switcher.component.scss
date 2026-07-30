@@ -18,11 +18,10 @@
 
 // Material wraps projected content in .mdc-button__label, so centring the
 // button itself leaves flag and code stacked inside that wrapper. The label is
-// the element that has to become the flex row.
-//
-// ::ng-deep is required rather than belt and braces: the wrapper belongs to
-// MatButton's template, so it carries MatButton's scoping attribute and an
-// unpierced selector can never match it under emulated encapsulation.
+// the element that has to become the flex row. ::ng-deep is required rather
+// than belt and braces: the wrapper belongs to MatButton's template, so it
+// carries MatButton's scoping attribute and an unpierced selector can never
+// match it under emulated encapsulation.
 .language-button ::ng-deep .mdc-button__label {
   display: inline-flex;
   align-items: center;
