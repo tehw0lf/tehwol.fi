@@ -58,6 +58,12 @@ function layOutTrack(
     get: () => visibleSlides * (SLIDE_WIDTH + SLIDE_GAP) - SLIDE_GAP
   });
   Object.defineProperty(track, 'offsetLeft', { configurable: true, value: 0 });
+  // scrollTo clamps its target against the real end of the track, so the
+  // scrollable width has to be laid out as well.
+  Object.defineProperty(track, 'scrollWidth', {
+    configurable: true,
+    get: () => track.children.length * (SLIDE_WIDTH + SLIDE_GAP) - SLIDE_GAP
+  });
 
   Array.from(track.children).forEach((slide, index) => {
     Object.defineProperty(slide, 'offsetLeft', {
@@ -158,6 +164,24 @@ describe('CarouselComponent', () => {
     expect(component.activeIndex()).toBeLessThan(7);
     expect(component.canScrollForward()).toBe(false);
     expect(component.canScrollBack()).toBe(true);
+  });
+
+  it('should record the slide the track can actually reach at the end', () => {
+    // Six of eight slides fit, so the track stops two slides short of slide 7.
+    // Recording the requested index anyway left activeIndex on a slide never
+    // reached, and the next step back moved by the difference rather than by a
+    // full slide.
+    const track = layOutTrack(fixture, 6);
+
+    component.scrollTo(7);
+
+    expect(component.activeIndex()).toBe(2);
+
+    // Stepping back from the real position lands on the previous slide rather
+    // than jumping into the middle of the track.
+    component.scrollBy(-1);
+    expect(component.activeIndex()).toBe(1);
+    expect(track).toBeTruthy();
   });
 
   it('should keep forward enabled while the last slide is only partly on screen', () => {

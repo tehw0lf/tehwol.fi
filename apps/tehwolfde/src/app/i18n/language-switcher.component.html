@@ -1,9 +1,13 @@
+<!-- No aria-label: it would replace the accessible name with text that does not
+     contain the visible "DE"/"EN", leaving voice control users with nothing to
+     say (WCAG 2.5.3). The visible code names the control; the description
+     carries the "switch language" context for screen reader users. -->
 <button
   mat-button
   class="language-button"
   type="button"
   (click)="translateService.toggle()"
-  [attr.aria-label]="'nav.switchLanguage' | translate"
+  [attr.aria-describedby]="describedById"
 >
   @if (translateService.nextLocale() === 'de') {
     <svg class="language-flag" viewBox="0 0 5 3" aria-hidden="true">
@@ -20,3 +24,6 @@
   }
   <span class="language-code">{{ translateService.nextLocale() }}</span>
 </button>
+<span [id]="describedById" class="cdk-visually-hidden">{{
+  'nav.switchLanguage' | translate
+}}</span>
