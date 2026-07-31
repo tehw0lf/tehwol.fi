@@ -34,6 +34,52 @@ test.describe('tehwolfde Home', () => {
     await expect(lightButton.or(darkButton)).toBeVisible();
   });
 
+  // Focusing #main-content after NavigationEnd used to scroll the carousels:
+  // the browser reveals a focus target by scrolling every scroll container
+  // around it, which walked the first track on the page to its far end. On a
+  // phone the libraries section therefore arrived showing its last slide.
+  // The viewport comes from a fresh context rather than setViewportSize: the
+  // scroll only happens on the navigation that focuses main, so the page has to
+  // be laid out at phone width before it loads, not resized afterwards.
+  test('should start every carousel at its first slide on mobile', async ({
+    browser,
+    browserName
+  }) => {
+    // isMobile is a Chromium only option, and Chromium is where the offending
+    // focus scroll happens, so the other engines run the same check without it.
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      ...(browserName === 'chromium'
+        ? { isMobile: true, hasTouch: true }
+        : {})
+    });
+
+    try {
+      const page = await context.newPage();
+      await page.goto('/');
+
+      await expect(
+        page.locator('[data-section] .carousel-track').first()
+      ).toBeVisible();
+
+      // The offending scroll is animated and starts shortly after load, so the
+      // tracks have to be read once they have settled. expect.poll would defeat
+      // the test: it retries until the condition holds and so passes on the
+      // first sample taken before the animation begins.
+      await page.waitForTimeout(5000);
+
+      const offsets = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-section] .carousel-track')
+        ).map((track) => (track as HTMLElement).scrollLeft)
+      );
+
+      expect(offsets).toEqual([0, 0]);
+    } finally {
+      await context.close();
+    }
+  });
+
   test('should be responsive', async ({ page }) => {
     // Test desktop view
     await page.setViewportSize({ width: 1200, height: 800 });

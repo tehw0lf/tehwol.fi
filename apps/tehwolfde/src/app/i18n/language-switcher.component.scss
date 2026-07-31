@@ -1,3 +1,5 @@
+@use '../../assets/styles/global';
+
 // mat-icon-button centres a 24px glyph, which neither an svg nor a text node
 // inherits, so the old label sat off centre next to the theme and GitHub icons.
 // A mat-button with explicit centring keeps flag and code on the same baseline
@@ -39,7 +41,11 @@
   flex: none;
 }
 
+// The code is the only text in the toolbar that Material colours itself, so
+// without this it rendered in the default button foreground while the nav links
+// and icons beside it use the site link colour.
 .language-code {
+  color: global.$linkcolor;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
