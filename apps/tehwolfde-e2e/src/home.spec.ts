@@ -34,6 +34,56 @@ test.describe('tehwolfde Home', () => {
     await expect(lightButton.or(darkButton)).toBeVisible();
   });
 
+  test('should have language switcher', async ({ page }) => {
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    const trigger = mainNav.locator('button.language-button');
+
+    // The trigger reports the active locale rather than the one on offer.
+    await expect(trigger).toContainText('English');
+
+    await trigger.click();
+    const menu = page.locator('.mat-mdc-menu-panel');
+    await expect(menu).toBeVisible();
+
+    // Endonyms, so each language is recognisable to someone who cannot read
+    // the currently active one.
+    await expect(menu.getByRole('menuitemradio', { name: 'Deutsch' })).toBeVisible();
+    await menu.getByRole('menuitemradio', { name: 'Deutsch' }).click();
+
+    await expect(trigger).toContainText('Deutsch');
+    await expect(page.locator('h1')).toContainText('Willkommen');
+  });
+
+  // The endonyms differ in width, so a label sized to its content resized the
+  // button on every switch and shoved the GitHub link beside it sideways. jsdom
+  // does not lay text out, so the fixed box can only be verified here, against
+  // a real layout, by measuring the same element in both locales.
+  test('should not resize the language switcher when the locale changes', async ({
+    page
+  }) => {
+    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+    const trigger = mainNav.locator('button.language-button');
+
+    const englishBox = await trigger.boundingBox();
+
+    await trigger.click();
+    await page
+      .locator('.mat-mdc-menu-panel')
+      .getByRole('menuitemradio', { name: 'Deutsch' })
+      .click();
+    await expect(trigger).toContainText('Deutsch');
+
+    const germanBox = await trigger.boundingBox();
+
+    expect(englishBox).not.toBeNull();
+    expect(germanBox).not.toBeNull();
+    expect(germanBox?.width).toBeCloseTo(englishBox?.width ?? 0, 1);
+    // The glyph and the first letter have to stay put too, not just the outer
+    // edges: Material centres the label, so a fixed width alone would still
+    // slide the text inside it.
+    expect(germanBox?.x).toBeCloseTo(englishBox?.x ?? 0, 1);
+  });
+
   // Focusing #main-content after NavigationEnd used to scroll the carousels:
   // the browser reveals a focus target by scrolling every scroll container
   // around it, which walked the first track on the page to its far end. On a

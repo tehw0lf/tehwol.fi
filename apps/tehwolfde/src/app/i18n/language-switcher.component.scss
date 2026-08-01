@@ -11,9 +11,9 @@
 
 // 48px tall to match the icon buttons beside it: a mat-button defaults to 36px,
 // which is below the minimum touch target and left the switcher noticeably
-// smaller than the theme toggle it sits next to. The width is a floor rather
-// than a fixed size because the label is an endonym whose length varies by
-// locale.
+// smaller than the theme toggle it sits next to. The width follows from the
+// label, which reserves a fixed box of its own, so the button no longer changes
+// size when the locale changes.
 .language-button {
   min-width: 48px;
   height: 48px;
@@ -52,9 +52,20 @@
 // without this it rendered in the default button foreground while the nav links
 // and icons beside it use the site link colour.
 //
-// Endonyms differ in width and change with the active locale, so the button has
-// to grow with its label instead of sitting at a fixed width; white-space keeps
-// a longer name on one line rather than wrapping inside the toolbar.
+// Endonyms differ in width, so a label sized to its content would resize the
+// button on every switch and shove the GitHub link beside it sideways. The
+// reservation is made here rather than on the button because Material centres
+// the label inside .mdc-button__label: a fixed button width alone would hold
+// the outer edges still but still slide the text within them. Left aligning it
+// against a fixed box keeps the glyph and the first letter on the same spot
+// whatever locale is active.
+//
+// 10ch fits the longest endonym likely to be added. 1ch is the width of "0",
+// but these are proportional mixed case words, so the two do not correspond:
+// measured in this exact font, "Nederlands" is the widest realistic candidate
+// at 9.93ch and "Português" needs 8.86ch, which is why this is not the 9ch it
+// looks like it should be. Anything longer is truncated by the overflow rule
+// rather than being allowed to reflow the toolbar.
 .language-name {
   color: global.$linkcolor;
   font-size: 13px;
@@ -62,4 +73,8 @@
   letter-spacing: 0.04em;
   line-height: 1;
   white-space: nowrap;
+  min-width: 10ch;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
