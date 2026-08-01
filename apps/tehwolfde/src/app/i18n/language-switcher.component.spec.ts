@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -8,18 +9,45 @@ import { TranslateService } from './translate.service';
 describe('LanguageSwitcherComponent', () => {
   let fixture: ComponentFixture<LanguageSwitcherComponent>;
   let translateService: TranslateService;
+  let overlayContainer: OverlayContainer;
 
-  /** The button element the user actually clicks. */
-  function button(): HTMLButtonElement {
-    return fixture.nativeElement.querySelector('button');
+  /** The trigger element the user actually clicks. */
+  function trigger(): HTMLButtonElement {
+    return fixture.nativeElement.querySelector('button.language-button');
   }
 
-  function visibleCode(): string {
+  function visibleName(): string {
     return (
       fixture.nativeElement
-        .querySelector('.language-code')
+        .querySelector('.language-name')
         ?.textContent?.trim() ?? ''
     );
+  }
+
+  /** The menu renders into an overlay, outside the component's own DOM. */
+  function menuItems(): HTMLButtonElement[] {
+    return Array.from(
+      overlayContainer
+        .getContainerElement()
+        .querySelectorAll('button[mat-menu-item]')
+    );
+  }
+
+  /**
+   * The endonym of each entry, read from its own span rather than from the
+   * item's textContent: the tick is an icon font ligature, so its glyph name
+   * would otherwise be counted as text even though aria-hidden keeps it away
+   * from screen readers.
+   */
+  function menuEndonyms(): string[] {
+    return menuItems().map(
+      (i) => i.querySelector('span:not(.language-check)')?.textContent?.trim() ?? ''
+    );
+  }
+
+  function openMenu(): void {
+    trigger().click();
+    fixture.detectChanges();
   }
 
   beforeEach(async () => {
@@ -30,53 +58,100 @@ describe('LanguageSwitcherComponent', () => {
 
     fixture = TestBed.createComponent(LanguageSwitcherComponent);
     translateService = TestBed.inject(TranslateService);
+    overlayContainer = TestBed.inject(OverlayContainer);
     fixture.detectChanges();
   });
 
-  it('should offer the locale the user is not reading', () => {
-    // The control shows where a click leads, not where the user already is.
-    // Inverting this would silently label every switcher wrongly.
+  it('should show the active locale on the trigger', () => {
+    // Menu convention: the trigger reports the current state rather than the
+    // one a click would lead to, because the trigger only opens the menu.
     expect(translateService.locale()).toBe('en');
-    expect(visibleCode()).toBe('de');
+    expect(visibleName()).toBe('English');
   });
 
-  it('should toggle the locale when clicked', () => {
-    button().click();
+  it('should name each locale by its own endonym', () => {
+    openMenu();
+
+    // Endonyms, not translated names: they must stay recognisable to someone
+    // who cannot read the currently active locale.
+    expect(menuEndonyms()).toEqual(['English', 'Deutsch']);
+  });
+
+  it('should switch the locale when a menu entry is chosen', () => {
+    openMenu();
+    menuItems()[1].click();
     fixture.detectChanges();
 
     expect(translateService.locale()).toBe('de');
-    expect(visibleCode()).toBe('en');
+    expect(visibleName()).toBe('Deutsch');
 
-    button().click();
+    openMenu();
+    menuItems()[0].click();
     fixture.detectChanges();
 
     expect(translateService.locale()).toBe('en');
-    expect(visibleCode()).toBe('de');
+    expect(visibleName()).toBe('English');
   });
 
-  it('should show the flag of the offered locale', () => {
-    const flagOf = () =>
-      fixture.nativeElement.querySelector('svg.language-flag');
+  it('should offer every configured locale', () => {
+    // Adding a language is meant to be a registry edit alone, so the menu is
+    // driven by the list rather than by hardcoded entries.
+    openMenu();
 
-    expect(flagOf()).toBeTruthy();
-    const offeringGerman = flagOf().outerHTML;
+    expect(menuItems().length).toBe(translateService.locales.length);
+  });
 
-    button().click();
+  it('should mark the active locale as checked', () => {
+    openMenu();
+
+    const checked = () =>
+      menuItems().map((i) => i.getAttribute('aria-checked'));
+    expect(checked()).toEqual(['true', 'false']);
+
+    menuItems()[1].click();
     fixture.detectChanges();
+    openMenu();
 
-    // Different artwork per locale rather than one flag that never changes.
-    expect(flagOf().outerHTML).not.toBe(offeringGerman);
+    expect(checked()).toEqual(['false', 'true']);
   });
 
-  it('should keep the visible code inside the accessible name', () => {
+  it('should expose the locale choice as an exclusive selection', () => {
+    // menuitemradio is what conveys "one of these is active" to a screen
+    // reader; plain menuitems would announce the tick as decoration only.
+    openMenu();
+
+    for (const item of menuItems()) {
+      expect(item.getAttribute('role')).toBe('menuitemradio');
+    }
+  });
+
+  it('should tag each entry with its own language', () => {
+    // Without lang, a screen reader reads "Deutsch" with English phonetics.
+    openMenu();
+
+    expect(menuItems().map((i) => i.getAttribute('lang'))).toEqual([
+      'en',
+      'de'
+    ]);
+  });
+
+  it('should report the menu expanded state on the trigger', () => {
+    expect(trigger().getAttribute('aria-expanded')).toBe('false');
+
+    openMenu();
+
+    expect(trigger().getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('should keep the visible name inside the accessible name', () => {
     // WCAG 2.5.3: an aria-label that omits the visible text leaves voice
     // control users with no phrase that matches what they can see.
-    expect(button().getAttribute('aria-label')).toBeNull();
-    expect(visibleCode().length).toBeGreaterThan(0);
+    expect(trigger().getAttribute('aria-label')).toBeNull();
+    expect(visibleName().length).toBeGreaterThan(0);
   });
 
   it('should describe the control without overriding its name', () => {
-    const describedBy = button().getAttribute('aria-describedby');
+    const describedBy = trigger().getAttribute('aria-describedby');
     expect(describedBy).toBeTruthy();
 
     const description = fixture.nativeElement.querySelector(
@@ -88,7 +163,7 @@ describe('LanguageSwitcherComponent', () => {
 
   it('should give each instance its own description id', () => {
     // Both nav variants render a switcher at once, so a fixed id would be
-    // duplicated and the second button would point at the first description.
+    // duplicated and the second trigger would point at the first description.
     const second = TestBed.createComponent(LanguageSwitcherComponent);
     second.detectChanges();
 
@@ -96,10 +171,10 @@ describe('LanguageSwitcherComponent', () => {
     expect(second.componentInstance.describedById).not.toBe(first);
   });
 
-  it('should mark the flag as decorative', () => {
-    // The code beside it already names the language, so announcing the artwork
+  it('should mark the globe as decorative', () => {
+    // The name beside it already names the language, so announcing the icon
     // would repeat it.
-    const flag = fixture.nativeElement.querySelector('svg.language-flag');
-    expect(flag.getAttribute('aria-hidden')).toBe('true');
+    const globe = fixture.nativeElement.querySelector('.language-globe');
+    expect(globe.getAttribute('aria-hidden')).toBe('true');
   });
 });

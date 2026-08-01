@@ -67,6 +67,20 @@ body.light {
   color: global.$linkcolor !important;
 }
 
+// The tick on the active language and the empty box standing in for it on the
+// others. Both need the same footprint or the endonyms would not line up. This
+// lives here rather than in the switcher's own styles because mat-menu renders
+// into the CDK overlay at the document root, out of reach of a scoped rule.
+.language-check {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 1;
+  margin-right: 8px;
+  flex: none;
+  color: global.$linkcolor;
+}
+
 body.dark .mat-mdc-menu-panel {
   background-color: #222222;
 }

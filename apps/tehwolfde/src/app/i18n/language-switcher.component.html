@@ -1,29 +1,44 @@
 <!-- No aria-label: it would replace the accessible name with text that does not
-     contain the visible "DE"/"EN", leaving voice control users with nothing to
-     say (WCAG 2.5.3). The visible code names the control; the description
-     carries the "switch language" context for screen reader users. -->
+     contain the visible endonym, leaving voice control users with nothing to
+     say (WCAG 2.5.3). The visible name of the active language names the
+     control; the description carries the "switch language" context for screen
+     reader users. -->
 <button
   mat-button
   class="language-button"
   type="button"
-  (click)="translateService.toggle()"
+  [matMenuTriggerFor]="languageMenu"
   [attr.aria-describedby]="describedById"
 >
-  @if (translateService.nextLocale() === 'de') {
-    <svg class="language-flag" viewBox="0 0 5 3" aria-hidden="true">
-      <rect width="5" height="1" y="0" fill="#000000" />
-      <rect width="5" height="1" y="1" fill="#dd0000" />
-      <rect width="5" height="1" y="2" fill="#ffce00" />
-    </svg>
-  } @else {
-    <svg class="language-flag" viewBox="0 0 19 10" aria-hidden="true">
-      <rect width="19" height="10" fill="#b22234" />
-      <path d="M0 1.5h19M0 3.5h19M0 5.5h19M0 7.5h19M0 9.5h19" stroke="#ffffff" />
-      <rect width="8" height="5.5" fill="#3c3b6e" />
-    </svg>
-  }
-  <span class="language-code">{{ translateService.nextLocale() }}</span>
+  <mat-icon class="language-globe" aria-hidden="true">language</mat-icon>
+  <span class="language-name">{{ translateService.currentEndonym() }}</span>
 </button>
 <span [id]="describedById" class="cdk-visually-hidden">{{
   'nav.switchLanguage' | translate
 }}</span>
+
+<mat-menu #languageMenu="matMenu" class="language-menu">
+  @for (locale of locales; track locale.code) {
+    <!-- menuitemradio rather than menuitem: the locales are one exclusive
+         choice, and aria-checked is what tells a screen reader which one is
+         active. The tick is its visual counterpart, so sighted and screen
+         reader users get the same information. -->
+    <button
+      mat-menu-item
+      type="button"
+      role="menuitemradio"
+      [attr.aria-checked]="translateService.locale() === locale.code"
+      [lang]="locale.code"
+      (click)="select(locale.code)"
+    >
+      @if (translateService.locale() === locale.code) {
+        <mat-icon class="language-check" aria-hidden="true">check</mat-icon>
+      } @else {
+        <!-- An empty box rather than no element at all, so the endonyms of the
+             unticked entries stay aligned with the ticked one. -->
+        <span class="language-check" aria-hidden="true"></span>
+      }
+      <span>{{ locale.endonym }}</span>
+    </button>
+  }
+</mat-menu>

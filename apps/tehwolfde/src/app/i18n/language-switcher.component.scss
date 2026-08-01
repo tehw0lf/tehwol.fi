@@ -11,7 +11,9 @@
 
 // 48px tall to match the icon buttons beside it: a mat-button defaults to 36px,
 // which is below the minimum touch target and left the switcher noticeably
-// smaller than the theme toggle it sits next to.
+// smaller than the theme toggle it sits next to. The width is a floor rather
+// than a fixed size because the label is an endonym whose length varies by
+// locale.
 .language-button {
   min-width: 48px;
   height: 48px;
@@ -31,24 +33,33 @@
   line-height: 1;
 }
 
-.language-flag {
-  display: block;
+// Sized down from the mat-icon default of 24px so the glyph matches the cap
+// height of the name beside it rather than towering over it.
+.language-globe {
   width: 20px;
-  height: 14px;
-  // The artwork carries its own colours, so it must not pick up the toolbar
-  // text colour the way a mat-icon would.
-  border-radius: 2px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 1;
+  color: global.$linkcolor;
   flex: none;
 }
 
-// The code is the only text in the toolbar that Material colours itself, so
+// The menu entries are styled in styles.scss, not here: mat-menu renders into
+// the CDK overlay at the document root, outside this component's DOM, so no
+// scoped rule reaches them.
+
+// The name is the only text in the toolbar that Material colours itself, so
 // without this it rendered in the default button foreground while the nav links
 // and icons beside it use the site link colour.
-.language-code {
+//
+// Endonyms differ in width and change with the active locale, so the button has
+// to grow with its label instead of sitting at a fixed width; white-space keeps
+// a longer name on one line rather than wrapping inside the toolbar.
+.language-name {
   color: global.$linkcolor;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   line-height: 1;
+  white-space: nowrap;
 }

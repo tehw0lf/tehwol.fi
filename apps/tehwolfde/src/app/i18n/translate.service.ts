@@ -5,12 +5,31 @@ import { catchError, of, switchMap } from 'rxjs';
 
 export type Locale = 'en' | 'de';
 
+/**
+ * The locales on offer, in the order the switcher lists them.
+ *
+ * Endonyms rather than translated names: someone looking for their language
+ * recognises it in its own spelling regardless of which locale is currently
+ * active, so the menu stays usable even when the user cannot read the UI it is
+ * rendered in. For the same reason these are not translation keys — they must
+ * not change with the active locale.
+ *
+ * Adding a language means adding an entry here and an `assets/i18n/<code>.json`
+ * file; the switcher picks it up without further changes.
+ */
+export const LOCALES: readonly { code: Locale; endonym: string }[] = [
+  { code: 'en', endonym: 'English' },
+  { code: 'de', endonym: 'Deutsch' }
+] as const;
+
 @Injectable({ providedIn: 'root' })
 export class TranslateService {
   private http = inject(HttpClient);
 
   locale = signal<Locale>('en');
   private translations = signal<Record<string, string>>({});
+
+  readonly locales = LOCALES;
 
   constructor() {
     toObservable(this.locale)
@@ -19,17 +38,20 @@ export class TranslateService {
   }
 
   /**
-   * The locale the switcher offers, which is the one the user is not currently
-   * reading. Both nav variants render the same control, so the label lives here
-   * rather than being duplicated as a ternary in two templates.
+   * The active locale's own name, shown on the switcher trigger. Both nav
+   * variants render the same control, so the label lives here rather than being
+   * duplicated in two templates.
    */
-  nextLocale = computed<Locale>(() => (this.locale() === 'en' ? 'de' : 'en'));
+  currentEndonym = computed<string>(
+    () =>
+      LOCALES.find((l) => l.code === this.locale())?.endonym ?? this.locale()
+  );
 
   translate(key: string): string {
     return this.translations()[key] ?? key;
   }
 
-  toggle(): void {
-    this.locale.update((l) => (l === 'en' ? 'de' : 'en'));
+  setLocale(locale: Locale): void {
+    this.locale.set(locale);
   }
 }
