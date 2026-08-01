@@ -51,7 +51,7 @@
 // The name is the only text in the toolbar that Material colours itself, so
 // without this it rendered in the default button foreground while the nav links
 // and icons beside it use the site link colour.
-//
+
 // Endonyms differ in width, so a label sized to its content would resize the
 // button on every switch and shove the GitHub link beside it sideways. The
 // reservation is made here rather than on the button because Material centres
@@ -59,7 +59,7 @@
 // the outer edges still but still slide the text within them. Left aligning it
 // against a fixed box keeps the glyph and the first letter on the same spot
 // whatever locale is active.
-//
+
 // 10ch fits the longest endonym likely to be added. 1ch is the width of "0",
 // but these are proportional mixed case words, so the two do not correspond:
 // measured in this exact font, "Nederlands" is the widest realistic candidate

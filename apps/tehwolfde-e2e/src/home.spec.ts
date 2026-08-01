@@ -77,11 +77,18 @@ test.describe('tehwolfde Home', () => {
 
     expect(englishBox).not.toBeNull();
     expect(germanBox).not.toBeNull();
-    expect(germanBox?.width).toBeCloseTo(englishBox?.width ?? 0, 1);
+
+    // A whole pixel of slack rather than toBeCloseTo's 0.05: engines round
+    // subpixel text metrics differently per locale, and this has to hold across
+    // every Playwright project. The regression it guards against moved the
+    // button by 6px, so the looser bound still catches it comfortably.
+    expect(Math.abs((germanBox?.width ?? 0) - (englishBox?.width ?? 0)))
+      .toBeLessThanOrEqual(1);
     // The glyph and the first letter have to stay put too, not just the outer
     // edges: Material centres the label, so a fixed width alone would still
     // slide the text inside it.
-    expect(germanBox?.x).toBeCloseTo(englishBox?.x ?? 0, 1);
+    expect(Math.abs((germanBox?.x ?? 0) - (englishBox?.x ?? 0)))
+      .toBeLessThanOrEqual(1);
   });
 
   // Focusing #main-content after NavigationEnd used to scroll the carousels:
