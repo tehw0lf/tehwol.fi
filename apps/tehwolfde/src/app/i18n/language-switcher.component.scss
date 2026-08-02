@@ -11,7 +11,9 @@
 
 // 48px tall to match the icon buttons beside it: a mat-button defaults to 36px,
 // which is below the minimum touch target and left the switcher noticeably
-// smaller than the theme toggle it sits next to.
+// smaller than the theme toggle it sits next to. The width follows from the
+// label, which reserves a fixed box of its own, so the button no longer changes
+// size when the locale changes.
 .language-button {
   min-width: 48px;
   height: 48px;
@@ -31,24 +33,48 @@
   line-height: 1;
 }
 
-.language-flag {
-  display: block;
+// Sized down from the mat-icon default of 24px so the glyph matches the cap
+// height of the name beside it rather than towering over it.
+.language-globe {
   width: 20px;
-  height: 14px;
-  // The artwork carries its own colours, so it must not pick up the toolbar
-  // text colour the way a mat-icon would.
-  border-radius: 2px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 1;
+  color: global.$linkcolor;
   flex: none;
 }
 
-// The code is the only text in the toolbar that Material colours itself, so
+// The menu entries are styled in styles.scss, not here: mat-menu renders into
+// the CDK overlay at the document root, outside this component's DOM, so no
+// scoped rule reaches them.
+
+// The name is the only text in the toolbar that Material colours itself, so
 // without this it rendered in the default button foreground while the nav links
 // and icons beside it use the site link colour.
-.language-code {
+
+// Endonyms differ in width, so a label sized to its content would resize the
+// button on every switch and shove the GitHub link beside it sideways. The
+// reservation is made here rather than on the button because Material centres
+// the label inside .mdc-button__label: a fixed button width alone would hold
+// the outer edges still but still slide the text within them. Left aligning it
+// against a fixed box keeps the glyph and the first letter on the same spot
+// whatever locale is active.
+
+// 10ch fits the longest endonym likely to be added. 1ch is the width of "0",
+// but these are proportional mixed case words, so the two do not correspond:
+// measured in this exact font, "Nederlands" is the widest realistic candidate
+// at 9.93ch and "Português" needs 8.86ch, which is why this is not the 9ch it
+// looks like it should be. Anything longer is truncated by the overflow rule
+// rather than being allowed to reflow the toolbar.
+.language-name {
   color: global.$linkcolor;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   line-height: 1;
+  white-space: nowrap;
+  min-width: 10ch;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
