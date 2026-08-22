@@ -1,9 +1,8 @@
-@use '../../../assets/styles/global';
 
 // Shared styles for both desktop and mobile nav components
 
 .link-active {
-  border-bottom: 2px solid global.$linkcolor;
+  border-bottom: 2px solid var(--tw-link);
 }
 
 .dark-theme-button {

@@ -1,0 +1,86 @@
+// Design tokens — single source of truth for the tehw0lf brand.
+//
+// The palette was extracted from what already shipped: the website, the
+// favicon and the fwdark userstyle had grown the same colours independently.
+// The ramp is anchored on #8e8e8e, the grey of the avatar and the favicon, so
+// the mark and the interface share one family.
+//
+// Consumers outside this app (the publishable @tehw0lf/* libraries) reference
+// these as `var(--tw-*, <fallback>)` so they keep working untokenised — the
+// fallbacks are the dark values, which is what those components shipped with.
+//
+// THEMES
+// ThemeService puts `.dark` or `.light` on <body>. Palette-independent values
+// live on :root; anything that depends on the ground is defined under both
+// body classes, so a token always resolves to something legible on the surface
+// behind it. Contrast ratios in the comments are measured against that ground.
+
+:root {
+  /* Brand — the identity grey. Fixed: it is the mark, not a UI colour. */
+  --tw-brand: #8e8e8e;
+
+  /* Neutral ramp — anchored at 500 on the brand grey. Ground-independent. */
+  --tw-neutral-900: #1a1a1a;
+  --tw-neutral-850: #222222;
+  --tw-neutral-800: #272727;
+  --tw-neutral-750: #2f2f2f;
+  --tw-neutral-700: #333333;
+  --tw-neutral-650: #424242;
+  --tw-neutral-500: #8e8e8e; // = brand
+  --tw-neutral-300: #b8b8b8;
+  --tw-neutral-200: #d4d4d4;
+  --tw-neutral-100: #ececec;
+  --tw-neutral-050: #f6f6f6;
+
+  --tw-glass-blur: blur(50px);
+}
+
+// Dark — the original palette, unchanged from what shipped.
+body.dark {
+  --tw-bg: var(--tw-neutral-900);
+  --tw-surface: var(--tw-neutral-850);
+  --tw-surface-raised: var(--tw-neutral-800);
+  --tw-control-bg: var(--tw-neutral-700);
+  // The accent is only 3.79:1 on the control surface, so controls get their
+  // own foreground rather than borrowing --tw-accent.
+  --tw-control-text: #e8903f; // 5.11:1 on --tw-control-bg
+
+  --tw-text: #6699bb; // 5.67:1
+  --tw-text-dim: #437da8; // 3.93:1 — large text only
+  --tw-text-muted: var(--tw-neutral-300);
+
+  --tw-accent: #cc7832; // 5.22:1
+  --tw-accent-hover: #f08b39; // 7.01:1
+  --tw-link: #e8903f; // 7.04:1
+
+  --tw-success: #38e038;
+  --tw-warn: #ff8000;
+  --tw-danger: #ca0101;
+
+  --tw-glass-bg: rgba(34, 34, 34, 0.75);
+}
+
+// Light — the same hues, darkened until they clear AA on white.
+// The dark values sit between 1.77:1 and 3.33:1 on white; none of them pass,
+// which is why these are shifted rather than reused.
+body.light {
+  --tw-bg: #ffffff;
+  --tw-surface: var(--tw-neutral-050);
+  --tw-surface-raised: var(--tw-neutral-100);
+  --tw-control-bg: var(--tw-neutral-200);
+  --tw-control-text: #854519; // 4.95:1 on --tw-control-bg
+
+  --tw-text: #2d6a99; // 5.78:1 — the blue, darkened
+  --tw-text-dim: #1f5c8b; // 7.09:1
+  --tw-text-muted: #5f5f5f;
+
+  --tw-accent: #a0521f; // 5.64:1 — the burnt orange, darkened
+  --tw-accent-hover: #b3611f; // 4.52:1
+  --tw-link: #a0521f; // 5.64:1
+
+  --tw-success: #1a7f1a;
+  --tw-warn: #8a4b00;
+  --tw-danger: #b30000;
+
+  --tw-glass-bg: rgba(255, 255, 255, 0.75);
+}

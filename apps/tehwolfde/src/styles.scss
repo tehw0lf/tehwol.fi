@@ -1,3 +1,4 @@
+@use 'assets/styles/tokens';
 @use 'assets/styles/custom-theme';
 @use 'assets/styles/global';
 @use 'assets/fonts/fonts';
@@ -52,11 +53,11 @@ mat-sidenav-content {
 }
 
 body.dark {
-  background-color: #1a1a1a;
+  background-color: var(--tw-bg);
 }
 
 body.light {
-  background-color: white;
+  background-color: var(--tw-bg);
 }
 
 .mat-mdc-button {
@@ -64,7 +65,7 @@ body.light {
 }
 
 .mat-mdc-menu-item-text {
-  color: global.$linkcolor !important;
+  color: var(--tw-link) !important;
 }
 
 // The tick on the active language and the empty box standing in for it on the
@@ -78,13 +79,13 @@ body.light {
   line-height: 1;
   margin-right: 8px;
   flex: none;
-  color: global.$linkcolor;
+  color: var(--tw-link);
 }
 
 body.dark .mat-mdc-menu-panel {
-  background-color: #222222;
+  background-color: var(--tw-surface);
 }
 
 body.light .mat-mdc-menu-panel {
-  background-color: rgb(212, 212, 212);
+  background-color: var(--tw-surface-raised);
 }

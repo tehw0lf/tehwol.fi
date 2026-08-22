@@ -69,17 +69,19 @@ describe('ContactFormComponent', () => {
       fixture.detectChanges(); // Initialize component
 
       expect(component.buttonStyle()).toEqual({
-        'background-color': '#333333',
+        'background-color': 'var(--tw-control-bg, #333333)',
         border: 'none',
-        color: '#cc7832'
+        color: 'var(--tw-control-text, #e8903f)'
       });
       expect(component.formStyle()).toEqual({
-        color: '#437da8',
-        'background-color': 'rgba(34, 34, 34, 0.75)',
-        'backdrop-filter': 'blur(50px)',
+        color: 'var(--tw-text, #6699bb)',
+        'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
+        'backdrop-filter': 'var(--tw-glass-blur, blur(50px))',
         'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
       });
-      expect(component.textStyle()).toEqual({ color: '#cc7832' });
+      expect(component.textStyle()).toEqual({
+        color: 'var(--tw-accent, #cc7832)'
+      });
       expect(component.sendText()).toBe('Send');
       expect(component.sendSuccessfulText()).toBe('E-Mail successfully sent');
       expect(component.sendErrorText()).toBe('Send error');
@@ -324,7 +326,9 @@ describe('ContactFormComponent', () => {
 
       component.fields.forEach((field) => {
         expect(field.props?.attributes?.style).toBeDefined();
-        expect(field.props?.attributes?.style).toContain('color: #cc7832;');
+        expect(field.props?.attributes?.style).toContain(
+          'color: var(--tw-accent, #cc7832);'
+        );
       });
     });
   });

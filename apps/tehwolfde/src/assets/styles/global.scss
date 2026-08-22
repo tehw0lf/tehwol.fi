@@ -1,8 +1,10 @@
 // Global variables
+//
+// Typography only. Colours are CSS custom properties in _tokens.scss, defined
+// per theme under body.dark / body.light — a Sass variable compiles to one
+// fixed value and cannot follow the theme, which is what used to leave the
+// light mode wearing the dark palette's colours.
+
 /* Font */
 $font: Roboto, 'Helvetica Neue', sans-serif;
 $fontsize-button-md: 24px;
-
-/* Text color — WCAG AA compliant (4.5:1 on dark backgrounds) */
-$fontcolor: #6699bb;
-$linkcolor: #e8903f;

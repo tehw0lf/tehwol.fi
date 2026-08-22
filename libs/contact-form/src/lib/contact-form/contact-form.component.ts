@@ -42,19 +42,19 @@ interface FormConfigEntry {
 })
 export class ContactFormComponent implements OnDestroy {
   buttonStyle = input({
-    'background-color': '#333333',
+    'background-color': 'var(--tw-control-bg, #333333)',
     border: 'none',
-    color: '#cc7832'
+    color: 'var(--tw-control-text, #e8903f)'
   });
 
   formStyle = input({
-    color: '#437da8',
-    'background-color': 'rgba(34, 34, 34, 0.75)',
-    'backdrop-filter': 'blur(50px)',
+    color: 'var(--tw-text, #6699bb)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
+    'backdrop-filter': 'var(--tw-glass-blur, blur(50px))',
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   });
 
-  textStyle = input({ color: '#cc7832' });
+  textStyle = input({ color: 'var(--tw-accent, #cc7832)' });
 
   sendText = input('Send');
 

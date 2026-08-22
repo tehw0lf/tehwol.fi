@@ -10,7 +10,6 @@ import { WordlistGeneratorComponent as WordlistGeneratorComponent_1 } from '@teh
 import { wordlistGeneratorTools } from '@tehw0lf/wordlist-generator/webmcp';
 
 import { TranslateService } from '../../i18n/translate.service';
-import { ThemeService } from '../../services/theme.service';
 import { WebmcpService } from '../../services/webmcp.service';
 
 @Component({
@@ -20,7 +19,6 @@ import { WebmcpService } from '../../services/webmcp.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordlistGeneratorComponent {
-  themeService = inject(ThemeService);
   translateService = inject(TranslateService);
   private webmcp = inject(WebmcpService);
   private destroyRef = inject(DestroyRef);
@@ -35,11 +33,8 @@ export class WordlistGeneratorComponent {
   }
 
   buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? '#333333'
-        : 'rgba(255, 255, 255, 0.75)',
-    color: '#cc7832'
+    'background-color': 'var(--tw-control-bg, #333333)',
+    color: 'var(--tw-control-text, #e8903f)'
   }));
 
   get wordlistLabels() {
