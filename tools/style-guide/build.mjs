@@ -6,10 +6,16 @@
  * than written alongside them — a hand-maintained copy drifts, which is the
  * problem the tokens were introduced to solve in the first place.
  *
+ *   npm run style-guide          regenerate
+ *   npm run style-guide:check    fail if the committed guide is stale
+ *
+ * Or directly, which is what those scripts call:
+ *
  *   node tools/style-guide/build.mjs [--out <path>] [--check]
  *
- * --check exits non-zero if the generated output differs from what is on disk,
- * so CI can catch a token change that never made it into the guide.
+ * --check exits non-zero if the generated output differs from what is on disk.
+ * It runs ahead of `nx affected:lint`, so a token change that never made it into
+ * the guide fails the build rather than landing as a silent inconsistency.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -470,7 +476,7 @@ function main(argv) {
     }
     console.error(
       `style guide is stale: ${out} does not match _tokens.scss.\n` +
-        'Run: node tools/style-guide/build.mjs'
+        'Run: npm run style-guide'
     );
     return 1;
   }

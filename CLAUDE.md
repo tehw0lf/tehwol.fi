@@ -98,7 +98,12 @@ npm run style-guide          # regenerate tools/style-guide/brand-tokens.html
 npm run style-guide:check    # fails if the guide is stale
 ```
 
-Then republish the guide as the existing Artifact so the shared link stays current.
+The check runs ahead of `nx affected:lint`, so CI fails on a token change whose
+guide was never regenerated. Commit the regenerated HTML alongside the tokens.
+
+Republishing the guide to its Artifact is manual — CI has no access to it. After
+a token change, regenerate, commit, and republish to the same URL so the shared
+link stays current.
 
 ## Version Bump Requirement
 
