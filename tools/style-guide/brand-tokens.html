@@ -4,29 +4,35 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
 <style>
 :root {
-  --bg:#ffffff; --surface:#f6f6f6; --panel:#ececec; --rule:#dcdcdc; --hair:#e8e8e8;
-  --ink:#2b2b2b; --soft:#5f5f5f; --blue:#2d6a99; --accent:#a0521f; --brand:#6b6b6b;
-  --ok:#1a7f1a; --ok-bd:rgba(26,127,26,.35); --ok-bg:rgba(26,127,26,.08);
-  --wr:#8a4b00; --wr-bd:rgba(138,75,0,.35); --wr-bg:rgba(138,75,0,.08);
-  --bad:#b30000; --bad-bd:rgba(179,0,0,.35); --bad-bg:rgba(179,0,0,.08);
+  --bg:#ffffff; --surface:#f6f6f6; --panel:#ececec;
+  --rule:#d4d4d4; --hair:#ececec;
+  --ink:#2b2b2b; --soft:#5f5f5f;
+  --blue:#2d6a99; --accent:#a0521f; --brand:#6b6b6b;
+  --ok:#1a7f1a; --ok-bd:rgba(26,127,26,0.35); --ok-bg:rgba(26,127,26,0.08);
+  --wr:#8a4b00; --wr-bd:rgba(138,75,0,0.35); --wr-bg:rgba(138,75,0,0.08);
+  --bad:#b30000; --bad-bd:rgba(179,0,0,0.35); --bad-bg:rgba(179,0,0,0.08);
   --mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:Roboto,'Helvetica Neue',system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
-    --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
-    --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
-    --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
-    --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+  --bg:#1a1a1a; --surface:#222222; --panel:#272727;
+  --rule:#333333; --hair:#272727;
+  --ink:#c9c9c9; --soft:#b8b8b8;
+  --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
+  --ok:#38e038; --ok-bd:rgba(56,224,56,0.35); --ok-bg:rgba(56,224,56,0.08);
+  --wr:#ff8000; --wr-bd:rgba(255,128,0,0.35); --wr-bg:rgba(255,128,0,0.08);
+  --bad:#e05252; --bad-bd:rgba(224,82,82,0.35); --bad-bg:rgba(224,82,82,0.08);
   }
 }
 :root[data-theme="dark"] {
-  --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
-  --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
-  --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
-  --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
-  --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+  --bg:#1a1a1a; --surface:#222222; --panel:#272727;
+  --rule:#333333; --hair:#272727;
+  --ink:#c9c9c9; --soft:#b8b8b8;
+  --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
+  --ok:#38e038; --ok-bd:rgba(56,224,56,0.35); --ok-bg:rgba(56,224,56,0.08);
+  --wr:#ff8000; --wr-bd:rgba(255,128,0,0.35); --wr-bg:rgba(255,128,0,0.08);
+  --bad:#e05252; --bad-bd:rgba(224,82,82,0.35); --bad-bg:rgba(224,82,82,0.08);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
@@ -318,7 +324,7 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
       <div class="spec-bd d">
         <h3>Cartesian wordlists</h3>
         <p>Style inputs default to <code style="color:#cc7832">var(--tw-*, …)</code>,
-        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        so an untokenised consumer renders as before. Defined in <code>_tokens.scss</code>.</p>
         <div class="btnrow">
           <button class="b1">Generate wordlist</button>
           <button class="b2">Cancel</button>
@@ -330,7 +336,7 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
       <div class="spec-bd l">
         <h3>Cartesian wordlists</h3>
         <p>Style inputs default to <code style="color:#a0521f">var(--tw-*, …)</code>,
-        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        so an untokenised consumer renders as before. Defined in <code>_tokens.scss</code>.</p>
         <div class="btnrow">
           <button class="b1">Generate wordlist</button>
           <button class="b2">Cancel</button>

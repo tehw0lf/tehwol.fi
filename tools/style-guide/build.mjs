@@ -76,6 +76,39 @@ function contrast(a, b) {
   return Math.round(((hi + 0.05) / (lo + 0.05)) * 100) / 100;
 }
 
+/* ---------- page chrome -------------------------------------------------- */
+
+/**
+ * The guide's own chrome, derived from the tokens it documents rather than
+ * restated as literals — otherwise a token change updates the tables while
+ * leaving the page around them on the old palette.
+ *
+ * Three values are the guide's own, and each is here for a measured reason:
+ * `--bad` must read as an error on a dark ground, where --tw-danger (#ca0101)
+ * sits at 2.91:1; `--brand` is darkened in light mode so the wolf mark holds its
+ * edge on white; and `--ink` is running prose, which wants more contrast than
+ * any UI token carries. Secondary text takes --tw-text-muted, which is the token
+ * for exactly that and clears AA on both grounds.
+ */
+function chrome(theme, { brandMark, danger, bodyInk }) {
+  const t = (name) => theme.get(name);
+  const tint = (hex, alpha) => {
+    let h = hex.replace('#', '');
+    if (h.length === 3) h = [...h].map((c) => c + c).join('');
+    const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    return `rgba(${r},${g},${b},${alpha})`;
+  };
+  return [
+    `--bg:${t('--tw-bg')}; --surface:${t('--tw-surface')}; --panel:${t('--tw-surface-raised')};`,
+    `--rule:${t('--tw-control-bg')}; --hair:${t('--tw-surface-raised')};`,
+    `--ink:${bodyInk}; --soft:${t('--tw-text-muted')};`,
+    `--blue:${t('--tw-text')}; --accent:${t('--tw-accent')}; --brand:${brandMark};`,
+    `--ok:${t('--tw-success')}; --ok-bd:${tint(t('--tw-success'), 0.35)}; --ok-bg:${tint(t('--tw-success'), 0.08)};`,
+    `--wr:${t('--tw-warn')}; --wr-bd:${tint(t('--tw-warn'), 0.35)}; --wr-bg:${tint(t('--tw-warn'), 0.08)};`,
+    `--bad:${danger}; --bad-bd:${tint(danger, 0.35)}; --bad-bg:${tint(danger, 0.08)};`
+  ].join('\n  ');
+}
+
 /* ---------- content ------------------------------------------------------ */
 
 /** Ink tokens name the surface they sit on; surfaces carry no ratio. */
@@ -160,6 +193,19 @@ function render({ root, dark, light }) {
       `<td class="muted">${role}</td></tr>`
   ).join('\n      ');
 
+  // The mark is the brand grey in dark; on white it needs darkening to hold an
+  // edge, and #8e8e8e only reaches 3.28:1 there.
+  const lightChrome = chrome(light, {
+    brandMark: '#6b6b6b',
+    danger: light.get('--tw-danger'),
+    bodyInk: '#2b2b2b'
+  });
+  const darkChrome = chrome(dark, {
+    brandMark: root.get('--tw-brand'),
+    danger: '#e05252',
+    bodyInk: '#c9c9c9'
+  });
+
   const d = (t) => escape(dark.get(t));
   const l = (t) => escape(light.get(t));
 
@@ -169,29 +215,17 @@ function render({ root, dark, light }) {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
 <style>
 :root {
-  --bg:#ffffff; --surface:#f6f6f6; --panel:#ececec; --rule:#dcdcdc; --hair:#e8e8e8;
-  --ink:#2b2b2b; --soft:#5f5f5f; --blue:#2d6a99; --accent:#a0521f; --brand:#6b6b6b;
-  --ok:#1a7f1a; --ok-bd:rgba(26,127,26,.35); --ok-bg:rgba(26,127,26,.08);
-  --wr:#8a4b00; --wr-bd:rgba(138,75,0,.35); --wr-bg:rgba(138,75,0,.08);
-  --bad:#b30000; --bad-bd:rgba(179,0,0,.35); --bad-bg:rgba(179,0,0,.08);
+  ${lightChrome}
   --mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:Roboto,'Helvetica Neue',system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
-    --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
-    --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
-    --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
-    --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+  ${darkChrome}
   }
 }
 :root[data-theme="dark"] {
-  --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
-  --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
-  --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
-  --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
-  --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+  ${darkChrome}
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
@@ -336,7 +370,7 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
       <div class="spec-bd d">
         <h3>Cartesian wordlists</h3>
         <p>Style inputs default to <code style="color:${d('--tw-accent')}">var(--tw-*, …)</code>,
-        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        so an untokenised consumer renders as before. Defined in <code>_tokens.scss</code>.</p>
         <div class="btnrow">
           <button class="b1">Generate wordlist</button>
           <button class="b2">Cancel</button>
@@ -348,7 +382,7 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
       <div class="spec-bd l">
         <h3>Cartesian wordlists</h3>
         <p>Style inputs default to <code style="color:${l('--tw-accent')}">var(--tw-*, …)</code>,
-        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        so an untokenised consumer renders as before. Defined in <code>_tokens.scss</code>.</p>
         <div class="btnrow">
           <button class="b1">Generate wordlist</button>
           <button class="b2">Cancel</button>
