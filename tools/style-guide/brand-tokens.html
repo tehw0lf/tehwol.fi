@@ -1,0 +1,397 @@
+<title>tehw0lf Brand Tokens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:#ffffff; --surface:#f6f6f6; --panel:#ececec; --rule:#dcdcdc; --hair:#e8e8e8;
+  --ink:#2b2b2b; --soft:#5f5f5f; --blue:#2d6a99; --accent:#a0521f; --brand:#6b6b6b;
+  --ok:#1a7f1a; --ok-bd:rgba(26,127,26,.35); --ok-bg:rgba(26,127,26,.08);
+  --wr:#8a4b00; --wr-bd:rgba(138,75,0,.35); --wr-bg:rgba(138,75,0,.08);
+  --bad:#b30000; --bad-bd:rgba(179,0,0,.35); --bad-bg:rgba(179,0,0,.08);
+  --mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:Roboto,'Helvetica Neue',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
+    --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
+    --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
+    --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
+    --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#1a1a1a; --surface:#222222; --panel:#272727; --rule:#333333; --hair:#2a2a2a;
+  --ink:#c9c9c9; --soft:#8e8e8e; --blue:#6699bb; --accent:#cc7832; --brand:#8e8e8e;
+  --ok:#38e038; --ok-bd:rgba(56,224,56,.35); --ok-bg:rgba(56,224,56,.07);
+  --wr:#ff8000; --wr-bd:rgba(255,128,0,.35); --wr-bg:rgba(255,128,0,.07);
+  --bad:#e05252; --bad-bd:rgba(224,82,82,.35); --bad-bg:rgba(224,82,82,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+header{padding:72px 0 52px;border-bottom:1px solid var(--rule);
+  display:flex;gap:34px;align-items:center;flex-wrap:wrap}
+.mark{width:86px;height:86px;flex:none} .mark path{fill:var(--brand)}
+h1{font-size:clamp(30px,5vw,45px);font-weight:700;margin:0;color:var(--ink);
+  letter-spacing:-.022em;text-wrap:balance;line-height:1.1}
+.sub{margin:10px 0 0;color:var(--soft);max-width:62ch;font-size:15.5px}
+.sub b{color:var(--blue);font-weight:400}
+section{padding:48px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+h2{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+.lede{margin:0 0 26px;color:var(--soft);max-width:66ch;font-size:15px}
+.lede code,.note code,p code{color:var(--blue);font-size:12.5px}
+code{font-family:var(--mono);font-size:12px}
+.tok{color:var(--blue);font-weight:500;display:block}
+.role{font-size:12px;color:var(--soft);font-weight:300}
+.dot{display:inline-block;width:11px;height:11px;border-radius:2px;
+  margin-right:9px;vertical-align:-1px;border:1px solid var(--hair)}
+.tblwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:600px}
+thead th{text-align:left;font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--soft);
+  padding:13px 16px;background:var(--surface);border-bottom:1px solid var(--rule)}
+tbody th{text-align:left;font-weight:400;padding:13px 16px;
+  border-bottom:1px solid var(--hair);vertical-align:top;width:32%}
+td{padding:13px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+td code{color:var(--ink);text-transform:uppercase;font-size:11.5px}
+.muted{color:var(--soft)}
+code.dim{color:var(--soft);font-size:11.5px}
+.r{display:block;font-family:var(--mono);font-size:10.5px;margin-top:7px;
+  padding:2.5px 7px;border-radius:2px;width:fit-content;
+  font-variant-numeric:tabular-nums;border:1px solid}
+.r.pass{color:var(--ok);border-color:var(--ok-bd);background:var(--ok-bg)}
+.r.large{color:var(--wr);border-color:var(--wr-bd);background:var(--wr-bg)}
+.r.fail{color:var(--bad);border-color:var(--bad-bd);background:var(--bad-bg)}
+.ramp{display:flex;flex-direction:column;gap:2px}
+.step{display:flex;align-items:center;gap:14px;padding:5px 0}
+.bar{height:26px;width:180px;border-radius:2px;flex:none;border:1px solid var(--hair)}
+.step .n{color:var(--soft);width:34px;font-variant-numeric:tabular-nums}
+.step .h{color:var(--ink);text-transform:uppercase;font-size:11.5px}
+.step.anchor .bar{width:230px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);padding:2px 7px;border-radius:2px}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.spec{border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.spec-hd{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:9px 20px;border-bottom:1px solid var(--rule);background:var(--surface);color:var(--soft)}
+.spec-bd{padding:26px 24px;display:flex;flex-direction:column;gap:13px}
+.spec-bd h3{margin:0;font-size:19px;font-weight:500;letter-spacing:-.01em}
+.spec-bd p{margin:0;font-size:14px}
+.spec-bd a{font-weight:700;text-decoration:none}
+.spec-bd a:hover{text-decoration:underline}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+button{font-family:var(--sans);font-size:13px;padding:8px 17px;border-radius:3px;
+  border:1px solid transparent;cursor:pointer}
+.d{background:#1a1a1a} .d h3{color:#e6e6e6} .d p{color:#6699bb} .d a{color:#e8903f}
+.d .b1{background:#333333;color:#e8903f}
+.d .b2{background:transparent;color:#6699bb;border-color:#333333}
+.l{background:#ffffff} .l h3{color:#2b2b2b} .l p{color:#2d6a99} .l a{color:#a0521f}
+.l .b1{background:#d4d4d4;color:#854519}
+.l .b2{background:transparent;color:#2d6a99;border-color:#dcdcdc}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+pre{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;
+  line-height:1.7;margin:0;color:var(--ink)}
+pre .c{color:var(--soft)} pre .v{color:var(--blue)}
+.note{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
+.note div{border-left:2px solid var(--accent);padding:2px 0 2px 17px}
+.note h4{margin:0 0 5px;font-size:13.5px;font-weight:500;color:var(--ink);font-family:var(--mono)}
+.note p{margin:0;font-size:13.5px;color:var(--soft)}
+footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--mono)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <svg class="mark" viewBox="0 0 500 500" aria-label="tehw0lf wolf mark" role="img">
+    <g transform="translate(0,500) scale(0.1,-0.1)"><path d="M3105 4986 c-47 -14 -72 -48 -111 -149 -18 -48 -39 -83 -63 -105 -78
+-70 -90 -85 -109 -125 -11 -23 -34 -73 -52 -110 -32 -70 -69 -111 -261 -292
+-88 -83 -122 -145 -199 -369 -86 -251 -125 -309 -268 -407 -104 -71 -180 -135
+-196 -168 -8 -15 -44 -44 -82 -66 -108 -63 -159 -122 -248 -290 -69 -129 -109
+-180 -156 -199 -46 -18 -55 -33 -65 -106 -17 -142 -101 -404 -173 -543 -66
+-131 -158 -242 -380 -464 -280 -280 -292 -300 -292 -497 0 -138 18 -269 57
+-424 18 -73 27 -134 27 -192 1 -79 -2 -91 -41 -175 -74 -162 -99 -265 -71
+-293 8 -8 45 -12 100 -12 136 0 161 17 280 190 37 52 101 136 143 185 42 50
+90 113 106 140 72 125 55 277 -35 309 -10 3 -66 13 -124 21 -198 28 -218 59
+-138 219 74 148 134 214 218 240 10 3 24 20 31 38 16 37 84 93 200 163 110 67
+184 137 198 188 20 75 33 101 66 138 59 65 73 113 88 297 14 173 23 213 56
+248 11 12 35 60 54 108 42 107 97 191 219 333 121 141 198 208 259 229 27 9
+81 43 123 78 158 128 207 164 237 173 58 16 84 90 105 294 10 101 40 170 125
+297 31 46 63 108 72 138 15 53 16 54 73 70 104 30 186 144 267 374 74 209 146
+340 214 386 28 19 38 21 55 12 12 -6 82 -70 156 -142 74 -72 181 -169 237
+-214 57 -46 110 -97 119 -113 19 -37 15 -56 -37 -211 -30 -87 -39 -130 -37
+-165 4 -64 26 -76 128 -68 69 6 226 28 293 41 l27 6 0 -84 c0 -182 -25 -368
+-75 -574 -62 -255 -80 -612 -100 -2005 l-6 -436 90 -66 c49 -36 98 -78 107
+-92 24 -37 29 -116 14 -246 -16 -151 -17 -313 -2 -332 7 -8 32 -20 55 -26 27
+-6 64 -29 100 -60 73 -64 137 -84 247 -79 95 4 120 21 120 81 0 31 -6 45 -30
+67 -49 45 -62 99 -106 430 -28 216 -86 376 -179 495 -25 32 -50 75 -55 94 -18
+71 -22 272 -11 601 26 764 60 1182 119 1450 25 117 27 141 27 375 0 414 -23
+503 -160 615 -130 107 -187 185 -240 334 -22 60 -66 111 -119 138 -60 30 -75
+46 -91 101 -8 28 -22 61 -30 73 -34 52 -162 105 -310 129 -113 19 -500 19
+-560 1z"/></g>
+  </svg>
+  <div>
+    <h1>tehw0lf brand tokens</h1>
+    <p class="sub">The palette was never designed in one sitting — it grew across the
+    website, the favicon and the <b>fwdark</b> userstyle, arriving at the same colours
+    each time. This is that palette, named, paired across both themes, and measured.</p>
+  </div>
+</header>
+
+<section>
+  <h2>Brand</h2>
+  <p class="lede">One grey, carried since 2022. It fills the avatar and the favicon and
+  stands as the default of the colour embed. Not Material Grey, not Darcula — it has no
+  source outside this workspace. It is the one value that does not shift between themes:
+  it is the mark, not a UI colour.</p>
+  <div class="ramp">
+    <div class="step anchor">
+      <span class="bar" style="background:#8e8e8e"></span>
+      <code class="n">—</code><code class="h">#8e8e8e</code>
+      <span class="tag">--tw-brand</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Two themes</h2>
+  <p class="lede">A theme class on <code>&lt;body&gt;</code> — <code>.dark</code> or
+  <code>.light</code> — selects the set. Every ink token is measured against the surface
+  it actually sits on, named in its row; the ratio in each column is against that
+  column's own ground, never the other one's.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Token</th><th>Dark</th><th>Light</th></tr></thead>
+    <tbody>
+    <tr>
+      <th scope="row"><code class="tok">--tw-bg</code><span class="role">page ground</span></th>
+      <td><span class="dot" style="background:#1a1a1a"></span><code>#1a1a1a</code></td>
+      <td><span class="dot" style="background:#ffffff"></span><code>#ffffff</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-surface</code><span class="role">raised surface</span></th>
+      <td><span class="dot" style="background:#222222"></span><code>#222222</code></td>
+      <td><span class="dot" style="background:#f6f6f6"></span><code>#f6f6f6</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-surface-raised</code><span class="role">panel</span></th>
+      <td><span class="dot" style="background:#272727"></span><code>#272727</code></td>
+      <td><span class="dot" style="background:#ececec"></span><code>#ececec</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-control-bg</code><span class="role">control surface</span></th>
+      <td><span class="dot" style="background:#333333"></span><code>#333333</code></td>
+      <td><span class="dot" style="background:#d4d4d4"></span><code>#d4d4d4</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-control-text</code><span class="role">text on controls</span></th>
+      <td><span class="dot" style="background:#e8903f"></span><code>#e8903f</code><span class="r pass">5.11:1 · AA</span></td>
+      <td><span class="dot" style="background:#854519"></span><code>#854519</code><span class="r pass">4.95:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-text</code><span class="role">body copy</span></th>
+      <td><span class="dot" style="background:#6699bb"></span><code>#6699bb</code><span class="r pass">5.67:1 · AA</span></td>
+      <td><span class="dot" style="background:#2d6a99"></span><code>#2d6a99</code><span class="r pass">5.78:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-text-dim</code><span class="role">secondary, large text</span></th>
+      <td><span class="dot" style="background:#437da8"></span><code>#437da8</code><span class="r large">3.93:1 · AA&nbsp;Large</span></td>
+      <td><span class="dot" style="background:#1f5c8b"></span><code>#1f5c8b</code><span class="r pass">7.09:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-text-muted</code><span class="role">muted</span></th>
+      <td><span class="dot" style="background:#b8b8b8"></span><code>#b8b8b8</code><span class="r pass">8.77:1 · AA</span></td>
+      <td><span class="dot" style="background:#5f5f5f"></span><code>#5f5f5f</code><span class="r pass">6.39:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-accent</code><span class="role">accent</span></th>
+      <td><span class="dot" style="background:#cc7832"></span><code>#cc7832</code><span class="r pass">5.22:1 · AA</span></td>
+      <td><span class="dot" style="background:#a0521f"></span><code>#a0521f</code><span class="r pass">5.64:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-accent-hover</code><span class="role">accent, hover</span></th>
+      <td><span class="dot" style="background:#f08b39"></span><code>#f08b39</code><span class="r pass">7.01:1 · AA</span></td>
+      <td><span class="dot" style="background:#b3611f"></span><code>#b3611f</code><span class="r pass">4.52:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-link</code><span class="role">links</span></th>
+      <td><span class="dot" style="background:#e8903f"></span><code>#e8903f</code><span class="r pass">7.04:1 · AA</span></td>
+      <td><span class="dot" style="background:#a0521f"></span><code>#a0521f</code><span class="r pass">5.64:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-success</code><span class="role">success</span></th>
+      <td><span class="dot" style="background:#38e038"></span><code>#38e038</code><span class="r pass">9.85:1 · AA</span></td>
+      <td><span class="dot" style="background:#1a7f1a"></span><code>#1a7f1a</code><span class="r pass">5.13:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-warn</code><span class="role">warning</span></th>
+      <td><span class="dot" style="background:#ff8000"></span><code>#ff8000</code><span class="r pass">6.91:1 · AA</span></td>
+      <td><span class="dot" style="background:#8a4b00"></span><code>#8a4b00</code><span class="r pass">6.8:1 · AA</span></td>
+    </tr>
+    <tr>
+      <th scope="row"><code class="tok">--tw-danger</code><span class="role">danger</span></th>
+      <td><span class="dot" style="background:#ca0101"></span><code>#ca0101</code><span class="r fail">2.91:1 · below&nbsp;AA</span></td>
+      <td><span class="dot" style="background:#b30000"></span><code>#b30000</code><span class="r pass">7.2:1 · AA</span></td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Neutral ramp</h2>
+  <p class="lede">Anchored at 500 on the brand grey, so the mark and the interface belong
+  to one family. Ground-independent — both themes draw their surfaces from this one ramp,
+  from opposite ends.</p>
+  <div class="ramp">
+      <div class="step">
+        <span class="bar" style="background:#1a1a1a"></span>
+        <code class="n">900</code><code class="h">#1a1a1a</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#222222"></span>
+        <code class="n">850</code><code class="h">#222222</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#272727"></span>
+        <code class="n">800</code><code class="h">#272727</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#2f2f2f"></span>
+        <code class="n">750</code><code class="h">#2f2f2f</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#333333"></span>
+        <code class="n">700</code><code class="h">#333333</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#424242"></span>
+        <code class="n">650</code><code class="h">#424242</code>
+        
+      </div>
+      <div class="step anchor">
+        <span class="bar" style="background:#8e8e8e"></span>
+        <code class="n">500</code><code class="h">#8e8e8e</code>
+        <span class="tag">= --tw-brand</span>
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#b8b8b8"></span>
+        <code class="n">300</code><code class="h">#b8b8b8</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#d4d4d4"></span>
+        <code class="n">200</code><code class="h">#d4d4d4</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#ececec"></span>
+        <code class="n">100</code><code class="h">#ececec</code>
+        
+      </div>
+      <div class="step">
+        <span class="bar" style="background:#f6f6f6"></span>
+        <code class="n">050</code><code class="h">#f6f6f6</code>
+        
+      </div>
+  </div>
+</section>
+
+<section>
+  <h2>Specimen</h2>
+  <p class="lede">The same component in both themes. Roboto for running text, Roboto Mono
+  for tokens and values — the faces the site already ships.</p>
+  <div class="specs">
+    <div class="spec">
+      <div class="spec-hd">body.dark</div>
+      <div class="spec-bd d">
+        <h3>Cartesian wordlists</h3>
+        <p>Style inputs default to <code style="color:#cc7832">var(--tw-*, …)</code>,
+        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        <div class="btnrow">
+          <button class="b1">Generate wordlist</button>
+          <button class="b2">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-hd">body.light</div>
+      <div class="spec-bd l">
+        <h3>Cartesian wordlists</h3>
+        <p>Style inputs default to <code style="color:#a0521f">var(--tw-*, …)</code>,
+        so an untokenised consumer renders as before. Read the <a href="#">token source</a>.</p>
+        <div class="btnrow">
+          <button class="b1">Generate wordlist</button>
+          <button class="b2">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Using these in a new app</h2>
+  <p class="lede">Copy the token block, then reference it. Two rules carry most of the
+  weight, and both were learned the hard way on this palette.</p>
+  <pre><span class="c">/* Controls do not borrow --tw-accent: it is tuned for the page
+   ground and only reaches 3.79:1 on the control surface. */</span>
+button {
+  background: <span class="v">var(--tw-control-bg)</span>;
+  color: <span class="v">var(--tw-control-text)</span>;
+}
+
+<span class="c">/* In a publishable library, carry the dark value as a fallback so
+   a consumer without tokens renders exactly as it does today. */</span>
+buttonStyle = input({
+  color: <span class="v">'var(--tw-accent, #cc7832)'</span>
+});</pre>
+  <div class="note" style="margin-top:26px">
+    <div>
+      <h4>Never in Sass</h4>
+      <p>A Sass colour variable compiles to one fixed value and cannot follow the theme.
+      That is what left the light mode wearing dark ink.</p>
+    </div>
+    <div>
+      <h4>Measure against the surface</h4>
+      <p>Not against the page. A colour that clears AA on the ground can fail on a
+      control sitting on top of it.</p>
+    </div>
+    <div>
+      <h4>Semantic stays separate</h4>
+      <p>Success, warning and danger are their own tokens. They never stand in for the
+      accent, and the accent never stands in for them.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Shared with fwdark</h2>
+  <p class="lede">fwdark is a userstyle for a browser game — a different medium, a
+  different decade of code. These values were arrived at twice, independently. That
+  repetition is what makes them a brand rather than a preference.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Value</th><th>fwdark</th><th>tehw0lf</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:#cc7832"></span><code>#cc7832</code></td><td><code class="dim">--color-link</code></td><td><code class="dim">--tw-accent</code></td><td class="muted">the burnt orange</td></tr>
+      <tr><td><span class="dot" style="background:#1a1a1a"></span><code>#1a1a1a</code></td><td><code class="dim">--color-mainbg</code></td><td><code class="dim">--tw-neutral-900</code></td><td class="muted">the ground</td></tr>
+      <tr><td><span class="dot" style="background:#f08b39"></span><code>#f08b39</code></td><td><code class="dim">--color-link-active</code></td><td><code class="dim">--tw-accent-hover</code></td><td class="muted">the hover state</td></tr>
+      <tr><td><span class="dot" style="background:#2f2f2f"></span><code>#2f2f2f</code></td><td><code class="dim">--color-mainheader-bg</code></td><td><code class="dim">--tw-neutral-750</code></td><td class="muted">the raised tone</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>tehw0lf · generated from _tokens.scss · every ratio measured against its own ground</footer>
+</div>

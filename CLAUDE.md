@@ -76,6 +76,30 @@ Each library in `libs/` is independently publishable with its own:
 
 When working on libraries, test integration with the main app by importing via the path mapping.
 
+## Design Tokens
+
+All brand colours live in `apps/tehwolfde/src/assets/styles/_tokens.scss` as CSS
+custom properties, defined per theme under `body.dark` and `body.light`. It is the
+single source of truth — never hardcode a colour, and never put one in a Sass
+variable: Sass compiles to one fixed value and cannot follow the theme.
+
+The publishable libraries reference tokens as `var(--tw-accent, #cc7832)`. Keep the
+fallback (the dark value) so consumers without tokens render unchanged.
+
+Two rules that are easy to get wrong:
+- Controls use `--tw-control-text`, not `--tw-accent`. The accent is tuned for the
+  page ground and only reaches 3.79:1 on the control surface.
+- Measure contrast against the surface a colour actually sits on, not against the page.
+
+**The style guide is generated, not written.** After changing `_tokens.scss`, run:
+
+```bash
+npm run style-guide          # regenerate tools/style-guide/brand-tokens.html
+npm run style-guide:check    # fails if the guide is stale
+```
+
+Then republish the guide as the existing Artifact so the shared link stays current.
+
 ## Version Bump Requirement
 
 **IMPORTANT**: Every PR in this repository **must** include a version bump in `package.json`. CI uses the version tag for Docker artifact naming via `nx affected`. Without a bump, the security scan step fails because it cannot find a uniquely tagged artifact.
