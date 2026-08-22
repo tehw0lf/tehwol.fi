@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "22.1.15",
+  "version": "22.1.16",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -19,7 +19,7 @@
     "e2e:ci": "nx e2e tehwolfde-e2e -- --reporter=junit",
     "affected:build": "nx affected:build",
     "affected:test": "nx affected:test",
-    "affected:lint": "nx affected:lint",
+    "affected:lint": "npm run style-guide:check && nx affected:lint",
     "affected": "nx affected",
     "format": "nx format:write",
     "format:check": "nx format:check",
