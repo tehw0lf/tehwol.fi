@@ -15,7 +15,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { TranslatePipe } from '../../i18n/translate.pipe';
-import { ThemeService } from '../../services/theme.service';
 
 /**
  * Horizontally scrolling container that owns the track, the arrow buttons and
@@ -48,7 +47,6 @@ import { ThemeService } from '../../services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent {
-  private themeService = inject(ThemeService);
   private destroyRef = inject(DestroyRef);
 
   private track = viewChild<ElementRef<HTMLElement>>('track');
@@ -140,10 +138,7 @@ export class CarouselComponent {
   }
 
   buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-control-bg, #333333)'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-control-bg, #333333)',
     color: 'var(--tw-link, #e8903f)'
   }));
 

@@ -14,7 +14,7 @@
 .mat-button-wrapper {
   display: inline-flex;
   align-items: center;
-  color: global.$linkcolor;
+  color: var(--tw-link);
 }
 
 .nav-logo {
@@ -38,7 +38,7 @@
 }
 
 .mat-toolbar-multiple-rows.light {
-  background-color: rgb(212, 212, 212);
+  background-color: var(--tw-surface-raised);
 }
 
 .github {

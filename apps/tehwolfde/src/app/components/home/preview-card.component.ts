@@ -12,7 +12,6 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 import { TranslatePipe } from '../../i18n/translate.pipe';
-import { ThemeService } from '../../services/theme.service';
 
 /** A home page slide: scaled down live preview, title and a link into the app. */
 export interface PreviewCard {
@@ -36,7 +35,6 @@ export interface PreviewCard {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewCardComponent {
-  private themeService = inject(ThemeService);
 
   readonly card = input.required<PreviewCard>();
 
@@ -51,19 +49,13 @@ export class PreviewCardComponent {
   readonly loadPreview = input(false);
 
   cardStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
     'backdrop-filter': 'var(--tw-glass-blur, blur(50px))',
     color: 'var(--tw-text, #6699bb)'
   }));
 
   buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-control-bg, #333333)'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-control-bg, #333333)',
     color: 'var(--tw-link, #e8903f)'
   }));
 }

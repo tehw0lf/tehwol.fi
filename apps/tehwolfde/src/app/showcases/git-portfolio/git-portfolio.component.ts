@@ -14,7 +14,6 @@ import {
 import { createGitPortfolioTools } from '@tehw0lf/git-portfolio/webmcp';
 
 import { TranslateService } from '../../i18n/translate.service';
-import { ThemeService } from '../../services/theme.service';
 import { WebmcpService } from '../../services/webmcp.service';
 
 @Component({
@@ -24,7 +23,6 @@ import { WebmcpService } from '../../services/webmcp.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GitPortfolioComponent {
-  private themeService = inject(ThemeService);
   translateService = inject(TranslateService);
   private webmcp = inject(WebmcpService);
   private gitProviderService = inject(GitProviderService);
@@ -50,19 +48,13 @@ export class GitPortfolioComponent {
   }
 
   buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
     color: 'var(--tw-accent, #cc7832)'
   }));
 
   cardStyle = computed(() => ({
     color: 'var(--tw-text, #6699bb)',
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
     'backdrop-filter': 'var(--tw-glass-blur, blur(50px))'
   }));
 

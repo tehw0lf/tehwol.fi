@@ -13,7 +13,6 @@ import { of } from 'rxjs';
 
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
-import { ThemeService } from '../../services/theme.service';
 import { WebmcpService } from '../../services/webmcp.service';
 
 @Component({
@@ -24,7 +23,6 @@ import { WebmcpService } from '../../services/webmcp.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
-  private themeService = inject(ThemeService);
   translateService = inject(TranslateService);
   private webmcp = inject(WebmcpService);
   private destroyRef = inject(DestroyRef);
@@ -57,20 +55,14 @@ export class ContactFormComponent {
   }
 
   buttonStyle = computed(() => ({
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-control-bg, #333333)'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-control-bg, #333333)',
     border: 'none',
     color: 'var(--tw-accent, #cc7832)'
   }));
 
   formStyle = computed(() => ({
     color: 'var(--tw-text, #6699bb)',
-    'background-color':
-      this.themeService.theme() === 'dark'
-        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
-        : 'rgba(255, 255, 255, 0.75)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
     'backdrop-filter': 'var(--tw-glass-blur, blur(50px))',
     'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.075)'
   }));

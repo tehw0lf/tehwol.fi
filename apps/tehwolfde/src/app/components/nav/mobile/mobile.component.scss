@@ -1,4 +1,3 @@
-@use '../../../../assets/styles/global';
 @use '@tehw0lf/mvc';
 @use '../shared-nav';
 
@@ -12,15 +11,15 @@
 }
 
 .mdc-list-item:hover .mdc-list-item__primary-text {
-  color: global.$linkcolor !important;
+  color: var(--tw-link) !important;
 }
 
 .mdc-list-item__primary-text {
-  color: global.$linkcolor !important;
+  color: var(--tw-link) !important;
 }
 
 #menu.mat-mdc-icon-button {
-  color: global.$linkcolor;
+  color: var(--tw-link);
 }
 
 // Material sizes icon buttons at 40px, below the 48px minimum touch target.
@@ -46,15 +45,15 @@
 }
 
 .mat-drawer-container.light {
-  background-color: white;
+  background-color: var(--tw-bg);
 
   .mat-drawer {
-    background-color: var(--tw-neutral-200);
+    background-color: var(--tw-surface-raised);
   }
 }
 
 .main-content {
-  color: global.$fontcolor;
+  color: var(--tw-text);
   padding: 16px;
   box-sizing: border-box;
 
@@ -68,7 +67,7 @@ span.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple::before {
 }
 
 .apps-subheader {
-  color: global.$linkcolor !important;
+  color: var(--tw-link) !important;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.08em;
