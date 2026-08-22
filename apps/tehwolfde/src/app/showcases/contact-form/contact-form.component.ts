@@ -57,7 +57,7 @@ export class ContactFormComponent {
   buttonStyle = computed(() => ({
     'background-color': 'var(--tw-control-bg, #333333)',
     border: 'none',
-    color: 'var(--tw-accent, #cc7832)'
+    color: 'var(--tw-control-text, #e8903f)'
   }));
 
   formStyle = computed(() => ({

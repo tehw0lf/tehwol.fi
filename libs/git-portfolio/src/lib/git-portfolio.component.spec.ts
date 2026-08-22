@@ -276,7 +276,7 @@ describe('GitPortfolioComponent', () => {
       });
       expect(component.checkColor()).toBe('var(--tw-success, #38e038)');
       expect(component.forkColor()).toBe('var(--tw-text, #6699bb)');
-      expect(component.issueColor()).toBe('rgb(56, 224, 56)');
+      expect(component.issueColor()).toBe('var(--tw-success, #38e038)');
       expect(component.pasteColor()).toBe('var(--tw-accent, #cc7832)');
       expect(component.starColor()).toBe('gold');
       expect(component.gitProviderConfig()).toEqual({});

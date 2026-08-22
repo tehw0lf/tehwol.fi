@@ -53,7 +53,7 @@ export class GitPortfolioComponent implements OnDestroy {
 
   forkColor = input('var(--tw-text, #6699bb)');
 
-  issueColor = input('rgb(56, 224, 56)');
+  issueColor = input('var(--tw-success, #38e038)');
 
   pasteColor = input('var(--tw-accent, #cc7832)');
 

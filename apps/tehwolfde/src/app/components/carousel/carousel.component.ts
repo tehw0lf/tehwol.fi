@@ -139,7 +139,7 @@ export class CarouselComponent {
 
   buttonStyle = computed(() => ({
     'background-color': 'var(--tw-control-bg, #333333)',
-    color: 'var(--tw-link, #e8903f)'
+    color: 'var(--tw-control-text, #e8903f)'
   }));
 
   /**

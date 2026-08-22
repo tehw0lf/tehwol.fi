@@ -41,6 +41,9 @@ body.dark {
   --tw-surface: var(--tw-neutral-850);
   --tw-surface-raised: var(--tw-neutral-800);
   --tw-control-bg: var(--tw-neutral-700);
+  // The accent is only 3.79:1 on the control surface, so controls get their
+  // own foreground rather than borrowing --tw-accent.
+  --tw-control-text: #e8903f; // 5.11:1 on --tw-control-bg
 
   --tw-text: #6699bb; // 5.67:1
   --tw-text-dim: #437da8; // 3.93:1 — large text only
@@ -65,6 +68,7 @@ body.light {
   --tw-surface: var(--tw-neutral-050);
   --tw-surface-raised: var(--tw-neutral-100);
   --tw-control-bg: var(--tw-neutral-200);
+  --tw-control-text: #854519; // 4.95:1 on --tw-control-bg
 
   --tw-text: #2d6a99; // 5.78:1 — the blue, darkened
   --tw-text-dim: #1f5c8b; // 7.09:1

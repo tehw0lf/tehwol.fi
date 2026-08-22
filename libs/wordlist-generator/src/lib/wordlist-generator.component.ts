@@ -61,7 +61,7 @@ export class WordlistGeneratorComponent implements OnDestroy {
 
   buttonStyle = input({
     'background-color': 'var(--tw-control-bg, #333333)',
-    color: 'var(--tw-accent, #cc7832)'
+    color: 'var(--tw-control-text, #e8903f)'
   });
 
   dragStyle = input({ color: 'var(--tw-accent, #cc7832)' });

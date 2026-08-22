@@ -71,7 +71,7 @@ describe('ContactFormComponent', () => {
       expect(component.buttonStyle()).toEqual({
         'background-color': 'var(--tw-control-bg, #333333)',
         border: 'none',
-        color: 'var(--tw-accent, #cc7832)'
+        color: 'var(--tw-control-text, #e8903f)'
       });
       expect(component.formStyle()).toEqual({
         color: 'var(--tw-text, #6699bb)',
