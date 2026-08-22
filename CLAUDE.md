@@ -117,7 +117,8 @@ Steps required on every PR branch:
 
 ## Pre-commit Validation Commands
 
-**IMPORTANT**: Before committing any changes, always run these validation commands. Never commit changes that do not pass both commands with an exit code of 0.
+The workspace rule — never commit what does not pass — applies here; these are
+this repository's concrete commands for it.
 
 ### Primary Validation
 ```bash
@@ -135,59 +136,20 @@ npx nx run-many -t lint,test,build
 npm run e2e
 ```
 
-## Important Instructions
+## Project-specific Instructions
 
-**IMPORTANT**: Act as a critical code reviewer. Question approaches, ask clarifying questions about requirements, suggest alternative solutions, and identify potential issues (performance, security, maintainability, edge cases) before implementing.
+Rules that apply to every repository — critical review, pre-commit validation,
+`.gitignore` hygiene, feature-branch workflow — live in the global and workspace
+`CLAUDE.md` and are not repeated here.
 
-**IMPORTANT**: Always validate that code works before committing. Never commit code that does not pass linting, testing, building, or end-to-end testing.
+### Nx MCP server
 
-**IMPORTANT**: Check the `.gitignore` file and ensure sensitive files are not committed.
+This workspace has the Nx MCP server available. Use it for project-graph
+inspection, generator runs, and task/CI troubleshooting instead of guessing at
+workspace layout.
 
-**IMPORTANT**: Prefer editing existing files over creating new ones unless absolutely necessary for the goal.
+### Documentation lookups
 
-**IMPORTANT**: Never proactively create documentation files (*.md) or README files unless explicitly requested.
-
-## MCP Server Integration
-
-**IMPORTANT**: When working with this project, utilize MCP servers to get the latest best practices and documentation.
-
-### Context7 for Latest Documentation
-Use the Context7 MCP server to retrieve up-to-date documentation for Angular, Nx, and other libraries used in this project:
-
-```bash
-# Example usage for getting Angular best practices
-- Use Context7 to get latest Angular documentation
-- Use Context7 to get latest Nx monorepo patterns
-- Use Context7 to get latest Jest testing practices
-- Use Context7 to get latest Playwright E2E testing patterns
-- Use Context7 to get latest Angular Material implementation guidance
-```
-
-### Available MCP Servers
-- **Context7**: For retrieving latest library documentation and best practices
-- **Memory**: For maintaining context about project decisions and patterns
-- **Sequential-thinking**: For complex architectural decisions and problem-solving
-- **Nx MCP Server**: For Nx-specific workspace management, generation, and task execution
-
-### Nx MCP Server Integration
-**IMPORTANT**: This workspace includes Nx MCP server integration. Refer to [`.github/instructions/nx.instructions.md`](.github/instructions/nx.instructions.md) for comprehensive Nx-specific guidelines including:
-- Workspace analysis and project graph visualization
-- Code generation workflows
-- Task execution and debugging
-- CI error troubleshooting
-
-The Nx MCP server provides tools for workspace management, generator execution, and task monitoring that are specifically tailored to this Nx 21.2.2 monorepo.
-
-### When to Use MCP Servers
-- Before implementing new features, consult Context7 for latest best practices
-- When updating dependencies, check Context7 for migration patterns
-- For complex architectural decisions, use sequential-thinking MCP server
-- Store important project decisions and patterns in memory MCP server
-
-**IMPORTANT**: Always prefer latest documentation from Context7 over potentially outdated local knowledge when implementing Angular, Nx, Jest, or Playwright features.
-
-# important-instruction-reminders
-Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+Angular, Nx, Jest, Playwright and Angular Material move fast. Prefer Context7
+over recalled knowledge when implementing against them, and check it for
+migration notes when bumping those dependencies.
