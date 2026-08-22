@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "22.1.13",
+  "version": "22.1.15",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -23,6 +23,8 @@
     "affected": "nx affected",
     "format": "nx format:write",
     "format:check": "nx format:check",
+    "style-guide": "node tools/style-guide/build.mjs",
+    "style-guide:check": "node tools/style-guide/build.mjs --check",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
