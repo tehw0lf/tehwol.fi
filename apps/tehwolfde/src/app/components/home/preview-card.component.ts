@@ -53,17 +53,17 @@ export class PreviewCardComponent {
   cardStyle = computed(() => ({
     'background-color':
       this.themeService.theme() === 'dark'
-        ? 'rgba(34, 34, 34, 0.75)'
+        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
         : 'rgba(255, 255, 255, 0.75)',
-    'backdrop-filter': 'blur(50px)',
-    color: '#6699bb'
+    'backdrop-filter': 'var(--tw-glass-blur, blur(50px))',
+    color: 'var(--tw-text, #6699bb)'
   }));
 
   buttonStyle = computed(() => ({
     'background-color':
       this.themeService.theme() === 'dark'
-        ? '#333333'
+        ? 'var(--tw-control-bg, #333333)'
         : 'rgba(255, 255, 255, 0.75)',
-    color: '#e8903f'
+    color: 'var(--tw-link, #e8903f)'
   }));
 }

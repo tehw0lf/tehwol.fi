@@ -142,9 +142,9 @@ export class CarouselComponent {
   buttonStyle = computed(() => ({
     'background-color':
       this.themeService.theme() === 'dark'
-        ? '#333333'
+        ? 'var(--tw-control-bg, #333333)'
         : 'rgba(255, 255, 255, 0.75)',
-    color: '#e8903f'
+    color: 'var(--tw-link, #e8903f)'
   }));
 
   /**

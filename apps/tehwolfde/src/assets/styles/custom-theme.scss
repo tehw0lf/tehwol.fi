@@ -46,8 +46,8 @@ $light-theme: mat.m2-define-light-theme(
   @include apply-component-themes($dark-theme);
   @include mat.form-field-density(0);
   @include mat.input-density(0);
-  --mat-form-field-filled-label-text-color: #cc7832;
-  --mat-form-field-outlined-label-text-color: #cc7832;
+  --mat-form-field-filled-label-text-color: var(--tw-accent);
+  --mat-form-field-outlined-label-text-color: var(--tw-accent);
 }
 
 .light {

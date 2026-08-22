@@ -38,10 +38,10 @@
 }
 
 .mat-drawer-container.dark {
-  background-color: #1a1a1a;
+  background-color: var(--tw-bg);
 
   .mat-drawer {
-    background-color: #1a1a1a;
+    background-color: var(--tw-bg);
   }
 }
 
@@ -49,7 +49,7 @@
   background-color: white;
 
   .mat-drawer {
-    background-color: #d4d4d4;
+    background-color: var(--tw-neutral-200);
   }
 }
 

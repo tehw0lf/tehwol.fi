@@ -262,17 +262,22 @@ describe('GitPortfolioComponent', () => {
 
   describe('input properties', () => {
     it('should have default input values', () => {
-      expect(component.buttonStyle()).toEqual({ 'background-color': '#424242', color: '#cc7832' });
-      expect(component.cardStyle()).toEqual({
-        color: '#437da8',
-        'background-color': 'rgba(34, 34, 34, 0.75)',
-        'backdrop-filter': 'blur(50px)'
+      expect(component.buttonStyle()).toEqual({
+        'background-color': 'var(--tw-neutral-650, #424242)',
+        color: 'var(--tw-accent, #cc7832)'
       });
-      expect(component.textStyle()).toEqual({ color: '#437da8' });
-      expect(component.checkColor()).toBe('#38e038');
-      expect(component.forkColor()).toBe('#437da8');
+      expect(component.cardStyle()).toEqual({
+        color: 'var(--tw-text, #6699bb)',
+        'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
+        'backdrop-filter': 'var(--tw-glass-blur, blur(50px))'
+      });
+      expect(component.textStyle()).toEqual({
+        color: 'var(--tw-text, #6699bb)'
+      });
+      expect(component.checkColor()).toBe('var(--tw-success, #38e038)');
+      expect(component.forkColor()).toBe('var(--tw-text, #6699bb)');
       expect(component.issueColor()).toBe('rgb(56, 224, 56)');
-      expect(component.pasteColor()).toBe('#cc7832');
+      expect(component.pasteColor()).toBe('var(--tw-accent, #cc7832)');
       expect(component.starColor()).toBe('gold');
       expect(component.gitProviderConfig()).toEqual({});
       expect(component.showForked()).toBe(true);

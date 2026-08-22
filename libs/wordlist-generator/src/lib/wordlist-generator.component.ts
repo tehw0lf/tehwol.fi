@@ -60,12 +60,12 @@ export class WordlistGeneratorComponent implements OnDestroy {
   private wordlistGenerator = inject(WordlistGeneratorService);
 
   buttonStyle = input({
-    'background-color': '#333333',
-    color: '#cc7832'
+    'background-color': 'var(--tw-control-bg, #333333)',
+    color: 'var(--tw-accent, #cc7832)'
   });
 
-  dragStyle = input({ color: '#cc7832' });
-  textStyle = input({ color: '#cc7832' });
+  dragStyle = input({ color: 'var(--tw-accent, #cc7832)' });
+  textStyle = input({ color: 'var(--tw-accent, #cc7832)' });
 
   labels = input({
     generating: 'Generating...',

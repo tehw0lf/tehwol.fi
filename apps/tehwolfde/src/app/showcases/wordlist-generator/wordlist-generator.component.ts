@@ -37,9 +37,9 @@ export class WordlistGeneratorComponent {
   buttonStyle = computed(() => ({
     'background-color':
       this.themeService.theme() === 'dark'
-        ? '#333333'
+        ? 'var(--tw-control-bg, #333333)'
         : 'rgba(255, 255, 255, 0.75)',
-    color: '#cc7832'
+    color: 'var(--tw-accent, #cc7832)'
   }));
 
   get wordlistLabels() {

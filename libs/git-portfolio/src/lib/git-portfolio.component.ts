@@ -36,23 +36,26 @@ export class GitPortfolioComponent implements OnDestroy {
   private gitProviderService = inject(GitProviderService);
   private breakpointObserver = inject(BreakpointObserver);
 
-  buttonStyle = input({ 'background-color': '#424242', color: '#cc7832' });
-
-  cardStyle = input({
-    color: '#437da8',
-    'background-color': 'rgba(34, 34, 34, 0.75)',
-    'backdrop-filter': 'blur(50px)'
+  buttonStyle = input({
+    'background-color': 'var(--tw-neutral-650, #424242)',
+    color: 'var(--tw-accent, #cc7832)'
   });
 
-  textStyle = input({ color: '#437da8' });
+  cardStyle = input({
+    color: 'var(--tw-text, #6699bb)',
+    'background-color': 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))',
+    'backdrop-filter': 'var(--tw-glass-blur, blur(50px))'
+  });
 
-  checkColor = input('#38e038');
+  textStyle = input({ color: 'var(--tw-text, #6699bb)' });
 
-  forkColor = input('#437da8');
+  checkColor = input('var(--tw-success, #38e038)');
+
+  forkColor = input('var(--tw-text, #6699bb)');
 
   issueColor = input('rgb(56, 224, 56)');
 
-  pasteColor = input('#cc7832');
+  pasteColor = input('var(--tw-accent, #cc7832)');
 
   starColor = input('gold');
 

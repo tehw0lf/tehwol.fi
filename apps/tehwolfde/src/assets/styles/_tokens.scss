@@ -1,0 +1,55 @@
+// Design tokens — single source of truth for the tehw0lf brand.
+//
+// The palette was extracted from what already shipped: the website, the
+// favicon and the fwdark userstyle had grown the same colours independently.
+// Values are unchanged from what was in production, with two exceptions noted
+// below. Contrast ratios in the comments are measured against --tw-bg.
+//
+// Consumers outside this app (the publishable @tehw0lf/* libraries) reference
+// these as `var(--tw-*, <fallback>)` so they keep working untokenised.
+
+:root {
+  /* Brand ------------------------------------------------------------------
+     #8e8e8e is the avatar, the favicon and the default of the colour embed.
+     It anchors the neutral ramp so the mark and the interface share a family. */
+  --tw-brand: #8e8e8e; // 5.31:1
+
+  /* Neutrals — ramp anchored on the brand grey */
+  --tw-neutral-900: #1a1a1a; // page ground
+  --tw-neutral-850: #222222; // raised surface
+  --tw-neutral-800: #272727; // panel
+  --tw-neutral-750: #2f2f2f; // header
+  --tw-neutral-700: #333333; // control
+  --tw-neutral-650: #424242; // control, alternate
+  --tw-neutral-500: #8e8e8e; // = brand
+  --tw-neutral-300: #b8b8b8; // 8.77:1
+  --tw-neutral-200: #d4d4d4; // 11.74:1
+
+  /* Semantic surfaces */
+  --tw-bg: var(--tw-neutral-900);
+  --tw-surface: var(--tw-neutral-850);
+  --tw-surface-raised: var(--tw-neutral-800);
+  --tw-control-bg: var(--tw-neutral-700);
+
+  /* Text
+     #437da8 was used for body copy in several places but only reaches 3.93:1,
+     below the AA threshold for normal text. --tw-text is #6699bb (5.67:1); the
+     darker tone is kept as --tw-text-dim for large text and non-essential UI. */
+  --tw-text: #6699bb; // 5.67:1
+  --tw-text-dim: #437da8; // 3.93:1 — large text only
+  --tw-text-muted: var(--tw-neutral-300);
+
+  /* Accent — the burnt orange that runs through everything */
+  --tw-accent: #cc7832; // 5.22:1
+  --tw-accent-hover: #f08b39; // 7.01:1
+  --tw-link: #e8903f; // 7.04:1
+
+  /* Status */
+  --tw-success: #38e038;
+  --tw-warn: #ff8000;
+  --tw-danger: #ca0101;
+
+  /* Translucent surfaces used by the library card/form styles */
+  --tw-glass-bg: rgba(34, 34, 34, 0.75);
+  --tw-glass-blur: blur(50px);
+}

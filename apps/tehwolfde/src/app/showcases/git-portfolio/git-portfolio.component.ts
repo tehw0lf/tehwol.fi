@@ -52,18 +52,18 @@ export class GitPortfolioComponent {
   buttonStyle = computed(() => ({
     'background-color':
       this.themeService.theme() === 'dark'
-        ? 'rgba(34, 34, 34, 0.75)'
+        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
         : 'rgba(255, 255, 255, 0.75)',
-    color: '#cc7832'
+    color: 'var(--tw-accent, #cc7832)'
   }));
 
   cardStyle = computed(() => ({
-    color: '#437da8',
+    color: 'var(--tw-text, #6699bb)',
     'background-color':
       this.themeService.theme() === 'dark'
-        ? 'rgba(34, 34, 34, 0.75)'
+        ? 'var(--tw-glass-bg, rgba(34, 34, 34, 0.75))'
         : 'rgba(255, 255, 255, 0.75)',
-    'backdrop-filter': 'blur(50px)'
+    'backdrop-filter': 'var(--tw-glass-blur, blur(50px))'
   }));
 
   get gitPortfolioLabels() {

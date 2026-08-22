@@ -1,3 +1,4 @@
+@use 'assets/styles/tokens';
 @use 'assets/styles/custom-theme';
 @use 'assets/styles/global';
 @use 'assets/fonts/fonts';
@@ -52,7 +53,7 @@ mat-sidenav-content {
 }
 
 body.dark {
-  background-color: #1a1a1a;
+  background-color: var(--tw-bg);
 }
 
 body.light {
@@ -82,7 +83,7 @@ body.light {
 }
 
 body.dark .mat-mdc-menu-panel {
-  background-color: #222222;
+  background-color: var(--tw-surface);
 }
 
 body.light .mat-mdc-menu-panel {
