@@ -24,15 +24,21 @@
         <span>
           <img alt="tehwolf.de" class="nav-logo" src="../../favicon.svg" />
           <span>{{ 'nav.home' | translate }}</span>
-        </span> </a
-      ><a
+        </span>
+      </a>
+      <mat-divider></mat-divider>
+      <h3 matSubheader class="nav-subheader">
+        {{ 'nav.libraries' | translate }}
+      </h3>
+      <a
         (click)="closeSidenav()"
         routerLink="/portfolio"
         routerLinkActive="link-active"
         mat-list-item
       >
-        <span>{{ 'nav.portfolio' | translate }}</span> </a
-      ><a
+        <span>{{ 'nav.portfolio' | translate }}</span>
+      </a>
+      <a
         (click)="closeSidenav()"
         routerLink="/wordlist-generator"
         routerLinkActive="link-active"
@@ -53,7 +59,7 @@
         </span>
       </a>
       <mat-divider></mat-divider>
-      <h3 matSubheader class="apps-subheader">{{ 'nav.apps' | translate }}</h3>
+      <h3 matSubheader class="nav-subheader">{{ 'nav.apps' | translate }}</h3>
       @for (app of apps; track app.slug) {
         <a
           (click)="closeSidenav()"
@@ -64,6 +70,8 @@
           <span>{{ app.title }}</span>
         </a>
       }
+      <mat-divider></mat-divider>
+      <h3 matSubheader class="nav-subheader">{{ 'nav.links' | translate }}</h3>
       <a
         (click)="closeSidenav()"
         class="mat-mdc-list-item"
