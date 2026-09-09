@@ -8,9 +8,9 @@
     "url": "git+https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
-    "@angular/common": "22.0.8",
-    "@angular/core": "22.0.8",
-    "@angular/forms": "22.0.8",
+    "@angular/common": "22.1.5",
+    "@angular/core": "22.1.5",
+    "@angular/forms": "22.1.5",
     "@ngx-formly/core": "7.1.0",
     "@ngx-formly/material": "7.1.0",
     "@tehw0lf/mvc": "0.0.11"
