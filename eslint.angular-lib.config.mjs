@@ -52,7 +52,17 @@ export default [
       parser: jsoncParser
     },
     rules: {
-      '@nx/dependency-checks': 'error'
+      '@nx/dependency-checks': [
+        'error',
+        {
+          // tslib is injected by the compiler via importHelpers, so it never
+          // appears in an import statement.
+          runtimeHelpers: ['tslib'],
+          // The rule only reads TypeScript imports; @tehw0lf/mvc is consumed
+          // from the component SCSS via `@use`, so it looks unused to it.
+          ignoredDependencies: ['@tehw0lf/mvc']
+        }
+      ]
     }
   }
 ];

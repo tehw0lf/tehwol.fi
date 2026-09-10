@@ -9,6 +9,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/libs/contact-form"],
+      "defaultConfiguration": "production",
       "options": {
         "project": "libs/contact-form/ng-package.json",
         "tsConfig": "libs/contact-form/tsconfig.lib.json"
@@ -18,26 +19,11 @@
           "tsConfig": "libs/contact-form/tsconfig.lib.prod.json"
         },
         "development": {}
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/contact-form"],
-      "options": {
-        "jestConfig": "libs/contact-form/jest.config.ts",
-        "tsConfig": "libs/contact-form/tsconfig.spec.json"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": [
-          "libs/contact-form/**/*.ts",
-          "libs/contact-form/**/*.html",
-          "libs/contact-form/package.json",
-          "libs/contact-form/project.json"
-        ]
+        "args": ["**/*.ts", "**/*.html", "package.json", "project.json"]
       }
     }
   }

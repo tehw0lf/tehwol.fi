@@ -7,27 +7,7 @@
   "implicitDependencies": ["tehwolfde"],
   "targets": {
     "e2e": {
-      "executor": "@nx/playwright:playwright",
-      "options": {
-        "config": "apps/tehwolfde-e2e/playwright.config.ts"
-      },
       "outputs": ["{workspaceRoot}/dist/.playwright"]
-    },
-    "e2e-ci": {
-      "executor": "@nx/playwright:playwright",
-      "options": {
-        "config": "apps/tehwolfde-e2e/playwright.config.ts"
-      },
-      "configurations": {
-        "ci": {
-          "headed": false,
-          "workers": 1
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
   }
 }

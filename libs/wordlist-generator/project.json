@@ -9,6 +9,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/libs/wordlist-generator"],
+      "defaultConfiguration": "production",
       "options": {
         "project": "libs/wordlist-generator/ng-package.json",
         "tsConfig": "libs/wordlist-generator/tsconfig.lib.json"
@@ -18,26 +19,11 @@
           "tsConfig": "libs/wordlist-generator/tsconfig.lib.prod.json"
         },
         "development": {}
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/wordlist-generator"],
-      "options": {
-        "jestConfig": "libs/wordlist-generator/jest.config.ts",
-        "tsConfig": "libs/wordlist-generator/tsconfig.spec.json"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": [
-          "libs/wordlist-generator/**/*.ts",
-          "libs/wordlist-generator/**/*.html",
-          "libs/wordlist-generator/package.json",
-          "libs/wordlist-generator/project.json"
-        ]
+        "args": ["**/*.ts", "**/*.html", "package.json", "project.json"]
       }
     }
   }

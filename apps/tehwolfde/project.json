@@ -9,6 +9,7 @@
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/tehwolfde",
         "index": "apps/tehwolfde/src/index.html",
@@ -56,11 +57,12 @@
           "sourceMap": true,
           "namedChunks": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "tehwolfde:build:production"
@@ -68,26 +70,12 @@
         "development": {
           "buildTarget": "tehwolfde:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "tehwolfde:build"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/tehwolfde"],
-      "options": {
-        "jestConfig": "apps/tehwolfde/jest.config.ts",
-        "tsConfig": "apps/tehwolfde/tsconfig.spec.json"
       }
     }
   }
