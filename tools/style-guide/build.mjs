@@ -34,7 +34,8 @@ function block(css, selector) {
   const start = css.indexOf(`${selector} {`);
   if (start === -1) throw new Error(`No "${selector}" block in ${TOKENS}`);
   const end = css.indexOf('\n}', start);
-  if (end === -1) throw new Error(`Unterminated "${selector}" block in ${TOKENS}`);
+  if (end === -1)
+    throw new Error(`Unterminated "${selector}" block in ${TOKENS}`);
   return css.slice(start, end);
 }
 
@@ -54,7 +55,10 @@ function resolveValue(value, scope, root) {
   let current = value;
   for (let hops = 0; hops < 10; hops++) {
     if (!current.startsWith('var(')) return current;
-    const inner = current.slice(4, current.lastIndexOf(')')).split(',')[0].trim();
+    const inner = current
+      .slice(4, current.lastIndexOf(')'))
+      .split(',')[0]
+      .trim();
     const next = scope.get(inner) ?? root.get(inner);
     if (next === undefined) return current;
     current = next;
@@ -144,7 +148,10 @@ const SHARED_WITH_FWDARK = [
 ];
 
 const escape = (s) =>
-  String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  String(s).replace(
+    /[&<>"]/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]
+  );
 
 function ratioBadge(value, ground) {
   const r = contrast(value, ground);
