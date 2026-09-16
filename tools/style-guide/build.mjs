@@ -199,6 +199,70 @@ function render({ root, dark, light }) {
       `<td class="muted">${role}</td></tr>`
   ).join('\n      ');
 
+  // Typography and spacing are ground-independent, so they come off :root and
+  // render once rather than per theme. Driven off the parsed map so a new token
+  // reaches the page — and so --check sees a guide that no longer matches.
+  const SIZE_LABELS = {
+    '--tw-text-xs': 'Captions, code labels, eyebrows',
+    '--tw-text-sm': 'Secondary copy, table cells',
+    '--tw-text-base': 'Body copy, form controls',
+    '--tw-text-lg': 'The reading size for prose',
+    '--tw-text-xl': 'Sub-headings',
+    '--tw-text-2xl': 'Headings'
+  };
+  const sizes = [...root]
+    .filter(([k]) => k.startsWith('--tw-text-'))
+    .map(
+      ([k, v]) => `<div class="tsize">
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+        <span style="font-size:${escape(v)};line-height:1.2">${escape(
+          SIZE_LABELS[k] ?? 'Specimen'
+        )}</span>
+      </div>`
+    )
+    .join('\n      ');
+
+  const weights = [...root]
+    .filter(([k]) => k.startsWith('--tw-weight-'))
+    .map(
+      ([k, v]) => `<div class="tsize">
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+        <span style="font-weight:${escape(v)};font-size:20px">Roboto ${escape(v)}</span>
+      </div>`
+    )
+    .join('\n      ');
+
+  const leading = [...root]
+    .filter(([k]) => k.startsWith('--tw-leading-'))
+    .map(
+      ([k, v]) => `<div class="lead">
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+        <p style="line-height:${escape(v)}">The eye needs a clear return path to
+        the start of the next line; that is what this value buys.</p>
+      </div>`
+    )
+    .join('\n      ');
+
+  const spaces = [...root]
+    .filter(([k]) => k.startsWith('--tw-space-'))
+    .map(
+      ([k, v]) => `<div class="sp">
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+        <span class="spbar" style="width:${escape(v)}"></span>
+      </div>`
+    )
+    .join('\n      ');
+
+  const radii = [...root]
+    .filter(([k]) => k.startsWith('--tw-radius-'))
+    .map(
+      ([k, v]) => `<div class="rad">
+        <span class="radbox" style="border-radius:${escape(v)}"></span>
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+      </div>`
+    )
+    .join('\n      ');
+
   // The mark is the brand grey in dark; on white it needs darkening to hold an
   // edge, and #8e8e8e only reaches 3.28:1 there.
   const lightChrome = chrome(light, {
@@ -304,6 +368,28 @@ pre{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
   padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;
   line-height:1.7;margin:0;color:var(--ink)}
 pre .c{color:var(--soft)} pre .v{color:var(--blue)}
+.tsize{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--hair)}
+.tsize .tok{width:150px;flex:none;color:var(--ink)}
+.tsize .h{width:52px;flex:none;color:var(--soft);font-variant-numeric:tabular-nums}
+.tsize span{color:var(--ink);min-width:0}
+.lead{display:grid;grid-template-columns:150px 52px 1fr;gap:14px;align-items:start;
+  padding:9px 0;border-bottom:1px solid var(--hair)}
+.lead .h{color:var(--soft);font-variant-numeric:tabular-nums}
+.lead p{margin:0;font-size:13.5px;color:var(--soft);max-width:54ch}
+.sp{display:flex;align-items:center;gap:14px;padding:5px 0}
+.sp .tok{width:150px;flex:none;color:var(--ink)}
+.sp .h{width:52px;flex:none;color:var(--soft);font-variant-numeric:tabular-nums}
+.spbar{height:16px;background:var(--accent);border-radius:2px;flex:none}
+.rads{display:flex;gap:26px;flex-wrap:wrap}
+.rad{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.radbox{width:84px;height:56px;background:var(--panel);border:1px solid var(--accent)}
+.rad .h{color:var(--soft)}
+@media (max-width:560px){
+  .tsize{flex-wrap:wrap;gap:6px}
+  .tsize .tok,.tsize .h{width:auto}
+  .lead{grid-template-columns:1fr;gap:5px}
+  .sp .tok,.sp .h{width:auto}
+}
 .note{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
 .note div{border-left:2px solid var(--accent);padding:2px 0 2px 17px}
 .note h4{margin:0 0 5px;font-size:13.5px;font-weight:500;color:var(--ink);font-family:var(--mono)}
@@ -363,6 +449,42 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
   from opposite ends.</p>
   <div class="ramp">
       ${ramp}
+  </div>
+</section>
+
+<section>
+  <h2>Type scale</h2>
+  <p class="lede">Roboto, self-hosted as woff2 in three weights with split latin ranges.
+  The ramp is what the app and the libraries already set, collected rather than invented.
+  Only 300, 400 and 500 have a face — any other weight is the browser approximating.</p>
+  <div class="scale">
+      ${sizes}
+  </div>
+  <div class="scale" style="margin-top:26px">
+      ${weights}
+  </div>
+  <div class="scale" style="margin-top:26px">
+      ${leading}
+  </div>
+  <div class="note" style="margin-top:26px">
+    <div>
+      <h4>Mono is not hosted</h4>
+      <p>--tw-font-mono names Roboto Mono, but only the three sans faces ship in
+      assets/fonts. In the app it falls through to the system monospace.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Space &amp; radius</h2>
+  <p class="lede">A 4px base. The steps that recur most in the codebase are 4, 8, 16
+  and 32. Two values still sit off the grid — 10px and 15px — and belong at
+  --tw-space-3 or --tw-space-4 whenever that layout is next touched.</p>
+  <div class="scale">
+      ${spaces}
+  </div>
+  <div class="rads" style="margin-top:26px">
+      ${radii}
   </div>
 </section>
 
