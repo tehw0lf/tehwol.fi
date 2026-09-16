@@ -40,6 +40,15 @@
      @tehw0lf/* libraries can consume them the same way they consume colour. */
   --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
 
+  /* There is no --tw-font-mono, deliberately, and it has been removed twice —
+     once as an unhosted Roboto Mono nothing consumed, once as a system stack.
+     The only fixed-width text the brand sets is the wordlist generator's
+     <code> element, and a <code> renders monospace without being told to, so
+     the token would add something to the brand to restate a browser default.
+     A specific face would have to be self-hosted: the CSP is font-src 'self'.
+     The style guide and the design-system sheets hold their own mono for
+     setting token names; that is page chrome, not a brand token. */
+
   --tw-weight-light: 300;
   --tw-weight-regular: 400;
   --tw-weight-medium: 500;
@@ -58,8 +67,10 @@
   --tw-leading-normal: 1.5;
   --tw-leading-loose: 1.7;
 
-  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid:
-     the stray 10px and 15px in the app both belong at 12px or 16px. */
+  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid.
+     One off-grid value is left on purpose: the desktop nav margin, where 10px
+     is load-bearing and 12px overflows the toolbar in German (see TODO.md).
+     The two remaining 15px are blur() radii, which are not spacing. */
   --tw-space-1: 4px;
   --tw-space-2: 8px;
   --tw-space-3: 12px;

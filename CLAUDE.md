@@ -7,10 +7,11 @@ This file provides project-specific guidance to Claude Code for this repository.
 This is an Nx monorepo containing an Angular portfolio website and reusable Angular libraries. The main application `tehwolfde` showcases three custom libraries published under the `@tehw0lf` namespace:
 
 - **git-portfolio**: Customizable Git repository portfolio supporting GitHub/GitLab
-- **wordlist-generator**: Cartesian product-based wordlist generator 
+- **wordlist-generator**: Cartesian product-based wordlist generator
 - **contact-form**: Flexible contact form using ngx-formly
 
 ### Monorepo Structure
+
 - `apps/tehwolfde/`: Main Angular application (portfolio website)
 - `apps/tehwolfde-e2e/`: E2E tests using Playwright
 - `libs/*/`: Publishable Angular libraries with independent versioning
@@ -19,6 +20,7 @@ This is an Nx monorepo containing an Angular portfolio website and reusable Angu
 ## Commands
 
 ### Development
+
 ```bash
 npm start                    # Serve the main application
 nx serve tehwolfde          # Alternative serve command
@@ -26,6 +28,7 @@ nx serve tehwolfde --port 4200  # Serve on specific port
 ```
 
 ### Building
+
 ```bash
 npm run build               # Build main application
 nx build tehwolfde         # Build specific application
@@ -33,6 +36,7 @@ nx build git-portfolio     # Build specific library
 ```
 
 ### Testing
+
 ```bash
 npm test                   # Run all tests with --detect-open-handles
 nx test tehwolfde         # Test specific project
@@ -40,6 +44,7 @@ nx test git-portfolio     # Test specific library
 ```
 
 ### Linting & Formatting
+
 ```bash
 npm run lint              # Lint all projects
 nx lint tehwolfde        # Lint specific project
@@ -47,12 +52,14 @@ npm run format           # Format all files
 ```
 
 ### E2E Testing
+
 ```bash
 npm run e2e              # Run E2E tests
 nx e2e tehwolfde-e2e    # Alternative E2E command
 ```
 
 ### Nx-specific Commands
+
 ```bash
 nx affected:build        # Build only affected projects
 nx affected:test        # Test only affected projects
@@ -61,6 +68,7 @@ nx dep-graph           # View dependency graph
 ```
 
 ## Project-specific conventions
+
 - Component prefix: `tehw0lf`
 - Styling: SCSS with Angular Material (purple-green theme)
 - Testing: Jest for unit tests, Playwright for E2E
@@ -69,6 +77,7 @@ nx dep-graph           # View dependency graph
 ## Library Development
 
 Each library in `libs/` is independently publishable with its own:
+
 - `package.json` with version and dependencies
 - `project.json` with build/test/lint targets
 - TypeScript configs for library and production builds
@@ -78,38 +87,53 @@ When working on libraries, test integration with the main app by importing via t
 
 ## Design Tokens
 
-All brand colours live in `apps/tehwolfde/src/assets/styles/_tokens.scss` as CSS
-custom properties, defined per theme under `body.dark` and `body.light`. It is the
-single source of truth — never hardcode a colour, and never put one in a Sass
+The brand lives in `apps/tehwolfde/src/assets/styles/_tokens.scss` as CSS custom
+properties: colour per theme under `body.dark` and `body.light`, and the
+palette-independent values — type, weight, spacing, radius — on `:root`. It is
+the single source of truth. Never hardcode a colour, and never put one in a Sass
 variable: Sass compiles to one fixed value and cannot follow the theme.
 
-The publishable libraries reference tokens as `var(--tw-accent, #cc7832)`. Keep the
-fallback (the dark value) so consumers without tokens render unchanged.
+The publishable libraries reference tokens with a fallback, in SCSS and in the
+TypeScript style inputs alike: `var(--tw-accent, #cc7832)`,
+`var(--tw-space-3, 12px)`. Keep the fallback (the dark value for colour) so
+consumers without the token layer render as the component shipped.
 
-Two rules that are easy to get wrong:
+Three rules that are easy to get wrong:
+
 - Controls use `--tw-control-text`, not `--tw-accent`. The accent is tuned for the
   page ground and only reaches 3.79:1 on the control surface.
 - Measure contrast against the surface a colour actually sits on, not against the page.
+- Spacing is a 4px scale. The one off-grid value left is the desktop nav margin,
+  which is load-bearing — see `TODO.md` before touching it.
 
-**The style guide is generated, not written.** After changing `_tokens.scss`, run:
+**Both views of the tokens are generated, not written.** After changing
+`_tokens.scss`, run:
 
 ```bash
 npm run style-guide          # regenerate tools/style-guide/brand-tokens.html
+npm run design-tokens        # regenerate tools/design-system/tokens.css
 npm run style-guide:check    # fails if the guide is stale
+npm run design-tokens:check  # fails if the design-system CSS is stale
 ```
 
-The check runs ahead of `nx affected:lint`, so CI fails on a token change whose
-guide was never regenerated. Commit the regenerated HTML alongside the tokens.
+Both checks run ahead of `nx affected:lint`, so CI fails on a token change whose
+generated output was never regenerated. Commit the regenerated files alongside
+the tokens; both are in `.prettierignore` because the checks compare bytes and
+the formatter would rewrite them.
 
-Republishing the guide to its Artifact is manual — CI has no access to it. After
-a token change, regenerate, commit, and republish to the same URL so the shared
-link stays current.
+Republishing is manual for both — CI can reach neither the Artifact nor the
+design project. After a token change: regenerate, commit, then republish to the
+same URLs so the shared links stay current.
+
+`tools/design-system/sheet-chrome.css` is hand-written and appended verbatim to
+the generated tokens. Editing it is correct; editing `tokens.css` is not.
 
 ## Version Bump Requirement
 
 **IMPORTANT**: Every PR in this repository **must** include a version bump in `package.json`. CI uses the version tag for Docker artifact naming via `nx affected`. Without a bump, the security scan step fails because it cannot find a uniquely tagged artifact.
 
 Steps required on every PR branch:
+
 1. Bump the `version` field in `package.json` (patch increment unless the change warrants minor/major)
 2. Run `npm install` immediately after to update `package-lock.json`
 3. Commit both `package.json` and `package-lock.json` together
@@ -121,16 +145,19 @@ The workspace rule — never commit what does not pass — applies here; these a
 this repository's concrete commands for it.
 
 ### Primary Validation
+
 ```bash
 npm run lint && npm run test && npm run build
 ```
 
 ### E2E Validation
+
 ```bash
 npm run e2e
 ```
 
 ### Alternative Nx-specific Validation
+
 ```bash
 npx nx run-many -t lint,test,build
 npm run e2e

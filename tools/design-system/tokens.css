@@ -1,0 +1,238 @@
+/* tehw0lf design tokens — GENERATED, do not edit.
+ *
+ * Source: apps/tehwolfde/src/assets/styles/_tokens.scss
+ * Regenerate: npm run design-tokens
+ *
+ * The app switches themes with body.dark / body.light. These sheets follow
+ * the viewer instead, so the same values are bound to :root and to both
+ * theme states. Edit _tokens.scss, never this file. */
+
+:root {
+  /* Brand — the identity grey. Fixed: it is the mark, not a UI colour. */
+  --tw-brand: #8e8e8e;
+
+  /* Neutral ramp — anchored at 500 on the brand grey. Ground-independent. */
+  --tw-neutral-900: #1a1a1a;
+  --tw-neutral-850: #222222;
+  --tw-neutral-800: #272727;
+  --tw-neutral-750: #2f2f2f;
+  --tw-neutral-700: #333333;
+  --tw-neutral-650: #424242;
+  --tw-neutral-500: #8e8e8e; /* = brand */
+  --tw-neutral-300: #b8b8b8;
+  --tw-neutral-200: #d4d4d4;
+  --tw-neutral-100: #ececec;
+  --tw-neutral-050: #f6f6f6;
+
+  --tw-glass-blur: blur(50px);
+
+  /* Typography — the family is self-hosted Roboto (300/400/500 are the only
+     weights shipped in assets/fonts; do not reference a weight without a
+     face). Exposed as tokens rather than Sass variables so the publishable
+     @tehw0lf/​* libraries can consume them the same way they consume colour. */
+  --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
+
+  --tw-weight-light: 300;
+  --tw-weight-regular: 400;
+  --tw-weight-medium: 500;
+
+  /* Size ramp — collected from what the app and libraries already use. Body
+     is 16px; 18px is the reading size the site sets on its prose. */
+  --tw-text-xs: 12px;
+  --tw-text-sm: 14px;
+  --tw-text-base: 16px;
+  --tw-text-lg: 18px;
+  --tw-text-xl: 20px;
+  --tw-text-2xl: 24px;
+
+  /* Line heights are unitless so they scale with the size they land on. */
+  --tw-leading-tight: 1.2;
+  --tw-leading-normal: 1.5;
+  --tw-leading-loose: 1.7;
+
+  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid.
+     One off-grid value is left on purpose: the desktop nav margin, where
+     10px is load-bearing and 12px overflows the toolbar in German (see
+     TODO.md). The two remaining 15px are blur() radii, which are not
+     spacing. */
+  --tw-space-1: 4px;
+  --tw-space-2: 8px;
+  --tw-space-3: 12px;
+  --tw-space-4: 16px;
+  --tw-space-6: 24px;
+  --tw-space-8: 32px;
+  --tw-space-10: 40px;
+
+  /* Radius — 4px is the shipped default; full is for avatars and pills. */
+  --tw-radius-sm: 2px;
+  --tw-radius-md: 4px;
+  --tw-radius-lg: 8px;
+  --tw-radius-full: 50%;
+
+  /* Light is the bare-:root default, per the Artifact page contract. */
+  --tw-bg: #ffffff;
+  --tw-surface: var(--tw-neutral-050);
+  --tw-surface-raised: var(--tw-neutral-100);
+  --tw-control-bg: var(--tw-neutral-200);
+  --tw-control-text: #854519; /* 4.95:1 on --tw-control-bg */
+
+  --tw-text: #2d6a99; /* 5.78:1 — the blue, darkened */
+  --tw-text-dim: #1f5c8b; /* 7.09:1 */
+  --tw-text-muted: #5f5f5f;
+
+  --tw-accent: #a0521f; /* 5.64:1 — the burnt orange, darkened */
+  --tw-accent-hover: #b3611f; /* 4.52:1 */
+  --tw-link: #a0521f; /* 5.64:1 */
+
+  --tw-success: #1a7f1a;
+  --tw-warn: #8a4b00;
+  --tw-danger: #b30000;
+
+  --tw-glass-bg: rgba(255, 255, 255, 0.75);
+
+  /* Chrome for these spec sheets, not brand tokens. */
+  --ds-rule: var(--tw-neutral-200);
+  --ds-ink: #2b2b2b;
+  --ds-mono: 'Roboto Mono', ui-monospace, sfmono-regular, menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --tw-bg: var(--tw-neutral-900);
+    --tw-surface: var(--tw-neutral-850);
+    --tw-surface-raised: var(--tw-neutral-800);
+    --tw-control-bg: var(--tw-neutral-700);
+
+    /* The accent is only 3.79:1 on the control surface, so controls get their
+       own foreground rather than borrowing --tw-accent. */
+    --tw-control-text: #e8903f; /* 5.11:1 on --tw-control-bg */
+
+    --tw-text: #6699bb; /* 5.67:1 */
+    --tw-text-dim: #437da8; /* 3.93:1 — large text only */
+    --tw-text-muted: var(--tw-neutral-300);
+
+    --tw-accent: #cc7832; /* 5.22:1 */
+    --tw-accent-hover: #f08b39; /* 7.01:1 */
+    --tw-link: #e8903f; /* 7.04:1 */
+
+    --tw-success: #38e038;
+    --tw-warn: #ff8000;
+    --tw-danger: #ca0101;
+
+    --tw-glass-bg: rgba(34, 34, 34, 0.75);
+
+    --ds-rule: var(--tw-neutral-650);
+    --ds-ink: #d4d4d4;
+  }
+}
+
+/* Repeated verbatim: a media query cannot be overridden by an attribute
+   selector alone, so an explicit choice needs its own block. */
+:root[data-theme='dark'] {
+  --tw-bg: var(--tw-neutral-900);
+  --tw-surface: var(--tw-neutral-850);
+  --tw-surface-raised: var(--tw-neutral-800);
+  --tw-control-bg: var(--tw-neutral-700);
+
+  /* The accent is only 3.79:1 on the control surface, so controls get their
+     own foreground rather than borrowing --tw-accent. */
+  --tw-control-text: #e8903f; /* 5.11:1 on --tw-control-bg */
+
+  --tw-text: #6699bb; /* 5.67:1 */
+  --tw-text-dim: #437da8; /* 3.93:1 — large text only */
+  --tw-text-muted: var(--tw-neutral-300);
+
+  --tw-accent: #cc7832; /* 5.22:1 */
+  --tw-accent-hover: #f08b39; /* 7.01:1 */
+  --tw-link: #e8903f; /* 7.04:1 */
+
+  --tw-success: #38e038;
+  --tw-warn: #ff8000;
+  --tw-danger: #ca0101;
+
+  --tw-glass-bg: rgba(34, 34, 34, 0.75);
+
+  --ds-rule: var(--tw-neutral-650);
+  --ds-ink: #d4d4d4;
+}
+/* ---------------------------------------------------------------------------
+   Shared spec-sheet chrome.
+
+   Hand-written and appended verbatim to the generated tokens above. This is the
+   layout of the published sheets, not part of the brand, so it is kept apart
+   from the generated section — editing it here is correct and will not be
+   overwritten by `npm run design-tokens`. Everything above the marker is
+   generated from _tokens.scss and will be.
+   --------------------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  padding-block: var(--tw-space-8);
+  padding-inline: var(--tw-space-4);
+  background: var(--tw-bg);
+  color: var(--ds-ink);
+  font-family: var(--tw-font-sans);
+  font-size: var(--tw-text-base);
+  line-height: var(--tw-leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sheet {
+  max-width: 900px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-8);
+}
+
+.sheet-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-1);
+  padding-bottom: var(--tw-space-4);
+  border-bottom: 1px solid var(--ds-rule);
+}
+
+.eyebrow {
+  font-size: var(--tw-text-xs);
+  font-weight: var(--tw-weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tw-text-muted);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--tw-text-2xl);
+  font-weight: var(--tw-weight-light);
+  line-height: var(--tw-leading-tight);
+  text-wrap: balance;
+  color: var(--ds-ink);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--tw-text-lg);
+  font-weight: var(--tw-weight-medium);
+  line-height: var(--tw-leading-tight);
+  color: var(--ds-ink);
+}
+
+.note {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--tw-text-sm);
+  color: var(--tw-text-muted);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-4);
+}
+
+code,
+.mono {
+  font-family: var(--ds-mono);
+  font-size: var(--tw-text-xs);
+}

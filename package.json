@@ -1,6 +1,6 @@
 {
   "name": "tehw0lf",
-  "version": "22.1.26",
+  "version": "22.1.28",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -19,12 +19,14 @@
     "e2e:ci": "nx e2e tehwolfde-e2e -- --reporter=junit",
     "affected:build": "nx affected:build",
     "affected:test": "nx affected:test",
-    "affected:lint": "npm run style-guide:check && nx affected:lint",
+    "affected:lint": "npm run style-guide:check && npm run design-tokens:check && nx affected:lint",
     "affected": "nx affected",
     "format": "nx format:write",
     "format:check": "nx format:check",
     "style-guide": "node tools/style-guide/build.mjs",
     "style-guide:check": "node tools/style-guide/build.mjs --check",
+    "design-tokens": "node tools/design-system/build.mjs",
+    "design-tokens:check": "node tools/design-system/build.mjs --check",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
