@@ -473,13 +473,6 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
   <div class="scale" style="margin-top:26px">
       ${leading}
   </div>
-  <div class="note" style="margin-top:26px">
-    <div>
-      <h4>Mono is not hosted</h4>
-      <p>--tw-font-mono names Roboto Mono, but only the three sans faces ship in
-      assets/fonts. In the app it falls through to the system monospace.</p>
-    </div>
-  </div>
 </section>
 
 <section>
@@ -497,8 +490,8 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
 
 <section>
   <h2>Specimen</h2>
-  <p class="lede">The same component in both themes. Roboto for running text, Roboto Mono
-  for tokens and values — the faces the site already ships.</p>
+  <p class="lede">The same component in both themes, set in Roboto — the face the site
+  ships, in the three weights it hosts.</p>
   <div class="specs">
     <div class="spec">
       <div class="spec-hd">body.dark</div>
