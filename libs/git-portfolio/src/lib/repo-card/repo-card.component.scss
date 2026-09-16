@@ -15,7 +15,7 @@
   vertical-align: middle;
   line-height: 36px;
   font-size: 24px;
-  margin: 0 10px 0 0;
+  margin: 0 var(--tw-space-3, 12px) 0 0;
   padding: 0 16px;
   text-align: center;
   text-decoration: none;
@@ -74,10 +74,15 @@
   padding: 16px;
 }
 
+// The negative bottom margin and the bottom padding are a matched pair: the
+// footer bleeds out into the card's 16px padding and pays the same amount back
+// as its own padding, so the content stays put while the footer background
+// reaches nearer the card edge. Move one without the other and the content
+// shifts — they are migrated together, and must stay equal.
 .mat-mdc-card-footer {
-  margin: 0 -16px -10px -16px;
+  margin: 0 -16px calc(-1 * var(--tw-space-3, 12px)) -16px;
   padding: 16px;
-  padding-bottom: 10px;
+  padding-bottom: var(--tw-space-3, 12px);
 }
 
 .footer-span {

@@ -1,0 +1,81 @@
+/* ---------------------------------------------------------------------------
+   Shared spec-sheet chrome.
+
+   Hand-written and appended verbatim to the generated tokens above. This is the
+   layout of the published sheets, not part of the brand, so it is kept apart
+   from the generated section — editing it here is correct and will not be
+   overwritten by `npm run design-tokens`. Everything above the marker is
+   generated from _tokens.scss and will be.
+   --------------------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  padding-block: var(--tw-space-8);
+  padding-inline: var(--tw-space-4);
+  background: var(--tw-bg);
+  color: var(--ds-ink);
+  font-family: var(--tw-font-sans);
+  font-size: var(--tw-text-base);
+  line-height: var(--tw-leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sheet {
+  max-width: 900px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-8);
+}
+
+.sheet-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-1);
+  padding-bottom: var(--tw-space-4);
+  border-bottom: 1px solid var(--ds-rule);
+}
+
+.eyebrow {
+  font-size: var(--tw-text-xs);
+  font-weight: var(--tw-weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tw-text-muted);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--tw-text-2xl);
+  font-weight: var(--tw-weight-light);
+  line-height: var(--tw-leading-tight);
+  text-wrap: balance;
+  color: var(--ds-ink);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--tw-text-lg);
+  font-weight: var(--tw-weight-medium);
+  line-height: var(--tw-leading-tight);
+  color: var(--ds-ink);
+}
+
+.note {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--tw-text-sm);
+  color: var(--tw-text-muted);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tw-space-4);
+}
+
+code,
+.mono {
+  font-family: var(--tw-font-mono);
+  font-size: var(--tw-text-xs);
+}

@@ -42,8 +42,24 @@ function block(css, selector) {
 /** Custom-property declarations in a block, comments stripped. */
 function declarations(text) {
   const out = new Map();
+  let carry = '';
+
   for (const raw of text.split('\n')) {
-    const line = raw.split('//')[0].trim();
+    let line = raw.split('//')[0].trim();
+
+    // Long values are wrapped across lines by the formatter, so matching one
+    // line at a time would drop them without a word — and a token missing
+    // from the parse is a token this guard cannot notice changing.
+    if (carry) {
+      carry += ' ' + line;
+      if (!line.endsWith(';')) continue;
+      line = carry;
+      carry = '';
+    } else if (/^--[\w-]+:/.test(line) && !line.includes(';')) {
+      carry = line;
+      continue;
+    }
+
     const m = /^(--[\w-]+):\s*(.+?);/.exec(line);
     if (m) out.set(m[1], m[2].trim());
   }
@@ -225,6 +241,19 @@ function render({ root, dark, light }) {
         <span style="font-size:${escape(v)};line-height:1.2">${escape(
           SIZE_LABELS[k] ?? 'Specimen'
         )}</span>
+      </div>`
+    )
+    .join('\n      ');
+
+  // Families are rendered from the token rather than named in prose: the guide
+  // was blind to a font-family change for exactly as long as the family was a
+  // literal in the page instead of a value read out of _tokens.scss.
+  const families = [...root]
+    .filter(([k]) => k.startsWith('--tw-font-'))
+    .map(
+      ([k, v]) => `<div class="tsize">
+        <code class="tok">${k}</code><code class="h">${escape(v)}</code>
+        <span style="font-family:${escape(v)};font-size:19px">Cartesian wordlists 0123</span>
       </div>`
     )
     .join('\n      ');
@@ -463,8 +492,14 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
   <h2>Type scale</h2>
   <p class="lede">Roboto, self-hosted as woff2 in three weights with split latin ranges.
   The ramp is what the app and the libraries already set, collected rather than invented.
-  Only 300, 400 and 500 have a face — any other weight is the browser approximating.</p>
+  Only 300, 400 and 500 have a face — any other weight is the browser approximating.
+  Monospace is a system stack, not a hosted face: the only fixed-width text the brand
+  sets is generated wordlist output, where lining up matters and the particular face
+  does not.</p>
   <div class="scale">
+      ${families}
+  </div>
+  <div class="scale" style="margin-top:26px">
       ${sizes}
   </div>
   <div class="scale" style="margin-top:26px">
@@ -478,8 +513,9 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
 <section>
   <h2>Space &amp; radius</h2>
   <p class="lede">A 4px base. The steps that recur most in the codebase are 4, 8, 16
-  and 32. Two values still sit off the grid — 10px and 15px — and belong at
-  --tw-space-3 or --tw-space-4 whenever that layout is next touched.</p>
+  and 32. The app and the libraries sit on the grid, with one deliberate exception:
+  the desktop nav margin, where 10px is load-bearing and 12px overflows the toolbar
+  in German. The two remaining 15px are blur() radii, which are not spacing.</p>
   <div class="scale">
       ${spaces}
   </div>

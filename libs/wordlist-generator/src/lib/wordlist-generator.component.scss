@@ -19,19 +19,19 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
       .drag-indicator {
         height: 20px;
         width: 20px;
-        margin-right: 10px;
+        margin-right: var(--tw-space-3, 12px);
       }
 
       .clone-charset {
-        margin: 0 10px;
+        margin: 0 var(--tw-space-3, 12px);
       }
 
       .remove-charset {
-        margin-right: 10px;
+        margin-right: var(--tw-space-3, 12px);
       }
 
       @media screen and (max-width: 430px) {
-        margin-bottom: 15px;
+        margin-bottom: var(--tw-space-4, 16px);
       }
     }
 
@@ -46,20 +46,20 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
     }
 
     .choose-format {
-      margin: 0 10px 10px 0;
+      margin: 0 var(--tw-space-3, 12px) var(--tw-space-3, 12px) 0;
       min-width: 150px;
       letter-spacing: normal;
     }
 
     .generate-wordlist {
-      margin: 0 10px 10px 0;
+      margin: 0 var(--tw-space-3, 12px) var(--tw-space-3, 12px) 0;
       min-width: 150px;
       letter-spacing: normal;
       white-space: normal;
     }
 
     .download-wordlist {
-      margin: 0 0 10px 0;
+      margin: 0 0 var(--tw-space-3, 12px) 0;
       min-width: 150px;
       letter-spacing: normal;
     }
@@ -72,8 +72,13 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
       margin-top: 0px;
     }
 
+    // Generated output is scanned column-wise, so it wants fixed advance
+    // widths. The fallback is the generic keyword rather than a named face:
+    // a consumer without the token layer still gets monospace, which is the
+    // part that matters here.
     .wordlist {
-      font-size: 12px;
+      font-family: var(--tw-font-mono, monospace);
+      font-size: var(--tw-text-xs, 12px);
       margin-left: 1em;
       overflow-wrap: normal;
       width: 1%;
@@ -103,7 +108,6 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
   height: 50px !important;
 }
 
-
 .mat-mdc-form-field-infix {
   height: 42px !important;
   min-height: 42px !important;
@@ -130,6 +134,8 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
   width: 21em;
 }
 
-.bottom-10 {
-  margin-bottom: 10px;
+// Named for its role, not its value: it used to be `.bottom-10` for a literal
+// 10px, which made the class name wrong the moment the value moved onto the grid.
+.bottom-gap {
+  margin-bottom: var(--tw-space-3, 12px);
 }

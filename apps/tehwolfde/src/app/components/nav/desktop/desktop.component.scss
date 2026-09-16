@@ -2,6 +2,15 @@
 @use '@tehw0lf/mvc';
 @use '../shared-nav';
 
+// NOT migrated to --tw-space-3, deliberately. The toolbar lays the links out
+// in a `flex: 1 1 0%` container and everything to their right — theme toggle,
+// language switcher, GitHub link — follows in flow. At desktop width the German
+// labels are wide enough that the row only just fits, so raising this margin to
+// 12px tips it over and shifts the switcher ~10px when the locale changes. The
+// e2e test `should not resize the language switcher when the locale changes`
+// catches it. 10px is load-bearing here by accident, which is its own bug; the
+// fix is to stop the link container overflowing, not to round the margin.
+// Tracked in TODO.md.
 .mat-mdc-button {
   vertical-align: middle;
   line-height: 36px;

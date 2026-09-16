@@ -340,8 +340,21 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
   <h2>Type scale</h2>
   <p class="lede">Roboto, self-hosted as woff2 in three weights with split latin ranges.
   The ramp is what the app and the libraries already set, collected rather than invented.
-  Only 300, 400 and 500 have a face — any other weight is the browser approximating.</p>
+  Only 300, 400 and 500 have a face — any other weight is the browser approximating.
+  Monospace is a system stack, not a hosted face: the only fixed-width text the brand
+  sets is generated wordlist output, where lining up matters and the particular face
+  does not.</p>
   <div class="scale">
+      <div class="tsize">
+        <code class="tok">--tw-font-sans</code><code class="h">Roboto, 'Helvetica Neue', sans-serif</code>
+        <span style="font-family:Roboto, 'Helvetica Neue', sans-serif;font-size:19px">Cartesian wordlists 0123</span>
+      </div>
+      <div class="tsize">
+        <code class="tok">--tw-font-mono</code><code class="h">ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', menlo, consolas, monospace</code>
+        <span style="font-family:ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', menlo, consolas, monospace;font-size:19px">Cartesian wordlists 0123</span>
+      </div>
+  </div>
+  <div class="scale" style="margin-top:26px">
       <div class="tsize">
         <code class="tok">--tw-text-xs</code><code class="h">12px</code>
         <span style="font-size:12px;line-height:1.2">Captions, code labels, eyebrows</span>
@@ -403,8 +416,9 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
 <section>
   <h2>Space &amp; radius</h2>
   <p class="lede">A 4px base. The steps that recur most in the codebase are 4, 8, 16
-  and 32. Two values still sit off the grid — 10px and 15px — and belong at
-  --tw-space-3 or --tw-space-4 whenever that layout is next touched.</p>
+  and 32. The app and the libraries sit on the grid, with one deliberate exception:
+  the desktop nav margin, where 10px is load-bearing and 12px overflows the toolbar
+  in German. The two remaining 15px are blur() radii, which are not spacing.</p>
   <div class="scale">
       <div class="sp">
         <code class="tok">--tw-space-1</code><code class="h">4px</code>

@@ -1,6 +1,6 @@
 <div class="meta-container flex-row-wrap">
   <div class="form-container flex-column flex-fxflex">
-    <div class="flex-row-wrap bottom-10">
+    <div class="flex-row-wrap bottom-gap">
       <button
         class="generate-wordlist"
         [ngStyle]="buttonStyle()"
@@ -52,14 +52,18 @@
 
     @if (isGenerating() && isLargeDataset()) {
       <div class="progress-container">
-        <mat-progress-bar mode="indeterminate" role="progressbar" aria-label="Generating wordlist"></mat-progress-bar>
+        <mat-progress-bar
+          mode="indeterminate"
+          role="progressbar"
+          aria-label="Generating wordlist"
+        ></mat-progress-bar>
         <p [ngStyle]="textStyle()">{{ labels().processingLarge }}</p>
       </div>
     }
 
     @if (charsetForm) {
       <form [formGroup]="charsetForm">
-        <mat-form-field class="fixed-width bottom-10" appearance="outline">
+        <mat-form-field class="fixed-width bottom-gap" appearance="outline">
           <mat-label [ngStyle]="textStyle()">{{ labels().prefix }}</mat-label>
           <input
             [ngStyle]="textStyle()"
@@ -81,7 +85,7 @@
                 <mat-icon class="drag-indicator" [ngStyle]="dragStyle()"
                   >drag_indicator</mat-icon
                 >
-                <mat-form-field class="charset bottom-10" appearance="outline">
+                <mat-form-field class="charset bottom-gap" appearance="outline">
                   <mat-label [ngStyle]="textStyle()">
                     {{ labels().charsetPosition }}{{ i }}
                   </mat-label>

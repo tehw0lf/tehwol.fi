@@ -40,6 +40,16 @@
      @tehw0lf/* libraries can consume them the same way they consume colour. */
   --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
 
+  /* Monospace is a system stack, deliberately not a hosted face. The only
+     fixed-width text the brand sets is generated wordlist output, where what
+     matters is that columns line up, not which face does it. Hosting one would
+     mean shipping a webfont from the publishable libraries to consumers who
+     never asked for it, and the app's CSP is font-src 'self' (#281, DAST), so
+     a linked face is blocked outright. A system stack needs neither. */
+  --tw-font-mono:
+    ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', menlo, consolas,
+    monospace;
+
   --tw-weight-light: 300;
   --tw-weight-regular: 400;
   --tw-weight-medium: 500;
@@ -58,8 +68,10 @@
   --tw-leading-normal: 1.5;
   --tw-leading-loose: 1.7;
 
-  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid:
-     the stray 10px and 15px in the app both belong at 12px or 16px. */
+  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid.
+     One off-grid value is left on purpose: the desktop nav margin, where 10px
+     is load-bearing and 12px overflows the toolbar in German (see TODO.md).
+     The two remaining 15px are blur() radii, which are not spacing. */
   --tw-space-1: 4px;
   --tw-space-2: 8px;
   --tw-space-3: 12px;

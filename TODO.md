@@ -4,100 +4,131 @@ Known work that is deliberately not done yet. Each entry says what the problem
 is, why it was left, and what doing it would involve — so picking one up does
 not start with re-deriving the context.
 
-Counts and line numbers were verified against `main` at version 22.1.25
-(commit `08927f1`). Re-check them before acting; they drift as the code moves.
+Counts and line numbers were verified against `main` at version 22.1.27.
+Re-check them before acting; they drift as the code moves.
 
 ---
 
-## 1. Migrate the off-grid spacing values onto the 4px scale
+## 1. The desktop nav overflows its flex container in German
 
-**Status:** open · **Effort:** small, but needs visual review · **Risk:** changes rendered layout
+**Status:** open · **Effort:** small · **Risk:** changes rendered layout
 
-`--tw-space-*` is a 4px scale (`_tokens.scss`). Sixteen off-grid values remain,
-across fourteen declarations — two shorthands carry `10px` twice. They were left
-alone when the scale was introduced in #337, because rounding them changes what
-ships.
+Found while migrating the spacing scale, and the reason one margin was left
+off the grid.
 
-| Value  | Count | Where                                  |
-| ------ | ----- | -------------------------------------- |
-| `10px` | 15    | see below                              |
-| `15px` | 1     | `wordlist-generator.component.scss:34` |
+`desktop.component.scss` sets `margin: 0 10px 0 0` on the nav links. It is the
+last off-grid spacing value in the codebase, and it is **load-bearing by
+accident**: raising it to `--tw-space-3` (12px) makes the e2e test
+`should not resize the language switcher when the locale changes` fail.
 
-Full list:
+The mechanism, measured in Firefox at 1280px:
 
+- The links sit in a `flex: 1 1 0%` container; the theme toggle, the language
+  switcher and the GitHub link follow it in flow.
+- The German labels are wider than the English ones — "Wortlisten-Generator"
+  against "Wordlist Generator".
+- At 10px margins the German row just fits. At 12px it does not, the container
+  overflows its flex share, and everything to its right is pushed along.
+- The switcher's **width** is unchanged (125.83px in both locales — the fixed
+  label box still works). Its **x** moves by 9.93px.
+
+So the switcher fix the test guards is intact; what breaks is that the toolbar
+shifts when the locale changes, which is the same class of defect.
+
+**Approach:** stop the link container overflowing, rather than tuning the
+margin until it fits. `min-width: 0` on the flex child is the usual fix for a
+flex item refusing to shrink below its content; check it against the longest
+locale, not English. Once the row can shrink, migrate the margin to
+`--tw-space-3` and drop the explanatory comment in the stylesheet.
+
+**Verify with:**
+
+```bash
+npx nx e2e tehwolfde-e2e -- --project=firefox \
+  --grep "resize the language switcher"
 ```
-apps/tehwolfde/src/app/i18n/language-switcher.component.scss:19      padding: 0 10px
-apps/tehwolfde/src/app/components/nav/mobile/mobile.component.scss:8 margin: 0 10px 0 0
-apps/tehwolfde/src/app/components/nav/desktop/desktop.component.scss:9  margin: 0 10px 0 0
-libs/wordlist-generator/…/wordlist-generator.component.scss:22       margin-right: 10px
-libs/wordlist-generator/…/wordlist-generator.component.scss:26       margin: 0 10px
-libs/wordlist-generator/…/wordlist-generator.component.scss:30       margin-right: 10px
-libs/wordlist-generator/…/wordlist-generator.component.scss:34       margin-bottom: 15px
-libs/wordlist-generator/…/wordlist-generator.component.scss:49       margin: 0 10px 10px 0
-libs/wordlist-generator/…/wordlist-generator.component.scss:55       margin: 0 10px 10px 0
-libs/wordlist-generator/…/wordlist-generator.component.scss:62       margin: 0 0 10px 0
-libs/wordlist-generator/…/wordlist-generator.component.scss:134      margin-bottom: 10px
-libs/git-portfolio/…/repo-card.component.scss:18                     margin: 0 10px 0 0
-libs/git-portfolio/…/repo-card.component.scss:78                     margin: 0 -16px -10px -16px
-libs/git-portfolio/…/repo-card.component.scss:80                     padding-bottom: 10px
-```
-
-**Do not touch these** — they look like matches but are not spacing:
-
-- `desktop.component.scss:28` and `:33` — `backdrop-filter: blur(15px)`. A blur
-  radius has nothing to do with the spacing grid.
-- `repo-card.component.scss:78` — the `-10px` is a _negative_ margin pulling a
-  footer flush. Rounding it to `-12px` moves the element; decide deliberately.
-
-**Approach:** `10px → var(--tw-space-3)` (12px) or `var(--tw-space-2)` (8px)
-per case, whichever the layout actually wants — not a blind find-and-replace.
-Two of the three files are publishable libraries, so the change ships to
-consumers. Wants a visual check per component, not just green tests.
 
 ---
 
-## 2. No drift guard on the published design system
+## 2. Off-grid spacing migration — done except the entry above
 
-**Status:** open · **Effort:** medium · **Risk:** low
+**Status:** done in 22.1.27, one value deliberately left
 
-`_tokens.scss` is the single source of truth. The repo protects it:
-`npm run style-guide:check` regenerates `tools/style-guide/brand-tokens.html`
-and fails `nx affected:lint` when the committed guide no longer matches.
+Every spacing value in the app and the libraries now sits on the 4px scale.
+Sixteen values across fourteen declarations were migrated; the one exception is
+the desktop nav margin in entry 1.
 
-The design-system project on claude.ai/design has no equivalent. Its
-`tokens.css` is a hand-copied mirror, so a token change in the repo leaves it
-silently stale. Nothing fails; the published sheets just start lying.
+Notes worth keeping, since a future grep will surface them again:
 
-**Approach:** generate `tokens.css` from `_tokens.scss` the way the style guide
-is generated, and add it to the same check. The upload itself stays manual — CI
-has no access to the design project — but at least the generated file would be
-verifiably current before anyone uploads it.
+- `desktop.component.scss` — two `backdrop-filter: blur(15px)`. A blur radius
+  is not spacing and must not be migrated.
+- `repo-card.component.scss` — the footer's negative bottom margin and its
+  bottom padding are a matched pair. They bleed the footer into the card's
+  padding and pay the same amount back, so they move together or not at all.
+  Both are now `--tw-space-3`, the negative one via `calc(-1 * …)`.
+- `.bottom-10` in the wordlist generator was renamed `.bottom-gap`. A class
+  named for its value becomes a lie the moment the value moves.
 
-**Note:** the sheets bind tokens to `:root` and to both theme states, whereas
-the app uses `body.dark` / `body.light`. A generator has to do that transform,
-so it is not a straight copy of the file.
+Library SCSS uses the fallback form — `var(--tw-space-3, 12px)` — matching the
+`var(--tw-accent, #cc7832)` convention already used in the TypeScript style
+inputs, so consumers without the token layer render as the components shipped.
 
 ---
 
-## 3. Consider self-hosting a monospace face — only if something needs one
+## 3. Drift guard on the published design system — done
 
-**Status:** open, low priority · **Effort:** small
+**Status:** done in 22.1.27
 
-`--tw-font-mono` was removed in #338: it named Roboto Mono, which the app
-neither hosts nor uses, and nothing in the repo consumed it. The site sets no
-code or tabular text, so there is no brand mono face by design.
+`tools/design-system/build.mjs` generates `tokens.css` from `_tokens.scss` and
+`npm run design-tokens:check` fails when the committed file is stale. It runs
+alongside `style-guide:check` ahead of `nx affected:lint`.
 
-If that changes — a code block, a table of figures, anything that wants fixed
-advance widths — the face has to be **self-hosted**. The app's CSP sets
-`font-src 'self'` (`security-headers.conf`), so a Google Fonts link is blocked,
-not merely slow. That CSP was tightened deliberately in #281 in response to DAST
-findings; do not loosen it for a font.
+What it does **not** do: upload. CI has no access to the design project, so
+publishing stays manual. The guard guarantees the file in the repo is current —
+whoever uploads is uploading the right bytes — not that anybody uploaded.
 
-**Approach:** mirror what #281 did for Roboto — woff2 for latin and latin-ext
-into `apps/tehwolfde/src/assets/fonts/`, `@font-face` blocks in `fonts.scss`,
-and the Apache 2.0 `LICENSE.txt` alongside, as the existing font folders have.
-Roboto Mono is a variable font, so weights 400 and 500 share one file: two
-files, not four.
+The generator carries the comments from `_tokens.scss` into the output, because
+the file is read as documentation. Two hazards it handles, both found by
+testing rather than inspection:
 
-Until then, the design-system sheets hold their own `--ds-mono`, which is sheet
-chrome rather than a brand token.
+- `@tehw0lf/*` in a comment contains `/*`, which would open a nested CSS
+  comment and swallow the rest of the block. Delimiters are neutralised with a
+  zero-width space.
+- Long values are wrapped across lines by Prettier. Both generators previously
+  matched declarations one line at a time and **silently dropped**
+  `--tw-font-mono` — the guard reported "up to date" while the token was
+  missing from the output. Both parsers now join continuation lines.
+
+The generated file is in `.prettierignore`, for the same reason
+`brand-tokens.html` is: the check compares bytes, and the formatter would
+rewrite the long font stacks.
+
+---
+
+## 4. Monospace — resolved, no hosted face
+
+**Status:** done in 22.1.27
+
+`--tw-font-mono` exists again, but as a **system stack**, not the Roboto Mono
+that was removed in #338. The difference matters: #338 removed a token that
+named an unhosted face and that nothing consumed. This one has a consumer.
+
+`<code class="wordlist">` in the wordlist generator sets generated output, which
+is scanned column-wise and genuinely wants fixed advance widths. It was already
+rendering in the browser's default monospace — unspecified and unbranded.
+
+A hosted face was rejected for two reasons:
+
+1. It would ship a webfont from the publishable libraries to consumers who
+   never asked for one.
+2. The app's CSP is `font-src 'self'` (`security-headers.conf`), tightened
+   deliberately in #281 for DAST findings. A linked face is blocked outright,
+   and the CSP must not be loosened for a font.
+
+A system stack needs neither. The design-system sheets now take
+`--tw-font-mono` like any other brand token; their old `--ds-mono` is gone.
+
+The style guide keeps its own `--mono`, which loads Roboto Mono from Google
+Fonts. That is correct and separate: it is a standalone documentation page
+viewed directly in a browser, not served by the app, so the app's CSP does not
+apply to it.
