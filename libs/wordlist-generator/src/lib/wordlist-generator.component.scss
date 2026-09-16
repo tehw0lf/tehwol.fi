@@ -72,12 +72,10 @@ wordlist-generator .mat-mdc-icon-button.mat-mdc-button-base {
       margin-top: 0px;
     }
 
-    // Generated output is scanned column-wise, so it wants fixed advance
-    // widths. The fallback is the generic keyword rather than a named face:
-    // a consumer without the token layer still gets monospace, which is the
-    // part that matters here.
+    // No font-family here: the element is a <code>, which is already monospace
+    // by default. Generated output is scanned column-wise and wants fixed
+    // advance widths, and it gets them without the brand naming a face.
     .wordlist {
-      font-family: var(--tw-font-mono, monospace);
       font-size: var(--tw-text-xs, 12px);
       margin-left: 1em;
       overflow-wrap: normal;

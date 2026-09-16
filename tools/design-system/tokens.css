@@ -32,15 +32,6 @@
      @tehw0lf/​* libraries can consume them the same way they consume colour. */
   --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
 
-  /* Monospace is a system stack, deliberately not a hosted face. The only
-     fixed-width text the brand sets is generated wordlist output, where what
-     matters is that columns line up, not which face does it. Hosting one
-     would mean shipping a webfont from the publishable libraries to
-     consumers who never asked for it, and the app's CSP is font-src 'self'
-     (#281, DAST), so a linked face is blocked outright. A system stack needs
-     neither. */
-  --tw-font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', menlo, consolas, monospace;
-
   --tw-weight-light: 300;
   --tw-weight-regular: 400;
   --tw-weight-medium: 500;
@@ -102,6 +93,7 @@
   /* Chrome for these spec sheets, not brand tokens. */
   --ds-rule: var(--tw-neutral-200);
   --ds-ink: #2b2b2b;
+  --ds-mono: 'Roboto Mono', ui-monospace, sfmono-regular, menlo, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -241,6 +233,6 @@ section {
 
 code,
 .mono {
-  font-family: var(--tw-font-mono);
+  font-family: var(--ds-mono);
   font-size: var(--tw-text-xs);
 }

@@ -493,9 +493,8 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
   <p class="lede">Roboto, self-hosted as woff2 in three weights with split latin ranges.
   The ramp is what the app and the libraries already set, collected rather than invented.
   Only 300, 400 and 500 have a face — any other weight is the browser approximating.
-  Monospace is a system stack, not a hosted face: the only fixed-width text the brand
-  sets is generated wordlist output, where lining up matters and the particular face
-  does not.</p>
+  There is no mono token: the one place the brand sets fixed-width text is a
+  <code>&lt;code&gt;</code> element, which is monospace without being told.</p>
   <div class="scale">
       ${families}
   </div>

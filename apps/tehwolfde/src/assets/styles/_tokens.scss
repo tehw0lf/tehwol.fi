@@ -40,15 +40,14 @@
      @tehw0lf/* libraries can consume them the same way they consume colour. */
   --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
 
-  /* Monospace is a system stack, deliberately not a hosted face. The only
-     fixed-width text the brand sets is generated wordlist output, where what
-     matters is that columns line up, not which face does it. Hosting one would
-     mean shipping a webfont from the publishable libraries to consumers who
-     never asked for it, and the app's CSP is font-src 'self' (#281, DAST), so
-     a linked face is blocked outright. A system stack needs neither. */
-  --tw-font-mono:
-    ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', menlo, consolas,
-    monospace;
+  /* There is no --tw-font-mono, deliberately, and it has been removed twice —
+     once as an unhosted Roboto Mono nothing consumed, once as a system stack.
+     The only fixed-width text the brand sets is the wordlist generator's
+     <code> element, and a <code> renders monospace without being told to, so
+     the token would add something to the brand to restate a browser default.
+     A specific face would have to be self-hosted: the CSP is font-src 'self'.
+     The style guide and the design-system sheets hold their own mono for
+     setting token names; that is page chrome, not a brand token. */
 
   --tw-weight-light: 300;
   --tw-weight-regular: 400;

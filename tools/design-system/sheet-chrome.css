@@ -76,6 +76,6 @@ section {
 
 code,
 .mono {
-  font-family: var(--tw-font-mono);
+  font-family: var(--ds-mono);
   font-size: var(--tw-text-xs);
 }

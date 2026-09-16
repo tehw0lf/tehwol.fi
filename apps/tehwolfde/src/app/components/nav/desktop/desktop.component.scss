@@ -32,6 +32,8 @@
   margin: 0 4px 0 0;
 }
 
+// The 15px here is a blur radius, not spacing. A grep for off-grid lengths
+// finds it; it does not belong on the --tw-space-* scale.
 .nav-row {
   border-radius: 4px;
   backdrop-filter: blur(15px);

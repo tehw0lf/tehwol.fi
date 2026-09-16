@@ -78,9 +78,10 @@ function entries(text) {
     let line = raw.trim();
 
     // A declaration whose value is long enough gets wrapped across lines by
-    // the formatter (--tw-font-mono is), so a line-at-a-time regex would drop
-    // it silently — the guard would then pass while the token was missing
-    // from the output entirely. Join continuation lines until the semicolon.
+    // the formatter, so a line-at-a-time regex would drop it silently — the
+    // guard would then pass while the token was missing from the output
+    // entirely. Nothing in _tokens.scss is that long today, which is exactly
+    // why this is easy to regress. Join continuation lines to the semicolon.
     if (carry) {
       carry += ' ' + line;
       if (!line.endsWith(';')) continue;
@@ -208,16 +209,20 @@ function declarations(list, indent) {
 /**
  * Tokens the sheets need that the brand does not define.
  *
- * These are rules and running prose — the sheets' own layout, which the brand
- * has no opinion about. Monospace is deliberately NOT here: it used to be a
- * --ds-mono of the sheets' own, on the grounds that the brand set no fixed
- * width text, but the wordlist generator does, so --tw-font-mono is a brand
- * token now and the sheets take it like any other.
+ * --ds-mono is the clearest case: these sheets set token names and values in
+ * monospace, but the brand names no mono face — the one place it sets
+ * fixed-width text is a <code> element, which is monospace without being told.
+ * Naming these --ds-* rather than --tw-* keeps the distinction visible: they
+ * are sheet chrome, not part of the brand.
  */
 const SHEET_TOKENS = {
   light: [
     ['--ds-rule', 'var(--tw-neutral-200)'],
-    ['--ds-ink', '#2b2b2b']
+    ['--ds-ink', '#2b2b2b'],
+    [
+      '--ds-mono',
+      "'Roboto Mono', ui-monospace, sfmono-regular, menlo, monospace"
+    ]
   ],
   dark: [
     ['--ds-rule', 'var(--tw-neutral-650)'],
