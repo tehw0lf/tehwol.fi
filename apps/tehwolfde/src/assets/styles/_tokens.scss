@@ -33,6 +33,47 @@
   --tw-neutral-050: #f6f6f6;
 
   --tw-glass-blur: blur(50px);
+
+  /* Typography — the family is self-hosted Roboto (300/400/500 are the only
+     weights shipped in assets/fonts; do not reference a weight without a face).
+     Exposed as tokens rather than Sass variables so the publishable
+     @tehw0lf/* libraries can consume them the same way they consume colour. */
+  --tw-font-sans: Roboto, 'Helvetica Neue', sans-serif;
+  --tw-font-mono: 'Roboto Mono', ui-monospace, sfmono-regular, menlo, monospace;
+
+  --tw-weight-light: 300;
+  --tw-weight-regular: 400;
+  --tw-weight-medium: 500;
+
+  /* Size ramp — collected from what the app and libraries already use.
+     Body is 16px; 18px is the reading size the site sets on its prose. */
+  --tw-text-xs: 12px;
+  --tw-text-sm: 14px;
+  --tw-text-base: 16px;
+  --tw-text-lg: 18px;
+  --tw-text-xl: 20px;
+  --tw-text-2xl: 24px;
+
+  /* Line heights are unitless so they scale with the size they land on. */
+  --tw-leading-tight: 1.2;
+  --tw-leading-normal: 1.5;
+  --tw-leading-loose: 1.7;
+
+  /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid:
+     the stray 10px and 15px in the app both belong at 12px or 16px. */
+  --tw-space-1: 4px;
+  --tw-space-2: 8px;
+  --tw-space-3: 12px;
+  --tw-space-4: 16px;
+  --tw-space-6: 24px;
+  --tw-space-8: 32px;
+  --tw-space-10: 40px;
+
+  /* Radius — 4px is the shipped default; full is for avatars and pills. */
+  --tw-radius-sm: 2px;
+  --tw-radius-md: 4px;
+  --tw-radius-lg: 8px;
+  --tw-radius-full: 50%;
 }
 
 // Dark — the original palette, unchanged from what shipped.
