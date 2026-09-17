@@ -3,6 +3,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabGroup } from '@angular/material/tabs';
+import { By } from '@angular/platform-browser';
 import { BehaviorSubject, NEVER, of, throwError } from 'rxjs';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
@@ -303,6 +305,53 @@ describe('GitPortfolioComponent', () => {
     it('should expose loading signal from service', () => {
       expect(component.loading).toBeDefined();
       expect(typeof component.loading()).toBe('boolean');
+    });
+  });
+
+  describe('tabbed sections', () => {
+    const tabLabels = (): string[] =>
+      Array.from(
+        fixture.nativeElement.querySelectorAll('.mat-mdc-tab .mdc-tab__text-label')
+      ).map((el) => (el as HTMLElement).textContent?.trim() ?? '');
+
+    it('should offer own and forked repositories as tabs per provider', () => {
+      // Two providers in the mock, each contributing an own and a forked tab.
+      expect(tabLabels()).toEqual([
+        'Own Repos (2)',
+        'Forked Repos (1)',
+        'Own Repos (1)',
+        'Forked Repos (1)'
+      ]);
+    });
+
+    it('should show the forked count in the label so forks are discoverable', () => {
+      expect(tabLabels()).toContain('Forked Repos (1)');
+    });
+
+    it('should build one tab per visible section', () => {
+      // The workspace runs without @angular/animations, so matTabContent bodies
+      // stay lazy and tab switching cannot be driven here; the e2e suite covers
+      // selecting a tab and seeing its cards.
+      const group = fixture.debugElement.query(
+        By.directive(MatTabGroup)
+      ).componentInstance as MatTabGroup;
+
+      expect(group._tabs.length).toBe(2);
+    });
+
+    it('should omit a section entirely when it is switched off', () => {
+      fixture.componentRef.setInput('showForked', false);
+      fixture.detectChanges();
+
+      expect(tabLabels().some((label) => label.startsWith('Forked'))).toBe(
+        false
+      );
+    });
+
+    it('should count zero for an empty group', () => {
+      expect(
+        component.tabLabel('Forked Repos', { github: { own: [], forked: [] } }, 'github', 'forked')
+      ).toBe('Forked Repos (0)');
     });
   });
 

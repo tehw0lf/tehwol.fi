@@ -6,6 +6,7 @@ import {
 import { CommonModule, KeyValuePipe, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, inject, signal, effect, computed, untracked, OnDestroy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -27,6 +28,7 @@ import { GitRepository } from './types/git-repository-type';
     LayoutModule,
     NgStyle,
     MatProgressSpinnerModule,
+    MatTabsModule,
     RepoCardComponent,
     KeyValuePipe
   ],
@@ -210,6 +212,24 @@ export class GitPortfolioComponent implements OnDestroy {
          gitRepositories[gitProvider].forked?.length > 0)) ??
       false
     );
+  }
+
+  /**
+   * Appends the repository count to a tab label, so both the existence and the
+   * size of each group are visible without opening the tab.
+   */
+  tabLabel(
+    label: string,
+    gitRepositories: GitRepositories | undefined,
+    gitProvider: string,
+    type: 'own' | 'forked'
+  ): string {
+    const count = this.getGitRepositoriesOfType(
+      gitRepositories,
+      gitProvider,
+      type
+    ).length;
+    return `${label} (${count})`;
   }
 
   hasRepositoriesOfType(

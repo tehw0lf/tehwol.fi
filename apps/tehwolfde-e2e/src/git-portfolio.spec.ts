@@ -81,9 +81,10 @@ test.describe('Git Portfolio Page', () => {
   });
 
   test('should display repository cards when data loads', async ({ page }) => {
-    // With mocked data, we should see repository cards
+    // Own and forked repositories live in separate tabs, so only the selected
+    // tab's cards are rendered.
     const repoCards = page.locator('repo-card');
-    await expect(repoCards).toHaveCount(2);
+    await expect(repoCards).toHaveCount(1);
     await expect(repoCards.first()).toBeVisible();
 
     // Check that mock data appears in the cards
@@ -91,5 +92,28 @@ test.describe('Git Portfolio Page', () => {
     await expect(
       page.locator('text=A mock repository for testing')
     ).toBeVisible();
+  });
+
+  test('should show both sections as tabs with their repository counts', async ({
+    page
+  }) => {
+    const tabs = page.locator('.mat-mdc-tab');
+    await expect(tabs).toHaveCount(2);
+    await expect(tabs.nth(0)).toContainText('Own Repos (1)');
+    await expect(tabs.nth(1)).toContainText('Forked Repos (1)');
+  });
+
+  test('should reveal the forked repositories when their tab is selected', async ({
+    page
+  }) => {
+    // The fork is not reachable by scrolling any more, so selecting the tab is
+    // the only way to it - this is what the tabs exist for.
+    await expect(page.locator('text=mock-repo-2')).toHaveCount(0);
+
+    await page.locator('.mat-mdc-tab', { hasText: 'Forked Repos' }).click();
+
+    await expect(page.locator('text=mock-repo-2')).toBeVisible();
+    await expect(page.locator('text=A forked repository')).toBeVisible();
+    await expect(page.locator('text=mock-repo-1')).toHaveCount(0);
   });
 });
