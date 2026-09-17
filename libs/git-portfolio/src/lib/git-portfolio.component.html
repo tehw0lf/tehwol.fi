@@ -1,3 +1,22 @@
+@if (loadFailed()) {
+  <div class="load-error" role="alert">
+    <p [ngStyle]="textStyle()">{{ labels().loadError }}</p>
+    <button
+      type="button"
+      class="retry-button"
+      [ngStyle]="buttonStyle()"
+      [disabled]="retryDisabled()"
+      (click)="retryLoad()"
+    >
+      {{ retrying() ? labels().retrying : labels().retry }}
+    </button>
+  </div>
+}
+@if (retrying()) {
+  <div class="retry-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+}
 @if (gitRepositories(); as gitRepositories) {
   <div>
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {

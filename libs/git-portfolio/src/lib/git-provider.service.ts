@@ -1,7 +1,15 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, expand, Observable, of, reduce, zip } from 'rxjs';
-import { map, tap, shareReplay, takeWhile } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  expand,
+  Observable,
+  of,
+  reduce,
+  throwError,
+  zip
+} from 'rxjs';
+import { catchError, map, tap, shareReplay, takeWhile } from 'rxjs/operators';
 
 import { GitProviderConfig } from './types/git-provider-config-type';
 import { GitRepositories } from './types/git-repositories-type';
@@ -29,6 +37,15 @@ export class GitProviderService {
     return this.loadingStateSubject.asObservable();
   }
 
+  /**
+   * A failed fetch must not settle in the cache: shareReplay(1) would replay the
+   * error to every later subscriber for the full TTL, so a single dropped
+   * connection would keep the portfolio broken long after the network returned.
+   */
+  private evictCacheEntry(cacheKey: string): void {
+    this.repositoryCache.delete(cacheKey);
+  }
+
   getRepositories(
     gitProviderUserNames?: GitProviderConfig
   ): Observable<GitRepositories> {
@@ -47,6 +64,12 @@ export class GitProviderService {
       tap((repositories: GitRepositories) => {
         this.repositorySubject.next(repositories);
         this.loadingStateSubject.next(false);
+      }),
+      catchError((error: unknown) => {
+        // Loading ends on both paths, otherwise the spinner outlives the request.
+        this.loadingStateSubject.next(false);
+        this.evictCacheEntry(cacheKey);
+        return throwError(() => error);
       }),
       shareReplay(1)
     );
@@ -127,6 +150,14 @@ export class GitProviderService {
     };
   }
 
+  /**
+   * Every page must arrive before the result counts. A page that fails midway
+   * would otherwise reduce to whatever was collected so far, and since the
+   * providers sort by name rather than by fork flag, a truncated list renders
+   * as a real but incomplete portfolio — "no forked repositories" instead of an
+   * error. Failing the whole fetch keeps a partial answer from posing as a
+   * complete one.
+   */
   private fetchAllPages<T>(firstUrl: string): Observable<T[]> {
     return this.http.get<T[]>(firstUrl, { observe: 'response' }).pipe(
       expand((response) => {

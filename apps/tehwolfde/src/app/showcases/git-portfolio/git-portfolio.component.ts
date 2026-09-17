@@ -67,7 +67,10 @@ export class GitPortfolioComponent {
       noForkedRepos: t('gitPortfolio.noForkedRepos'),
       copyRepoUrl: t('gitPortfolio.copyRepoUrl'),
       created: t('gitPortfolio.created'),
-      updated: t('gitPortfolio.updated')
+      updated: t('gitPortfolio.updated'),
+      loadError: t('gitPortfolio.loadError'),
+      retry: t('gitPortfolio.retry'),
+      retrying: t('gitPortfolio.retrying')
     };
   }
 }

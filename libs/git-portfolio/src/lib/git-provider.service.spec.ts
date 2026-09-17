@@ -339,6 +339,64 @@ describe('GitProviderService', () => {
     });
   });
 
+  describe('error handling', () => {
+    it('should propagate the error and stop loading when a request fails', (done) => {
+      const loadingStates: boolean[] = [];
+      service.loading.subscribe((state) => loadingStates.push(state));
+
+      service.getRepositories({ github: 'testuser' }).subscribe({
+        next: () => done.fail('expected the fetch to error'),
+        error: () => {
+          expect(loadingStates[loadingStates.length - 1]).toBe(false);
+          done();
+        }
+      });
+
+      httpMock
+        .expectOne(GITHUB_URL)
+        .error(new ProgressEvent('network error'));
+    });
+
+    it('should not serve a failed fetch from the cache', (done) => {
+      // Only GitHub is configured: zip subscribes lazily, so a failing first
+      // source leaves the second one unsubscribed and its request unmade.
+      const config: GitProviderConfig = { github: 'testuser' };
+
+      service.getRepositories(config).subscribe({
+        error: () => {
+          // A second call must hit the network again rather than replay the
+          // cached error for the rest of the TTL.
+          service.getRepositories(config).subscribe({
+            next: (repositories) => {
+              expect(repositories.github?.own).toHaveLength(1);
+              done();
+            }
+          });
+
+          httpMock.expectOne(GITHUB_URL).flush([GITHUB_REPOS[0]]);
+        }
+      });
+
+      httpMock
+        .expectOne(GITHUB_URL)
+        .error(new ProgressEvent('network error'));
+    });
+
+    it('should fail rather than return a truncated list when a later page fails', (done) => {
+      service.getRepositories({ github: 'testuser' }).subscribe({
+        next: () => done.fail('a partial result must not look like success'),
+        error: () => done()
+      });
+
+      httpMock.expectOne(GITHUB_URL).flush([GITHUB_REPOS[0]], {
+        headers: { Link: `<${GITHUB_URL}&page=2>; rel="next"` }
+      });
+      httpMock
+        .expectOne(`${GITHUB_URL}&page=2`)
+        .error(new ProgressEvent('network error'));
+    });
+  });
+
   describe('clearCache', () => {
     it('should clear cache and reset state', () => {
       // Clear cache

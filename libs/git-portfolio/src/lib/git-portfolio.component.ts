@@ -4,7 +4,7 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { CommonModule, KeyValuePipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, inject, signal, effect, computed, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, inject, signal, effect, computed, untracked, OnDestroy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -72,7 +72,10 @@ export class GitPortfolioComponent implements OnDestroy {
     noForkedRepos: 'This user has not forked any repositories yet',
     copyRepoUrl: 'Copy repo URL',
     created: 'Created: ',
-    updated: 'Updated: '
+    updated: 'Updated: ',
+    loadError: 'Repositories could not be loaded',
+    retry: 'Try again',
+    retrying: 'Retrying...'
   });
 
   repoCardLabels = computed(() => ({
@@ -86,12 +89,23 @@ export class GitPortfolioComponent implements OnDestroy {
   currentRepo = signal<GitRepository | undefined>(undefined);
   gitRepositories = signal<GitRepositories | undefined>(undefined);
   viewport = signal('');
+  loadFailed = signal(false);
+  retrying = signal(false);
+  coolingDown = signal(false);
+  retryDisabled = computed(() => this.retrying() || this.coolingDown());
+
+  private readonly RETRY_COOLDOWN_MS = 3000;
+  private lastRetryAt = 0;
+  private cooldownTimer?: ReturnType<typeof setTimeout>;
 
   private unsubscribe$ = new Subject<void>();
 
   constructor() {
     effect(() => {
-      this.getRepositories();
+      // Reads the config so a changed user refetches; the retry signals are set
+      // inside getRepositories() and must not retrigger this effect.
+      this.gitProviderConfig();
+      untracked(() => this.getRepositories());
     });
 
     this.breakpointObserver
@@ -116,6 +130,7 @@ export class GitPortfolioComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearTimeout(this.cooldownTimer);
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -135,9 +150,46 @@ export class GitPortfolioComponent implements OnDestroy {
     this.gitProviderService
       .getRepositories(this.gitProviderConfig())
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(repositories => {
-        this.gitRepositories.set(repositories);
+      .subscribe({
+        next: repositories => {
+          this.gitRepositories.set(repositories);
+          this.loadFailed.set(false);
+          this.retrying.set(false);
+        },
+        error: () => {
+          this.gitRepositories.set(undefined);
+          this.loadFailed.set(true);
+          this.retrying.set(false);
+        }
       });
+  }
+
+  /**
+   * Rate limits the retry button. `retrying` alone is not enough: a failing
+   * request (offline, aborted) rejects almost immediately, so the in-flight flag
+   * is already back to false by the time the next click lands and a user could
+   * hammer the provider APIs, which are rate limited per IP. The cooldown makes
+   * the gap between two attempts the binding constraint.
+   */
+  retryLoad(): void {
+    const now = Date.now();
+    if (this.retrying() || now - this.lastRetryAt < this.RETRY_COOLDOWN_MS) {
+      return;
+    }
+    this.lastRetryAt = now;
+    this.retrying.set(true);
+    this.loadFailed.set(false);
+    this.startCooldown();
+    this.getRepositories();
+  }
+
+  private startCooldown(): void {
+    this.coolingDown.set(true);
+    clearTimeout(this.cooldownTimer);
+    this.cooldownTimer = setTimeout(
+      () => this.coolingDown.set(false),
+      this.RETRY_COOLDOWN_MS
+    );
   }
 
   getGitRepositoriesOfType(
