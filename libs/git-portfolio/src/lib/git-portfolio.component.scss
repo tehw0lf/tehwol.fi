@@ -19,6 +19,25 @@
   margin-top: 0;
 }
 
+.repository-tabs {
+  // Inactive labels follow the surrounding text colour, the active one and the
+  // ink bar use the accent, so the selected tab is distinguishable. Material's
+  // own palette is not token aware, hence the explicit overrides.
+  --mat-tab-inactive-label-text-color: var(--tw-text, #6699bb);
+  --mat-tab-inactive-hover-label-text-color: var(--tw-text, #6699bb);
+  --mat-tab-inactive-focus-label-text-color: var(--tw-text, #6699bb);
+  --mat-tab-active-label-text-color: var(--tw-accent, #cc7832);
+  --mat-tab-active-hover-label-text-color: var(--tw-accent, #cc7832);
+  --mat-tab-active-focus-label-text-color: var(--tw-accent, #cc7832);
+  --mat-tab-active-indicator-color: var(--tw-accent, #cc7832);
+  --mat-tab-active-ripple-color: var(--tw-accent, #cc7832);
+  --mat-tab-inactive-ripple-color: var(--tw-text, #6699bb);
+}
+
+.tab-content {
+  padding-top: var(--tw-space-6, 24px);
+}
+
 .load-error {
   display: flex;
   flex-direction: column;
