@@ -40,6 +40,9 @@
   "gitPortfolio.copyRepoUrl": "Repo-URL kopieren",
   "gitPortfolio.created": "Erstellt: ",
   "gitPortfolio.updated": "Aktualisiert: ",
+  "gitPortfolio.loadError": "Repositories konnten nicht geladen werden",
+  "gitPortfolio.retry": "Erneut versuchen",
+  "gitPortfolio.retrying": "Wird geladen...",
 
   "wordlistGenerator.generating": "Generiere...",
   "wordlistGenerator.generate": "Wortliste generieren",

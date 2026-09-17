@@ -3,7 +3,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, NEVER, of, throwError } from 'rxjs';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
 import { GitProviderService } from './git-provider.service';
@@ -303,6 +303,97 @@ describe('GitPortfolioComponent', () => {
     it('should expose loading signal from service', () => {
       expect(component.loading).toBeDefined();
       expect(typeof component.loading()).toBe('boolean');
+    });
+  });
+
+  describe('load failure', () => {
+    const failOnce = () =>
+      gitProviderService.getRepositories.mockReturnValue(
+        throwError(() => new Error('network error'))
+      );
+
+    it('should surface an error state instead of rendering nothing', () => {
+      failOnce();
+      const failed = TestBed.createComponent(GitPortfolioComponent);
+      failed.detectChanges();
+
+      expect(failed.componentInstance.loadFailed()).toBe(true);
+      expect(
+        failed.nativeElement.querySelector('.load-error')
+      ).toBeTruthy();
+    });
+
+    it('should clear the error state once a retry succeeds', () => {
+      failOnce();
+      const failed = TestBed.createComponent(GitPortfolioComponent);
+      failed.detectChanges();
+
+      gitProviderService.getRepositories.mockReturnValue(of(MOCK_REPOSITORIES));
+      failed.componentInstance.retryLoad();
+      failed.detectChanges();
+
+      expect(failed.componentInstance.loadFailed()).toBe(false);
+      expect(failed.componentInstance.retrying()).toBe(false);
+      expect(failed.nativeElement.querySelector('.load-error')).toBeNull();
+    });
+
+    it('should ignore retries while one is still in flight', () => {
+      failOnce();
+      const failed = TestBed.createComponent(GitPortfolioComponent);
+      failed.detectChanges();
+
+      // A request that never settles keeps `retrying` true, so the guard holds.
+      gitProviderService.getRepositories.mockReturnValue(NEVER);
+      const callsBefore = gitProviderService.getRepositories.mock.calls.length;
+
+      failed.componentInstance.retryLoad();
+      failed.componentInstance.retryLoad();
+      failed.componentInstance.retryLoad();
+
+      expect(
+        gitProviderService.getRepositories.mock.calls.length - callsBefore
+      ).toBe(1);
+    });
+
+    it('should rate limit retries that fail immediately', () => {
+      // Offline requests reject synchronously, so `retrying` is already false
+      // again on the next click: only the cooldown stops a click burst from
+      // becoming a request burst.
+      failOnce();
+      const failed = TestBed.createComponent(GitPortfolioComponent);
+      failed.detectChanges();
+      const callsBefore = gitProviderService.getRepositories.mock.calls.length;
+
+      for (let click = 0; click < 5; click++) {
+        failed.componentInstance.retryLoad();
+      }
+
+      expect(
+        gitProviderService.getRepositories.mock.calls.length - callsBefore
+      ).toBe(1);
+      expect(failed.componentInstance.retryDisabled()).toBe(true);
+    });
+
+    it('should allow another retry once the cooldown has elapsed', () => {
+      jest.useFakeTimers();
+      try {
+        failOnce();
+        const failed = TestBed.createComponent(GitPortfolioComponent);
+        failed.detectChanges();
+        const callsBefore =
+          gitProviderService.getRepositories.mock.calls.length;
+
+        failed.componentInstance.retryLoad();
+        failed.componentInstance.retryLoad();
+        jest.advanceTimersByTime(3000);
+        failed.componentInstance.retryLoad();
+
+        expect(
+          gitProviderService.getRepositories.mock.calls.length - callsBefore
+        ).toBe(2);
+      } finally {
+        jest.useRealTimers();
+      }
     });
   });
 });
