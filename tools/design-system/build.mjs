@@ -18,12 +18,15 @@
  * --check exits non-zero if the generated output differs from what is on disk,
  * and runs alongside style-guide:check ahead of `nx affected:lint`.
  *
- * WHAT THIS DOES NOT DO
- * Publishing the result to the design system stays manual — CI has no access to
- * it. This guarantees the file in the repo is current, so whoever publishes is
- * publishing the right bytes; it cannot guarantee that someone did publish.
- * The design system reads its tokens from a tokens.json of its own, so a token
- * change lands there as well as in this stylesheet.
+ * WHAT THIS FILE IS FOR
+ * The published design system does NOT read this stylesheet — it reads the
+ * tokens.json that build-tokens-json.mjs writes beside it. This file is the
+ * human-readable view: the brand with the reasoning from _tokens.scss carried
+ * across, for anyone reading the tokens rather than building against them.
+ *
+ * Publishing either one to the artifact has no CI path, so it is done from a
+ * session that can reach it. The guards here guarantee the bytes in the repo
+ * are current; they cannot guarantee anybody published them.
  *
  * THE THEME TRANSFORM
  * The app switches themes with `body.dark` / `body.light`, driven by
@@ -52,7 +55,7 @@ const DEFAULT_OUT = resolve(HERE, 'tokens.css');
 /* ---------- parsing ------------------------------------------------------ */
 
 /** Pull one `<selector> { … }` block out of the stylesheet. */
-function block(css, selector) {
+export function block(css, selector) {
   const start = css.indexOf(`${selector} {`);
   if (start === -1) throw new Error(`No "${selector}" block in ${TOKENS}`);
   const end = css.indexOf('\n}', start);
@@ -71,7 +74,7 @@ function block(css, selector) {
  * list stripped of why each value is what it is would be worse documentation
  * than the hand-written file this replaces.
  */
-function entries(text) {
+export function entries(text) {
   const out = [];
   let pending = [];
   let inComment = false;
@@ -314,4 +317,11 @@ function main(argv) {
   return 0;
 }
 
-process.exit(main(process.argv.slice(2)));
+// Only when run as a script: build-tokens-json.mjs imports block() and
+// entries() from here, and an unguarded exit would end that process too.
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))
+) {
+  process.exit(main(process.argv.slice(2)));
+}

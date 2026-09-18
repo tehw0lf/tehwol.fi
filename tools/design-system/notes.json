@@ -1,0 +1,80 @@
+{
+  "$comment": [
+    "Usage notes for the published design system, keyed by token name.",
+    "",
+    "HAND-WRITTEN. Everything else about tokens.json is generated from",
+    "_tokens.scss: the names, the values, the theme pairing. Only this text is",
+    "here, because the source comments explain groups ('Neutral ramp — anchored",
+    "at 500 on the brand grey') while the design system wants a sentence per",
+    "token telling a reader when to reach for it.",
+    "",
+    "Every token in _tokens.scss needs an entry. build-tokens-json.mjs --check",
+    "fails on one that has none, which is what stops a new token reaching the",
+    "published system undescribed."
+  ],
+
+  "tw-brand": "The identity grey of the avatar and the favicon. Fixed across themes: it is the mark, not a UI colour. Never use it for text.",
+
+  "tw-neutral-900": "Darkest step of the ramp. The dark theme's page ground.",
+  "tw-neutral-850": "The dark theme's card and panel surface.",
+  "tw-neutral-800": "The dark theme's raised surface, one step above a card.",
+  "tw-neutral-750": "Ramp step between the raised surface and the control ground.",
+  "tw-neutral-700": "The dark theme's control ground: buttons, inputs, chips.",
+  "tw-neutral-650": "Hairlines and dividers on a dark ground.",
+  "tw-neutral-500": "The midpoint, identical to the brand grey. The whole ramp is anchored here so the mark and the interface share one family.",
+  "tw-neutral-300": "Muted text on a dark ground.",
+  "tw-neutral-200": "The light theme's control ground, and hairlines on a light ground.",
+  "tw-neutral-100": "The light theme's raised surface.",
+  "tw-neutral-050": "The light theme's card and panel surface.",
+
+  "tw-bg": "The page ground. Every contrast figure in this system is measured against this or against tw-surface.",
+  "tw-surface": "Cards, panels and the nav bar: one step off the page ground.",
+  "tw-surface-raised": "Menus, dialogs and anything that sits above a card.",
+  "tw-control-bg": "The ground under buttons, inputs and chips. Pair it with tw-control-text, never with tw-accent.",
+  "tw-control-text": "Foreground on tw-control-bg: 5.11:1 dark, 4.95:1 light. Controls get their own foreground because tw-accent only reaches 3.79:1 on the control ground.",
+
+  "tw-text": "Body text on tw-bg: 5.67:1 dark, 5.78:1 light. The brand blue, darkened for the light theme.",
+  "tw-text-dim": "Secondary text. Dark is 3.93:1, so on a dark ground use it at 24px or above only; light is 7.09:1 and unrestricted.",
+  "tw-text-muted": "Captions, metadata and labels that must recede without disappearing.",
+
+  "tw-accent": "The burnt orange, on the page ground only: 5.22:1 dark, 5.64:1 light. On a control ground use tw-control-text.",
+  "tw-accent-hover": "The accent under pointer or focus: 7.01:1 dark, 4.52:1 light.",
+  "tw-link": "Inline links on the page ground: 7.04:1 dark, 5.64:1 light.",
+
+  "tw-success": "A completed or valid state. Always pair it with a word or an icon, never colour alone.",
+  "tw-warn": "A caution that does not block the reader.",
+  "tw-danger": "A failure or a destructive action. Pair it with a word, never colour alone.",
+
+  "tw-glass-bg": "The translucent ground of the frosted nav bar, used together with tw-glass-blur.",
+  "tw-glass-blur": "The backdrop-filter radius of the frosted nav bar: backdrop-filter: blur(var(--tw-glass-blur)). A blur radius, not a spacing step, so it is not on the 4px grid.",
+
+  "tw-font-sans": "The one brand family: self-hosted Roboto, with a system fallback. There is deliberately no mono token.",
+
+  "tw-weight-light": "Display text only. One of the three weights with a shipped font face.",
+  "tw-weight-regular": "Body copy and everything unemphasised.",
+  "tw-weight-medium": "Headings, buttons and labels. The heaviest face that ships; never ask for 600 or 700.",
+
+  "tw-text-xs": "Captions, token names and the wordlist output.",
+  "tw-text-sm": "Labels, table cells and secondary interface text.",
+  "tw-text-base": "Body copy. The base of the ramp.",
+  "tw-text-lg": "Section headings, and the reading size the site sets on its prose.",
+  "tw-text-xl": "Page headings.",
+  "tw-text-2xl": "Display text: the largest size the brand sets.",
+
+  "tw-leading-tight": "Headings and display text. Unitless, so it scales with the size it lands on.",
+  "tw-leading-normal": "Interface text: labels, buttons, table cells.",
+  "tw-leading-loose": "Long-form prose at 18px.",
+
+  "tw-space-1": "The base step. Gaps inside a control, between an icon and its label.",
+  "tw-space-2": "Padding inside compact controls; the gap between related items in a row.",
+  "tw-space-3": "The gap between navigation links, and padding in medium controls.",
+  "tw-space-4": "Card padding and the page's side gutter.",
+  "tw-space-6": "The gap between blocks inside a section.",
+  "tw-space-8": "The gap between sections.",
+  "tw-space-10": "The largest step: the space around a page's main region.",
+
+  "tw-radius-sm": "Chips, tags and other small surfaces.",
+  "tw-radius-md": "The default: buttons, inputs and cards.",
+  "tw-radius-lg": "Dialogs, menus and large panels.",
+  "tw-radius-full": "Avatars and pills."
+}
