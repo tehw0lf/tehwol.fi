@@ -2,10 +2,11 @@
 /**
  * Builds the design system's tokens.css from _tokens.scss.
  *
- * The design-system project on claude.ai/design publishes spec sheets that bind
- * the brand tokens. Its stylesheet used to be a hand-copied mirror of
- * _tokens.scss, which made it the one copy of the brand that could drift
- * silently: nothing failed, the published sheets just started lying.
+ * The published design system at
+ * https://claude.ai/artifact/N8SfD9v1qXKPjYuEA4LiPk holds the brand tokens for
+ * anything built outside this repo. Its stylesheet used to be a hand-copied
+ * mirror of _tokens.scss, which made it the one copy of the brand that could
+ * drift silently: nothing failed, the published view just started lying.
  *
  *   npm run design-tokens          regenerate
  *   npm run design-tokens:check    fail if the committed file is stale
@@ -18,9 +19,11 @@
  * and runs alongside style-guide:check ahead of `nx affected:lint`.
  *
  * WHAT THIS DOES NOT DO
- * Uploading the result to the design project stays manual — CI has no access to
- * it. This guarantees the file in the repo is current, so whoever uploads is
- * uploading the right bytes; it cannot guarantee that someone did upload.
+ * Publishing the result to the design system stays manual — CI has no access to
+ * it. This guarantees the file in the repo is current, so whoever publishes is
+ * publishing the right bytes; it cannot guarantee that someone did publish.
+ * The design system reads its tokens from a tokens.json of its own, so a token
+ * change lands there as well as in this stylesheet.
  *
  * THE THEME TRANSFORM
  * The app switches themes with `body.dark` / `body.light`, driven by

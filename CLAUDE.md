@@ -121,9 +121,17 @@ generated output was never regenerated. Commit the regenerated files alongside
 the tokens; both are in `.prettierignore` because the checks compare bytes and
 the formatter would rewrite them.
 
-Republishing is manual for both — CI can reach neither the Artifact nor the
-design project. After a token change: regenerate, commit, then republish to the
-same URLs so the shared links stay current.
+Republishing is manual for both — CI can reach neither of them. After a token
+change: regenerate, commit, then republish to the same URLs so the shared links
+stay current.
+
+- Style guide: https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF
+- Design system: https://claude.ai/artifact/N8SfD9v1qXKPjYuEA4LiPk
+
+The design system does not read `tokens.css`. It keeps the tokens as
+`project/tokens.json`, a list of entries per family with a usage note on each,
+so a token change has to be carried into that file as well — the generated
+stylesheet alone will not update it.
 
 `tools/design-system/sheet-chrome.css` is hand-written and appended verbatim to
 the generated tokens. Editing it is correct; editing `tokens.css` is not.
