@@ -9,10 +9,10 @@
 // lets the container take exactly its share whatever the labels measure, which
 // is what keeps the switcher in place across locales.
 //
-// Below the width the labels need (about 1290px in German, 1196px in English,
-// while the desktop nav appears from 960px) the links still do not fit. They
-// scroll inside their own box then, rather than painting over the controls to
-// their right or dragging the whole page sideways. Tracked in TODO.md.
+// The toolbar now appears from 1280px, which is where its content fits, so the
+// overflow below is a fallback rather than the everyday case it used to be: a
+// label longer than today's would scroll inside this box instead of painting
+// over the controls to its right or dragging the whole page sideways.
 .nav-links {
   min-width: 0;
   overflow-x: auto;

@@ -240,8 +240,11 @@ test.describe('Mobile Sidenav Behavior', () => {
   test('should not show mobile sidenav on desktop screens', async ({
     page
   }) => {
-    // Change to desktop viewport
-    await page.setViewportSize({ width: 1200, height: 800 });
+    // 1280px, the width the desktop toolbar appears from: it is the narrowest
+    // viewport where all five links fit beside the controls in either locale.
+    // A narrower one here would assert the toolbar at a width that now
+    // correctly renders the burger instead.
+    await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/');
 
     // Desktop component toolbar should be visible
