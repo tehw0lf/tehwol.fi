@@ -15,3 +15,8 @@
 # Its long font stacks are exactly what Prettier would rewrap, and the check
 # compares bytes.
 /tools/design-system/tokens.css
+
+# And for the tokens.json the published design system actually reads, generated
+# by tools/design-system/build-tokens-json.mjs. notes.json beside it is
+# hand-written and stays formatted.
+/tools/design-system/tokens.json

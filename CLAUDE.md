@@ -106,24 +106,37 @@ Three rules that are easy to get wrong:
 - Spacing is a 4px scale. Every spacing value in the app and the libraries sits
   on it; the only other lengths left are blur radii, which are not spacing.
 
-**Both views of the tokens are generated, not written.** After changing
+**Every view of the tokens is generated, not written.** After changing
 `_tokens.scss`, run:
 
 ```bash
 npm run style-guide          # regenerate tools/style-guide/brand-tokens.html
-npm run design-tokens        # regenerate tools/design-system/tokens.css
+npm run design-tokens        # regenerate the design system's tokens.css + tokens.json
 npm run style-guide:check    # fails if the guide is stale
-npm run design-tokens:check  # fails if the design-system CSS is stale
+npm run design-tokens:check  # fails if either design-system file is stale
 ```
 
 Both checks run ahead of `nx affected:lint`, so CI fails on a token change whose
 generated output was never regenerated. Commit the regenerated files alongside
-the tokens; both are in `.prettierignore` because the checks compare bytes and
-the formatter would rewrite them.
+the tokens; all three are in `.prettierignore` because the checks compare bytes
+and the formatter would rewrite them.
 
-Republishing is manual for both — CI can reach neither the Artifact nor the
-design project. After a token change: regenerate, commit, then republish to the
-same URLs so the shared links stay current.
+`tools/design-system/notes.json` is hand-written and holds one usage note per
+token — the sentence the design system shows a reader. A token with no note, or
+a note whose token no longer exists, fails `design-tokens:check`, so a new token
+cannot reach the published system undescribed.
+
+Republishing is manual for both — CI can reach neither of them. After a token
+change: regenerate, commit, then republish to the same URLs so the shared links
+stay current.
+
+- Style guide: https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF
+- Design system: https://claude.ai/artifact/N8SfD9v1qXKPjYuEA4LiPk
+
+The design system reads `project/tokens.json`, not `tokens.css`. Publish the
+generated `tools/design-system/tokens.json` to that path — the design system
+keeps its files under `project/`, so the publish call names it
+`project/tokens.json` with the artifact's URL.
 
 `tools/design-system/sheet-chrome.css` is hand-written and appended verbatim to
 the generated tokens. Editing it is correct; editing `tokens.css` is not.
