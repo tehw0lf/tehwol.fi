@@ -51,10 +51,7 @@
   --tw-leading-loose: 1.7;
 
   /* Spacing — a 4px base. The ramp is what shipped, rounded onto the grid.
-     One off-grid value is left on purpose: the desktop nav margin, where
-     10px is load-bearing and 12px overflows the toolbar in German (see
-     TODO.md). The two remaining 15px are blur() radii, which are not
-     spacing. */
+     The two remaining 15px are blur() radii, which are not spacing. */
   --tw-space-1: 4px;
   --tw-space-2: 8px;
   --tw-space-3: 12px;

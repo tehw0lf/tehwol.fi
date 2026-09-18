@@ -512,9 +512,8 @@ footer{padding:42px 0 64px;color:var(--soft);font-size:12.5px;font-family:var(--
 <section>
   <h2>Space &amp; radius</h2>
   <p class="lede">A 4px base. The steps that recur most in the codebase are 4, 8, 16
-  and 32. The app and the libraries sit on the grid, with one deliberate exception:
-  the desktop nav margin, where 10px is load-bearing and 12px overflows the toolbar
-  in German. The two remaining 15px are blur() radii, which are not spacing.</p>
+  and 32. The app and the libraries sit on the grid. The two remaining 15px are
+  blur() radii, which are not spacing.</p>
   <div class="scale">
       ${spaces}
   </div>

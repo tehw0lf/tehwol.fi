@@ -103,8 +103,8 @@ Three rules that are easy to get wrong:
 - Controls use `--tw-control-text`, not `--tw-accent`. The accent is tuned for the
   page ground and only reaches 3.79:1 on the control surface.
 - Measure contrast against the surface a colour actually sits on, not against the page.
-- Spacing is a 4px scale. The one off-grid value left is the desktop nav margin,
-  which is load-bearing — see `TODO.md` before touching it.
+- Spacing is a 4px scale. Every spacing value in the app and the libraries sits
+  on it; the only other lengths left are blur radii, which are not spacing.
 
 **Both views of the tokens are generated, not written.** After changing
 `_tokens.scss`, run:

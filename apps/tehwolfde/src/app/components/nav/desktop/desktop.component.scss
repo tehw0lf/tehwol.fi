@@ -2,20 +2,35 @@
 @use '@tehw0lf/mvc';
 @use '../shared-nav';
 
-// NOT migrated to --tw-space-3, deliberately. The toolbar lays the links out
-// in a `flex: 1 1 0%` container and everything to their right — theme toggle,
-// language switcher, GitHub link — follows in flow. At desktop width the German
-// labels are wide enough that the row only just fits, so raising this margin to
-// 12px tips it over and shifts the switcher ~10px when the locale changes. The
-// e2e test `should not resize the language switcher when the locale changes`
-// catches it. 10px is load-bearing here by accident, which is its own bug; the
-// fix is to stop the link container overflowing, not to round the margin.
-// Tracked in TODO.md.
+// A flex item's min-width defaults to its content width, so the link row could
+// never shrink below the sum of its labels: whenever the locale made them wider
+// than the row's share, the container overflowed its flex basis and pushed the
+// theme toggle, language switcher and GitHub link along with it. min-width: 0
+// lets the container take exactly its share whatever the labels measure, which
+// is what keeps the switcher in place across locales.
+//
+// Below the width the labels need (about 1290px in German, 1196px in English,
+// while the desktop nav appears from 960px) the links still do not fit. They
+// scroll inside their own box then, rather than painting over the controls to
+// their right or dragging the whole page sideways. Tracked in TODO.md.
+.nav-links {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+
+  // The trailing gap after the last link only ever met the theme toggle's own
+  // margin, and at 1280px it was the one thing that made the German row wider
+  // than its share, which would have shown a scrollbar for nothing.
+  .nav-item:last-child {
+    margin-right: 0;
+  }
+}
+
 .mat-mdc-button {
   vertical-align: middle;
   line-height: 36px;
   font-size: global.$fontsize-button-md;
-  margin: 0 10px 0 0;
+  margin: 0 var(--tw-space-3) 0 0;
   text-align: center;
   text-decoration: none;
 }
