@@ -334,8 +334,12 @@ describe('GitProviderService', () => {
 
       // Error one request to trigger error handling
       reqGithub.flush('User not found', { status: 404, statusText: 'Not Found' });
-      // Handle the other request normally to avoid open request error
-      reqGitlab.flush([]);
+
+      // zip cancels its other source once one errors, so the GitLab request is
+      // already torn down here. It used to stay open — the paged fetch was
+      // shareReplay'd and therefore never unsubscribed — and this test had to
+      // flush it to keep httpMock quiet.
+      expect(reqGitlab.cancelled).toBe(true);
     });
   });
 
@@ -394,6 +398,101 @@ describe('GitProviderService', () => {
       httpMock
         .expectOne(`${GITHUB_URL}&page=2`)
         .error(new ProgressEvent('network error'));
+    });
+  });
+
+  describe('abandoned loads', () => {
+    it('should stop paging when the subscriber unsubscribes', () => {
+      const sub = service
+        .getRepositories({ github: 'testuser' })
+        .subscribe();
+
+      // First page arrives and advertises a second.
+      httpMock.expectOne(GITHUB_URL).flush([GITHUB_REPOS[0]], {
+        headers: { Link: `<${GITHUB_URL}&page=2>; rel="next"` }
+      });
+      const page2 = httpMock.expectOne(`${GITHUB_URL}&page=2`);
+
+      // The caller walks away — the component's switchMap does this on a
+      // config change. The in-flight page must be cancelled, not run to
+      // completion against a rate-limited API.
+      sub.unsubscribe();
+
+      expect(page2.cancelled).toBe(true);
+    });
+
+    it('should not clear the loading state from an abandoned load', () => {
+      const states: boolean[] = [];
+      service.loading.subscribe((state) => states.push(state));
+
+      const sub = service.getRepositories({ github: 'slowuser' }).subscribe();
+      const inFlight = httpMock.expectOne(
+        'https://api.github.com/users/slowuser/repos?per_page=100'
+      );
+
+      sub.unsubscribe();
+
+      // The response lands after the caller gave up. Nothing should observe it,
+      // so `loading` must not be flipped to false on its behalf: the spinner
+      // belongs to whichever load is current now.
+      expect(inFlight.cancelled).toBe(true);
+      expect(states).not.toContain(false);
+    });
+
+    it('should still end loading for a cache hit', async () => {
+      const first = firstValueFrom(
+        service.getRepositories(GIT_PROVIDER_USER_NAMES)
+      );
+      httpMock.expectOne(GITHUB_URL).flush(GITHUB_REPOS);
+      httpMock.expectOne(GITLAB_URL).flush(GITLAB_REPOS);
+      await first;
+
+      const states: boolean[] = [];
+      service.loading.subscribe((state) => states.push(state));
+
+      // Served from the cache, so no HTTP at all — but this subscriber still
+      // needs its loading state ended, or its spinner never clears.
+      await firstValueFrom(service.getRepositories(GIT_PROVIDER_USER_NAMES));
+      httpMock.verify();
+
+      expect(states[states.length - 1]).toBe(false);
+    });
+  });
+
+  describe('concurrent callers', () => {
+    it('should share one request between callers asking at the same time', async () => {
+      const a = firstValueFrom(service.getRepositories(GIT_PROVIDER_USER_NAMES));
+      const b = firstValueFrom(service.getRepositories(GIT_PROVIDER_USER_NAMES));
+
+      // One request per provider, not two: the second caller joined the first.
+      httpMock.expectOne(GITHUB_URL).flush(GITHUB_REPOS);
+      httpMock.expectOne(GITLAB_URL).flush(GITLAB_REPOS);
+      httpMock.verify();
+
+      expect(await a).toEqual(await b);
+    });
+
+    it('should refetch once the shared request has settled', async () => {
+      const first = firstValueFrom(
+        service.getRepositories(GIT_PROVIDER_USER_NAMES)
+      );
+      httpMock.expectOne(GITHUB_URL).flush(GITHUB_REPOS);
+      httpMock.expectOne(GITLAB_URL).flush(GITLAB_REPOS);
+      await first;
+
+      // Past the TTL the entry is stale, so a new caller must hit the network
+      // again rather than be handed the request that already settled.
+      const realNow = Date.now();
+      jest.spyOn(Date, 'now').mockReturnValue(realNow + 11 * 60 * 1000);
+
+      const again = firstValueFrom(
+        service.getRepositories(GIT_PROVIDER_USER_NAMES)
+      );
+      httpMock.expectOne(GITHUB_URL).flush(GITHUB_REPOS);
+      httpMock.expectOne(GITLAB_URL).flush(GITLAB_REPOS);
+      await again;
+
+      jest.restoreAllMocks();
     });
   });
 
