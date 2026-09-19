@@ -103,17 +103,11 @@ const scalar = (value) =>
 
 /* ---------- assembly ------------------------------------------------------ */
 
-function usage(name, notes, missing) {
-  const key = name.slice(2);
-  const note = notes[key];
-  if (!note) missing.push(key);
-  return note ?? '';
-}
+const usage = (name, notes) => notes[name.slice(2)] ?? '';
 
 function build() {
   const css = readFileSync(TOKENS, 'utf8');
   const notes = JSON.parse(readFileSync(NOTES, 'utf8'));
-  const missing = [];
 
   const root = entries(block(css, ':root'));
   const dark = entries(block(css, 'body.dark'));
@@ -128,7 +122,7 @@ function build() {
       dark: alias(e.value),
       light: alias(lightByName.get(e.name) ?? e.value)
     },
-    usage: usage(e.name, notes, missing)
+    usage: usage(e.name, notes)
   }));
 
   const rootColors = root
@@ -136,7 +130,7 @@ function build() {
     .map((e) => ({
       name: e.name.slice(2),
       value: { dark: alias(e.value), light: alias(e.value) },
-      usage: usage(e.name, notes, missing)
+      usage: usage(e.name, notes)
     }));
 
   /* The other families, in the order FAMILIES lists them. */
@@ -147,7 +141,7 @@ function build() {
       .map((e) => ({
         name: e.name.slice(2),
         value: scalar(key === 'effect' ? unwrapBlur(e.value) : e.value),
-        usage: usage(e.name, notes, missing)
+        usage: usage(e.name, notes)
       }));
     if (tokens.length) families[key] = { tokens };
   }
@@ -174,12 +168,20 @@ function build() {
     root.find((e) => e.name === '--tw-font-sans')?.value ??
     'Roboto, sans-serif';
 
-  // Names the notes file carries that no token in _tokens.scss defines. A
-  // renamed token would otherwise leave its old note behind, still read as
-  // current by whoever edits the file next.
+  /* The notes guard, in both directions, over every token _tokens.scss defines
+     — not only the ones that reach a usage() call. Type tokens are consumed by
+     the `type` section rather than emitted as a family entry, so deriving this
+     from the call sites let a new size or weight publish undescribed. */
   const defined = new Set(
     [...root, ...dark, ...light].map((e) => e.name.slice(2))
   );
+
+  // Defined tokens the notes file does not describe.
+  const missing = [...defined].filter((k) => !notes[k]).sort();
+
+  // Names the notes file carries that no token in _tokens.scss defines. A
+  // renamed token would otherwise leave its old note behind, still read as
+  // current by whoever edits the file next.
   const orphaned = Object.keys(notes)
     .filter((k) => !k.startsWith('$') && !defined.has(k))
     .sort();
@@ -232,7 +234,18 @@ function build() {
 function main(argv) {
   const check = argv.includes('--check');
   const outFlag = argv.indexOf('--out');
-  const out = outFlag === -1 ? DEFAULT_OUT : resolve(argv[outFlag + 1]);
+
+  /* `--out` last would resolve(undefined) and throw; `--out --check` would take
+     the flag as the path and quietly read or write a file named `--check`. */
+  const outValue = outFlag === -1 ? null : argv[outFlag + 1];
+  if (outFlag !== -1 && (outValue === undefined || outValue.startsWith('--'))) {
+    console.error(
+      '--out needs a path.\n' +
+        'Usage: node tools/design-system/build-tokens-json.mjs [--out <path>] [--check]'
+    );
+    return 1;
+  }
+  const out = outValue === null ? DEFAULT_OUT : resolve(outValue);
 
   const { json, missing, orphaned } = build();
 
