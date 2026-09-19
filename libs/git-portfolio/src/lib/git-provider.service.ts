@@ -39,7 +39,19 @@ export class GitProviderService {
   private loadingStateSubject = new BehaviorSubject<boolean>(true);
   private repositorySubject = new BehaviorSubject<GitRepositories>({});
   private repositoryCache = new Map<string, CacheEntry>();
-  private inFlightRequests = new Map<string, Observable<GitRepositories>>();
+
+  /**
+   * Keyed by cache key, but each entry carries its own token. A settling
+   * request may only write the cache or clean up while it still *owns* the
+   * entry — clearCache() drops ownership, and a newer request for the same key
+   * takes it over. Without that, a response already on the wire would
+   * repopulate the cache it was just told to forget, and a late straggler
+   * would delete the tracking entry belonging to the request that replaced it.
+   */
+  private inFlightRequests = new Map<
+    string,
+    { token: symbol; request: Observable<GitRepositories> }
+  >();
 
   get loading(): Observable<boolean> {
     return this.loadingStateSubject.asObservable();
@@ -85,36 +97,49 @@ export class GitProviderService {
     // is dropped as soon as it settles and never becomes a stale cache.
     const inFlight = this.inFlightRequests.get(cacheKey);
     if (inFlight) {
-      return this.withLoadingState(inFlight);
+      return this.withLoadingState(inFlight.request);
     }
 
     // Clean up expired entries and manage cache size
     this.cleanupCache();
 
+    // This request's claim on the key. Every write below is guarded by it, so
+    // a request that has been superseded or cleared touches nothing.
+    const token = Symbol(cacheKey);
+    const owns = () => this.inFlightRequests.get(cacheKey)?.token === token;
+    const release = () => {
+      if (owns()) this.inFlightRequests.delete(cacheKey);
+    };
+
     const request$ = this.fetchRepositories(gitProviderUserNames).pipe(
       tap((repositories: GitRepositories) => {
+        // Only the owner may fill the cache: otherwise a response already on
+        // the wire when clearCache() ran would put back what was just dropped.
+        if (!owns()) return;
         this.repositoryCache.set(cacheKey, {
           data: repositories,
           timestamp: Date.now(),
           ttl: this.CACHE_TTL
         });
-        // Deregister as the value lands, not in finalize: a subscriber that
+        // Released as the value lands, not in finalize: a subscriber that
         // calls back into getRepositories from its own next handler must see
         // the settled cache, not a request that is technically still open.
-        this.inFlightRequests.delete(cacheKey);
+        release();
       }),
       catchError((error: unknown) => {
-        this.evictCacheEntry(cacheKey);
-        this.inFlightRequests.delete(cacheKey);
+        if (owns()) {
+          this.evictCacheEntry(cacheKey);
+          release();
+        }
         return throwError(() => error);
       }),
       // Covers the paths the two handlers above do not: an unsubscribe before
       // the response, which would otherwise strand the entry forever.
-      finalize(() => this.inFlightRequests.delete(cacheKey)),
+      finalize(release),
       share()
     );
 
-    this.inFlightRequests.set(cacheKey, request$);
+    this.inFlightRequests.set(cacheKey, { token, request: request$ });
 
     return this.withLoadingState(request$);
   }

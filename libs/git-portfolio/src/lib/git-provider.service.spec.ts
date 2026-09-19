@@ -496,6 +496,56 @@ describe('GitProviderService', () => {
     });
   });
 
+  describe('ownership of an in-flight request', () => {
+    it('should not repopulate a cache that was cleared mid-request', () => {
+      const sub = service.getRepositories({ github: 'testuser' }).subscribe();
+      const inFlight = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      service.clearCache();
+      // The response was already on the wire when the cache was dropped. It
+      // must not put back what clearCache() was called to forget.
+      inFlight.flush(GITHUB_REPOS);
+
+      service.getRepositories({ github: 'testuser' }).subscribe();
+      const refetch = httpMock.match(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      expect(refetch.length).toBe(1);
+      refetch.forEach((request) => request.flush(GITHUB_REPOS));
+      sub.unsubscribe();
+    });
+
+    it('should let a superseded request clean up without disturbing its replacement', () => {
+      const first = service.getRepositories({ github: 'testuser' }).subscribe();
+      const firstRequest = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      // clearCache drops the first request's claim on the key, so the next
+      // call starts a genuinely new one rather than joining the old.
+      service.clearCache();
+      const second = service.getRepositories({ github: 'testuser' }).subscribe();
+      const secondRequest = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      // The abandoned request settles last. Its cleanup must not evict the
+      // entry the second request now owns.
+      firstRequest.flush(GITHUB_REPOS);
+      secondRequest.flush(GITHUB_REPOS);
+
+      // Served from the second request's cache entry: no third trip.
+      service.getRepositories({ github: 'testuser' }).subscribe();
+      httpMock.verify();
+
+      first.unsubscribe();
+      second.unsubscribe();
+    });
+  });
+
   describe('clearCache', () => {
     it('should clear cache and reset state', () => {
       // Clear cache
