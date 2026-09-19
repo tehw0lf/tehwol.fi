@@ -236,9 +236,10 @@ function main(argv) {
   const outFlag = argv.indexOf('--out');
 
   /* `--out` last would resolve(undefined) and throw; `--out --check` would take
-     the flag as the path and quietly read or write a file named `--check`. */
+     the flag as the path and quietly read or write a file named `--check`;
+     `--out ""` would resolve to the working directory and operate on that. */
   const outValue = outFlag === -1 ? null : argv[outFlag + 1];
-  if (outFlag !== -1 && (outValue === undefined || outValue.startsWith('--'))) {
+  if (outFlag !== -1 && (!outValue || outValue.startsWith('--'))) {
     console.error(
       '--out needs a path.\n' +
         'Usage: node tools/design-system/build-tokens-json.mjs [--out <path>] [--check]'
