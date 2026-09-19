@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabGroup } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject, NEVER, of, throwError } from 'rxjs';
+import { BehaviorSubject, NEVER, Subject, of, throwError } from 'rxjs';
 
 import { GitPortfolioComponent } from './git-portfolio.component';
 import { GitProviderService } from './git-provider.service';
@@ -443,6 +443,79 @@ describe('GitPortfolioComponent', () => {
       } finally {
         jest.useRealTimers();
       }
+    });
+  });
+
+  describe('stale responses', () => {
+    /**
+     * The config is a reactive input, so a change starts a new request while an
+     * earlier one may still be in flight. These cover the ordering that made
+     * that unsafe: the first request settling *after* the second.
+     */
+    const pending = () => new Subject<GitRepositories>();
+
+    it('should ignore a slow response from a superseded config', () => {
+      const first = pending();
+      const second = pending();
+      gitProviderService.getRepositories
+        .mockReturnValueOnce(first)
+        .mockReturnValueOnce(second);
+
+      const staged = TestBed.createComponent(GitPortfolioComponent);
+      staged.componentRef.setInput('gitProviderConfig', { github: 'olduser' });
+      staged.detectChanges();
+
+      staged.componentRef.setInput('gitProviderConfig', { github: 'newuser' });
+      staged.detectChanges();
+
+      // The current config answers first, then the abandoned one arrives late.
+      second.next(MOCK_REPOSITORIES);
+      const stale: GitRepositories = {
+        github: { own: [createGitRepository(99, 'stale')], forked: [] }
+      };
+      first.next(stale);
+      staged.detectChanges();
+
+      expect(staged.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
+    });
+
+    it('should not show the error state for a superseded request', () => {
+      const first = pending();
+      const second = pending();
+      gitProviderService.getRepositories
+        .mockReturnValueOnce(first)
+        .mockReturnValueOnce(second);
+
+      const staged = TestBed.createComponent(GitPortfolioComponent);
+      staged.componentRef.setInput('gitProviderConfig', { github: 'olduser' });
+      staged.detectChanges();
+
+      staged.componentRef.setInput('gitProviderConfig', { github: 'newuser' });
+      staged.detectChanges();
+
+      second.next(MOCK_REPOSITORIES);
+      // The abandoned request fails afterwards; the user has moved on from it.
+      first.error(new Error('network error'));
+      staged.detectChanges();
+
+      expect(staged.componentInstance.loadFailed()).toBe(false);
+      expect(staged.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
+    });
+
+    it('should keep loading after a failure so a later retry still lands', () => {
+      gitProviderService.getRepositories.mockReturnValue(
+        throwError(() => new Error('network error'))
+      );
+      const failed = TestBed.createComponent(GitPortfolioComponent);
+      failed.detectChanges();
+      expect(failed.componentInstance.loadFailed()).toBe(true);
+
+      gitProviderService.getRepositories.mockReturnValue(of(MOCK_REPOSITORIES));
+      failed.componentRef.setInput('gitProviderConfig', { github: 'someone' });
+      failed.detectChanges();
+
+      expect(failed.componentInstance.loadFailed()).toBe(false);
+      expect(failed.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
     });
   });
 });
