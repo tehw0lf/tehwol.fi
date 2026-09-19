@@ -518,6 +518,35 @@ describe('GitProviderService', () => {
       sub.unsubscribe();
     });
 
+    it('should not let an invalidated request end the loading state', () => {
+      const states: boolean[] = [];
+      service.loading.subscribe((state) => states.push(state));
+
+      const first = service.getRepositories({ github: 'testuser' }).subscribe();
+      const firstRequest = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      service.clearCache();
+      const second = service.getRepositories({ github: 'testuser' }).subscribe();
+      const secondRequest = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
+
+      // The invalidated request answers while its replacement is still in
+      // flight. Reporting itself done here would clear the spinner over a
+      // portfolio that has not loaded yet.
+      firstRequest.flush(GITHUB_REPOS);
+      expect(states[states.length - 1]).toBe(true);
+
+      // The replacement is what ends it.
+      secondRequest.flush(GITHUB_REPOS);
+      expect(states[states.length - 1]).toBe(false);
+
+      first.unsubscribe();
+      second.unsubscribe();
+    });
+
     it('should let a superseded request clean up without disturbing its replacement', () => {
       const first = service.getRepositories({ github: 'testuser' }).subscribe();
       const firstRequest = httpMock.expectOne(

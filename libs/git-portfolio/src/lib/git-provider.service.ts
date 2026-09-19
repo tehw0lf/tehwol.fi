@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import {
   BehaviorSubject,
+  defer,
   expand,
   Observable,
   of,
@@ -52,6 +53,14 @@ export class GitProviderService {
     string,
     { token: symbol; request: Observable<GitRepositories> }
   >();
+
+  /**
+   * Bumped by clearCache(). The shared state needs its own generation rather
+   * than the ownership token above, because a request releases that token as
+   * its value lands — before withLoadingState() sees the same value — so by
+   * then ownership can no longer tell a current load from an invalidated one.
+   */
+  private stateGeneration = 0;
 
   get loading(): Observable<boolean> {
     return this.loadingStateSubject.asObservable();
@@ -155,16 +164,27 @@ export class GitProviderService {
   private withLoadingState(
     repositories$: Observable<GitRepositories>
   ): Observable<GitRepositories> {
-    return repositories$.pipe(
-      tap((repositories: GitRepositories) => {
-        this.repositorySubject.next(repositories);
-        this.loadingStateSubject.next(false);
-      }),
-      catchError((error: unknown) => {
-        this.loadingStateSubject.next(false);
-        return throwError(() => error);
-      })
-    );
+    // defer so the generation is read per subscription, at the moment this
+    // load actually starts, rather than once when the observable is built.
+    return defer(() => {
+      const generation = this.stateGeneration;
+      const current = () => generation === this.stateGeneration;
+
+      return repositories$.pipe(
+        tap((repositories: GitRepositories) => {
+          // A load invalidated by clearCache() must not report itself done:
+          // its replacement may still be in flight, and clearing the spinner
+          // on its behalf would show an empty portfolio as a finished one.
+          if (!current()) return;
+          this.repositorySubject.next(repositories);
+          this.loadingStateSubject.next(false);
+        }),
+        catchError((error: unknown) => {
+          if (current()) this.loadingStateSubject.next(false);
+          return throwError(() => error);
+        })
+      );
+    });
   }
 
   private createCacheKey(config?: GitProviderConfig): string {
@@ -295,6 +315,10 @@ export class GitProviderService {
   }
 
   clearCache(): void {
+    // Invalidates both halves: the cache ownership above, and the shared
+    // state, so a request already on the wire can neither refill the cache
+    // nor report itself finished once its result is no longer wanted.
+    this.stateGeneration++;
     this.repositoryCache.clear();
     // Otherwise a request already on the wire would still populate the cache
     // it was just asked to forget.
