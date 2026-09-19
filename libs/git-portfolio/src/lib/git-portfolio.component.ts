@@ -8,8 +8,8 @@ import { ChangeDetectionStrategy, Component, input, inject, signal, effect, comp
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
 
 import { GitProviderService } from './git-provider.service';
 import { RepoCardComponent } from './repo-card/repo-card.component';
@@ -102,7 +102,34 @@ export class GitPortfolioComponent implements OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
+  /**
+   * Every load goes through here, so switchMap can drop the previous one. The
+   * config is a reactive input: a change starts a new request while an earlier
+   * one may still be in flight, and the provider APIs are slow enough for that
+   * to happen in practice. Without the cancel, a stale response arriving second
+   * would overwrite the current user's repositories, or fail a request the user
+   * has already moved on from and show the error state over good data.
+   */
+  private load$ = new Subject<GitProviderConfig>();
+
   constructor() {
+    this.load$
+      .pipe(
+        switchMap(config =>
+          this.gitProviderService.getRepositories(config).pipe(
+            // Keeps a failed request from completing the outer subscription,
+            // which would leave later retries with nothing listening.
+            catchError(() => of(null))
+          )
+        ),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(repositories => {
+        this.gitRepositories.set(repositories ?? undefined);
+        this.loadFailed.set(repositories === null);
+        this.retrying.set(false);
+      });
+
     effect(() => {
       // Reads the config so a changed user refetches; the retry signals are set
       // inside getRepositories() and must not retrigger this effect.
@@ -149,21 +176,7 @@ export class GitPortfolioComponent implements OnDestroy {
   }
 
   getRepositories(): void {
-    this.gitProviderService
-      .getRepositories(this.gitProviderConfig())
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: repositories => {
-          this.gitRepositories.set(repositories);
-          this.loadFailed.set(false);
-          this.retrying.set(false);
-        },
-        error: () => {
-          this.gitRepositories.set(undefined);
-          this.loadFailed.set(true);
-          this.retrying.set(false);
-        }
-      });
+    this.load$.next(this.gitProviderConfig());
   }
 
   /**
