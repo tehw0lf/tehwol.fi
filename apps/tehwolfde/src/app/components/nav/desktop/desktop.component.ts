@@ -44,9 +44,18 @@ export class DesktopComponent implements OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private unsubscribe$: Subject<void> = new Subject();
 
+  // 1280px, not a round 960: it is the width at which the toolbar's content
+  // actually fits. Measured in Chromium with all five links — the German row
+  // needs 924px for the links plus 312px for the theme toggle, the language
+  // switcher and the GitHub link, plus 32px of toolbar padding. At 1152px the
+  // German labels are already cut off; at 960px both locales are.
+  //
+  // Below this the burger menu renders instead, which fits any width. The
+  // link container keeps its min-width: 0 and overflow-x for the case a
+  // future label outgrows even this, but that is a fallback, not the plan.
   private isLargeScreen = toSignal(
     this.breakpointObserver
-      .observe(['(min-width: 960px)'])
+      .observe(['(min-width: 1280px)'])
       .pipe(takeUntil(this.unsubscribe$)),
     { initialValue: { matches: false, breakpoints: {} } }
   );

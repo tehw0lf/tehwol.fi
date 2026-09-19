@@ -138,9 +138,19 @@ test.describe('tehwolfde Home', () => {
   });
 
   test('should be responsive', async ({ page }) => {
-    // Test desktop view
-    await page.setViewportSize({ width: 1200, height: 800 });
+    // tehw0lf-desktop hosts both the burger and the toolbar and is always in
+    // the DOM, so asserting it alone would pass at any width. The toolbar's
+    // own links are what the breakpoint switches, so assert those: they appear
+    // from 1280px, the width their content fits at.
+    await page.setViewportSize({ width: 1280, height: 800 });
     await expect(page.locator('tehw0lf-desktop')).toBeVisible();
+    await expect(
+      page.locator('tehw0lf-desktop a[routerLink="/home"]')
+    ).toBeVisible();
+
+    // Just below it the burger takes over, in the same component.
+    await page.setViewportSize({ width: 1279, height: 800 });
+    await expect(page.locator('tehw0lf-desktop button#menu')).toBeVisible();
 
     // Test mobile view
     await page.setViewportSize({ width: 375, height: 667 });
