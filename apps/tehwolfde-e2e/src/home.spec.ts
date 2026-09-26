@@ -6,7 +6,9 @@ test.describe('tehwolfde Home', () => {
   });
 
   test('should display welcome message', async ({ page }) => {
-    await expect(page.locator('h1:has-text("Welcome to tehwolf.de!")')).toBeVisible();
+    await expect(
+      page.locator('h1:has-text("Welcome to tehwolf.de!")')
+    ).toBeVisible();
   });
 
   test('should have proper navigation component', async ({ page }) => {
@@ -20,8 +22,12 @@ test.describe('tehwolfde Home', () => {
     const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
     await expect(mainNav.locator('a[routerLink="/home"]')).toBeVisible();
     await expect(mainNav.locator('a[routerLink="/portfolio"]')).toBeVisible();
-    await expect(mainNav.locator('a[routerLink="/wordlist-generator"]')).toBeVisible();
-    await expect(mainNav.locator('a[routerLink="/contact-form"]')).toBeVisible();
+    await expect(
+      mainNav.locator('a[routerLink="/wordlist-generator"]')
+    ).toBeVisible();
+    await expect(
+      mainNav.locator('a[routerLink="/contact-form"]')
+    ).toBeVisible();
   });
 
   test('should have theme switcher', async ({ page }) => {
@@ -29,7 +35,7 @@ test.describe('tehwolfde Home', () => {
     const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
     const lightButton = mainNav.locator('button#light');
     const darkButton = mainNav.locator('button#dark');
-    
+
     // One of them should be visible
     await expect(lightButton.or(darkButton)).toBeVisible();
   });
@@ -47,7 +53,9 @@ test.describe('tehwolfde Home', () => {
 
     // Endonyms, so each language is recognisable to someone who cannot read
     // the currently active one.
-    await expect(menu.getByRole('menuitemradio', { name: 'Deutsch' })).toBeVisible();
+    await expect(
+      menu.getByRole('menuitemradio', { name: 'Deutsch' })
+    ).toBeVisible();
     await menu.getByRole('menuitemradio', { name: 'Deutsch' }).click();
 
     await expect(trigger).toContainText('Deutsch');
@@ -82,13 +90,15 @@ test.describe('tehwolfde Home', () => {
     // subpixel text metrics differently per locale, and this has to hold across
     // every Playwright project. The regression it guards against moved the
     // button by 6px, so the looser bound still catches it comfortably.
-    expect(Math.abs((germanBox?.width ?? 0) - (englishBox?.width ?? 0)))
-      .toBeLessThanOrEqual(1);
+    expect(
+      Math.abs((germanBox?.width ?? 0) - (englishBox?.width ?? 0))
+    ).toBeLessThanOrEqual(1);
     // The glyph and the first letter have to stay put too, not just the outer
     // edges: Material centres the label, so a fixed width alone would still
     // slide the text inside it.
-    expect(Math.abs((germanBox?.x ?? 0) - (englishBox?.x ?? 0)))
-      .toBeLessThanOrEqual(1);
+    expect(
+      Math.abs((germanBox?.x ?? 0) - (englishBox?.x ?? 0))
+    ).toBeLessThanOrEqual(1);
   });
 
   // Focusing #main-content after NavigationEnd used to scroll the carousels:
@@ -106,9 +116,7 @@ test.describe('tehwolfde Home', () => {
     // focus scroll happens, so the other engines run the same check without it.
     const context = await browser.newContext({
       viewport: { width: 390, height: 844 },
-      ...(browserName === 'chromium'
-        ? { isMobile: true, hasTouch: true }
-        : {})
+      ...(browserName === 'chromium' ? { isMobile: true, hasTouch: true } : {})
     });
 
     try {
@@ -159,14 +167,16 @@ test.describe('tehwolfde Home', () => {
 
   test('should have GitHub link', async ({ page }) => {
     const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
-    await expect(mainNav.locator('a[href="https://github.com/tehw0lf"]')).toBeVisible();
+    await expect(
+      mainNav.locator('a[href="https://github.com/tehw0lf"]')
+    ).toBeVisible();
   });
 
   test('should have accessible navigation', async ({ page }) => {
     // Check for proper ARIA labels and roles on main navigation
     const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
     await expect(mainNav).toBeVisible();
-    
+
     // Check if mobile navigation exists when switching to mobile view
     await page.setViewportSize({ width: 375, height: 667 });
     const mobileComponent = page.locator('tehw0lf-mobile');

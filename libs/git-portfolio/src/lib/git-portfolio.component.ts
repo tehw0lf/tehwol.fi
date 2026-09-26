@@ -4,7 +4,17 @@ import {
   LayoutModule
 } from '@angular/cdk/layout';
 import { CommonModule, KeyValuePipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, inject, signal, effect, computed, untracked, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  inject,
+  signal,
+  effect,
+  computed,
+  untracked,
+  OnDestroy
+} from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -115,7 +125,7 @@ export class GitPortfolioComponent implements OnDestroy {
   constructor() {
     this.load$
       .pipe(
-        switchMap(config =>
+        switchMap((config) =>
           this.gitProviderService.getRepositories(config).pipe(
             // Keeps a failed request from completing the outer subscription,
             // which would leave later retries with nothing listening.
@@ -124,7 +134,7 @@ export class GitPortfolioComponent implements OnDestroy {
         ),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(repositories => {
+      .subscribe((repositories) => {
         this.gitRepositories.set(repositories ?? undefined);
         this.loadFailed.set(repositories === null);
         this.retrying.set(false);
@@ -222,7 +232,7 @@ export class GitPortfolioComponent implements OnDestroy {
     return (
       (gitRepositories?.[gitProvider] &&
         (gitRepositories[gitProvider].own?.length > 0 ||
-         gitRepositories[gitProvider].forked?.length > 0)) ??
+          gitRepositories[gitProvider].forked?.length > 0)) ??
       false
     );
   }

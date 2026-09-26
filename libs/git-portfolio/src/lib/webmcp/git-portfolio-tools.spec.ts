@@ -77,7 +77,9 @@ describe('git portfolio webmcp tools', () => {
   it('should exclude forks unless asked', async () => {
     const withoutForks = await run('git_portfolio_list', {});
     expect(
-      withoutForks.repositories.some((r: { kind: string }) => r.kind === 'forked')
+      withoutForks.repositories.some(
+        (r: { kind: string }) => r.kind === 'forked'
+      )
     ).toBe(false);
 
     const withForks = await run('git_portfolio_list', { includeForks: true });

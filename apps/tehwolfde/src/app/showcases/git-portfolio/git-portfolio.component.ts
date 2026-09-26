@@ -37,10 +37,7 @@ export class GitPortfolioComponent {
       // Shares GitProviderService with the rendered component, so tool calls
       // hit the same ten minute cache instead of the provider APIs.
       void this.webmcp.register(
-        createGitPortfolioTools(
-          this.gitProviderService,
-          this.gitProviderConfig
-        )
+        createGitPortfolioTools(this.gitProviderService, this.gitProviderConfig)
       );
     });
 

@@ -73,11 +73,11 @@ describe('model context adapter', () => {
   });
 
   it('should survive a failing registration', async () => {
-    const registerTool = jest
-      .fn()
-      .mockRejectedValue(new Error('nope'));
+    const registerTool = jest.fn().mockRejectedValue(new Error('nope'));
     setDocumentContext({ registerTool });
-    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const warn = jest
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
 
     await expect(registerModelContextTools([tool])).resolves.toBeDefined();
     expect(warn).toHaveBeenCalled();

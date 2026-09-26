@@ -35,7 +35,6 @@ export interface PreviewCard {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewCardComponent {
-
   readonly card = input.required<PreviewCard>();
 
   /** Position within the carousel, announced to screen readers as "3/8". */

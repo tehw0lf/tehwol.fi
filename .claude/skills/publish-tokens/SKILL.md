@@ -12,10 +12,10 @@ skill exists rather than a workflow.
 
 The two artifacts:
 
-| What | URL | The file it takes |
-| --- | --- | --- |
+| What          | URL                                               | The file it takes                                         |
+| ------------- | ------------------------------------------------- | --------------------------------------------------------- |
 | Design system | https://claude.ai/artifact/N8SfD9v1qXKPjYuEA4LiPk | `tools/design-system/tokens.json` → `project/tokens.json` |
-| Style guide | https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF | `tools/style-guide/brand-tokens.html` → the page itself |
+| Style guide   | https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF | `tools/style-guide/brand-tokens.html` → the page itself   |
 
 The design system reads `project/tokens.json`. It does **not** read
 `tokens.css`, which is the human-readable view and is published nowhere.

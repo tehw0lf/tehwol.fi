@@ -1,16 +1,29 @@
-import { Component, DebugElement, Renderer2, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  Renderer2,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { OcticonDirective } from './octicon.directive';
 
 const mockFetch = () =>
-  Promise.resolve({ ok: true, text: () => Promise.resolve('<svg></svg>') } as Response);
+  Promise.resolve({
+    ok: true,
+    text: () => Promise.resolve('<svg></svg>')
+  } as Response);
 
 @Component({
   template: `
     <div id="working-octicon" octicon="star" color="gold" width="20px"></div>
-    <div id="invalid-octicon" octicon="invalid-icon" color="blue" width="16px"></div>
+    <div
+      id="invalid-octicon"
+      octicon="invalid-icon"
+      color="blue"
+      width="16px"
+    ></div>
     <div id="no-width-octicon" octicon="repo" color="green"></div>
   `,
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -51,7 +64,7 @@ describe('OcticonDirective', () => {
     expect(workingElement.attributes.color).toBe('gold');
     expect(workingElement.attributes.octicon).toBe('star');
     expect(workingElement.attributes.width).toBe('20px');
-    
+
     // In test environment, just verify the directive was applied
     expect(workingElement.nativeElement).toBeTruthy();
   });
@@ -80,7 +93,7 @@ describe('OcticonDirective', () => {
 
     const emptyFixture = TestBed.createComponent(EmptyOcticonComponent);
     emptyFixture.detectChanges();
-    
+
     const element = emptyFixture.debugElement.query(By.css('div'));
     // Should not crash - that's the main test
     expect(element).toBeTruthy();

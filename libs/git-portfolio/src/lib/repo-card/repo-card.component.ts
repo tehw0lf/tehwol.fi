@@ -1,6 +1,12 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import * as githubLanguageColors from 'github-language-colors/colors.json';
@@ -14,19 +20,19 @@ interface Dictionary {
 }
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'repo-card',
-    templateUrl: './repo-card.component.html',
-    styleUrls: ['./repo-card.component.scss'],
-    imports: [
-        MatCardModule,
-        NgStyle,
-        MatButtonModule,
-        OcticonDirective,
-        ClipboardModule,
-        DatePipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'repo-card',
+  templateUrl: './repo-card.component.html',
+  styleUrls: ['./repo-card.component.scss'],
+  imports: [
+    MatCardModule,
+    NgStyle,
+    MatButtonModule,
+    OcticonDirective,
+    ClipboardModule,
+    DatePipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RepoCardComponent {
   buttonStyle = input.required<any>();

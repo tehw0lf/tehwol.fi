@@ -77,7 +77,8 @@ export class WordlistGeneratorComponent implements OnDestroy {
     charsetPosition: 'character set for string position ',
     suffix: 'suffix (optional)',
     generatedWordlist: 'Generated wordlist:',
-    tooLarge: 'The generated wordlist is too large to be displayed. You can still download it.'
+    tooLarge:
+      'The generated wordlist is too large to be displayed. You can still download it.'
   });
 
   charsetForm: UntypedFormGroup | undefined;

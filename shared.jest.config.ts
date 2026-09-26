@@ -6,13 +6,17 @@ export interface JestConfigOptions {
   rootDir?: string;
 }
 
-export const createJestConfig = ({ displayName, coverageDirectory, rootDir = '.' }: JestConfigOptions) => ({
+export const createJestConfig = ({
+  displayName,
+  coverageDirectory,
+  rootDir = '.'
+}: JestConfigOptions) => ({
   displayName,
   preset: `${rootDir}/jest.preset.js`,
   setupFilesAfterEnv: [`<rootDir>/src/test-setup.ts`],
   globals: {},
   coverageDirectory,
-  
+
   // Optimized transforms using SWC
   transform: {
     '^.+\\.(ts|mjs|js)$': swcAngularJestTransformer({
@@ -37,11 +41,11 @@ export const createJestConfig = ({ displayName, coverageDirectory, rootDir = '.'
       }
     ]
   },
-  
+
   transformIgnorePatterns: [
     'node_modules/(?!.*\\.mjs$|@angular|@primer|cartesian-product-generator)'
   ],
-  
+
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

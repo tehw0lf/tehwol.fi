@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, ElementRef, inject, input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  input,
+  ViewChild
+} from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -19,8 +28,7 @@ export class EmbedComponent {
   title = input('Embedded Tool');
 
   @ViewChild('iframe') private iframeRef:
-    | ElementRef<HTMLIFrameElement>
-    | undefined;
+    ElementRef<HTMLIFrameElement> | undefined;
 
   private sanitizer = inject(DomSanitizer);
   private themeService = inject(ThemeService);

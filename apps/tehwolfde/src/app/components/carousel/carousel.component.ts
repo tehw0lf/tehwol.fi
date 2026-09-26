@@ -229,8 +229,7 @@ export class CarouselComponent {
     // would move by the difference rather than by a full slide.
     const target = slide ? slide.offsetLeft - trackEl.offsetLeft : undefined;
     const maxScroll = Math.max(0, trackEl.scrollWidth - trackEl.clientWidth);
-    const reached =
-      target === undefined ? target : Math.min(target, maxScroll);
+    const reached = target === undefined ? target : Math.min(target, maxScroll);
 
     this.activeIndex.set(
       reached === undefined || reached === target
@@ -275,7 +274,9 @@ export class CarouselComponent {
     let smallestDelta = Number.POSITIVE_INFINITY;
 
     slides.forEach((slide, index) => {
-      const delta = Math.abs(slide.offsetLeft - trackEl.offsetLeft - scrollLeft);
+      const delta = Math.abs(
+        slide.offsetLeft - trackEl.offsetLeft - scrollLeft
+      );
       if (delta < smallestDelta) {
         smallestDelta = delta;
         closest = index;

@@ -26,7 +26,10 @@ export class AppComponent {
   constructor() {
     const router = inject(Router);
     router.events
-      .pipe(filter((e) => e instanceof NavigationEnd), takeUntilDestroyed())
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
       .subscribe(() => {
         const main = document.getElementById('main-content');
         // preventScroll because focusing the main landmark is only meant to move

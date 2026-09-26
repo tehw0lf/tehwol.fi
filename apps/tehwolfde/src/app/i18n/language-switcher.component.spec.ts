@@ -41,7 +41,8 @@ describe('LanguageSwitcherComponent', () => {
    */
   function menuEndonyms(): string[] {
     return menuItems().map(
-      (i) => i.querySelector('span:not(.language-check)')?.textContent?.trim() ?? ''
+      (i) =>
+        i.querySelector('span:not(.language-check)')?.textContent?.trim() ?? ''
     );
   }
 

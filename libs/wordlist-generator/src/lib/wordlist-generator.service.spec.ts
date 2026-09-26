@@ -88,7 +88,8 @@ describe('WordlistGeneratorService', () => {
         onmessage: ((this: Worker, ev: MessageEvent) => void) | null = null;
         onmessageerror: ((this: Worker, ev: MessageEvent) => void) | null =
           null;
-        onerror: ((this: AbstractWorker, ev: ErrorEvent) => unknown) | null = null;
+        onerror: ((this: AbstractWorker, ev: ErrorEvent) => unknown) | null =
+          null;
 
         constructor(scriptURL: string | URL, options?: WorkerOptions) {
           super();
@@ -160,7 +161,7 @@ describe('WordlistGeneratorService', () => {
             expect(words).toContain('ad');
             expect(words).toContain('bc');
             expect(words).toContain('bd');
-            
+
             // Restore Worker
             global.Worker = originalWorker;
             done();
@@ -230,9 +231,7 @@ describe('WordlistGeneratorService', () => {
 
       service.generateWordlist(largeCharset1, largeCharset2).subscribe({
         next: (value) => {
-          done(
-            new Error(`Should not emit values on error, but got: ${value}`)
-          );
+          done(new Error(`Should not emit values on error, but got: ${value}`));
         },
         error: (error) => {
           expect(error.message).toBe('Worker test error');

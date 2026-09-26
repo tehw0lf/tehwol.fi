@@ -79,7 +79,9 @@ test.describe('Home app carousel', () => {
     await expect(slides).toHaveCount(embeds.length + 1); // + color
 
     // Previews mount after the page goes idle.
-    const preview = appsCarousel(page).locator('.carousel-slide iframe').first();
+    const preview = appsCarousel(page)
+      .locator('.carousel-slide iframe')
+      .first();
     await expect(preview).toBeAttached({ timeout: 10000 });
 
     const src = await preview.getAttribute('src');
@@ -101,7 +103,9 @@ test.describe('Home app carousel', () => {
 
     // Libraries are part of this application, so unlike the apps they are
     // expected to be embedded from a local route.
-    expect(await preview.getAttribute('src')).toMatch(/^\/(portfolio|wordlist)/);
+    expect(await preview.getAttribute('src')).toMatch(
+      /^\/(portfolio|wordlist)/
+    );
   });
 
   test('should advance slides with the next control', async ({ page }) => {
@@ -110,9 +114,7 @@ test.describe('Home app carousel', () => {
     const track = appsCarousel(page).locator('.carousel-track');
     const before = await track.evaluate((el) => el.scrollLeft);
 
-    await appsCarousel(page)
-      .getByRole('button', { name: /^Next/ })
-      .click();
+    await appsCarousel(page).getByRole('button', { name: /^Next/ }).click();
     await page.waitForTimeout(800);
 
     expect(await track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);

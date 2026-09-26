@@ -1,7 +1,4 @@
-import {
-  wordlistCountTool,
-  wordlistGenerateTool
-} from './wordlist-tools';
+import { wordlistCountTool, wordlistGenerateTool } from './wordlist-tools';
 
 interface GenerateResult {
   words: string[];
@@ -20,7 +17,9 @@ async function generate(input: {
   charsets: string[];
   limit?: number;
 }): Promise<GenerateResult> {
-  return (await wordlistGenerateTool.execute(input)) as unknown as GenerateResult;
+  return (await wordlistGenerateTool.execute(
+    input
+  )) as unknown as GenerateResult;
 }
 
 async function count(charsets: string[]): Promise<CountResult> {
@@ -40,7 +39,13 @@ describe('wordlist webmcp tools', () => {
     });
 
     it('should flag counts above the single call limit', async () => {
-      const result = await count(['abcdefghij', 'abcdefghij', 'abcdefghij', 'abcdefghij', 'abcdefghij']);
+      const result = await count([
+        'abcdefghij',
+        'abcdefghij',
+        'abcdefghij',
+        'abcdefghij',
+        'abcdefghij'
+      ]);
 
       expect(result.total).toBe(100000);
       expect(result.exceedsSingleCallLimit).toBe(true);
@@ -60,7 +65,10 @@ describe('wordlist webmcp tools', () => {
     });
 
     it('should cap the output and report truncation', async () => {
-      const result = await generate({ charsets: ['abcdefghij', 'abcdefghij'], limit: 10 });
+      const result = await generate({
+        charsets: ['abcdefghij', 'abcdefghij'],
+        limit: 10
+      });
 
       expect(result.words.length).toBe(10);
       expect(result.returned).toBe(10);
@@ -70,7 +78,13 @@ describe('wordlist webmcp tools', () => {
 
     it('should never exceed the hard cap even when asked to', async () => {
       const result = await generate({
-        charsets: ['abcdefghij', 'abcdefghij', 'abcdefghij', 'abcdefghij', 'abcdefghij'],
+        charsets: [
+          'abcdefghij',
+          'abcdefghij',
+          'abcdefghij',
+          'abcdefghij',
+          'abcdefghij'
+        ],
         limit: 999999
       });
 
@@ -83,9 +97,9 @@ describe('wordlist webmcp tools', () => {
       await expect(generate({ charsets: [] })).rejects.toThrow(
         'non-empty array'
       );
-      await expect(
-        generate({ charsets: ['ab', ''] })
-      ).rejects.toThrow('index 1');
+      await expect(generate({ charsets: ['ab', ''] })).rejects.toThrow(
+        'index 1'
+      );
       await expect(
         generate({ charsets: Array.from({ length: 17 }, () => 'ab') })
       ).rejects.toThrow('more than 16');

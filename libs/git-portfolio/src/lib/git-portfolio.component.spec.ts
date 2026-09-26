@@ -33,42 +33,42 @@ const MOCK_REPOSITORIES: GitRepositories = {
       createGitRepository(1, 'repo1', false, 10),
       createGitRepository(3, 'repo3', false, 15)
     ],
-    forked: [
-      createGitRepository(2, 'repo2', true, 5)
-    ]
+    forked: [createGitRepository(2, 'repo2', true, 5)]
   },
   gitlab: {
-    own: [
-      createGitRepository(4, 'project1', false, 8)
-    ],
-    forked: [
-      createGitRepository(5, 'project2', true, 3)
-    ]
+    own: [createGitRepository(4, 'project1', false, 8)],
+    forked: [createGitRepository(5, 'project2', true, 3)]
   }
 };
 
 describe('GitPortfolioComponent', () => {
   let component: GitPortfolioComponent;
   let fixture: ComponentFixture<GitPortfolioComponent>;
-  let gitProviderService: jest.Mocked<Pick<GitProviderService, 'getRepositories'>> & { loading: Observable<boolean> };
+  let gitProviderService: jest.Mocked<
+    Pick<GitProviderService, 'getRepositories'>
+  > & { loading: Observable<boolean> };
   let breakpointObserver: jest.Mocked<Pick<BreakpointObserver, 'observe'>>;
   let breakpointSubject: BehaviorSubject<BreakpointState>;
 
   // Helper functions to safely access mock data
-  const getGithubOwnRepo = (index: number) => MOCK_REPOSITORIES.github?.own?.[index] as GitRepository;
+  const getGithubOwnRepo = (index: number) =>
+    MOCK_REPOSITORIES.github?.own?.[index] as GitRepository;
   const getGithubOwnRepos = () => MOCK_REPOSITORIES.github?.own || [];
   const getGithubForkedRepos = () => MOCK_REPOSITORIES.github?.forked || [];
 
   beforeEach(async () => {
     global.fetch = jest.fn(() =>
-      Promise.resolve({ ok: true, text: () => Promise.resolve('<svg></svg>') } as Response)
+      Promise.resolve({
+        ok: true,
+        text: () => Promise.resolve('<svg></svg>')
+      } as Response)
     ) as typeof fetch;
 
     const gitProviderSpy = {
       getRepositories: jest.fn(),
       loading: of(false)
     };
-    
+
     breakpointSubject = new BehaviorSubject<BreakpointState>({
       matches: false,
       breakpoints: {
@@ -96,15 +96,19 @@ describe('GitPortfolioComponent', () => {
       ]
     }).compileComponents();
 
-    gitProviderService = TestBed.inject(GitProviderService) as jest.Mocked<Pick<GitProviderService, 'getRepositories'>> & { loading: Observable<boolean> };
-    breakpointObserver = TestBed.inject(BreakpointObserver) as jest.Mocked<Pick<BreakpointObserver, 'observe'>>;
+    gitProviderService = TestBed.inject(GitProviderService) as jest.Mocked<
+      Pick<GitProviderService, 'getRepositories'>
+    > & { loading: Observable<boolean> };
+    breakpointObserver = TestBed.inject(BreakpointObserver) as jest.Mocked<
+      Pick<BreakpointObserver, 'observe'>
+    >;
     // Mark as used to avoid lint warnings - used in responsive tests
     void breakpointObserver;
   });
 
   beforeEach(() => {
     gitProviderService.getRepositories.mockReturnValue(of(MOCK_REPOSITORIES));
-    
+
     fixture = TestBed.createComponent(GitPortfolioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -117,9 +121,9 @@ describe('GitPortfolioComponent', () => {
   describe('clipboard functionality', () => {
     it('should copy to clipboard and track current repo', () => {
       const testRepo = getGithubOwnRepo(0);
-      
+
       component.copyToClipboard(testRepo);
-      
+
       expect(component.currentRepo()).toBe(testRepo);
       expect(component.isCopiedToClipboard(testRepo)).toBeTruthy();
     });
@@ -127,32 +131,44 @@ describe('GitPortfolioComponent', () => {
     it('should return false for copied status when no current repo', () => {
       const testRepo = getGithubOwnRepo(0);
       component.currentRepo.set(undefined);
-      
+
       expect(component.isCopiedToClipboard(testRepo)).toBeFalsy();
     });
 
     it('should return false for copied status when different repo', () => {
       const repo1 = getGithubOwnRepo(0);
       const repo2 = getGithubOwnRepo(1);
-      
+
       component.copyToClipboard(repo1);
-      
+
       expect(component.isCopiedToClipboard(repo2)).toBeFalsy();
     });
   });
 
   describe('repository data methods', () => {
     it('should get repositories of specific type', () => {
-      const ownRepos = component.getGitRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'own');
-      const forkedRepos = component.getGitRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'forked');
-      
+      const ownRepos = component.getGitRepositoriesOfType(
+        MOCK_REPOSITORIES,
+        'github',
+        'own'
+      );
+      const forkedRepos = component.getGitRepositoriesOfType(
+        MOCK_REPOSITORIES,
+        'github',
+        'forked'
+      );
+
       expect(ownRepos).toEqual(getGithubOwnRepos());
       expect(forkedRepos).toEqual(getGithubForkedRepos());
     });
 
     it('should return empty array for non-existent provider', () => {
-      const repos = component.getGitRepositoriesOfType(MOCK_REPOSITORIES, 'bitbucket', 'own');
-      
+      const repos = component.getGitRepositoriesOfType(
+        MOCK_REPOSITORIES,
+        'bitbucket',
+        'own'
+      );
+
       expect(repos).toEqual([]);
     });
 
@@ -160,40 +176,68 @@ describe('GitPortfolioComponent', () => {
       const emptyRepositories: GitRepositories = {
         github: { own: [], forked: [] }
       };
-      
-      const repos = component.getGitRepositoriesOfType(emptyRepositories, 'github', 'own');
-      
+
+      const repos = component.getGitRepositoriesOfType(
+        emptyRepositories,
+        'github',
+        'own'
+      );
+
       expect(repos).toEqual([]);
     });
 
     it('should check if provider has any repositories', () => {
-      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'github')).toBe(true);
-      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'gitlab')).toBe(true);
-      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'bitbucket')).toBe(false);
+      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'github')).toBe(
+        true
+      );
+      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'gitlab')).toBe(
+        true
+      );
+      expect(component.hasAnyRepositories(MOCK_REPOSITORIES, 'bitbucket')).toBe(
+        false
+      );
     });
 
     it('should check if provider has repositories of specific type', () => {
-      expect(component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'own')).toBe(true);
-      expect(component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'forked')).toBe(true);
-      expect(component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'gitlab', 'own')).toBe(true);
-      expect(component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'gitlab', 'forked')).toBe(true);
+      expect(
+        component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'own')
+      ).toBe(true);
+      expect(
+        component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'github', 'forked')
+      ).toBe(true);
+      expect(
+        component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'gitlab', 'own')
+      ).toBe(true);
+      expect(
+        component.hasRepositoriesOfType(MOCK_REPOSITORIES, 'gitlab', 'forked')
+      ).toBe(true);
     });
 
     it('should return false for empty repository arrays', () => {
       const emptyRepositories: GitRepositories = {
         github: { own: [], forked: [] }
       };
-      
-      expect(component.hasAnyRepositories(emptyRepositories, 'github')).toBe(false);
-      expect(component.hasRepositoriesOfType(emptyRepositories, 'github', 'own')).toBe(false);
+
+      expect(component.hasAnyRepositories(emptyRepositories, 'github')).toBe(
+        false
+      );
+      expect(
+        component.hasRepositoriesOfType(emptyRepositories, 'github', 'own')
+      ).toBe(false);
     });
 
     it('should handle undefined repository data', () => {
       const emptyRepositories: GitRepositories = {};
-      
-      expect(component.hasAnyRepositories(emptyRepositories, 'github')).toBe(false);
-      expect(component.hasRepositoriesOfType(emptyRepositories, 'github', 'own')).toBe(false);
-      expect(component.getGitRepositoriesOfType(emptyRepositories, 'github', 'own')).toEqual([]);
+
+      expect(component.hasAnyRepositories(emptyRepositories, 'github')).toBe(
+        false
+      );
+      expect(
+        component.hasRepositoriesOfType(emptyRepositories, 'github', 'own')
+      ).toBe(false);
+      expect(
+        component.getGitRepositoriesOfType(emptyRepositories, 'github', 'own')
+      ).toEqual([]);
     });
   });
 
@@ -246,17 +290,19 @@ describe('GitPortfolioComponent', () => {
 
     it('should setup repositories signal', () => {
       component.getRepositories();
-      
+
       expect(component.gitRepositories).toBeDefined();
-      expect(gitProviderService.getRepositories).toHaveBeenCalledWith(component.gitProviderConfig());
+      expect(gitProviderService.getRepositories).toHaveBeenCalledWith(
+        component.gitProviderConfig()
+      );
     });
 
     it('should unsubscribe on destroy', () => {
       jest.spyOn(component['unsubscribe$'], 'next');
       jest.spyOn(component['unsubscribe$'], 'complete');
-      
+
       component.ngOnDestroy();
-      
+
       expect(component['unsubscribe$'].next).toHaveBeenCalled();
       expect(component['unsubscribe$'].complete).toHaveBeenCalled();
     });
@@ -289,12 +335,12 @@ describe('GitPortfolioComponent', () => {
     it('should accept custom input values', () => {
       const customButtonStyle = { color: 'red' };
       const customConfig = { github: 'testuser' };
-      
+
       fixture.componentRef.setInput('buttonStyle', customButtonStyle);
       fixture.componentRef.setInput('gitProviderConfig', customConfig);
       fixture.componentRef.setInput('showForked', false);
       fixture.detectChanges();
-      
+
       expect(component.buttonStyle()).toEqual(customButtonStyle);
       expect(component.gitProviderConfig()).toEqual(customConfig);
       expect(component.showForked()).toBe(false);
@@ -311,7 +357,9 @@ describe('GitPortfolioComponent', () => {
   describe('tabbed sections', () => {
     const tabLabels = (): string[] =>
       Array.from(
-        fixture.nativeElement.querySelectorAll('.mat-mdc-tab .mdc-tab__text-label')
+        fixture.nativeElement.querySelectorAll(
+          '.mat-mdc-tab .mdc-tab__text-label'
+        )
       ).map((el) => (el as HTMLElement).textContent?.trim() ?? '');
 
     it('should offer own and forked repositories as tabs per provider', () => {
@@ -332,9 +380,8 @@ describe('GitPortfolioComponent', () => {
       // The workspace runs without @angular/animations, so matTabContent bodies
       // stay lazy and tab switching cannot be driven here; the e2e suite covers
       // selecting a tab and seeing its cards.
-      const group = fixture.debugElement.query(
-        By.directive(MatTabGroup)
-      ).componentInstance as MatTabGroup;
+      const group = fixture.debugElement.query(By.directive(MatTabGroup))
+        .componentInstance as MatTabGroup;
 
       expect(group._tabs.length).toBe(2);
     });
@@ -350,7 +397,12 @@ describe('GitPortfolioComponent', () => {
 
     it('should count zero for an empty group', () => {
       expect(
-        component.tabLabel('Forked Repos', { github: { own: [], forked: [] } }, 'github', 'forked')
+        component.tabLabel(
+          'Forked Repos',
+          { github: { own: [], forked: [] } },
+          'github',
+          'forked'
+        )
       ).toBe('Forked Repos (0)');
     });
   });
@@ -367,9 +419,7 @@ describe('GitPortfolioComponent', () => {
       failed.detectChanges();
 
       expect(failed.componentInstance.loadFailed()).toBe(true);
-      expect(
-        failed.nativeElement.querySelector('.load-error')
-      ).toBeTruthy();
+      expect(failed.nativeElement.querySelector('.load-error')).toBeTruthy();
     });
 
     it('should clear the error state once a retry succeeds', () => {
@@ -476,7 +526,9 @@ describe('GitPortfolioComponent', () => {
       first.next(stale);
       staged.detectChanges();
 
-      expect(staged.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
+      expect(staged.componentInstance.gitRepositories()).toBe(
+        MOCK_REPOSITORIES
+      );
     });
 
     it('should not show the error state for a superseded request', () => {
@@ -499,7 +551,9 @@ describe('GitPortfolioComponent', () => {
       staged.detectChanges();
 
       expect(staged.componentInstance.loadFailed()).toBe(false);
-      expect(staged.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
+      expect(staged.componentInstance.gitRepositories()).toBe(
+        MOCK_REPOSITORIES
+      );
     });
 
     it('should keep loading after a failure so a later retry still lands', () => {
@@ -515,7 +569,9 @@ describe('GitPortfolioComponent', () => {
       failed.detectChanges();
 
       expect(failed.componentInstance.loadFailed()).toBe(false);
-      expect(failed.componentInstance.gitRepositories()).toBe(MOCK_REPOSITORIES);
+      expect(failed.componentInstance.gitRepositories()).toBe(
+        MOCK_REPOSITORIES
+      );
     });
   });
 });

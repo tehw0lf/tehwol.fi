@@ -1,16 +1,29 @@
-import { Directive, ElementRef, input, OnInit, Renderer2, inject } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  input,
+  OnInit,
+  Renderer2,
+  inject
+} from '@angular/core';
 
 const svgCache = new Map<string, Promise<string>>();
 
 const KNOWN_ICONS = new Set([
-  'check', 'issue-opened', 'paste', 'repo-forked', 'star', 'alert'
+  'check',
+  'issue-opened',
+  'paste',
+  'repo-forked',
+  'star',
+  'alert'
 ]);
 
 function fetchSvg(name: string): Promise<string> {
   const icon = KNOWN_ICONS.has(name) ? name : 'alert';
   if (!svgCache.has(icon)) {
     const promise = fetch(`/assets/icons/octicons/${icon}.svg`).then((r) => {
-      if (!r.ok) throw new Error(`Failed to load octicon "${icon}": ${r.status}`);
+      if (!r.ok)
+        throw new Error(`Failed to load octicon "${icon}": ${r.status}`);
       return r.text();
     });
     promise.catch(() => svgCache.delete(icon));
@@ -48,7 +61,10 @@ export class OcticonDirective implements OnInit {
       .catch((err) => console.error(err));
   }
 
-  private insertSvgSafely(element: HTMLElement, svgString: string): Element | null {
+  private insertSvgSafely(
+    element: HTMLElement,
+    svgString: string
+  ): Element | null {
     const range = document.createRange();
     range.selectNode(element);
     const fragment = range.createContextualFragment(svgString);

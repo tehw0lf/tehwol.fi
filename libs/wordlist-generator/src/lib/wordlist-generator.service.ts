@@ -23,11 +23,11 @@ export class WordlistGeneratorService {
 
   generateWordlist(...charsets: string[]): Observable<string> {
     const estimatedSize = this.estimateWordlistSize(charsets);
-    
+
     if (estimatedSize > this.LARGE_DATASET_THRESHOLD) {
       return this.generateWithWebWorker(charsets);
     }
-    
+
     return this.generateSynchronously(charsets);
   }
 
@@ -39,15 +39,15 @@ export class WordlistGeneratorService {
 
   private generateWithWebWorker(charsets: string[]): Observable<string> {
     const subject = new Subject<string>();
-    
+
     if (typeof Worker !== 'undefined') {
       const worker = new Worker(new URL('./wordlist.worker', import.meta.url));
-      
+
       worker.onmessage = ({ data }: MessageEvent<WordlistWorkerResponse>) => {
         switch (data.type) {
           case 'batch':
             if (data.words) {
-              data.words.forEach(word => subject.next(word));
+              data.words.forEach((word) => subject.next(word));
             }
             break;
           case 'complete':
@@ -60,18 +60,18 @@ export class WordlistGeneratorService {
             break;
         }
       };
-      
+
       worker.onerror = (error) => {
         subject.error(error);
         worker.terminate();
       };
-      
+
       const message: WordlistWorkerMessage = {
         type: 'generate',
         charsets,
         batchSize: 1000
       };
-      
+
       worker.postMessage(message);
     } else {
       // Fallback for environments without Worker support
@@ -81,7 +81,7 @@ export class WordlistGeneratorService {
         complete: () => subject.complete()
       });
     }
-    
+
     return subject.asObservable();
   }
 

@@ -82,16 +82,16 @@ describe('GitProviderService', () => {
       result$.subscribe((repositories) => {
         expect(repositories.github?.own).toEqual([
           GITHUB_REPOS[2], // repo3 (15 stars)
-          GITHUB_REPOS[0]  // repo1 (10 stars)
+          GITHUB_REPOS[0] // repo1 (10 stars)
         ]);
         expect(repositories.github?.forked).toEqual([
-          GITHUB_REPOS[1]  // repo2 (5 stars)
+          GITHUB_REPOS[1] // repo2 (5 stars)
         ]);
         expect(repositories.gitlab?.own).toEqual([
-          GITLAB_REPOS[0]  // project1 (8 stars)
+          GITLAB_REPOS[0] // project1 (8 stars)
         ]);
         expect(repositories.gitlab?.forked).toEqual([
-          GITLAB_REPOS[1]  // project2 (3 stars)
+          GITLAB_REPOS[1] // project2 (3 stars)
         ]);
         done();
       });
@@ -243,7 +243,9 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
+      const req = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
       req.flush(mixedRepos);
     });
 
@@ -263,12 +265,19 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
+      const req = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
       req.flush(unsortedRepos);
     });
 
     it('should handle repositories with undefined star counts', (done) => {
-      const repoWithUndefinedStars = createGitRepository(1, 'no-stars', false, 10);
+      const repoWithUndefinedStars = createGitRepository(
+        1,
+        'no-stars',
+        false,
+        10
+      );
       repoWithUndefinedStars.stargazers_count = undefined; // Explicitly set to undefined after creation
 
       const reposWithUndefinedStars = [
@@ -288,7 +297,9 @@ describe('GitProviderService', () => {
         done();
       });
 
-      const req = httpMock.expectOne('https://api.github.com/users/testuser/repos?per_page=100');
+      const req = httpMock.expectOne(
+        'https://api.github.com/users/testuser/repos?per_page=100'
+      );
       req.flush(reposWithUndefinedStars);
     });
   });
@@ -296,7 +307,7 @@ describe('GitProviderService', () => {
   describe('loading state', () => {
     it('should manage loading state correctly', (done) => {
       const loadingStates: boolean[] = [];
-      service.loading.subscribe(state => loadingStates.push(state));
+      service.loading.subscribe((state) => loadingStates.push(state));
 
       const result$ = service.getRepositories(GIT_PROVIDER_USER_NAMES);
 
@@ -333,7 +344,10 @@ describe('GitProviderService', () => {
       const reqGitlab = httpMock.expectOne(GITLAB_URL);
 
       // Error one request to trigger error handling
-      reqGithub.flush('User not found', { status: 404, statusText: 'Not Found' });
+      reqGithub.flush('User not found', {
+        status: 404,
+        statusText: 'Not Found'
+      });
 
       // zip cancels its other source once one errors, so the GitLab request is
       // already torn down here. It used to stay open — the paged fetch was
@@ -356,9 +370,7 @@ describe('GitProviderService', () => {
         }
       });
 
-      httpMock
-        .expectOne(GITHUB_URL)
-        .error(new ProgressEvent('network error'));
+      httpMock.expectOne(GITHUB_URL).error(new ProgressEvent('network error'));
     });
 
     it('should not serve a failed fetch from the cache', (done) => {
@@ -381,9 +393,7 @@ describe('GitProviderService', () => {
         }
       });
 
-      httpMock
-        .expectOne(GITHUB_URL)
-        .error(new ProgressEvent('network error'));
+      httpMock.expectOne(GITHUB_URL).error(new ProgressEvent('network error'));
     });
 
     it('should fail rather than return a truncated list when a later page fails', (done) => {
@@ -403,9 +413,7 @@ describe('GitProviderService', () => {
 
   describe('abandoned loads', () => {
     it('should stop paging when the subscriber unsubscribes', () => {
-      const sub = service
-        .getRepositories({ github: 'testuser' })
-        .subscribe();
+      const sub = service.getRepositories({ github: 'testuser' }).subscribe();
 
       // First page arrives and advertises a second.
       httpMock.expectOne(GITHUB_URL).flush([GITHUB_REPOS[0]], {
@@ -461,8 +469,12 @@ describe('GitProviderService', () => {
 
   describe('concurrent callers', () => {
     it('should share one request between callers asking at the same time', async () => {
-      const a = firstValueFrom(service.getRepositories(GIT_PROVIDER_USER_NAMES));
-      const b = firstValueFrom(service.getRepositories(GIT_PROVIDER_USER_NAMES));
+      const a = firstValueFrom(
+        service.getRepositories(GIT_PROVIDER_USER_NAMES)
+      );
+      const b = firstValueFrom(
+        service.getRepositories(GIT_PROVIDER_USER_NAMES)
+      );
 
       // One request per provider, not two: the second caller joined the first.
       httpMock.expectOne(GITHUB_URL).flush(GITHUB_REPOS);
@@ -528,7 +540,9 @@ describe('GitProviderService', () => {
       );
 
       service.clearCache();
-      const second = service.getRepositories({ github: 'testuser' }).subscribe();
+      const second = service
+        .getRepositories({ github: 'testuser' })
+        .subscribe();
       const secondRequest = httpMock.expectOne(
         'https://api.github.com/users/testuser/repos?per_page=100'
       );
@@ -556,7 +570,9 @@ describe('GitProviderService', () => {
       // clearCache drops the first request's claim on the key, so the next
       // call starts a genuinely new one rather than joining the old.
       service.clearCache();
-      const second = service.getRepositories({ github: 'testuser' }).subscribe();
+      const second = service
+        .getRepositories({ github: 'testuser' })
+        .subscribe();
       const secondRequest = httpMock.expectOne(
         'https://api.github.com/users/testuser/repos?per_page=100'
       );

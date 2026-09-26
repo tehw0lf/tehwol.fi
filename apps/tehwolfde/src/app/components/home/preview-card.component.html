@@ -2,9 +2,7 @@
   [ngStyle]="cardStyle()"
   role="group"
   aria-roledescription="slide"
-  [attr.aria-label]="
-    card().title + ' (' + (index() + 1) + '/' + total() + ')'
-  "
+  [attr.aria-label]="card().title + ' (' + (index() + 1) + '/' + total() + ')'"
 >
   <mat-card-header>
     <mat-card-title>{{ card().title }}</mat-card-title>
