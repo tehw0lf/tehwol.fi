@@ -61,6 +61,9 @@
     },
     "serve": {
       "executor": "@angular/build:dev-server",
+      "options": {
+        "port": 4215
+      },
       "defaultConfiguration": "development",
       "continuous": true,
       "configurations": {

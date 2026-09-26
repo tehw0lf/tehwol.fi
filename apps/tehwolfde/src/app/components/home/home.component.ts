@@ -1,14 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { EMBEDDED_APPS } from '../../embeds/apps';
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
 import { CarouselComponent } from '../carousel/carousel.component';
-import {
-  PreviewCard,
-  PreviewCardComponent
-} from './preview-card.component';
+import { PreviewCard, PreviewCardComponent } from './preview-card.component';
 
 /** Library entry before its description key is resolved against the locale. */
 interface LibraryEntry {

@@ -10,9 +10,7 @@
   },
   "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],
-  "exclude": [
-    "jest.config.ts"
-  ],
+  "exclude": ["jest.config.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

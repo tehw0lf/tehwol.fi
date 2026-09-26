@@ -11,17 +11,15 @@ describe('ThemeService', () => {
   beforeEach(() => {
     mockRenderer = {
       addClass: jest.fn(),
-      removeClass: jest.fn(),
+      removeClass: jest.fn()
     } as any;
 
     mockRendererFactory = {
-      createRenderer: jest.fn().mockReturnValue(mockRenderer),
+      createRenderer: jest.fn().mockReturnValue(mockRenderer)
     } as any;
 
     TestBed.configureTestingModule({
-      providers: [
-        { provide: RendererFactory2, useValue: mockRendererFactory }
-      ]
+      providers: [{ provide: RendererFactory2, useValue: mockRendererFactory }]
     });
     service = TestBed.inject(ThemeService);
   });
@@ -37,17 +35,23 @@ describe('ThemeService', () => {
 
   it('should set theme to dark and update document body classes', () => {
     service.dark();
-    
+
     expect(service.theme()).toBe('dark');
-    expect(mockRenderer.removeClass).toHaveBeenCalledWith(document.body, 'light');
+    expect(mockRenderer.removeClass).toHaveBeenCalledWith(
+      document.body,
+      'light'
+    );
     expect(mockRenderer.addClass).toHaveBeenCalledWith(document.body, 'dark');
   });
 
   it('should set theme to light and update document body classes', () => {
     service.light();
-    
+
     expect(service.theme()).toBe('light');
-    expect(mockRenderer.removeClass).toHaveBeenCalledWith(document.body, 'dark');
+    expect(mockRenderer.removeClass).toHaveBeenCalledWith(
+      document.body,
+      'dark'
+    );
     expect(mockRenderer.addClass).toHaveBeenCalledWith(document.body, 'light');
   });
 });

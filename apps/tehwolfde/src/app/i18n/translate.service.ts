@@ -33,7 +33,13 @@ export class TranslateService {
 
   constructor() {
     toObservable(this.locale)
-      .pipe(switchMap((locale) => this.http.get<Record<string, string>>(`/assets/i18n/${locale}.json`).pipe(catchError(() => of({})))))
+      .pipe(
+        switchMap((locale) =>
+          this.http
+            .get<Record<string, string>>(`/assets/i18n/${locale}.json`)
+            .pipe(catchError(() => of({})))
+        )
+      )
       .subscribe((t) => this.translations.set(t));
   }
 

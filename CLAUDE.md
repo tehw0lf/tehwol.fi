@@ -24,7 +24,7 @@ This is an Nx monorepo containing an Angular portfolio website and reusable Angu
 ```bash
 npm start                    # Serve the main application
 nx serve tehwolfde          # Alternative serve command
-nx serve tehwolfde --port 4200  # Serve on specific port
+nx serve tehwolfde --port 4300  # Override the default port (4215)
 ```
 
 ### Building

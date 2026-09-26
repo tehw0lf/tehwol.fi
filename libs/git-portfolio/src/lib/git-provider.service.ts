@@ -196,7 +196,7 @@ export class GitProviderService {
   }
 
   private isCacheValid(entry: CacheEntry): boolean {
-    return (Date.now() - entry.timestamp) < entry.ttl;
+    return Date.now() - entry.timestamp < entry.ttl;
   }
 
   private cleanupCache(): void {
@@ -206,13 +206,17 @@ export class GitProviderService {
         this.repositoryCache.delete(key);
       }
     }
-    
+
     // If cache is still too large, remove oldest entries
     if (this.repositoryCache.size >= this.MAX_CACHE_SIZE) {
-      const entries = Array.from(this.repositoryCache.entries())
-        .sort(([, a], [, b]) => a.timestamp - b.timestamp);
-      
-      const toRemove = entries.slice(0, entries.length - this.MAX_CACHE_SIZE + 1);
+      const entries = Array.from(this.repositoryCache.entries()).sort(
+        ([, a], [, b]) => a.timestamp - b.timestamp
+      );
+
+      const toRemove = entries.slice(
+        0,
+        entries.length - this.MAX_CACHE_SIZE + 1
+      );
       toRemove.forEach(([key]) => this.repositoryCache.delete(key));
     }
   }
@@ -279,10 +283,7 @@ export class GitProviderService {
           : of(null);
       }),
       takeWhile((response): response is HttpResponse<T[]> => response !== null),
-      reduce(
-        (acc: T[], response) => acc.concat(response.body ?? []),
-        []
-      )
+      reduce((acc: T[], response) => acc.concat(response.body ?? []), [])
     );
   }
 

@@ -15,10 +15,10 @@ generated views of it are published, and CI can reach neither — an artifact
 belongs to a person's account and a runner has no such identity, which is why
 this runs from a session instead.
 
-| Artifact | URL | Takes |
-| --- | --- | --- |
+| Artifact      | URL                                               | Takes                                                                    |
+| ------------- | ------------------------------------------------- | ------------------------------------------------------------------------ |
 | Design system | https://claude.ai/artifact/N8SfD9v1qXKPjYuEA4LiPk | `tools/design-system/tokens.json` → published path `project/tokens.json` |
-| Style guide | https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF | `tools/style-guide/brand-tokens.html` → the page itself |
+| Style guide   | https://claude.ai/artifact/MFNLXbxcYzfEV1pa56mMwF | `tools/style-guide/brand-tokens.html` → the page itself                  |
 
 The design system reads `project/tokens.json`. It does **not** read
 `tokens.css`, which is the human-readable view and is published nowhere. Do not

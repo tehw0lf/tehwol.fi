@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+  ViewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +31,13 @@ function resolveToHex(colorValue: string): string {
   templateUrl: './color.component.html',
   styleUrl: './color.component.scss',
   standalone: true,
-  imports: [EmbedComponent, FormsModule, MatInputModule, MatButtonModule, TranslatePipe],
+  imports: [
+    EmbedComponent,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    TranslatePipe
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ColorComponent {

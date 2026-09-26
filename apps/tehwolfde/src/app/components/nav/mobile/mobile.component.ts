@@ -16,7 +16,13 @@ import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { isActive, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  isActive,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { EMBEDDED_APPS } from '../../../embeds/apps';
@@ -56,8 +62,7 @@ export class MobileComponent implements AfterViewInit, OnDestroy {
   private sidenavService = inject(SidenavService);
 
   @ViewChild('sidenav', { static: true }) public sidenav:
-    | MatSidenav
-    | undefined;
+    MatSidenav | undefined;
 
   private unsubscribe$ = new Subject<void>();
 

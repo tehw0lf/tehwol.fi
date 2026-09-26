@@ -32,7 +32,9 @@ function assertCharsets(charsets: unknown): string[] {
   }
 
   if (charsets.length > MAX_CHARSETS) {
-    throw new Error(`charsets must not contain more than ${MAX_CHARSETS} entries`);
+    throw new Error(
+      `charsets must not contain more than ${MAX_CHARSETS} entries`
+    );
   }
 
   return charsets.map((charset, index) => {

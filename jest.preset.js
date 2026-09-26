@@ -6,7 +6,7 @@ module.exports = {
   maxWorkers: '50%',
   cache: true,
   cacheDirectory: '<rootDir>/node_modules/.cache/jest',
-  
+
   // Global optimizations
   collectCoverageFrom: [
     'src/**/*.{ts,js}',
@@ -15,13 +15,13 @@ module.exports = {
     '!src/**/*.spec.ts',
     '!src/**/*.stories.ts'
   ],
-  
+
   // Faster test execution
   testTimeout: 10000,
-  
+
   // Memory optimization
   workerIdleMemoryLimit: '512MB',
-  
+
   // Coverage configuration
   coverageReporters: ['text-summary', 'lcov', 'html'],
   coverageThreshold: {

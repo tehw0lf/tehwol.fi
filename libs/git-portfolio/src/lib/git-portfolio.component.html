@@ -22,7 +22,9 @@
     @for (gitProvider of gitProviders | keyvalue; track gitProvider) {
       @if (hasAnyRepositories(gitRepositories, gitProvider.key)) {
         <div>
-          <h1 [ngStyle]="textStyle()" class="mat-headline">{{ gitProvider.value }}</h1>
+          <h1 [ngStyle]="textStyle()" class="mat-headline">
+            {{ gitProvider.value }}
+          </h1>
           <mat-tab-group class="repository-tabs" [ngStyle]="textStyle()">
             @if (showOwn()) {
               <mat-tab
@@ -87,7 +89,9 @@
                         'own'
                       )
                     ) {
-                      <div [ngStyle]="textStyle()">{{ labels().noOwnRepos }}</div>
+                      <div [ngStyle]="textStyle()">
+                        {{ labels().noOwnRepos }}
+                      </div>
                     }
                   </div>
                 </ng-template>

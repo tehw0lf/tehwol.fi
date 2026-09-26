@@ -7,32 +7,35 @@ test.describe('Application Navigation', () => {
 
   test('should navigate to all main routes', async ({ page }) => {
     // Mock GitHub API for specific user 'tehw0lf' - needs both own and forked repos
-    await page.route('**/api.github.com/users/tehw0lf/repos**', async route => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify([
-          {
-            name: 'mock-repo-1',
-            description: 'A mock repository for testing',
-            html_url: 'https://github.com/tehw0lf/mock-repo-1',
-            language: 'TypeScript',
-            stargazers_count: 15,
-            forks_count: 3,
-            fork: false
-          },
-          {
-            name: 'mock-repo-2',
-            description: 'A forked repository',
-            html_url: 'https://github.com/tehw0lf/mock-repo-2',
-            language: 'JavaScript',
-            stargazers_count: 8,
-            forks_count: 1,
-            fork: true
-          }
-        ])
-      });
-    });
+    await page.route(
+      '**/api.github.com/users/tehw0lf/repos**',
+      async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify([
+            {
+              name: 'mock-repo-1',
+              description: 'A mock repository for testing',
+              html_url: 'https://github.com/tehw0lf/mock-repo-1',
+              language: 'TypeScript',
+              stargazers_count: 15,
+              forks_count: 3,
+              fork: false
+            },
+            {
+              name: 'mock-repo-2',
+              description: 'A forked repository',
+              html_url: 'https://github.com/tehw0lf/mock-repo-2',
+              language: 'JavaScript',
+              stargazers_count: 8,
+              forks_count: 1,
+              fork: true
+            }
+          ])
+        });
+      }
+    );
 
     // Test home navigation
     await page.goto('/home');
@@ -64,7 +67,7 @@ test.describe('Application Navigation', () => {
 
     // Test specific navigation links in main navigation
     const homeLink = mainNav.locator('a[routerLink="/home"]');
-    if (await homeLink.count() > 0) {
+    if ((await homeLink.count()) > 0) {
       await homeLink.click();
       // Not networkidle: the home page embeds a preview iframe per library and
       // per app, so third party origins keep the network busy past navigation.
@@ -75,16 +78,18 @@ test.describe('Application Navigation', () => {
   test('should handle mobile navigation', async ({ page }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
-    
+
     // Check for mobile navigation component
     const mobileNav = page.locator('tehw0lf-mobile');
     await expect(mobileNav).toBeVisible();
-    
+
     // Look for menu button - specifically the open menu button
-    const openMenuButton = page.getByRole('button', { name: 'Open navigation menu' });
-    if (await openMenuButton.count() > 0) {
+    const openMenuButton = page.getByRole('button', {
+      name: 'Open navigation menu'
+    });
+    if ((await openMenuButton.count()) > 0) {
       await openMenuButton.click();
-      
+
       // Check if mobile sidenav opens
       const sidenav = page.locator('mat-sidenav');
       await expect(sidenav).toBeVisible();
@@ -96,14 +101,17 @@ test.describe('Application Navigation', () => {
     const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
     const lightButton = mainNav.locator('button#light');
     const darkButton = mainNav.locator('button#dark');
-    
+
     // One of them should be visible - use count to avoid strict mode
-    if (await lightButton.count() > 0 && await lightButton.isVisible()) {
+    if ((await lightButton.count()) > 0 && (await lightButton.isVisible())) {
       await lightButton.click();
       await page.waitForTimeout(500);
       // After clicking light, dark button should be visible
       await expect(darkButton).toBeVisible();
-    } else if (await darkButton.count() > 0 && await darkButton.isVisible()) {
+    } else if (
+      (await darkButton.count()) > 0 &&
+      (await darkButton.isVisible())
+    ) {
       await darkButton.click();
       await page.waitForTimeout(500);
       // After clicking dark, light button should be visible
@@ -116,7 +124,12 @@ test.describe('Application Navigation', () => {
     await page.goto('/');
 
     // Navigate to different routes and verify each loads properly
-    const routes = ['/portfolio', '/wordlist-generator', '/contact-form', '/home'];
+    const routes = [
+      '/portfolio',
+      '/wordlist-generator',
+      '/contact-form',
+      '/home'
+    ];
 
     for (const route of routes) {
       await page.goto(route);
@@ -132,32 +145,35 @@ test.describe('Application Navigation', () => {
 
   test('should handle direct URL access', async ({ page }) => {
     // Mock GitHub API for specific user 'tehw0lf' - needs both own and forked repos
-    await page.route('**/api.github.com/users/tehw0lf/repos**', async route => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify([
-          {
-            name: 'mock-repo-1',
-            description: 'A mock repository for testing',
-            html_url: 'https://github.com/tehw0lf/mock-repo-1',
-            language: 'TypeScript',
-            stargazers_count: 15,
-            forks_count: 3,
-            fork: false
-          },
-          {
-            name: 'mock-repo-2',
-            description: 'A forked repository',
-            html_url: 'https://github.com/tehw0lf/mock-repo-2',
-            language: 'JavaScript',
-            stargazers_count: 8,
-            forks_count: 1,
-            fork: true
-          }
-        ])
-      });
-    });
+    await page.route(
+      '**/api.github.com/users/tehw0lf/repos**',
+      async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify([
+            {
+              name: 'mock-repo-1',
+              description: 'A mock repository for testing',
+              html_url: 'https://github.com/tehw0lf/mock-repo-1',
+              language: 'TypeScript',
+              stargazers_count: 15,
+              forks_count: 3,
+              fork: false
+            },
+            {
+              name: 'mock-repo-2',
+              description: 'A forked repository',
+              html_url: 'https://github.com/tehw0lf/mock-repo-2',
+              language: 'JavaScript',
+              stargazers_count: 8,
+              forks_count: 1,
+              fork: true
+            }
+          ])
+        });
+      }
+    );
 
     // Test that deep links work properly
     const routes = [
@@ -171,7 +187,9 @@ test.describe('Application Navigation', () => {
       await expect(page).toHaveURL(new RegExp(`.*${route.path}`));
       // Wait for component to be attached and give more time for loading
       await expect(page.locator(route.component)).toBeAttached();
-      await expect(page.locator(route.component)).toBeVisible({ timeout: 10000 });
+      await expect(page.locator(route.component)).toBeVisible({
+        timeout: 10000
+      });
     }
   });
 });

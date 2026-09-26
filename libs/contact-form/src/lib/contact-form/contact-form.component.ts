@@ -9,7 +9,11 @@ import {
   ViewEncapsulation,
   effect
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  ReactiveFormsModule,
+  AbstractControl
+} from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
@@ -26,19 +30,19 @@ interface FormConfigEntry {
 }
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'contact-form',
-    templateUrl: './contact-form.component.html',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./contact-form.component.scss'],
-    imports: [
-        LayoutModule,
-        ReactiveFormsModule,
-        FormlyModule,
-        FormlyMaterialModule,
-        NgStyle
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'contact-form',
+  templateUrl: './contact-form.component.html',
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./contact-form.component.scss'],
+  imports: [
+    LayoutModule,
+    ReactiveFormsModule,
+    FormlyModule,
+    FormlyMaterialModule,
+    NgStyle
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent implements OnDestroy {
   buttonStyle = input({
@@ -107,7 +111,7 @@ export class ContactFormComponent implements OnDestroy {
     // Clear existing fields and model
     this.fields = [];
     this.model = {};
-    
+
     this.formConfig().forEach((entry: FormConfigEntry) => {
       if (entry.value) {
         this.model[entry.field] = entry.value;
@@ -139,7 +143,11 @@ export class ContactFormComponent implements OnDestroy {
         }
         fieldConfig.validators = {
           email: {
-            expression: (control: AbstractControl) => !control.value || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(control.value),
+            expression: (control: AbstractControl) =>
+              !control.value ||
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                control.value
+              ),
             message: 'Please enter a valid email address'
           }
         };

@@ -49,7 +49,7 @@ test.describe('Git Portfolio Page', () => {
     // This test verifies that the component handles loading states properly
     // Since the loading spinner appears very briefly, we'll test the component is initially hidden
     // and only becomes visible after data loads
-    
+
     // Clear the beforeEach route
     await page.unroute('**/api.github.com/users/tehw0lf/repos**');
 
@@ -65,7 +65,7 @@ test.describe('Git Portfolio Page', () => {
     // as it only renders when data successfully loads
     const gitPortfolio = page.locator('git-portfolio');
     await expect(gitPortfolio).toBeAttached();
-    
+
     // The component should not be visible since no data loads
     await expect(gitPortfolio).not.toBeVisible();
   });

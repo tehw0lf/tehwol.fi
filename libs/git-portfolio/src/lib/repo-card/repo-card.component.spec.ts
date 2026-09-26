@@ -8,7 +8,9 @@ import { OcticonDirective } from '../octicon.directive';
 import { GitRepository } from '../types/git-repository-type';
 import { RepoCardComponent } from './repo-card.component';
 
-const createMockRepository = (overrides: Partial<GitRepository> = {}): GitRepository => {
+const createMockRepository = (
+  overrides: Partial<GitRepository> = {}
+): GitRepository => {
   const repo = new GitRepository();
   repo.id = 1;
   repo.name = 'test-repo';
@@ -32,7 +34,7 @@ const createMockRepository = (overrides: Partial<GitRepository> = {}): GitReposi
   repo.owner = {
     avatar_url: 'https://github.com/user.png'
   };
-  
+
   return Object.assign(repo, overrides);
 };
 
@@ -79,12 +81,12 @@ describe('RepoCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RepoCardComponent);
     component = fixture.componentInstance;
-    
+
     // Set all required inputs
     Object.entries(defaultInputs).forEach(([key, value]) => {
       fixture.componentRef.setInput(key, value);
     });
-    
+
     fixture.componentRef.setInput('gitRepo', createMockRepository());
     fixture.detectChanges();
   });
@@ -109,16 +111,16 @@ describe('RepoCardComponent', () => {
       const testRepo = createMockRepository({ name: 'custom-repo' });
       fixture.componentRef.setInput('gitRepo', testRepo);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo()).toEqual(testRepo);
     });
 
     it('should handle isCopied input', () => {
       expect(component.isCopied()).toBe(false); // default value
-      
+
       fixture.componentRef.setInput('isCopied', true);
       fixture.detectChanges();
-      
+
       expect(component.isCopied()).toBe(true);
     });
   });
@@ -133,10 +135,10 @@ describe('RepoCardComponent', () => {
         forks_count: 25,
         open_issues_count: 10
       });
-      
+
       fixture.componentRef.setInput('gitRepo', fullRepo);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo().name).toBe('full-repo');
       expect(component.gitRepo().description).toBe('A complete repository');
       expect(component.gitRepo().language).toBe('JavaScript');
@@ -152,10 +154,10 @@ describe('RepoCardComponent', () => {
         forks_count: undefined,
         open_issues_count: undefined
       });
-      
+
       fixture.componentRef.setInput('gitRepo', minimalRepo);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo().name).toBe('minimal-repo');
       expect(component.gitRepo().description).toBeUndefined();
       expect(component.gitRepo().language).toBeUndefined();
@@ -166,10 +168,10 @@ describe('RepoCardComponent', () => {
         fork: true,
         name: 'forked-repo'
       });
-      
+
       fixture.componentRef.setInput('gitRepo', forkedRepo);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo().fork).toBe(true);
     });
   });
@@ -190,10 +192,10 @@ describe('RepoCardComponent', () => {
   describe('clipboard functionality', () => {
     it('should emit copiedToClipboard event', () => {
       jest.spyOn(component.copiedToClipboard, 'emit');
-      
+
       // Simulate clipboard action (this would normally be triggered by CDK clipboard)
       component.copiedToClipboard.emit(true);
-      
+
       expect(component.copiedToClipboard.emit).toHaveBeenCalledWith(true);
     });
   });
@@ -204,27 +206,29 @@ describe('RepoCardComponent', () => {
         name: 'test-display-repo',
         description: 'Test description'
       });
-      
+
       fixture.componentRef.setInput('gitRepo', testRepo);
       fixture.detectChanges();
-      
+
       const compiled = fixture.nativeElement;
       expect(compiled.textContent).toContain('test-display-repo');
     });
 
     it('should apply custom styles', () => {
       const customCardStyle = { backgroundColor: 'red', color: 'white' };
-      
+
       fixture.componentRef.setInput('cardStyle', customCardStyle);
       fixture.detectChanges();
-      
+
       expect(component.cardStyle()).toEqual(customCardStyle);
     });
   });
 
   describe('repoUrl', () => {
     it('should return the html_url when it is http(s)', () => {
-      const repo = createMockRepository({ html_url: 'https://github.com/user/test-repo' });
+      const repo = createMockRepository({
+        html_url: 'https://github.com/user/test-repo'
+      });
       fixture.componentRef.setInput('gitRepo', repo);
       fixture.detectChanges();
 
@@ -258,10 +262,10 @@ describe('RepoCardComponent', () => {
         language: null as string | null,
         license: null as string | null
       });
-      
+
       fixture.componentRef.setInput('gitRepo', repoWithNulls);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo().description).toBeNull();
       expect(component.gitRepo().language).toBeNull();
       expect(component.gitRepo().license).toBeNull();
@@ -273,10 +277,10 @@ describe('RepoCardComponent', () => {
         forks_count: 50000,
         open_issues_count: 10000
       });
-      
+
       fixture.componentRef.setInput('gitRepo', repoWithLargeNumbers);
       fixture.detectChanges();
-      
+
       expect(component.gitRepo().stargazers_count).toBe(999999);
       expect(component.gitRepo().forks_count).toBe(50000);
       expect(component.gitRepo().open_issues_count).toBe(10000);

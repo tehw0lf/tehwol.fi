@@ -32,8 +32,9 @@ npx playwright test --debug
 ## Browser Configuration
 
 Tests run on:
+
 - Chromium (Desktop)
-- Firefox (Desktop) 
+- Firefox (Desktop)
 - WebKit/Safari (Desktop)
 
 Mobile browsers can be enabled by uncommenting the mobile configurations in `playwright.config.ts`.
@@ -47,6 +48,7 @@ Mobile browsers can be enabled by uncommenting the mobile configurations in `pla
 ## Writing Tests
 
 All tests should follow these patterns:
+
 - Use descriptive test names
 - Test user workflows, not implementation details
 - Include accessibility checks where appropriate

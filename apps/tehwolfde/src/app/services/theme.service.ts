@@ -1,4 +1,11 @@
-import { Injectable, Renderer2, RendererFactory2, signal, WritableSignal, inject } from '@angular/core';
+import {
+  Injectable,
+  Renderer2,
+  RendererFactory2,
+  signal,
+  WritableSignal,
+  inject
+} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
