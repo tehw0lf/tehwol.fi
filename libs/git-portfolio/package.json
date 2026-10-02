@@ -8,10 +8,10 @@
     "url": "git+https://github.com/tehw0lf/tehwol.fi.git"
   },
   "peerDependencies": {
-    "@angular/cdk": "22.1.6",
-    "@angular/common": "22.1.5",
-    "@angular/core": "22.1.5",
-    "@angular/material": "22.1.6",
+    "@angular/cdk": "22.2.1",
+    "@angular/common": "22.2.1",
+    "@angular/core": "22.2.1",
+    "@angular/material": "22.2.1",
     "@tehw0lf/mvc": "0.0.11",
     "github-language-colors": "1.0.0",
     "rxjs": "7.8.2"
