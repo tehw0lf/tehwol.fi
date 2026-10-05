@@ -62,6 +62,33 @@ test.describe('Embedded app routes', () => {
   });
 });
 
+test.describe('Embedded app runtime errors', () => {
+  // One generated embed route and the hand written color route: EmbedComponent
+  // is the routed component in the first and a child component in the second.
+  for (const route of ['/beep', '/color/red']) {
+    test(`should not log an Angular runtime error on ${route}`, async ({
+      page
+    }) => {
+      const angularErrors: string[] = [];
+      page.on('console', (message) => {
+        if (message.type() === 'error' && /NG0\d+/.test(message.text())) {
+          angularErrors.push(message.text());
+        }
+      });
+      page.on('pageerror', (error) => {
+        if (/NG0\d+/.test(error.message)) {
+          angularErrors.push(error.message);
+        }
+      });
+
+      await page.goto(route);
+      await expect(page.locator('iframe.embed-frame')).toBeAttached();
+
+      expect(angularErrors).toEqual([]);
+    });
+  }
+});
+
 test.describe('Home app carousel', () => {
   // The home page renders one carousel per section, so every locator is scoped
   // by data-section rather than by render order or by the translated label.
