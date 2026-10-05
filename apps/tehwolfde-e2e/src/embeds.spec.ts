@@ -70,10 +70,31 @@ test.describe('Embedded app runtime errors', () => {
       page
     }) => {
       const angularErrors: string[] = [];
+      const pending: Promise<void>[] = [];
       page.on('console', (message) => {
-        if (message.type() === 'error' && /NG0\d+/.test(message.text())) {
-          angularErrors.push(message.text());
+        if (message.type() !== 'error') {
+          return;
         }
+        // Firefox renders an Error argument as "Error" in message.text(), so
+        // the Angular error code is only found in the arguments themselves.
+        pending.push(
+          Promise.all(
+            message
+              .args()
+              .map((arg) =>
+                arg
+                  .evaluate((value) =>
+                    value instanceof Error ? value.message : String(value)
+                  )
+                  .catch(() => '')
+              )
+          ).then((args) => {
+            const text = [message.text(), ...args].join(' ');
+            if (/NG0\d+/.test(text)) {
+              angularErrors.push(text);
+            }
+          })
+        );
       });
       page.on('pageerror', (error) => {
         if (/NG0\d+/.test(error.message)) {
@@ -83,6 +104,7 @@ test.describe('Embedded app runtime errors', () => {
 
       await page.goto(route);
       await expect(page.locator('iframe.embed-frame')).toBeAttached();
+      await Promise.all(pending);
 
       expect(angularErrors).toEqual([]);
     });
