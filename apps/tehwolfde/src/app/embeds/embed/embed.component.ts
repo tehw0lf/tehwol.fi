@@ -60,9 +60,12 @@ export class EmbedComponent {
   }
 
   sendMessage(data: Record<string, unknown>): void {
-    // The theme subscription can fire before the first change detection. There
-    // is no iframe yet, and `url` is a required input that must not be read
-    // before it is bound.
+    // The theme subscription can fire before the first change detection, when
+    // the required `url` input is not bound yet and reading it throws NG0950.
+    // The `iframe` query is resolved only after the inputs are bound, so an
+    // unresolved query means there is nothing to read and nothing to post to.
+    // This relies on the query being non-static; the unit test for the unbound
+    // case fails if that ordering ever changes.
     const target = this.iframeRef?.nativeElement.contentWindow;
     if (!target) {
       return;
