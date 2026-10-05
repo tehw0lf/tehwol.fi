@@ -62,6 +62,55 @@ test.describe('Embedded app routes', () => {
   });
 });
 
+test.describe('Embedded app runtime errors', () => {
+  // One generated embed route and the hand written color route: EmbedComponent
+  // is the routed component in the first and a child component in the second.
+  for (const route of ['/beep', '/color/red']) {
+    test(`should not log an Angular runtime error on ${route}`, async ({
+      page
+    }) => {
+      const angularErrors: string[] = [];
+      const pending: Promise<void>[] = [];
+      page.on('console', (message) => {
+        if (message.type() !== 'error') {
+          return;
+        }
+        // Firefox renders an Error argument as "Error" in message.text(), so
+        // the Angular error code is only found in the arguments themselves.
+        pending.push(
+          Promise.all(
+            message
+              .args()
+              .map((arg) =>
+                arg
+                  .evaluate((value) =>
+                    value instanceof Error ? value.message : String(value)
+                  )
+                  .catch(() => '')
+              )
+          ).then((args) => {
+            const text = [message.text(), ...args].join(' ');
+            if (/NG0\d+/.test(text)) {
+              angularErrors.push(text);
+            }
+          })
+        );
+      });
+      page.on('pageerror', (error) => {
+        if (/NG0\d+/.test(error.message)) {
+          angularErrors.push(error.message);
+        }
+      });
+
+      await page.goto(route);
+      await expect(page.locator('iframe.embed-frame')).toBeAttached();
+      await Promise.all(pending);
+
+      expect(angularErrors).toEqual([]);
+    });
+  }
+});
+
 test.describe('Home app carousel', () => {
   // The home page renders one carousel per section, so every locator is scoped
   // by data-section rather than by render order or by the translated label.
