@@ -36,4 +36,10 @@ describe('EmbedComponent', () => {
   it('should call onIframeLoad without throwing', () => {
     expect(() => component.onIframeLoad()).not.toThrow();
   });
+
+  it('should not read the required url input before it is bound', () => {
+    const unbound = TestBed.createComponent(EmbedComponent).componentInstance;
+
+    expect(() => unbound.sendMessage({ type: 'theme' })).not.toThrow();
+  });
 });

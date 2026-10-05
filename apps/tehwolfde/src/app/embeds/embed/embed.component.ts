@@ -60,11 +60,19 @@ export class EmbedComponent {
   }
 
   sendMessage(data: Record<string, unknown>): void {
+    // The theme subscription can fire before the first change detection. There
+    // is no iframe yet, and `url` is a required input that must not be read
+    // before it is bound.
+    const target = this.iframeRef?.nativeElement.contentWindow;
+    if (!target) {
+      return;
+    }
+
     const origin = this.targetOrigin();
     if (!origin) {
       return;
     }
 
-    this.iframeRef?.nativeElement.contentWindow?.postMessage(data, origin);
+    target.postMessage(data, origin);
   }
 }
