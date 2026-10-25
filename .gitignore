@@ -7,7 +7,10 @@
 .angular
 
 # Nx
-.nx
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs
+.nx/self-healing
 
 # compiled output
 /dist
