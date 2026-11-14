@@ -54,4 +54,15 @@ test.describe('Console error fixture', () => {
 
     consoleErrors.length = 0;
   });
+
+  // Without this, removing the fixture's final assertion or its `auto` flag
+  // would leave the tests above green while disabling the check everywhere.
+  test.fail(
+    'should fail a test on an unlisted console error',
+    async ({ page }) => {
+      await page.goto('/home');
+      await page.evaluate(() => console.error('e2e unlisted error'));
+      await page.waitForTimeout(200);
+    }
+  );
 });

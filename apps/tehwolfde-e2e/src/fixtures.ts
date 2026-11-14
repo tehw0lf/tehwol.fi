@@ -35,13 +35,10 @@ export const allowedConsoleErrors: {
     reason: 'GitHub API rate limit'
   },
   {
-    // The suite runs against `nx serve`; Firefox reports failed dev server
-    // client fetches when the page reloads. Both must match: in Chromium the
-    // dev server client wraps console.error, so every message carries its
-    // location and a location-only entry would hide real errors.
+    // OcticonDirective (libs/git-portfolio) logs every failed icon fetch with
+    // console.error; Firefox cancels them when a test navigates away.
     pattern: /NetworkError when attempting to fetch resource/,
-    locationPattern: /\/@vite\/client/,
-    reason: 'dev server client fetch failure during reload'
+    reason: 'icon fetch cancelled by a navigation in Firefox'
   }
 ];
 
@@ -82,9 +79,16 @@ export const test = base.extend<{ consoleErrors: string[] }>({
               )
           )
             // Evaluation fails when the page navigated away: use the text.
-            .catch(() => [] as string[])
+            .catch(() => null)
             .then((args) => {
-              const text = [base, ...args].join(' ');
+              // Firefox renders an Error argument as a bare handle preview.
+              // When the arguments could not be read either, nothing of the
+              // message is known, so it cannot be told from the cancelled
+              // icon fetches above and is not counted.
+              if (args === null && /^(JSHandle@\w+\s*)+$/.test(base)) {
+                return;
+              }
+              const text = [base, ...(args ?? [])].join(' ');
               if (
                 !isAllowed(text, locationUrl) &&
                 !isAllowed(base, locationUrl)
