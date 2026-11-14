@@ -35,7 +35,7 @@ npx playwright test --debug
 
 ## Console and page errors
 
-Every spec imports `test` and `expect` from `./fixtures`, not from `@playwright/test` (lint enforces this). The fixture fails a test on any console error or uncaught page error that is not on the `allowedConsoleErrors` list in `src/fixtures.ts`. To allow known noise, add an entry there with a narrow pattern and a `reason` naming its source; never a broad pattern.
+Every spec imports `test` and `expect` from `./fixtures`, not from `@playwright/test` (lint enforces this). The fixture fails a test on any console error or uncaught page error that is not on the `allowedConsoleErrors` list in `src/fixtures.ts`. To allow known noise, add an entry there with a narrow pattern and a `reason` naming its source; never a broad pattern. Entries match by text in every browser; the `NetworkError` entry (icon fetches cancelled by a navigation in Firefox, logged by `OcticonDirective`) is such a text-only exception. In Firefox, an `Error` logged while the page navigates away, whose arguments can no longer be read, is a bare handle preview and is not counted.
 
 ## Browser Configuration
 

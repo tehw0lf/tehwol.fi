@@ -1,8 +1,10 @@
 import { expect, test as base } from '@playwright/test';
 
 /**
- * Known noise that is not produced by this repository's code. Every entry
- * names its source; keep each pattern as narrow as the source allows.
+ * Known console noise. Every entry names its source; keep each pattern as
+ * narrow as the source allows. Entries match by text (and location where one
+ * is given) in every browser, so a message with the same text logged by other
+ * code is allowed as well.
  */
 export const allowedConsoleErrors: {
   pattern?: RegExp;
@@ -36,7 +38,9 @@ export const allowedConsoleErrors: {
   },
   {
     // OcticonDirective (libs/git-portfolio) logs every failed icon fetch with
-    // console.error; Firefox cancels them when a test navigates away.
+    // console.error; Firefox cancels them when a test navigates away. This is
+    // this repository's own code, and the entry is a text-only exception: it
+    // applies in every browser and to any code that logs this text.
     pattern: /NetworkError when attempting to fetch resource/,
     reason: 'icon fetch cancelled by a navigation in Firefox'
   }
