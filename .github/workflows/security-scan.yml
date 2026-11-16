@@ -33,6 +33,7 @@ jobs:
     permissions:
       contents: write
       security-events: write
+      issues: write
       actions: read
       pull-requests: write
     with:
