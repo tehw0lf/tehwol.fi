@@ -25,9 +25,11 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
   },
-  /* Run your local dev server before starting the tests */
+  /* Run your local dev server before starting the tests. Without HMR: its
+     component update modules (/@ng/component) are fetched by the page while a
+     test runs, and Firefox logs them as failed dynamic imports. */
   webServer: {
-    command: 'npx nx serve tehwolfde',
+    command: 'npx nx serve tehwolfde --hmr=false',
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot

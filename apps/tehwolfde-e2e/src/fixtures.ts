@@ -50,12 +50,14 @@ export const allowedConsoleErrors: {
   },
   {
     // Firefox reports a web font as failed when a navigation cancels its
-    // download. This hits the app's own fonts and those of the beep preview on
-    // the home page alike. The entry names the aborted status only
-    // (status=2152398850 is NS_BINDING_ABORTED), so a font that fails for any
-    // other reason (a 404, a network error) still fails the test. Text-only:
-    // it applies in every browser and to any font source.
-    pattern: /downloadable font: download failed .*status=2152398850 source: /,
+    // download. This hits the app's own fonts (served by the local server) and
+    // those of the beep preview on the home page. The entry names the aborted
+    // status (status=2152398850 is NS_BINDING_ABORTED) and these two sources,
+    // so a font that fails for any other reason (a 404, a network error) or
+    // comes from elsewhere still fails the test. Text-only: it applies in
+    // every browser.
+    pattern:
+      /downloadable font: download failed .*status=2152398850 source: (?:http:\/\/localhost:\d+\/|https:\/\/tehw0lf\.github\.io\/beep\/fonts\/)/,
     reason: 'font download cancelled by a navigation in Firefox'
   }
 ];
