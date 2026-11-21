@@ -42,10 +42,15 @@ export const allowedConsoleErrors: {
   },
   {
     // OcticonDirective (libs/git-portfolio) logs every failed icon fetch with
-    // console.error; Firefox cancels them when a test navigates away. This is
-    // this repository's own code, and the entry is a text-only exception: it
-    // applies in every browser and to any code that logs this text.
-    pattern: /NetworkError when attempting to fetch resource/,
+    // console.error; Firefox cancels them when a test navigates away and
+    // words that as "NetworkError when attempting to fetch resource" or, for
+    // the AbortError of the same cancelled fetch, "The operation was aborted."
+    // (anchored, so a longer message that merely contains it does not match).
+    // This is this repository's own code, and the entry is a text-only
+    // exception: it applies in every browser and to any code that logs this
+    // text.
+    pattern:
+      /NetworkError when attempting to fetch resource|^(?:AbortError: )?The operation was aborted\.$/,
     reason: 'icon fetch cancelled by a navigation in Firefox'
   },
   {
