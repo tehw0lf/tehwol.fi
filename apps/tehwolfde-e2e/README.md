@@ -28,6 +28,14 @@ npx playwright test --debug
 - `src/git-portfolio.spec.ts` - Tests for the Git portfolio component
 - `src/wordlist-generator.spec.ts` - Tests for the wordlist generator
 - `src/contact-form.spec.ts` - Tests for the contact form
+- `src/embeds.spec.ts` - Tests for the embedded app routes and the home carousel
+- `src/mobile-sidenav.spec.ts` - Tests for the mobile side navigation
+- `src/console-errors.spec.ts` - Self-test of the console error fixture
+- `src/fixtures.ts` - Shared `test` and `expect` (see below)
+
+## Console and page errors
+
+Every spec imports `test` and `expect` from `./fixtures`, not from `@playwright/test` (lint enforces this). The fixture fails a test on any console error or uncaught page error that is not on the `allowedConsoleErrors` list in `src/fixtures.ts`. To allow known noise, add an entry there with a narrow pattern and a `reason` naming its source; never a broad pattern. Entries match by text in every browser; the icon-fetch entry (icon fetches cancelled by a navigation, logged by `OcticonDirective`; Firefox's `NetworkError` and `The operation was aborted.` and WebKit's `TypeError: Load failed`) and the font entry (Firefox font downloads aborted by a navigation) are such text-only exceptions. In Firefox, an `Error` logged while the page navigates away, whose arguments can no longer be read, is a bare handle preview and is not counted.
 
 ## Browser Configuration
 

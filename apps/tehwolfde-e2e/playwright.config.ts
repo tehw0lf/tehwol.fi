@@ -25,9 +25,13 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
   },
-  /* Run your local dev server before starting the tests */
+  /* Run your local dev server before starting the tests. Without HMR: with it,
+     Firefox was seen logging the dev server's component update modules
+     (/@ng/component) as failed dynamic imports during a test, which the
+     console error fixture reports. The trigger of those updates is not
+     established; the e2e run does not need HMR. */
   webServer: {
-    command: 'npx nx serve tehwolfde',
+    command: 'npx nx serve tehwolfde --hmr=false',
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot

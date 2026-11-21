@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 /**
  * Mirrors EMBEDDED_APPS. Kept as a literal so a mistake in the app's own list
@@ -65,48 +65,13 @@ test.describe('Embedded app routes', () => {
 test.describe('Embedded app runtime errors', () => {
   // One generated embed route and the hand written color route: EmbedComponent
   // is the routed component in the first and a child component in the second.
+  // The shared fixture fails the test on any console or page error.
   for (const route of ['/beep', '/color/red']) {
-    test(`should not log an Angular runtime error on ${route}`, async ({
+    test(`should render the embed without runtime errors on ${route}`, async ({
       page
     }) => {
-      const angularErrors: string[] = [];
-      const pending: Promise<void>[] = [];
-      page.on('console', (message) => {
-        if (message.type() !== 'error') {
-          return;
-        }
-        // Firefox renders an Error argument as "Error" in message.text(), so
-        // the Angular error code is only found in the arguments themselves.
-        pending.push(
-          Promise.all(
-            message
-              .args()
-              .map((arg) =>
-                arg
-                  .evaluate((value) =>
-                    value instanceof Error ? value.message : String(value)
-                  )
-                  .catch(() => '')
-              )
-          ).then((args) => {
-            const text = [message.text(), ...args].join(' ');
-            if (/NG0\d+/.test(text)) {
-              angularErrors.push(text);
-            }
-          })
-        );
-      });
-      page.on('pageerror', (error) => {
-        if (/NG0\d+/.test(error.message)) {
-          angularErrors.push(error.message);
-        }
-      });
-
       await page.goto(route);
       await expect(page.locator('iframe.embed-frame')).toBeAttached();
-      await Promise.all(pending);
-
-      expect(angularErrors).toEqual([]);
     });
   }
 });
