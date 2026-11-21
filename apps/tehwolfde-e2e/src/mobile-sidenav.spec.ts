@@ -5,6 +5,9 @@ test.describe('Mobile Sidenav Behavior', () => {
     // Set mobile viewport to trigger mobile navigation
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
+    // The routed component is a lazy chunk that loads after the load event;
+    // navigating away before it is in place makes WebKit abort the import.
+    await expect(page.locator('tehw0lf-home')).toBeAttached();
   });
 
   test('should show mobile sidenav component on small screens', async ({
@@ -289,6 +292,7 @@ test.describe('Mobile Sidenav Behavior', () => {
   }) => {
     // Navigate to a specific page
     await page.goto('/portfolio');
+    await expect(page.locator('git-portfolio')).toBeAttached();
 
     // Mock GitHub API
     await page.route(

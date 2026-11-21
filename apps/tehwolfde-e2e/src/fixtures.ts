@@ -18,8 +18,11 @@ export const allowedConsoleErrors: {
     // Firefox words it differently: "blocked the loading of a resource
     // (frame-ancestors)". WebKit: "Refused to load <url> because it does not
     // appear in the frame-ancestors directive of the Content Security Policy."
+    // The WebKit alternative names the five embed hosts of
+    // apps/tehwolfde/src/app/embeds/apps.ts, so a refused framing of any other
+    // site or of the app's own routes still fails the test.
     pattern:
-      /Framing '[^']*' violates the following Content Security Policy directive: "frame-ancestors|blocked the loading of a resource \(frame-ancestors\)|Refused to load \S+ because it does not appear in the frame-ancestors directive of the Content Security Policy/,
+      /Framing '[^']*' violates the following Content Security Policy directive: "frame-ancestors|blocked the loading of a resource \(frame-ancestors\)|Refused to load https:\/\/(?:flowdive|numveil|btrain|color|farbduell)\.tehwolf\.de\/ because it does not appear in the frame-ancestors directive of the Content Security Policy/,
     reason: 'embedded site refuses to be framed by the local server'
   },
   {

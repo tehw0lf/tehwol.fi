@@ -3,6 +3,10 @@ import { test, expect } from './fixtures';
 test.describe('Application Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    // The routed component is a lazy chunk that loads after the load event.
+    // Navigating away before it is in place makes WebKit abort the import,
+    // which the console error fixture reports.
+    await expect(page.locator('tehw0lf-home')).toBeAttached();
   });
 
   test('should navigate to all main routes', async ({ page }) => {
@@ -40,6 +44,7 @@ test.describe('Application Navigation', () => {
     // Test home navigation
     await page.goto('/home');
     await expect(page).toHaveURL(/.*\/home/);
+    await expect(page.locator('tehw0lf-home')).toBeAttached();
 
     // Test portfolio navigation
     await page.goto('/portfolio');
@@ -122,18 +127,22 @@ test.describe('Application Navigation', () => {
   test('should maintain state during navigation', async ({ page }) => {
     // Start at home
     await page.goto('/');
+    await expect(page.locator('tehw0lf-home')).toBeAttached();
 
-    // Navigate to different routes and verify each loads properly
+    // Navigate to different routes and verify each loads properly. Each
+    // routed component is waited for, so the next navigation does not abort
+    // its lazy chunk (WebKit reports that as an error).
     const routes = [
-      '/portfolio',
-      '/wordlist-generator',
-      '/contact-form',
-      '/home'
+      { path: '/portfolio', component: 'git-portfolio' },
+      { path: '/wordlist-generator', component: 'wordlist-generator' },
+      { path: '/contact-form', component: 'contact-form' },
+      { path: '/home', component: 'tehw0lf-home' }
     ];
 
     for (const route of routes) {
-      await page.goto(route);
+      await page.goto(route.path);
       await page.waitForLoadState('networkidle');
+      await expect(page.locator(route.component)).toBeAttached();
 
       // Verify the page loaded successfully by checking for actual visible content
       await expect(page.locator('body')).toBeVisible();
