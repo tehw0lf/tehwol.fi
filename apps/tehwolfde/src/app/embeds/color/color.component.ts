@@ -3,8 +3,7 @@ import {
   Component,
   computed,
   inject,
-  signal,
-  ViewChild
+  signal
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,8 +40,6 @@ function resolveToHex(colorValue: string): string {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ColorComponent {
-  @ViewChild(EmbedComponent) private embed: EmbedComponent | undefined;
-
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -60,6 +57,5 @@ export class ColorComponent {
     if (!value) return;
     this.color.set(value);
     this.router.navigate(['/color', value], { replaceUrl: true });
-    this.embed?.sendMessage({ type: 'color', color: value });
   }
 }

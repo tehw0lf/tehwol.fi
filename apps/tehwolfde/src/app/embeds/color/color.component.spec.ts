@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 
+import { EmbedComponent } from '../embed/embed.component';
 import { ColorComponent } from './color.component';
 
 describe('ColorComponent', () => {
@@ -43,6 +45,18 @@ describe('ColorComponent', () => {
     component.inputValue.set('ff0000');
     component.apply();
     expect(component.color()).toBe('ff0000');
+  });
+
+  it('should not post a color message to the embed on apply', () => {
+    const embed: EmbedComponent = fixture.debugElement.query(
+      By.directive(EmbedComponent)
+    ).componentInstance;
+    const sendMessage = jest.spyOn(embed, 'sendMessage');
+    component.inputValue.set('ff0000');
+    component.apply();
+    expect(
+      sendMessage.mock.calls.filter(([message]) => message.type === 'color')
+    ).toHaveLength(0);
   });
 
   it('should not apply when inputValue is empty', () => {
