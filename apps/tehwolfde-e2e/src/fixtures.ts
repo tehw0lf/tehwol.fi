@@ -16,9 +16,10 @@ export const allowedConsoleErrors: {
     // the local dev server is refused (Chromium reports it without location,
     // Firefox through its Playwright instrumentation).
     // Firefox words it differently: "blocked the loading of a resource
-    // (frame-ancestors)".
+    // (frame-ancestors)". WebKit: "Refused to load <url> because it does not
+    // appear in the frame-ancestors directive of the Content Security Policy."
     pattern:
-      /Framing '[^']*' violates the following Content Security Policy directive: "frame-ancestors|blocked the loading of a resource \(frame-ancestors\)/,
+      /Framing '[^']*' violates the following Content Security Policy directive: "frame-ancestors|blocked the loading of a resource \(frame-ancestors\)|Refused to load \S+ because it does not appear in the frame-ancestors directive of the Content Security Policy/,
     reason: 'embedded site refuses to be framed by the local server'
   },
   {
