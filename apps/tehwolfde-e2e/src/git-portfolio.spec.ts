@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Git Portfolio Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -49,6 +49,11 @@ test.describe('Git Portfolio Page', () => {
     // This test verifies that the component handles loading states properly
     // Since the loading spinner appears very briefly, we'll test the component is initially hidden
     // and only becomes visible after data loads
+
+    // The beforeEach navigation must have finished (the lazy chunk and the
+    // mocked data): navigating again while it loads makes WebKit abort the
+    // import, which the console error fixture reports.
+    await expect(page.locator('git-portfolio')).toBeVisible();
 
     // Clear the beforeEach route
     await page.unroute('**/api.github.com/users/tehw0lf/repos**');
