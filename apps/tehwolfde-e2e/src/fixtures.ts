@@ -47,6 +47,16 @@ export const allowedConsoleErrors: {
     // applies in every browser and to any code that logs this text.
     pattern: /NetworkError when attempting to fetch resource/,
     reason: 'icon fetch cancelled by a navigation in Firefox'
+  },
+  {
+    // The home page embeds a preview of the beep site, whose web fonts Firefox
+    // reports as failed when a navigation cancels the download
+    // (status=2152398850 is NS_BINDING_ABORTED). Third party code, so the entry
+    // names the font host, the path and the aborted status; any other font
+    // failure still fails the test. Text-only: it applies in every browser.
+    pattern:
+      /downloadable font: download failed .*status=2152398850 source: https:\/\/tehw0lf\.github\.io\/beep\/fonts\//,
+    reason: 'beep preview font download cancelled by a navigation in Firefox'
   }
 ];
 
