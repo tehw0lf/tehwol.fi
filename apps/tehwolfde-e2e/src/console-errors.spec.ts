@@ -55,6 +55,26 @@ test.describe('Console error fixture', () => {
     consoleErrors.length = 0;
   });
 
+  test('should ignore a logged AbortError of a cancelled fetch', async ({
+    page,
+    consoleErrors
+  }) => {
+    await page.goto('/home');
+    // The shape OcticonDirective logs: an AbortError object (Firefox words it
+    // "The operation was aborted." with a trailing space).
+    await page.evaluate(() =>
+      console.error(
+        new DOMException('The operation was aborted. ', 'AbortError')
+      )
+    );
+    await page.evaluate(() => console.error('e2e marker'));
+
+    await expect.poll(() => consoleErrors.join('\n')).toContain('e2e marker');
+    expect(consoleErrors.join('\n')).not.toContain('aborted');
+
+    consoleErrors.length = 0;
+  });
+
   // Without this, removing the fixture's final assertion or its `auto` flag
   // would leave the tests above green while disabling the check everywhere.
   test.fail(

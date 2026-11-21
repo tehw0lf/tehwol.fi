@@ -47,11 +47,15 @@ export const allowedConsoleErrors: {
     // fetch resource" or, for the AbortError of the same cancelled fetch, "The
     // operation was aborted."; WebKit as "TypeError: Load failed". The last two
     // are anchored, so a longer message that merely contains them does not
-    // match. This is this repository's own code, and the entry is a text-only
-    // exception: it applies in every browser and to any code that logs this
-    // text.
+    // match. The AbortError is logged as an object, so the fixture sees it as
+    // a handle preview followed by the evaluated message (and a trailing
+    // space): "JSHandle@object The operation was aborted. ". Hence the
+    // alternative accepts a start of text or a space before the message and
+    // trailing white space after it. This is this repository's own code, and
+    // the entry is a text-only exception: it applies in every browser and to
+    // any code that logs this text.
     pattern:
-      /NetworkError when attempting to fetch resource|^(?:AbortError: )?The operation was aborted\.$|^TypeError: Load failed$/,
+      /NetworkError when attempting to fetch resource|(?:^|\s)(?:AbortError: )?The operation was aborted\.\s*$|^TypeError: Load failed$/,
     reason: 'icon fetch cancelled by a navigation in Firefox and WebKit'
   },
   {
