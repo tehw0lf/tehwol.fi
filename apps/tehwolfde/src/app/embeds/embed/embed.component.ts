@@ -1,14 +1,16 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
+  effect,
   ElementRef,
   inject,
   input,
-  ViewChild
+  signal,
+  untracked,
+  viewChild
 } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -27,12 +29,11 @@ export class EmbedComponent {
   url = input.required<string>();
   title = input('Embedded Tool');
 
-  @ViewChild('iframe') private iframeRef:
-    ElementRef<HTMLIFrameElement> | undefined;
+  private iframeRef = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
+  private rendered = signal(false);
 
   private sanitizer = inject(DomSanitizer);
   private themeService = inject(ThemeService);
-  private destroyRef = inject(DestroyRef);
 
   safeUrl = computed(() =>
     this.sanitizer.bypassSecurityTrustResourceUrl(this.url())
@@ -50,9 +51,15 @@ export class EmbedComponent {
   });
 
   constructor() {
-    toObservable(this.themeService.theme)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((theme) => this.sendMessage({ type: 'theme', theme }));
+    afterNextRender(() => this.rendered.set(true));
+
+    effect(() => {
+      const theme = this.themeService.theme();
+      // Only a theme change posts. `rendered` is read untracked: tracking it
+      // would post once when it flips, to an iframe that has not loaded yet
+      // (`onIframeLoad()` posts the initial theme).
+      untracked(() => this.sendMessage({ type: 'theme', theme }));
+    });
   }
 
   onIframeLoad(): void {
@@ -60,13 +67,15 @@ export class EmbedComponent {
   }
 
   sendMessage(data: Record<string, unknown>): void {
-    // The theme subscription can fire before the first change detection, when
+    // This method is public and may be called before the first render, when
     // the required `url` input is not bound yet and reading it throws NG0950.
-    // The `iframe` query is resolved only after the inputs are bound, so an
-    // unresolved query means there is nothing to read and nothing to post to.
-    // This relies on the query being non-static; the unit test for the unbound
-    // case fails if that ordering ever changes.
-    const target = this.iframeRef?.nativeElement.contentWindow;
+    // `viewChild()` already resolves before the inputs are bound, so the query
+    // alone cannot tell; the `rendered` signal can.
+    if (!this.rendered()) {
+      return;
+    }
+
+    const target = this.iframeRef()?.nativeElement.contentWindow;
     if (!target) {
       return;
     }
