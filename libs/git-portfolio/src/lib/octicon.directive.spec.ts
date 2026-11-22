@@ -125,6 +125,7 @@ describe('OcticonDirective', () => {
     });
 
     afterEach(() => {
+      jest.useRealTimers();
       window.dispatchEvent(new Event('pageshow'));
       errorSpy.mockRestore();
     });
@@ -154,6 +155,34 @@ describe('OcticonDirective', () => {
       window.dispatchEvent(new Event('pageshow'));
       await render(() => Promise.reject(new TypeError('Load failed')));
       expect(errorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should log a TypeError after a beforeunload that does not unload', async () => {
+      jest.useFakeTimers();
+      window.dispatchEvent(new Event('beforeunload'));
+      jest.advanceTimersByTime(1000);
+      jest.useRealTimers();
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not log a TypeError after beforeunload before the delay has passed', async () => {
+      jest.useFakeTimers();
+      window.dispatchEvent(new Event('beforeunload'));
+      jest.advanceTimersByTime(999);
+      jest.useRealTimers();
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not log a TypeError after beforeunload followed by pagehide', async () => {
+      jest.useFakeTimers();
+      window.dispatchEvent(new Event('beforeunload'));
+      window.dispatchEvent(new Event('pagehide'));
+      jest.advanceTimersByTime(1000);
+      jest.useRealTimers();
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should log a non-ok response', async () => {
