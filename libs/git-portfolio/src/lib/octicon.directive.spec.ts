@@ -98,4 +98,72 @@ describe('OcticonDirective', () => {
     // Should not crash - that's the main test
     expect(element).toBeTruthy();
   });
+
+  describe('failed icon fetches', () => {
+    let errorSpy: jest.SpyInstance;
+
+    // svgCache keeps resolved promises across tests and a rejected one deletes
+    // itself, so 'issue-opened' (not resolved by any other test) is fetched
+    // again by every test below.
+    const render = async (fetchImpl: () => Promise<Response>) => {
+      global.fetch = jest.fn(fetchImpl) as typeof fetch;
+      @Component({
+        template: `<div octicon="issue-opened" color="red"></div>`,
+        standalone: true,
+        imports: [OcticonDirective]
+      })
+      class FailingComponent {}
+      const f = TestBed.createComponent(FailingComponent);
+      f.detectChanges();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    };
+
+    beforeEach(() => {
+      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+        /* silence */
+      });
+    });
+
+    afterEach(() => {
+      window.dispatchEvent(new Event('pageshow'));
+      errorSpy.mockRestore();
+    });
+
+    it('should not log an AbortError', async () => {
+      await render(() =>
+        Promise.reject(
+          new DOMException('The operation was aborted.', 'AbortError')
+        )
+      );
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not log a TypeError after beforeunload', async () => {
+      window.dispatchEvent(new Event('beforeunload'));
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should log a TypeError without beforeunload', async () => {
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should log a TypeError after beforeunload followed by pageshow', async () => {
+      window.dispatchEvent(new Event('beforeunload'));
+      window.dispatchEvent(new Event('pageshow'));
+      await render(() => Promise.reject(new TypeError('Load failed')));
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should log a non-ok response', async () => {
+      await render(() =>
+        Promise.resolve({ ok: false, status: 404 } as Response)
+      );
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      expect(String(errorSpy.mock.calls[0][0])).toContain(
+        'Failed to load octicon "issue-opened": 404'
+      );
+    });
+  });
 });
