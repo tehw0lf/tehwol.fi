@@ -10,13 +10,30 @@ import {
 // A navigation cancels pending fetches. Firefox rejects them after
 // `beforeunload` and before `pagehide`, so the page counts as leaving from
 // `beforeunload` until `pageshow` (a page restored from the back/forward
-// cache is live again).
+// cache is live again), or until the timer runs out without a `pagehide`:
+// then the `beforeunload` did not unload the page (a cancelled prompt) and
+// the page stayed.
+const LEAVING_TIMEOUT_MS = 1000;
 let leaving = false;
+let leavingTimer: ReturnType<typeof setTimeout> | undefined;
 if (typeof window !== 'undefined') {
+  const clearLeavingTimer = () => {
+    if (leavingTimer !== undefined) {
+      clearTimeout(leavingTimer);
+      leavingTimer = undefined;
+    }
+  };
   window.addEventListener('beforeunload', () => {
     leaving = true;
+    clearLeavingTimer();
+    leavingTimer = setTimeout(() => {
+      leavingTimer = undefined;
+      leaving = false;
+    }, LEAVING_TIMEOUT_MS);
   });
+  window.addEventListener('pagehide', clearLeavingTimer);
   window.addEventListener('pageshow', () => {
+    clearLeavingTimer();
     leaving = false;
   });
 }
